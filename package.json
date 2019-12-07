@@ -1,0 +1,44 @@
+{
+  "name": "boogle-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "animated-scroll-to": "^2.0.2",
+    "antd": "^3.23.5",
+    "axios": "^0.19.0",
+    "body-scroll-lock": "^2.6.4",
+    "bootstrap": "^4.3.1",
+    "react": "^16.10.1",
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-currency-format": "^1.0.0",
+    "react-decorators": "^1.2.2",
+    "react-dom": "^16.10.1",
+    "react-hook-form": "^3.23.17",
+    "react-number-format": "^4.3.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.1.2",
+    "react-sticky-el": "^1.0.20"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync ./build s3://boogle.shop --profile=deploy-s3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

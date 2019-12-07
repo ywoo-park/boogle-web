@@ -1,0 +1,186 @@
+@import '~antd/dist/antd.css';
+
+@media (min-width: 320px) and (max-width : 374px){
+    #navbar{
+        background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
+        overflow : hidden;
+
+    }
+
+    #navbar-search-row{
+        margin-top : 3vh;
+    }
+    .sticky{
+        background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
+    }
+    #navbar-fixed{        
+        margin-top : -3vh;
+        padding-top : 7vh;
+        max-height : 70vh;
+        min-height: 23vh;
+        width : 100%;
+    }
+
+    #navbar-unfixed{
+        height : 28vh;
+        width : 100%;
+        margin-top : 0vh;
+        position : relative;
+    }
+    .navbar-top-icon{
+        font-size : 4vh;
+        margin-right : -1vh;
+    }
+
+    .navbar-carousel{
+        width : 100%;
+        height : 25vh;
+    }
+    .navbar-carousel-div{
+        margin-top : 2vh;
+    }
+    .navbar-carousel-title{
+        color : white;
+    }
+    .brand{
+        width : 100%;
+        margin : auto;
+    }
+
+    .nav-txt{
+        font-size : 8px;
+    }
+    .nav-link{
+        font-size : 8px;
+    }
+    .before-login-text{
+        margin-left  :15vh;
+    }
+}
+
+@media (min-width : 375px) and (max-width: 576px){
+    #navbar{
+        background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
+        overflow : hidden;
+        width : 100%;
+        top : 0;
+        padding : 0;
+    }
+    .isFocused{
+        height : 12%;
+    }
+
+    #navbar-search-row{
+        margin-top : 3vh;
+    }
+
+    #navbar-search-row-after-focused{
+        margin : 5.5% 0 5.5% 0;
+    }
+
+    #navbar-fixed{        
+        margin-top : -3vh;
+        padding-top : 7vh;
+        max-height : 70vh;
+        min-height: 23vh;
+    }
+
+    #navbar-unfixed{
+        height : 28vh;
+        width : 100%;
+        margin-top : 0vh;
+    }
+    .navbar-top-icon{
+        font-size : 4vh;
+        margin-right : -1vh;
+    }
+
+    .navbar-carousel{
+        width : 100%;
+        height : 25vh;
+    }
+    .navbar-carousel-div{
+        margin-top : 2vh;
+    }
+    .navbar-carousel-title{
+        color : white;
+    }
+    .brand{
+        width : 100%;
+        margin : auto;
+    }
+
+    .nav-txt{
+        font-size : 8px;
+    }
+    .nav-link{
+        font-size : 8px;
+    }
+    .before-login-text{
+        margin-left  :15vh;
+    }
+}
+
+
+
+.navBar{
+    height : 15vh;
+    background-color : rgba(255,255,255,1.0);
+    width : 100%;
+}
+.nav-left{
+    width : 40%;
+}
+.nav-center{
+    width : 20%;
+}
+.nav-right{
+    width : 60vh;
+}
+
+.title{
+    width : 100%;
+}
+
+.logo{
+    width : 100%;
+    height: auto;
+}
+
+#responsive-navbar-nav{
+    margin-top : 1.5vh;
+}
+
+.navbar-header{
+    width: 100%;
+}
+
+
+
+.nav-txt{
+    margin-right : 4px;
+}
+
+.nav-link{
+    margin-right : -2px;
+}
+
+.topbar{
+    height : 10vh;
+    width : 100%;
+    margin-bottom : 10vh;
+}
+
+.login{
+    font-size : 14px;
+}
+@media (min-width: 577px){
+.before-login-text{
+    margin-left : 30vh;
+    }
+.login{
+    margin-left : 10vh;
+    }
+}
+
+

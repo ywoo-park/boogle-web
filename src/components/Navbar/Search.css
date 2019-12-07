@@ -1,0 +1,104 @@
+@media (min-width: 320px) and (max-width : 374px){
+    .search-form{
+        position : relative;
+    }
+    
+    .search-input{
+        width : 100%;
+        background : rgba(255,255,255,0.22);
+        border : white 2px solid;
+        border-radius: 15px;
+        padding : 0 3vh 0 3vh;
+        color : white;
+        line-height: normal;
+    }
+    .search-input:focus{
+        background : rgba(255,255,255,0.22);
+        border : white 2px solid;
+        outline : none;
+        
+    }
+    .search-input::placeholder{
+        color : white;
+        font-size: 2vh;
+        text-align: left;
+    }
+    
+    .search-input-button{
+        position: absolute;
+        top : 5.5px;
+        right : 10px;
+        z-index : 100;
+    }    
+    .search-result-col-before-focus{
+        position : fixed;
+        z-index : 1000;
+        height : 0;
+        background : rgba(0,0,0,0.7); 
+        display : none;
+    }
+    .search-result-col{
+        position : fixed;
+        z-index : 1000;
+        max-height : 100vh;
+        min-height : 0vh;
+        background : rgba(0,0,0,0.7); 
+    }
+
+    .search-result-row{
+        margin-bottom : 3vh;
+    }
+}
+
+@media (min-width : 375px) and (max-width: 576px){
+    .search-form{
+        position : relative;
+    }
+    
+    .search-input{
+        width : 100%;
+        background : rgba(255,255,255,0.22);
+        border : white 2px solid;
+        border-radius: 15px;
+        padding : 0 3vh 0 3vh;
+        color : white;
+        line-height: normal;
+        height : 4.5vh;
+    }
+    .search-input:focus{
+        background : rgba(255,255,255,0.22);
+        border : white 2px solid;
+        outline : none;
+        
+    }
+    .search-input::placeholder{
+        color : white;
+        font-size: 1.5vh;
+        text-align: left;
+    }
+    
+    .search-input-button{
+        position: absolute;
+        top : 7px;
+        right : 10px;
+        z-index : 100;
+    }    
+    .search-result-col-before-focus{
+        position : fixed;
+        z-index : 1000;
+        height : 0;
+        background : rgba(0,0,0,0.7); 
+        display : none;
+    }
+    .search-result-col{
+        position : fixed;
+        z-index : 1000;
+        max-height : 100vh;
+        min-height : 0vh;
+        background : rgba(0,0,0,0.7); 
+    }
+
+    .search-result-row{
+        margin-bottom : 3vh;
+    }
+}

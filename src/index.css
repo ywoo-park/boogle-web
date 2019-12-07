@@ -1,0 +1,21 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
+@import url('https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css');
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+
+    :lang(ko) {
+      font-family: 'Noto Sans KR';
+      font-weight: 500;
+    }
+
+    html, body {
+      position: fixed;
+      overflow: hidden;
+    }
+    button:focus { outline:0 !important; }
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
