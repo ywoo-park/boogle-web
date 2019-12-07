@@ -1,68 +1,38 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Boogle
 
-## Available Scripts
+![logo_final](https://user-images.githubusercontent.com/23696493/64013945-ea9b0080-cb5b-11e9-8363-2e124c60601e.png)
 
-In the project directory, you can run:
+사물함 기반 캠퍼스 중고 도서 거래 플랫폼 <북을>
 
-### `npm start`
+프로젝트 기간 : 2019년 4월 1일 ~
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+참여한 팀원 : 박영우, 최우혁, 김유진, 최서온, 정의현, 홍진석, 이예지, 김수빈, 김지우, 김예진, 정준화, 조수빈, 최하은, 현준호
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Boogle React App
 
-### `npm test`
+해당 프로젝트는 [Create React App]를 통해 생성되었습니다.(<https://github.com/facebook/create-react-app>).
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+```
+$ clone https://github.com/ywoo21/Boogle-React.git
+$ npm install
+$ npm start
+```
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## About This Repository
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+<북을>의 React 프로젝트입니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Used Skills
 
-### `npm run eject`
+- React.js
+- Axios(HTTP)
+- Ant Design / React BootStrap 3 (UI)
+- Redux.js(Application State Management)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## React Component Tree
+![북을_리액트_컴포넌트_트리](https://user-images.githubusercontent.com/23696493/65007296-a328b880-d940-11e9-9375-0481c5166743.jpg)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Information Architecture
+![IA 초안_BOOGLE-1](https://user-images.githubusercontent.com/23696493/65221699-846d2200-daf8-11e9-818f-b3e4cafa2715.png)
