@@ -1,3 +1,4 @@
+
 @media (min-width: 320px) and (max-width : 374px){
     #register-container{
         width: 100%;
@@ -27,6 +28,25 @@
     .isFocused{
         height : 12%;
     }
+    input:focus { outline: none; }
+    .register-button{
+        width : 100%;
+        background-color: #f7f7f7;
+        color : #666666;
+        border : #666666 0.3px solid;
+        font-size: 1.8vh;
+    }
+    .register-button-big{
+        height : 1.5vh;
+    }
+    .register-button-active{
+        width : 100%;
+        color : #666666;
+        background-color : #b0dae2;
+        border : #666666 0.3px solid;
+        font-size: 1.8vh;
+    }
+
 }
 
 @media (min-width: 577px) and (max-height : 1199px){

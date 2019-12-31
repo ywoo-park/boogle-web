@@ -25,7 +25,6 @@ class Sell extends Component {
     return (
       <section id="sell">
         <Register>
-
         </Register>
       </section>
     );
