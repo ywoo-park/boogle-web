@@ -22,6 +22,7 @@ export default function SignUpForm() {
         console.log(data);
         setStep(1)
     };
+    
     const onSubmitSecondForm = (data) => {
         console.log(data);
     };
@@ -195,8 +196,7 @@ export default function SignUpForm() {
                                 padding: "0",
                                 width: "100%",
                                 background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh",
-                                
+                                border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh",    
                             }}
                                 type="submit"
                                 value="다음 단계"
