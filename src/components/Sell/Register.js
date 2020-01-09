@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Row, Col, notification, Layout, Icon, List, Card, Divider, Rate, Radio } from 'antd';
 import Search from '../Navbar/Search';
-import { withRouter } from "react-router-dom";
+import { withRouter,  Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
+import CurrencyInput from 'react-currency-input';
+import Camera from 'react-html5-camera-photo';
 import axios from 'axios';
 import './Register.css';
-import { Button, ButtonGroup } from 'react-bootstrap';
 
 
 export default function Register() {
@@ -16,13 +17,31 @@ export default function Register() {
     const [isFocusedClass, setIsFocusedClass] = useState();
     const [selectedItem, setSelectedItem] = useState();
     const [dealType, setDealType] = useState(0);
+    const [contactType, setContactType] = useState(0);
 
-    const initialQualityOut = [false,false,false,false,false];
-    const initialQualityIn = [false,false,false,false,false,false];
+    const [userImages, setUserImages] = useState([]);
+    const [userImagesDiv, setUserImagesDiv] = useState();
+    const [imageUrls, setImageUrls] = useState([])
+
+    const initialQualityOut = [false, false, false, false, false];
+    const initialQualityIn = [false, false, false, false, false, false];
 
     const [qualityOut, setQualityOut] = useState(initialQualityOut);
     const [qualityIn, setQualityIn] = useState(initialQualityIn);
 
+    const [regiPrice, setRegiPrice] = useState(0);
+    const [isFinalSubmit, setIsFinalSubmit] = useState(false);
+
+    const [formData, setFormData] = useState();
+
+    const [sellItem, setSellItem] = useState();
+    const [imageList, setImageList] = useState();
+    const [imageFileList, setImageFileList] = useState();
+    const [regiImageList, setRegiImageList] = useState();
+    const [sellItemReq, setSellItemReq] = useState();
+
+    const [didMount, setDidMount] = useState(false);
+    
     const { register, handleSubmit } = useForm();
 
     const focusOnSearch = (isFocused) => {
@@ -33,44 +52,129 @@ export default function Register() {
     const updateInputValue = (resdata) => {
         setResdata(resdata);
     }
+
     React.useEffect(() => {
-        console.log(dealType);
-    }, [dealType])
+        if(didMount){
+            setUserImagesDiv(addImage());
+        }
+    }, [imageUrls])
+    React.useEffect(() => {
+        if(didMount){
+            setImageFileList(imageList);
+        }
+    }, [imageList])
+    React.useEffect(() => {
+        if(didMount){
+            setRegiImageList([]);
+        }
+    }, [imageFileList])
+    React.useEffect(() => {
+        if(didMount){
 
-    /*
-    const handleScroll = e => {
-        const element = e.target;
-        if (element.clientHeight > element.scrollHeight - element.scrollTop - 10) {
-            return;
+            const sellItemReqForm = new FormData();
+            console.log(sellItem)
+            sellItemReqForm.append("sellItemString", JSON.stringify(sellItem));
+            console.log(imageFileList);
+            //sellItemReqForm.append("imageFileList", JSON.stringify(imageFileList));
+            console.log(regiImageList);
+            sellItemReqForm.append("regiImageList", regiImageList);
+
+            imageFileList.forEach(i => {
+                sellItemReqForm.append("imageFileList", i);
+            });
+            
+           
+            
+            setSellItemReq(sellItemReqForm);
         }
 
-        if (element.scrollTop > this.state.scrollTop && element.scrollTop != 0
-            && element.scrollTop + 30 < element.scrollHeight && element.scrollTop > 30) {
-            this.setState({ scrolledDown: true })
-            this.setState({ scrolledDownClass: "scrolled-down" })
+    }, [regiImageList])
+    React.useEffect(() => {
+        setDidMount(true);
+        if(didMount){
+            saveSellItem();
         }
-        else {
-            this.setState({ scrolledDown: false });
-            this.setState({ scrolledDownClass: "" })
-        }
+    }, [sellItemReq])
 
-        this.setState({ scrollTop: element.scrollTop })
-
-        if (element.scrollTop > 188 && !this.state.isScrolled) {
-            this.setState({ isScrolled: true });
-            this.setState({ bannerList: "banner-list-after-scrolled" })
-        }
-        if (element.scrollTop < 188 && this.state.isScrolled) {
-            this.setState({ isScrolled: false });
-            this.setState({ bannerList: "banner-list" })
-        }
+    const addImage = () => {
+        const imageList = imageUrls.map((i) => (
+            <Col xs={{ span: 5, offset: 1 }}>
+                <div
+                    style={{
+                        border: "#44a0ac 1px solid", height: "10vh",
+                        width: "10vh", position: "relative", borderRadius: "1.5vh"
+                    }}>
+                    <img style={{
+                        width: "100%", height: "100%",
+                        position: "absolute", borderRadius: "1.5vh",
+                        transform: "translate(-50%, -50%)",
+                        top: "50%", left: "50%"
+                    }} src={i}
+                    />
+                </div>
+            </Col>
+        ));
+        return imageList;
     }
-    */
-    const onSubmit = data => {
+    const translateBooleanArrayToString = (booleanArray) => {
+        let s = ""
+        booleanArray.forEach(b => {
+            if(b == false){
+                s = s.concat("0")
+            }
+            else{
+                s = s.concat("1")
+            }
+        });
+        return s;
+    }
+
+    const onSubmit = (data) => {
+        console.log(isFinalSubmit);
+        if (isFinalSubmit) {
+            data.dealType = dealType;
+            data.contactType = contactType;
+            data.qualityIn = translateBooleanArrayToString(qualityIn);
+            data.qualityOut = translateBooleanArrayToString(qualityOut);
+            data.regiPrice = regiPrice;
+            data.regiImages = userImages;
+
+            setSellItem({
+                itemId : selectedItem.isbn.substring(11),
+                title : data.title,
+                author : data.author,
+                publisher : data.publisher,
+                pubdate : data.pubdate.substring(0,4) + data.pubdate.substring(6,8),
+                price : (data.price.replace(",", "")).replace(" 원", ""),
+                regiPrice : data.regiPrice,
+                dealType : data.dealType,
+                contactType : data.contactType,
+                qualityIn : data.qualityIn,
+                qualityOut : data.qualityOut,
+                sellerId : 0,
+                comment : data.comment,
+                imageUrl : selectedItem.image,
+                regiTime : new Date()
+              })
+              setImageList(data.regiImages);
+        }
     };
-    React.useEffect(() => {
-        register({ name: "reactSelect" }); // custom register react-select 
-    }, [register])
+  
+    const saveSellItem = () => {
+        axios.post('http://localhost:8080/sell', sellItemReq, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+
     return (
         <section id="register-container">
             {
@@ -78,13 +182,13 @@ export default function Register() {
                     <div>
                         <Row style={{ marginTop: "3vh" }}>
                             <Col xs={{ span: 8 }}>
+                            <Link to="/">
                                 <Icon style={{
                                     marginLeft: "25%",
                                     fontSize: "3vh", color: "#707070"
                                 }} type="arrow-left"
-                                    onClick={() => {
-                                        this.props.history.push('/');
-                                    }} />
+                                     />
+                            </Link>
                             </Col>
                             <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
                                 <h5 style={{ color: "#707070" }}>판매하기</h5>
@@ -150,7 +254,7 @@ export default function Register() {
                                             fontSize: "3vh", color: "white"
                                         }} type="arrow-left"
                                             onClick={() => {
-                                                { setStep(2) }
+                                                { setStep(0) }
                                             }} /></Col>
                                         <Col xs={{ span: 18, offset: 0 }} >
                                             <Search focusOnSearch={focusOnSearch}
@@ -237,7 +341,6 @@ export default function Register() {
                                                             }}
                                                                 onClick={() => {
                                                                     setSelectedItem(value);
-                                                                    console.log(value);
                                                                     setStep(2);
                                                                 }}
                                                             >판매 등록하기</button>
@@ -271,7 +374,7 @@ export default function Register() {
                                             fontSize: "3vh", color: "#707070"
                                         }} type="arrow-left"
                                             onClick={() => {
-                                                this.props.history.push('/');
+                                                if(step == 2) setStep(1);
                                             }} />
                                     </Col>
                                     <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
@@ -300,7 +403,7 @@ export default function Register() {
                                         <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>도서명</span>
                                     </Col>
                                 </Row>
-                                <form onSubmit={handleSubmit(onSubmit)}>
+                                <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
                                     <Row style={{ marginBottom: "1.5vh" }}>
                                         <Col xs={{ span: 20, offset: 2 }} >
 
@@ -348,7 +451,8 @@ export default function Register() {
                                                     <input
                                                         style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                                         name="pubdate" ref={register}
-                                                        value={selectedItem.pubdate} />
+                                                        value={selectedItem.pubdate.toString().substring(0, 4) + "년 " +
+                                                            selectedItem.pubdate.toString().substring(4, 6) + "월"} />
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -363,7 +467,7 @@ export default function Register() {
                                                     <input
                                                         style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                                         name="price" ref={register}
-                                                        value={selectedItem.price} />
+                                                        value={selectedItem.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"} />
                                                 </Col>
                                             </Row>
                                         </Col>
@@ -377,17 +481,77 @@ export default function Register() {
                                         <Col xs={{ span: 10, offset: 2 }}>
                                             <button
                                                 class={dealType == 0 ? "register-button-active" : "register-button"}
-                                                style={{height : "4vh"}}
+                                                style={{ height: "4vh" }}
                                                 onClick={() => setDealType(0)}>직거래</button>
                                         </Col>
-                                        <Col xs={{ span: 10, offset: 0}}>
+                                        <Col xs={{ span: 10, offset: 0 }}>
                                             <button
                                                 class={dealType == 1 ? "register-button-active" : "register-button"}
-                                                style={{height : "4vh"}}
+                                                style={{ height: "4vh" }}
                                                 onClick={() => { setDealType(1) }}>북을박스</button>
                                         </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>연락수단</span>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                        <Col xs={{ span: 6, offset: 2 }}>
+                                            <button
+                                                class={contactType == 0 ? "register-button-active" : "register-button"}
+                                                style={{ height: "4vh" }}
+                                                onClick={() => setContactType(0)}>카카오톡</button>
+                                        </Col>
+                                        <Col xs={{ span: 6, offset: 0 }}>
+                                            <button
+                                                class={contactType == 1 ? "register-button-active" : "register-button"}
+                                                style={{ height: "4vh" }}
+                                                onClick={() => { setContactType(1) }}>휴대폰</button>
+                                        </Col>
+                                        <Col xs={{ span: 6, offset: 0 }}>
+                                            <button
+                                                class={contactType == 2 ? "register-button-active" : "register-button"}
+                                                style={{ height: "4vh" }}
+                                                onClick={() => { setContactType(2) }}>카톡알람</button>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>사진</span>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <input id="selectedFile" type="file" accept="image/*;capture=camera"
+                                                onChange={(e) => {
+                                                    const file = e.target.files[0];
+                                                    setUserImages(userImages => [...userImages, file]);
 
+                                                    let reader = new FileReader();
 
+                                                    reader.onloadend = () => {
+                                                        setImageUrls(imageUrls => [...imageUrls, reader.result])
+                                                    }
+
+                                                    reader.readAsDataURL(file)
+                                                }}
+                                                style={{ display: "none" }}
+                                            />
+                                            <div onClick={() => { document.getElementById('selectedFile').click() }}
+                                                style={{
+                                                    border: "#44a0ac 1px solid", height: "10vh",
+                                                    width: "10vh", position: "relative", borderRadius: "1.5vh"
+                                                }}>
+                                                <Icon type="camera"
+                                                    style={{
+                                                        fontSize: "5vh", position: "absolute",
+                                                        textAlign: "center", width: "100%", transform: "translate(-50%, -50%)",
+                                                        top: "50%", left: "50%", color: "#44a0ac"
+                                                    }} />
+                                            </div>
+                                        </Col>
+                                        {userImagesDiv}
                                     </Row>
                                     <Row style={{ marginBottom: "1.5vh" }}>
                                         <Col xs={{ span: 8, offset: 2 }}>
@@ -397,21 +561,21 @@ export default function Register() {
                                     <Row style={{ marginBottom: "1.5vh" }}>
                                         <Col xs={{ span: 5, offset: 2 }} >
                                             <button
-                                                class={qualityOut[0] == true? "register-button-active" : "register-button"}
+                                                class={qualityOut[0] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityOut];
-                                                    if(old[0] == false) old[0] = true
+                                                    if (old[0] == false) old[0] = true
                                                     else old[0] = false
                                                     setQualityOut(old)
                                                 }}
-                                                  >깨끗</button>
+                                            >깨끗</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
                                                 class={qualityOut[1] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityOut];
-                                                    if(old[1] == false) old[1] = true
+                                                    if (old[1] == false) old[1] = true
                                                     else old[1] = false
                                                     setQualityOut(old)
                                                 }}>이름기입</button>
@@ -421,7 +585,7 @@ export default function Register() {
                                                 class={qualityOut[2] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityOut];
-                                                    if(old[2] == false) old[2] = true
+                                                    if (old[2] == false) old[2] = true
                                                     else old[2] = false
                                                     setQualityOut(old)
                                                 }}>긁힘/접힘</button>
@@ -431,7 +595,7 @@ export default function Register() {
                                                 class={qualityOut[3] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityOut];
-                                                    if(old[3] == false) old[3] = true
+                                                    if (old[3] == false) old[3] = true
                                                     else old[3] = false
                                                     setQualityOut(old)
                                                 }}>찢어짐</button>
@@ -441,7 +605,7 @@ export default function Register() {
                                                 class={qualityOut[4] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityOut];
-                                                    if(old[4] == false) old[4] = true
+                                                    if (old[4] == false) old[4] = true
                                                     else old[4] = false
                                                     setQualityOut(old)
                                                 }}>물에젖음</button>
@@ -455,21 +619,21 @@ export default function Register() {
                                     <Row style={{ marginBottom: "1.5vh" }}>
                                         <Col xs={{ span: 5, offset: 2 }} >
                                             <button
-                                                class={qualityIn[0] == true? "register-button-active" : "register-button"}
+                                                class={qualityIn[0] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityIn];
-                                                    if(old[0] == false) old[0] = true
+                                                    if (old[0] == false) old[0] = true
                                                     else old[0] = false
                                                     setQualityIn(old)
                                                 }}
-                                                  >깨끗</button>
+                                            >깨끗</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
                                                 class={qualityIn[1] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityIn];
-                                                    if(old[1] == false) old[1] = true
+                                                    if (old[1] == false) old[1] = true
                                                     else old[1] = false
                                                     setQualityIn(old)
                                                 }}>밑줄</button>
@@ -479,7 +643,7 @@ export default function Register() {
                                                 class={qualityIn[2] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityIn];
-                                                    if(old[2] == false) old[2] = true
+                                                    if (old[2] == false) old[2] = true
                                                     else old[2] = false
                                                     setQualityIn(old)
                                                 }}>연필</button>
@@ -489,7 +653,7 @@ export default function Register() {
                                                 class={qualityIn[3] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityIn];
-                                                    if(old[3] == false) old[3] = true
+                                                    if (old[3] == false) old[3] = true
                                                     else old[3] = false
                                                     setQualityIn(old)
                                                 }}>볼펜/형광펜</button>
@@ -499,7 +663,7 @@ export default function Register() {
                                                 class={qualityIn[4] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityIn];
-                                                    if(old[4] == false) old[4] = true
+                                                    if (old[4] == false) old[4] = true
                                                     else old[4] = false
                                                     setQualityIn(old)
                                                 }}>문제풀음</button>
@@ -509,10 +673,66 @@ export default function Register() {
                                                 class={qualityIn[5] == true ? "register-button-active" : "register-button"}
                                                 onClick={() => {
                                                     let old = [...qualityIn];
-                                                    if(old[5] == false) old[5] = true
+                                                    if (old[5] == false) old[5] = true
                                                     else old[5] = false
                                                     setQualityIn(old)
                                                 }}>물에젖음</button>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>희망가격</span>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                        <Col xs={{ span: 10, offset: 2 }} >
+                                            <CurrencyInput
+                                                precision="0"
+                                                suffix=" 원"
+                                                value={regiPrice}
+                                                onChangeEvent={(e) => {
+                                                    let value = e.target.value;
+                                                    value = value.replace(",", "");
+                                                    value = value.replace(" 원", "");
+                                                    setRegiPrice(value)
+                                                }
+                                                }
+                                                style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }} />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>태그</span>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                        <Col xs={{ span: 20, offset: 2 }} >
+                                            <input
+                                                style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
+                                                name="tag" ref={register} />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>코멘트</span>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                        <Col xs={{ span: 20, offset: 2 }} >
+                                            <textarea
+                                                style={{ width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px" }}
+                                                name="comment" ref={register} />
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "10vh" }}>
+                                        <Col xs={{ span: 20, offset: 2 }}>
+                                            <input style={{
+                                                width: "100%",
+                                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                                border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                                            }}
+                                                type="submit" value="판매 등록하기"
+                                                onClick={() => setIsFinalSubmit(true)} />
                                         </Col>
                                     </Row>
                                 </form>

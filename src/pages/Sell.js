@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Banner from '../components/Home/Banner';
 import Navbar from '../components/Navbar/Navbar';
-import SignUp from '../components/SignUp/SignUp';
 import Search from '../components/Navbar/Search';
 import Register from '../components/Sell/Register';
 

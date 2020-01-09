@@ -4,28 +4,33 @@
     #navbar{
         background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
         overflow : hidden;
-
+        width : 100%;
+        top : 0;
+        padding : 0;
+    }
+    .isFocused{
+        height : 12%;
     }
 
     #navbar-search-row{
         margin-top : 3vh;
     }
-    .sticky{
-        background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
+
+    #navbar-search-row-after-focused{
+        margin : 5.5% 0 5.5% 0;
     }
+
     #navbar-fixed{        
         margin-top : -3vh;
         padding-top : 7vh;
         max-height : 70vh;
         min-height: 23vh;
-        width : 100%;
     }
 
     #navbar-unfixed{
         height : 28vh;
         width : 100%;
         margin-top : 0vh;
-        position : relative;
     }
     .navbar-top-icon{
         font-size : 4vh;
