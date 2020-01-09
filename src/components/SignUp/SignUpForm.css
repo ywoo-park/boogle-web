@@ -1,6 +1,6 @@
 
 @media (min-width: 320px) and (max-width : 374px){
-    #register-container{
+    #signup-form-container{
         width: 100%;
         height: 100vh;
         -webkit-overflow-scrolling: touch;
@@ -17,7 +17,11 @@
     .isFocused{
         height : 12%;
     }
-    input:focus { outline: none; }
+    input, select{
+        height : 6vh;
+        padding : 1.5vh;
+    }
+    input:focus, select:focus { outline: none; }
     textarea:focus { outline: none; }
     .register-button{
         width : 100%;
@@ -35,12 +39,27 @@
         background-color : #b0dae2;
         border : #666666 0.3px solid;
         font-size: 1.8vh;
+    }
+    p {
+        color: #e95513;
+        font-size: 1.8vh;
+      }
+    .hide{
+        display : none;
+    }
+    .sign-up-check{
+        font-size: 4vh;
+        color: #666666;
+    }
+    .sign-up-check-selected{
+        font-size: 4vh;
+        color : #44a0ac;  
     }
 }
 
 
 @media (min-width : 375px) and (max-width: 576px){
-    #register-container{
+    #signup-form-container{
         width: 100%;
         height: 100vh;
         -webkit-overflow-scrolling: touch;
@@ -57,7 +76,11 @@
     .isFocused{
         height : 12%;
     }
-    input:focus { outline: none; }
+    input, select{
+        height : 6vh;
+        padding : 1.5vh;
+    }
+    input:focus, select:focus { outline: none; }
     textarea:focus { outline: none; }
     .register-button{
         width : 100%;
@@ -75,6 +98,21 @@
         background-color : #b0dae2;
         border : #666666 0.3px solid;
         font-size: 1.8vh;
+    }
+    p {
+        color: #e95513;
+        font-size: 1.8vh;
+      }
+    .hide{
+        display : none;
+    }
+    .sign-up-check{
+        font-size: 4vh;
+        color: #666666;
+    }
+    .sign-up-check-selected{
+        font-size: 4vh;
+        color : #44a0ac;  
     }
 
 }

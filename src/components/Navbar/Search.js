@@ -26,9 +26,6 @@ class Search extends Component {
     axios.get('http://13.125.191.60:8080/naver/bookApi?keyword=' + keyword)
       .then((response) => {
         const items = response.data.rss.channel.item;
-
-        console.log(items);
-        
         if(items!= undefined && items.length > 0 && keyword !=''){
           this.setState({
             resdata: items,
