@@ -1,29 +1,22 @@
-import React, { Component } from 'react';
-import SignUpForm from '../components/SignUp/SignUpForm';
+import React, { Component } from "react";
+import SignUpForm from "../components/SignUp/SignUpForm";
 
-import axios from 'axios';
+import axios from "axios";
 
 class SignUp extends Component {
+  state = {};
 
-  state = {
+  componentDidMount() {}
 
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-  }
+  componentWillUnmount() {}
 
   render() {
     return (
       <section id="signUp">
-        <SignUpForm>
-        </SignUpForm>
+        <SignUpForm></SignUpForm>
       </section>
     );
-  };
+  }
 }
 
 export default SignUp;
