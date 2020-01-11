@@ -6,20 +6,14 @@ import Axios from "axios";
 
 export default function SignInForm() {
   const { register, handleSubmit, errors } = useForm();
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
   const [keepSignIn, setKeepSignIn] = useState(false);
 
-  // useEffect(()=>{
-  //   id
-  // })
-
   const onSubmit = data => {
-    console.log(data);
     loginSend(data);
   };
   const login_check_url = "testtest";
   const loginSend = async data => {
+    console.log(data);
     Axios.post(login_check_url, data);
   };
 
@@ -47,6 +41,7 @@ export default function SignInForm() {
               }
             })}
           ></input>
+          <ErrorMessage errors={errors} name="id" as="p" />
         </Col>
       </Row>
       <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
@@ -55,6 +50,7 @@ export default function SignInForm() {
             name="password"
             placeholder="비밀번호"
             ref={register({ required: "비밀번호를 입력해주세요" })}
+            type="password"
           ></input>
         </Col>
       </Row>
