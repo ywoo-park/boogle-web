@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Row, Col, Icon } from "antd";
+import Axios from "axios";
 
 export default function SignInForm() {
   const { register, handleSubmit, errors } = useForm();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [keepSignIn, setKeepSignIn] = useState(false);
+
+  // useEffect(()=>{
+  //   id
+  // })
+
   const onSubmit = data => {
     console.log(data);
+    loginSend(data);
   };
+  const login_check_url = "testtest";
+  const loginSend = async data => {
+    Axios.post(login_check_url, data);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Row>
@@ -78,14 +90,18 @@ export default function SignInForm() {
       </Row>
       <Row>
         <Col>
-          <input value="아이디 찾기" />
+          <Link to="/findid">아이디 찾기</Link>
         </Col>
       </Row>
       <Row>
-        <Col>비밀번호 찾기</Col>
+        <Col>
+          <Link to="/findpassword">비밀번호 찾기</Link>
+        </Col>
       </Row>
       <Row>
-        <Col>회원가입</Col>
+        <Col>
+          <Link to="/signup">회원가입</Link>
+        </Col>
       </Row>
     </form>
   );
