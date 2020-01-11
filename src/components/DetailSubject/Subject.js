@@ -3,5 +3,5 @@ import { Col, Row } from "antd";
 import { render } from "react-dom";
 
 export default function Subject() {
-  render();
+  return <p> hi </p>;
 }
