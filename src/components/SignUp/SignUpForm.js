@@ -16,11 +16,10 @@ export default function SignUpForm() {
     const [confirmPassword, setConfirmPassword] = useState(0);
     const [formStyle, setFormStyle] = useState(["show", "hide"]);
     const [checkList, setCheckList] = useState([false,false,false]);
-    const [checkStyleList, setCheckStyleList] = useState(["sign-up-check", "sign-up-check", "sign-up-check"])
 
     const onSubmitFirstForm = (data) => {
         console.log(data);
-        setStep(1)
+        setStep(1);
     };
     
     const onSubmitSecondForm = (data) => {
@@ -38,7 +37,7 @@ export default function SignUpForm() {
     return (
         <section id="signup-form-container">
                 <div class={formStyle[0]}>
-                <form onSubmit={handleSubmit(onSubmitFirstForm)} enctype="multipart/form-data">
+                <form onSubmit={handleSubmit(onSubmitFirstForm)}>
                     <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
                         <Col xs={{ span: 8 }}>
                             <Icon style={{
@@ -103,7 +102,6 @@ export default function SignUpForm() {
                                 style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                 name="confirmPassword" placeholder="비밀번호 확인" ref={register({
                                     required: "비밀번호를 입력해주세요.",
-                                    validate: value => value == password
                                 })}
                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
                                 type="password" />
@@ -116,97 +114,25 @@ export default function SignUpForm() {
                             <Divider style={{ background: "lightgray" }} />
                         </Col>
                     </Row>
-                    <Row style={{ marginBottom: "2vh" }}>
-                        <Col offset={2} span={2}>
-                            <Icon onClick={(e)=>{
-                                if(checkList[0] == false){
-                                    const temp = checkList;
-                                    temp[0] = true; 
-                                    setCheckList(temp);
-                                    e.target.style.color = "#44a0ac"
-                                }
-                                else{
-                                    const temp = checkList;
-                                    temp[0] = false; 
-                                    setCheckList(temp);
-                                    e.target.style.color = "#666666"
-                                }
-                                }} className = "sign-up-check"
-                                type="check" />
-                        </Col>
-                        <Col offset={0} span={20}>
-                            <small>
-                                북을 이용약관 동의
-                                <span style={{ color: "#e95513" }}>(필수)</span>
-                            </small>
-                        </Col>
-                    </Row>
-                    <Row style={{ marginBottom: "2vh" }}>
-                        <Col offset={2} span={2}>
-                        <Icon onClick={(e)=>{
-                                if(checkList[1] == false){
-                                    const temp = checkList;
-                                    temp[1] = true; 
-                                    setCheckList(temp);
-                                    e.target.style.color = "#44a0ac"
-                                }
-                                else{
-                                    const temp = checkList;
-                                    temp[1] = false; 
-                                    setCheckList(temp);
-                                    e.target.style.color = "#666666"
-                                }
-                                }}
-                                className = "sign-up-check"
-                                type="check" />
-                        </Col>
-                        <Col offset={0} span={20}>
-                            <small>
-                                개인정보 수집 및 이용에 대한 안내
-                                        <span style={{ color: "#e95513" }}>(필수)</span>
-                            </small>
-                        </Col>
-                    </Row>
-                    <Row style={{ marginBottom: "6vh" }}>
-                        <Col offset={2} span={2}>
-                        <Icon onClick={(e)=>{
-                                if(checkList[2] == false){
-                                    const temp = checkList;
-                                    temp[2] = true; 
-                                    setCheckList(temp);
-                                    e.target.style.color = "#44a0ac"
-                                }
-                                else{
-                                    const temp = checkList;
-                                    temp[2] = false; 
-                                    setCheckList(temp);
-                                    e.target.style.color = "#666666"
-                                }
-                                }}className = "sign-up-check" type="check" />
-                        </Col>
-                        <Col offset={0} span={20}>
-                            <small>
-                                이벤트 등 프로모션 알림 메일 수신
-                                    </small>
-                        </Col>
-                    </Row>
+
                     <Row style={{ marginBottom: "6vh" }}>
                         <Col xs={{ span: 20, offset: 2 }}>
-                            <input style={{
+                            <input 
+                            type="submit"
+                            value="다음 단계"
+                            style={{
                                 padding: "0",
                                 width: "100%",
                                 background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                 border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh",    
                             }}
-                                type="submit"
-                                value="다음 단계"
                                 ></input>
                         </Col>
                     </Row>
                     </form>
                 </div>
                 <div class={formStyle[1]}>
-                    <form onSubmit={handleSubmit(onSubmitSecondForm)} enctype="multipart/form-data"> 
+                    <form onSubmit={handleSubmit(onSubmitSecondForm)}>
                     <Row style={{ marginTop: "3vh" }}>
                         <Col xs={{ span: 8 }}>
                             <Icon style={{
