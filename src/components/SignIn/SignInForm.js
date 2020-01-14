@@ -11,10 +11,12 @@ export default function SignInForm() {
   const onSubmit = data => {
     loginSend(data);
   };
-  const login_check_url = "testtest";
+  const login_check_url = "http://13.125.191.60:8080/users/signin";
   const loginSend = async data => {
     console.log(data);
-    Axios.post(login_check_url, data);
+    Axios.post(login_check_url, data).then(res => {
+      console.log(res);
+    });
   };
 
   return (
@@ -31,7 +33,7 @@ export default function SignInForm() {
               width: "100%",
               border: "rgba(51, 158, 172, 0.9) solid 2px"
             }}
-            name="id"
+            name="email"
             placeholder="아이디"
             ref={register({
               required: "이메일을 입력해주세요",
