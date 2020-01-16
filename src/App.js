@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Sell from "./pages/Sell";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import DetailSubject from "./pages/DetailSubject.js";
 
 class App extends Component {
   render() {
@@ -14,6 +15,7 @@ class App extends Component {
         <Route path="/sell" component={Sell} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
+        <Route path="/detailsubject" component={DetailSubject} />
       </Router>
     );
   }
