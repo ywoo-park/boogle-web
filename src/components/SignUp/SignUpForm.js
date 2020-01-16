@@ -15,7 +15,7 @@ export default function SignUpForm() {
     const [step, setStep] = useState(0);
     const [password, setPassword] = useState(0);
     const [confirmPassword, setConfirmPassword] = useState(0);
-    const [formStyle, setFormStyle] = useState(["show", "hide"]);
+    const [formStyle, setFormStyle] = useState(["show", "hide", "hide"]);
     const [checkList, setCheckList] = useState(["0","0","0"]);
     const [campus, setCampus] = useState("서강대학교");
     const [semester, setSemester] = useState("1");
@@ -37,24 +37,23 @@ export default function SignUpForm() {
     };
 
     React.useEffect(() => {
-        if (step == 0) setFormStyle(["show", "hide"]);
-        else if (step == 1) setFormStyle(["hide", "show"]);
+        console.log(step);
+        if (step == 0) setFormStyle(["show", "hide", "hide"]);
+        else if (step == 1) setFormStyle(["hide", "show", "hide"]);
+        else if(step == 2) setFormStyle(["hide","hide","show"]);
     }, [step])
-    React.useEffect(() => {
-        
-
-    }, [checkList])
 
     React.useEffect(() => {
-        console.log(signUpReq);
+       if(step ==1)
         saveUser();
     }, [signUpReq])
 
     const saveUser = () => {
-        axios.post('http://localhost:8080/users/signup', signUpReq, {
+        axios.post('http://13.125.191.60:8080/users/signup', signUpReq, {
         })
             .then((response) => {
                 console.log(response);
+                setStep(2);
             })
             .catch((error) => {
                 console.log(error);
@@ -79,6 +78,13 @@ export default function SignUpForm() {
                             <h5 style={{ color: "#707070" }}>회원가입</h5>
                         </Col>
                         <Col xs={{ span: 8 }}>
+                        <Icon style={{
+                                marginLeft: "25%",
+                                fontSize: "3vh", color: "#707070"
+                            }} type="close"
+                                onClick={() => {
+                                    if(step == 1) setStep(0);
+                                }} />
                         </Col>
                     </Row>
                     <Row>
@@ -252,6 +258,13 @@ export default function SignUpForm() {
                             <h5 style={{ color: "#707070" }}>회원가입</h5>
                         </Col>
                         <Col xs={{ span: 8 }}>
+                        <Icon style={{
+                                marginLeft: "25%",
+                                fontSize: "3vh", color: "#707070"
+                            }} type="close"
+                                onClick={() => {
+                                    if(step == 1) setStep(0);
+                                }} />
                         </Col>
                     </Row>
                     <Row>
@@ -378,6 +391,37 @@ export default function SignUpForm() {
                     </Row>
                 </div>
                 </form>
+                <div class={formStyle[2]}>
+                <Row style={{ marginTop: "3vh" }}>
+                        <Col xs={{ span: 8 }}>
+                        </Col>
+                        <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
+                            <h5 style={{ color: "#707070" }}>회원가입</h5>
+                        </Col>
+                        <Col xs={{ span: 8 }}>
+                        <Link to="/">
+                        <Icon style={{
+                                marginLeft: "25%",
+                                fontSize: "3vh", color: "#707070"
+                            }} type="close"
+                                onClick={() => {
+                                  return 
+                                }}/>
+                        </Link>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={{offset : 3, span : 18}} style={{textAlign: "center", marginTop : "20vh"}}>
+                            <img style={{width : "70%", height : "auto"}}
+                            src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/Group+289%403x.png"></img>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={{offset : 3, span : 18}} style={{textAlign: "center", marginTop : "8vh"}}>
+                            <h5 style={{textAlign : "center", color : "#44a0ac", fontWeight : "800"}}>회원 가입 완료</h5>
+                        </Col>
+                    </Row>
+                </div>
         </section>
     )
 }

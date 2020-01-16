@@ -47,9 +47,6 @@
     .hide{
         display : none;
     }
-    .show{
-        display : block;
-    }
     .sign-up-check{
         font-size: 4vh;
         color: #666666;
@@ -59,7 +56,6 @@
         color : #44a0ac;  
     }
 }
-
 
 
 @media (min-width : 375px) and (max-width: 576px){
