@@ -8,7 +8,6 @@ import Multiselect from 'react-bootstrap-multiselect';
 import axios from 'axios';
 import './SignUpForm.css';
 
-
 export default function SignUpForm() {
 
     const { register, handleSubmit, errors, getValues, setValue } = useForm();
