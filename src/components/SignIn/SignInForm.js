@@ -13,7 +13,6 @@ export default function SignInForm() {
   };
   const login_check_url = "http://13.125.191.60:8080/users/signin";
   const loginSend = async data => {
-    console.log(data);
     Axios.post(login_check_url, data).then(res => {
       console.log(res);
     });
