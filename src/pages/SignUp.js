@@ -12,7 +12,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <section id="signUp">
+      <section id="signUp" >
         <SignUpForm></SignUpForm>
       </section>
     );

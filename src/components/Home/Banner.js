@@ -4,7 +4,7 @@ import '../Navbar/Search.css';
 import { Row, Col, Icon, List, Divider, Rate } from 'antd';
 import Navbar from '../Navbar/Navbar';
 import Search from '../Navbar/Search';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import axios from 'axios';
@@ -561,7 +561,11 @@ class Banner extends Component {
             </Row>
             <Row>
               <Col span={24}>
-                <small>마이페이지</small>
+                <Link to="/signin">
+                  <small style={{ color: "#666666"}}>
+                    마이페이지
+                  </small>
+                </Link>
               </Col>
             </Row>
           </Col>
