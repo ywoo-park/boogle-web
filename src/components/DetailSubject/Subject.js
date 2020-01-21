@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
 import { Col, Row, Carousel, Icon } from "antd";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Subject() {
-  const { id, setId } = useState("");
+  const { id, setId } = useState("5e26e2e83eb3ee91a8915ecf");
+  const { item, setItem } = useState({});
   const detail_sub_url = `http://13.125.191.60:8080/sell?id={id}`;
+  // console.log(detail_sub_url);
+
+  useEffect(() => {
+    const getItemData = async () => {
+      const result = await axios.get(detail_sub_url);
+      setItem(result.data);
+      console.log(1010);
+    };
+    getItemData();
+  }, []);
 
   return (
     <div>
