@@ -82,9 +82,7 @@ export default function Register() {
             imageFileList.forEach(i => {
                 sellItemReqForm.append("imageFileList", i);
             });
-            
-           
-            
+       
             setSellItemReq(sellItemReqForm);
         }
 
