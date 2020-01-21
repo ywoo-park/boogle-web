@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Row, Col, Icon, Divider } from "antd";
@@ -7,7 +7,7 @@ import "./SignInForm.css";
 
 export default function SignInForm() {
   const { register, handleSubmit, errors } = useForm();
-  const [keepSignIn, setKeepSignIn] = useState(false);
+  // const [keepSignIn, setKeepSignIn] = useState(false);
 
   const onSubmit = data => {
     loginSend(data);
@@ -16,6 +16,8 @@ export default function SignInForm() {
   const loginSend = async data => {
     Axios.post(login_check_url, data).then(res => {
       console.log(res);
+      //web session에 token 보내기
+      //이전 페이지로 돌아가기
     });
   };
 
