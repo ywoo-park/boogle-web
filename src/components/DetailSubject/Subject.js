@@ -5,16 +5,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Subject() {
-  const { id, setId } = useState("5e26e2e83eb3ee91a8915ecf");
-  const { item, setItem } = useState({});
-  const detail_sub_url = `http://13.125.191.60:8080/sell?id={id}`;
-  // console.log(detail_sub_url);
+  const [id, setId] = useState("5e26e2e83eb3ee91a8915ecf");
+  const [item, setItem] = useState({});
+  const detail_sub_url = `http://13.125.191.60:8080/sell/detail?id=${id}`;
 
   useEffect(() => {
     const getItemData = async () => {
       const result = await axios.get(detail_sub_url);
-      setItem(result.data);
-      console.log(1010);
+      setItem(result.data.data);
     };
     getItemData();
   }, []);
@@ -46,6 +44,13 @@ export default function Subject() {
       <Row>
         <Col align="center">
           <Carousel>
+            {/* {item.regiImageUrlList.map((imgUrl, i) => {
+              return (
+                <div>
+                  <p>{imgUrl}</p>
+                </div>
+              );
+            })} */}
             <div>
               <h1>one</h1>
             </div>
@@ -57,7 +62,38 @@ export default function Subject() {
       </Row>
 
       <Row>
-        <Col align="center">책 정보</Col>
+        <Row>
+          <Col>
+            <h1>{item.title}</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Row>
+            <Col>
+              <h2>{item.author}</h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h3>{item.publisher}</h3>
+            </Col>
+          </Row>
+        </Row>
+        <Row>
+          <Row>
+            <Col>
+              <p>{item.price}</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {/* <p>{item.regiPrice}</p> */}
+              {/* <p>{item.regiImageUrlList}</p> */}
+              {/* {console.log(Array.isArray(item.regiImageUrlList))} */}
+              {console.log(item.regiImageUrlList)}
+            </Col>
+          </Row>
+        </Row>
       </Row>
       <Row>
         <Col align="center">판매자 정보</Col>
