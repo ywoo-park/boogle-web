@@ -561,7 +561,7 @@ class Banner extends Component {
             </Row>
             <Row>
               <Col span={24}>
-                <Link to="/signin">
+                <Link to="/mypage">
                   <small style={{ color: "#666666"}}>
                     마이페이지
                   </small>

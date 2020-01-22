@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Nav from 'react-bootstrap/Nav';
 import NavBar from 'react-bootstrap/Navbar';
@@ -145,7 +146,7 @@ class Navbar extends Component {
                         <NavBar.Text className="nav-txt">
                             {this.state.nameValue}님 안녕하세요!
                     </NavBar.Text>
-                        <Nav.Link className="nav-link" href="/myPage">
+                        <Nav.Link className="nav-link" href="/mypage">
                             마이페이지
                     </Nav.Link>
                         <Nav.Link onClick={logOut}>
@@ -188,7 +189,9 @@ class Navbar extends Component {
                                     <Icon className="navbar-top-icon" type="mail" theme="outlined" style={{ color: "lightgrey", margin: "auto", marginTop: "1vh" }}></Icon>
                                 </Col>
                                 <Col xs={{ span: 1, offset: 2 }}>
-                                    <Icon className="navbar-top-icon" type="user" theme="outlined" style={{ color: "lightgrey", margin: "auto", marginTop: "1vh" }}></Icon>
+                                    <Link to='/mypage'>
+                                        <Icon className="navbar-top-icon" type="user" theme="outlined" style={{ color: "lightgrey", margin: "auto", marginTop: "1vh" }}></Icon>
+                                    </Link>
                                 </Col>
                             </Row>
                             <Row id="navbar-search-row">
