@@ -53,5 +53,6 @@
   },
   "devDependencies": {
     "eslint-plugin-react-hooks": "^2.3.0"
-  }
+  },
+  "proxy": "http://localhost:3000"
 }
