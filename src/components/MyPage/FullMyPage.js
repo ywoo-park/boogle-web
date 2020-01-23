@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
-import { Row, Col, Icon, Divider } from "antd";
+import { Row, Col, Icon, Card, Divider } from "antd";
 import Axios from "axios";
 import './FullMyPage.css';
 import Banner from '../Home/Banner.js';
@@ -17,6 +17,11 @@ export default function FullMyPage() {
     const[scrolledDown, setScrolledDown] = useState(false);
     const[scrollTop, setScrollTop] = useState(0);
     const[scrolledDownClass, setScrolledDownClass] = useState("");
+
+    const[likeProduct, setLikeProduct] = useState(true);
+    const[buyProduct, setBuyProduct] = useState(false);
+    const[sellProduct, setSellProduct] = useState(false);
+
 
     useEffect(() => {
         console.log({
@@ -38,6 +43,24 @@ export default function FullMyPage() {
         //setName(e.target.value); // for UI test
         setName("김유진"); // for UI test
     }
+
+    const viewLikeProduct = e => {
+        setLikeProduct(true);
+        setBuyProduct(false);
+        setSellProduct(false);
+    }
+
+    const viewBuyProduct = e => {
+      setLikeProduct(false);
+      setBuyProduct(true);
+      setSellProduct(false);
+  }
+
+    const viewSellProduct = e => {
+      setLikeProduct(false);
+      setBuyProduct(false);
+      setSellProduct(true);
+  }
 
     const loginOk = props => {
         if (localStorage.getItem('token') != null && token == "") {
@@ -157,9 +180,9 @@ export default function FullMyPage() {
                   </Row>
 
                   <Row>
-                    <Col xs={{span: 2, offset: 9}}>
+                    <Col xs={{span: 4, offset: 6}}>
                       <Row>
-                        <Col xs={{span: 2}}>
+                        <Col xs={{span: 24}}>
                           <Icon style={{
                             color: "#ffffff",
                             fontSize: "3vh",
@@ -169,16 +192,18 @@ export default function FullMyPage() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col xs={{span: 2}}>
-                          <small style={{ color: "#ffffff"}}>
+                        <Col xs={{span: 24}}>
+                        <label style={{ 
+                              color: "#ffffff",
+                              fontSize: "2vh"}}>
                             알림
-                          </small>
+                          </label>
                         </Col>
                       </Row>
                     </Col>
-                    <Col xs={{span: 2}}>
+                    <Col xs={{span: 4}}>
                       <Row>
-                        <Col xs={{span: 2}}>
+                        <Col xs={{span: 24}}>
                           <Icon style={{
                             color: "#ffffff",
                             fontSize: "3vh",
@@ -188,16 +213,18 @@ export default function FullMyPage() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col xs={{span: 2}}>
-                          <small style={{ color: "#ffffff"}}>
+                        <Col xs={{span: 24}}>
+                        <label style={{ 
+                              color: "#ffffff",
+                              fontSize: "2vh"}}>
                             고객센터
-                          </small>
+                          </label >
                         </Col>
                       </Row>
                     </Col>
-                    <Col xs={{span: 2}}>
+                    <Col xs={{span: 4}}>
                       <Row>
-                        <Col xs={{span: 2}}>
+                        <Col xs={{span: 24}}>
                           <Icon style={{
                             color: "#ffffff",
                             fontSize: "3vh",
@@ -207,73 +234,100 @@ export default function FullMyPage() {
                         </Col>
                       </Row>
                       <Row>
-                        <Col xs={{span: 2}}>
-                          <small style={{ color: "#ffffff"}}>
+                        <Col xs={{span: 24}}>
+                        <label style={{ 
+                              color: "#ffffff",
+                              fontSize: "2vh"}}>
                             설정
-                          </small>
+                          </label>
                         </Col>
                       </Row>
                     </Col>
                   </Row>
                   
                   <Row style={{marginTop: "5vh"}}>
-                    <Col xs={{span: 4, offset: 6}}>
+                    <Col xs={{span: 6, offset: 3}}>
                       <Row>
-                        <Col span={4}>
+                        <Col span={24}>
                           <Icon style={{
                             color: "#ffffff",
                             fontSize: "5vh",
                           }}type="heart"
-                          onClick = {() => {}}
+                          onClick = {() => {viewLikeProduct();}}
                           />
                         </Col>
                       </Row>
                       <Row>
-                        <Col span={4}>
-                            <small style={{ color: "#ffffff"}}>
+                        <Col span={24}>
+                        <small style={{ 
+                              color: "#ffffff",
+                              fontSize: "2vh"}}>
                               관심상품
                             </small>
                         </Col>
                       </Row>
                     </Col>
-                    <Col xs={{span: 4}}>
+                    <Col xs={{span: 6}}>
                       <Row>
-                        <Col span={4}>
+                        <Col span={24}>
                           <Icon style={{
                             color: "#ffffff",
                             fontSize: "5vh",
                           }}type="heart"
-                          onClick = {() => {}}
+                          onClick = {() => {viewBuyProduct();}}
                           />
                         </Col>
                       </Row>
                       <Row>
-                        <Col span={4}>
-                            <small style={{ color: "#ffffff"}}>
+                        <Col span={24}>
+                        <small style={{ 
+                              color: "#ffffff",
+                              fontSize: "2vh"}}>
                               구매상품
                             </small>
                         </Col>
                       </Row>
                     </Col>
-                    <Col xs={{span: 4}}>
+                    <Col xs={{span: 6}}>
                       <Row>
-                        <Col span={4}>
+                        <Col span={24}>
                           <Icon style={{
                             color: "#ffffff",
                             fontSize: "5vh",
                           }}type="heart"
-                          onClick = {() => {}}
+                          onClick = {() => {viewSellProduct();}}
                           />
                         </Col>
                       </Row>
                       <Row>
-                        <Col span={4}>
-                            <small style={{ color: "#ffffff"}}>
+                        <Col span={24}>
+                            <small style={{ 
+                              color: "#ffffff",
+                              fontSize: "2vh"}}>
                               판매상품
                             </small>
                         </Col>
                       </Row>
                     </Col>
+                  </Row>
+
+                  <Row id="user-product"
+                  style={{marginTop: "5%", height: "45%"}}>
+                    {likeProduct == true ?
+                    <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
+                      <p>관심상품 목록</p>
+                    </Card>
+                    : null }
+                    {buyProduct == true ?
+                    <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
+                      <p>구매상품 프로세스</p>
+                    </Card>
+                    : null }
+                    {sellProduct == true ?
+                    <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
+                      <p>판매상품 프로세스</p>
+                    </Card>
+                    : null }
                   </Row>
 
 
