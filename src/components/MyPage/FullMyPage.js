@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
-import { Row, Col, Icon, Card, Divider } from "antd";
+import { Row, Col, Icon, Card, Modal, Divider } from "antd";
 import Axios from "axios";
 import './FullMyPage.css';
 import Banner from '../Home/Banner.js';
@@ -10,7 +10,6 @@ export default function FullMyPage() {
     const[token, setToken] = useState("");
     const[isLogIn, setIsLogIn] = useState(false);
     const[name, setName] = useState("");
-    const[search, setSearch] = useState(false);
 
     const[isScrolled, setIsScrolled] = useState(false);
     //const[bannerList, setBannerList] = useState("banner-list");
@@ -21,6 +20,12 @@ export default function FullMyPage() {
     const[likeProduct, setLikeProduct] = useState(true);
     const[buyProduct, setBuyProduct] = useState(false);
     const[sellProduct, setSellProduct] = useState(false);
+
+    const[notice, setNotice] = useState(false);
+    const[callCenter, setCallCenter] = useState(false);
+    const[setting, setSetting] = useState(false);
+    const[level, setLevel] = useState(false);
+    const[modal, setModal] = useState(false);
 
 
     useEffect(() => {
@@ -61,6 +66,42 @@ export default function FullMyPage() {
       setBuyProduct(false);
       setSellProduct(true);
   }
+
+    const showModal = e => {
+      setModal(true);
+    }
+
+    const closeModal = e => {
+      setModal(false);
+    }
+
+    const showNotice = e => {
+      setNotice(true);
+      setCallCenter(false);
+      setSetting(false);
+      setLevel(false);
+    }
+
+    const showCallCenter = e => {
+      setNotice(false);
+      setCallCenter(true);
+      setSetting(false);
+      setLevel(false);
+    }
+
+    const showSetting = e => {
+      setNotice(false);
+      setCallCenter(false);
+      setSetting(true);
+      setLevel(false);
+    }
+
+    const showLevel = e => {
+      setNotice(false);
+      setCallCenter(false);
+      setSetting(false);
+      setLevel(true);
+    }
 
     const loginOk = props => {
         if (localStorage.getItem('token') != null && token == "") {
@@ -111,14 +152,7 @@ export default function FullMyPage() {
         console.log("token: (" + localStorage.getItem('token') + ") Sign in, Please"); // for UI test
         loginOk(); // for UI test
     }
-
-    if (search === true){
-      console.log("Go to Search");
-      return(
-        <Banner isFocused={true}></Banner>
-        //isFocused로 해도 검색페이지 안 뜸, url은 mypage 그대로
-      );
-    }
+    
 
     const mypage = ({token}) => (
        // localStorage.getItem('token') === null ? ( // for UI test
@@ -144,16 +178,15 @@ export default function FullMyPage() {
                             마이페이지
                         </label>
                     </Col>
-                    <Col xs={{ span: 3, offset: 5 }}>
-                      <Icon style={{
-                        fontSize: "3vh", color: "#ffffff"
-                      }} 
-                      type="search"
-                      onClick = {() => {
-                        setSearch(true);
-                      }}
-                      />
-                    </Col>
+                    <Link to='/'>
+                      <Col xs={{ span: 3, offset: 5 }}>
+                        <Icon style={{
+                          fontSize: "3vh", color: "#ffffff"
+                        }} 
+                        type="search"
+                        />
+                      </Col>
+                    </Link>
                   </Row>
                   <Row style={{marginTop: "7vh"}}>
                     <Col>
@@ -171,7 +204,7 @@ export default function FullMyPage() {
                         fontSize: "10vh",
                       }} type="question-circle"
                       id="profile-circle"
-                      onClick = {() => {}}
+                      onClick = {() => {showModal(); showLevel();}}
                       />
                     </Col>
                   </Row>
@@ -187,7 +220,7 @@ export default function FullMyPage() {
                             color: "#ffffff",
                             fontSize: "3vh",
                           }}type="bell"
-                          onClick = {() => {}}
+                          onClick = {() => {showModal(); showNotice();}}
                           />
                         </Col>
                       </Row>
@@ -208,7 +241,7 @@ export default function FullMyPage() {
                             color: "#ffffff",
                             fontSize: "3vh",
                           }}type="phone"
-                          onClick = {() => {}}
+                          onClick = {() => {showModal(); showCallCenter();}}
                           />
                         </Col>
                       </Row>
@@ -229,7 +262,7 @@ export default function FullMyPage() {
                             color: "#ffffff",
                             fontSize: "3vh",
                           }}type="setting"
-                          onClick = {() => {}}
+                          onClick = {() => {showModal(); showSetting();}}
                           />
                         </Col>
                       </Row>
@@ -244,6 +277,27 @@ export default function FullMyPage() {
                       </Row>
                     </Col>
                   </Row>
+
+                  {modal == true ? 
+                    <Modal
+                    visible={modal}
+                    onOk={() => {closeModal();}}
+                    onCancel={() => {closeModal();}}>
+                      {notice == true ?
+                        <p>notice</p>
+                      : null }
+                      {callCenter == true ?
+                        <p>callCenter</p>
+                      : null }
+                      {setting == true ?
+                        <p>setting</p> 
+                      : null }
+                      {level == true ?
+                        <p>User Level Image</p> 
+                      : null }
+
+                    </Modal>
+                  : null }
                   
                   <Row style={{marginTop: "5vh"}}>
                     <Col xs={{span: 6, offset: 3}}>
