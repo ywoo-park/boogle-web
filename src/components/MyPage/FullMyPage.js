@@ -12,6 +12,12 @@ export default function FullMyPage() {
     const[name, setName] = useState("");
     const[search, setSearch] = useState(false);
 
+    const[isScrolled, setIsScrolled] = useState(false);
+    //const[bannerList, setBannerList] = useState("banner-list");
+    const[scrolledDown, setScrolledDown] = useState(false);
+    const[scrollTop, setScrollTop] = useState(0);
+    const[scrolledDownClass, setScrolledDownClass] = useState("");
+
     useEffect(() => {
         console.log({
             name,
@@ -47,6 +53,33 @@ export default function FullMyPage() {
             changeName(); // for UI test 
             changeIsLogIn(); // for UI test
         }
+    }
+
+    const handleScroll = e => {
+      const element = e.target;
+      if (element.clientHeight > element.scrollHeight - element.scrollTop - 10) {
+        return;
+      }
+      if (element.scrollTop > this.state.scrollTop && element.scrollTop != 0
+        && element.scrollTop + 30 < element.scrollHeight && element.scrollTop > 30) {
+        setScrolledDown(true);
+        setScrolledDownClass("scrolled-down");
+      }
+      else {
+        setScrolledDown(false);
+        setScrolledDownClass("");
+      }
+  
+      setScrollTop(element.scrollTop);
+  
+      if (element.scrollTop > 188 && !isScrolled) {
+        setIsScrolled(true);
+        //setBannerList("banner-list-after-scrolled")
+      }
+      if (element.scrollTop < 188 && isScrolled) {
+        setIsScrolled( false );
+        //setBannerList("banner-list")
+      }
     }
 
     if (localStorage.getItem('token') != null) {
@@ -125,56 +158,182 @@ export default function FullMyPage() {
 
                   <Row>
                     <Col xs={{span: 2, offset: 9}}>
-                      <Icon style={{
-                        color: "#ffffff",
-                        fontSize: "3vh",
-                      }}type="bell"
-                      onClick = {() => {}}
-                      />
+                      <Row>
+                        <Col xs={{span: 2}}>
+                          <Icon style={{
+                            color: "#ffffff",
+                            fontSize: "3vh",
+                          }}type="bell"
+                          onClick = {() => {}}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={{span: 2}}>
+                          <small style={{ color: "#ffffff"}}>
+                            알림
+                          </small>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col xs={{span: 2}}>
-                      <Icon style={{
-                        color: "#ffffff",
-                        fontSize: "3vh",
-                      }}type="phone"
-                      onClick = {() => {}}
-                      />
+                      <Row>
+                        <Col xs={{span: 2}}>
+                          <Icon style={{
+                            color: "#ffffff",
+                            fontSize: "3vh",
+                          }}type="phone"
+                          onClick = {() => {}}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={{span: 2}}>
+                          <small style={{ color: "#ffffff"}}>
+                            고객센터
+                          </small>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col xs={{span: 2}}>
-                      <Icon style={{
-                        color: "#ffffff",
-                        fontSize: "3vh",
-                      }}type="setting"
-                      onClick = {() => {}}
-                      />
+                      <Row>
+                        <Col xs={{span: 2}}>
+                          <Icon style={{
+                            color: "#ffffff",
+                            fontSize: "3vh",
+                          }}type="setting"
+                          onClick = {() => {}}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={{span: 2}}>
+                          <small style={{ color: "#ffffff"}}>
+                            설정
+                          </small>
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
                   
                   <Row style={{marginTop: "5vh"}}>
                     <Col xs={{span: 4, offset: 6}}>
-                      <Icon style={{
-                        color: "#ffffff",
-                        fontSize: "5vh",
-                      }}type="heart"
-                      onClick = {() => {}}
-                      />
+                      <Row>
+                        <Col span={4}>
+                          <Icon style={{
+                            color: "#ffffff",
+                            fontSize: "5vh",
+                          }}type="heart"
+                          onClick = {() => {}}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={4}>
+                            <small style={{ color: "#ffffff"}}>
+                              관심상품
+                            </small>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col xs={{span: 4}}>
-                      <Icon style={{
-                        color: "#ffffff",
-                        fontSize: "5vh",
-                      }}type="heart"
-                      onClick = {() => {}}
-                      />
+                      <Row>
+                        <Col span={4}>
+                          <Icon style={{
+                            color: "#ffffff",
+                            fontSize: "5vh",
+                          }}type="heart"
+                          onClick = {() => {}}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={4}>
+                            <small style={{ color: "#ffffff"}}>
+                              구매상품
+                            </small>
+                        </Col>
+                      </Row>
                     </Col>
                     <Col xs={{span: 4}}>
-                      <Icon style={{
-                        color: "#ffffff",
-                        fontSize: "5vh",
-                      }}type="heart"
-                      onClick = {() => {}}
-                      />
+                      <Row>
+                        <Col span={4}>
+                          <Icon style={{
+                            color: "#ffffff",
+                            fontSize: "5vh",
+                          }}type="heart"
+                          onClick = {() => {}}
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={4}>
+                            <small style={{ color: "#ffffff"}}>
+                              판매상품
+                            </small>
+                        </Col>
+                      </Row>
                     </Col>
+                  </Row>
+
+
+                  <Row id="banner-bottom-navbar" className={scrolledDownClass}>
+                  <Link to='/'>
+                    <Col xs={{ span: 6, offset: 0 }}>
+                      <Row>
+                        <Col span={24}>
+                          <Icon className="navbar-top-icon" type="home" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24}>
+                          <small>홈</small>
+                        </Col>
+                      </Row>
+                    </Col>
+                    </Link>
+                    <Col xs={{ span: 6, offset: 0 }}>
+                      <Row>
+                        <Col span={24}>
+                          <Icon className="navbar-top-icon" type="heart" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24}>
+                          <small>관심상품</small>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Link to='/sell'>
+                    <Col xs={{ span: 6, offset: 0 }}>
+                      <Row>
+                        <Col span={24}>
+                          <Icon className="navbar-top-icon" type="edit" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24}>
+                          <small >판매하기</small>
+                        </Col>
+                      </Row>
+                    </Col>
+                    </Link>
+                    <Link to="/mypage">
+                    <Col xs={{ span: 6, offset: 0 }}>
+                      <Row>
+                        <Col span={24}>
+                          <Icon className="navbar-top-icon" type="user" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24}>
+                            <small style={{ color: "#666666"}}>
+                              마이페이지
+                            </small>
+                        </Col>
+                      </Row>
+                    </Col>
+                    </Link>
                   </Row>
 
               </div>
