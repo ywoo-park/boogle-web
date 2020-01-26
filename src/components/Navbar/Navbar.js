@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Link } from "react";
 
 import Nav from "react-bootstrap/Nav";
 import NavBar from "react-bootstrap/Navbar";
@@ -214,6 +214,7 @@ class Navbar extends Component {
                   ></Icon>
                 </Col>
                 <Col xs={{ span: 1, offset: 2 }}>
+
                   <Icon
                     className="navbar-top-icon"
                     type="user"
@@ -224,6 +225,7 @@ class Navbar extends Component {
                       marginTop: "1vh"
                     }}
                   ></Icon>
+                
                 </Col>
               </Row>
               <Row id="navbar-search-row">
