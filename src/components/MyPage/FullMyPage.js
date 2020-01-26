@@ -152,7 +152,7 @@ export default function FullMyPage() {
         console.log("token: (" + localStorage.getItem('token') + ") Sign in, Please"); // for UI test
         loginOk(); // for UI test
     }
-    
+
 
     const mypage = ({token}) => (
        // localStorage.getItem('token') === null ? ( // for UI test
@@ -369,7 +369,11 @@ export default function FullMyPage() {
                   style={{marginTop: "5%", height: "45%"}}>
                     {likeProduct == true ?
                     <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
-                      <p>관심상품 목록</p>
+                      <p style={{color: "#000000"}}>관심상품이 없습니다.</p>
+                      <Icon style={{
+                        color: "#000000",
+                        fontSize: "5vh",
+                    }}type="plus"></Icon>
                     </Card>
                     : null }
                     {buyProduct == true ?
