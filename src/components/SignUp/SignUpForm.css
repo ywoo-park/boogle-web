@@ -67,7 +67,6 @@
         overscroll-behavior : none;
     }
     #navbar{
-        background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
         overflow : hidden;
         width : 100%;
         top : 0;

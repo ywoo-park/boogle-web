@@ -3,10 +3,10 @@ import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
 import Axios from "axios";
-import './FullMyPage.css';
+import './MyPageBanner.css';
 import Banner from '../Home/Banner.js';
 
-export default function FullMyPage() {
+export default function MyPageBanner() {
     const[token, setToken] = useState("");
     const[isLogIn, setIsLogIn] = useState(false);
     const[name, setName] = useState("");

@@ -5,9 +5,8 @@ import Home from "./pages/Home";
 import Sell from "./pages/Sell";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import DetailSubject from "./pages/DetailSubject.js";
-import MyPage from './pages/MyPage';
-import Admin from './pages/Admin';
+import DetailSubject from "./pages/DetailSubject";
+import MyPage from "./pages/MyPage";
 
 class App extends Component {
   render() {
@@ -19,7 +18,6 @@ class App extends Component {
         <Route path="/signin" component={SignIn} />
         <Route path="/detailsubject" component={DetailSubject} />
         <Route path="/mypage" component={MyPage}/>
-        <Route path="/admin" component={Admin}/>
       </Router>
     );
   }

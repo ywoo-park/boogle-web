@@ -1,22 +1,20 @@
-import React, { Component } from "react";
-import FullMyPage from "../components/MyPage/FullMyPage";
-
-import axios from "axios";
+import React, { Component } from 'react';
+import axios from 'axios';
+import MyPageBanner from '../components/MyPage/MyPageBanner';
 
 class MyPage extends Component {
-  state = {};
 
-  componentDidMount() {}
+  state = {
 
-  componentWillUnmount() {}
+  }
 
   render() {
     return (
       <section id="mypage">
-        <FullMyPage></FullMyPage>
+        <MyPageBanner></MyPageBanner>
       </section>
     );
-  }
+  };
 }
 
 export default MyPage;
