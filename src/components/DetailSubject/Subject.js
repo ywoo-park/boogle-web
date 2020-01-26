@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Subject() {
-  const [id, setId] = useState("5e285ed33eb3eebcd44e2275");
+  const [id, setId] = useState("5e2d0c1d3eb3eeed8c6d89cc");
   const [item, setItem] = useState({});
-  const detail_sub_url = `http://13.125.191.60:8080/sell/detail?id=${id}`;
+  const detail_sub_url = `http://13.124.113.72:8080/sell/detail?id=${id}`;
 
   useEffect(() => {
     const getItemData = async () => {
@@ -125,6 +125,7 @@ export default function Subject() {
         <Col>
           <Row>
             <Col>별점</Col>
+            {/* item.qualOut 개수에 따라서 별점 */}
             <Col>
               {item.regiTime != undefined ? dateFormat(item.regiTime) : null}
             </Col>
@@ -132,7 +133,7 @@ export default function Subject() {
               {item.dealType == 0 ? <span>북을박스</span> : <span>직거래</span>}
             </Col>
           </Row>
-          <Row>quality</Row>
+          <Row>{/* <Col>{th</Col> */}</Row>
         </Col>
       </Row>
       <Row>
