@@ -11,7 +11,7 @@
         padding : 0 3vh 0 3vh;
         color : white;
         line-height: normal;
-        height : 4.5vh;
+        height : 30px;
     }
     .search-input:focus{
         background : rgba(255,255,255,0.22);
@@ -63,7 +63,7 @@
         padding : 0 3vh 0 3vh;
         color : white;
         line-height: normal;
-        height : 4.5vh;
+        height : 30px;
     }
     .search-input:focus{
         background : rgba(255,255,255,0.22);

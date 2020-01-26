@@ -50,7 +50,7 @@ class Banner extends Component {
   }
 
   getHomeData = async () => {
-    axios.get('http://13.125.191.60:8080/home')
+    axios.get('http://13.124.113.72:8080/home')
       .then((response) => {
         this.setState({
           bookResList1: response.data.data.bookResList1,
@@ -61,7 +61,7 @@ class Banner extends Component {
   }
 
   getSellItemList = async (itemId) => {
-    axios.get('http://13.125.191.60:8080/sell?itemId=' + itemId)
+    axios.get('http://13.124.113.72:8080/sell?itemId=' + itemId)
       .then((response) => {
         console.log(response);
         this.setState({
@@ -101,9 +101,11 @@ class Banner extends Component {
     }
     return (
       <section id="banner-container" onScroll={this.handleScroll} >
+        
         <Navbar focusOnSearch={this.focusOnSearch} updateInputValue={this.updateInputValue}
           unFocusOnSearch={this.unFocusOnSearch}
-          search={<Search />} id="navbar"></Navbar>
+          search={<Search searchType="buy"/>}
+          id="navbar"></Navbar>
 
         {this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
           this.state.resdata.map((value, index) => {
@@ -125,7 +127,7 @@ class Banner extends Component {
                           this.getSellItemList(value.itemId);
                         }
                       }}
-                      src={this.state.resdata != null ? value.image.replace("type=m1", "") : null}></img>
+                      src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") :""}></img>
                   </Col>
                   <Col xs={{ span: 14, offset: 2 }}>
                     <Row>
@@ -153,8 +155,8 @@ class Banner extends Component {
                     <Row>
                       <Col style={{}} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null && value.registeredCount != 0 ? "재고 : " + value.registeredCount
-                            : this.state.resdata != null && value.registeredCount == 0 ? "재고 : 재고 없음"
+                          {this.state.resdata != null && value.regiCount != 0 ? "재고 : " + value.regiCount
+                            : this.state.resdata != null && value.regiCount == 0 ? "재고 : 재고 없음"
                               : null}
                         </small>
                       </Col>
@@ -175,13 +177,13 @@ class Banner extends Component {
                       <Row>
                         <Col xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.lowestPrice != 0 ? "북을 판매가 : " : null}
+                            {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가 : " : null}
                             {this.state.resdata != null ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={value.lowestPrice} displayType={'text'} thousandSeparator={true} />
+                                <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
                               </small>
                               : null}
-                            {this.state.resdata != null && value.lowestPrice != 0 ?
+                            {this.state.resdata != null && value.regiPrice != "" ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                               null}
                           </small>
@@ -191,13 +193,13 @@ class Banner extends Component {
                       <Row>
                         <Col xs={{ span: 12 }}>
                           <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.lowestPrice != 0 ? "북을 판매가 : " : null}
+                            {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가 : " : null}
                             {this.state.resdata != null ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={value.lowestPrice} displayType={'text'} thousandSeparator={true} />
+                                <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
                               </small>
                               : null}
-                            {this.state.resdata != null && value.lowestPrice != 0 ?
+                            {this.state.resdata != null && value.regiPrice != "" ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                               null}
                           </small>
@@ -237,7 +239,7 @@ class Banner extends Component {
                       onClick={() => {
                         this.setState({ inDetail: true });
                       }}
-                      src={this.state.resdata != null ? this.state.value.image.replace("type=m1", "") : null}></img>
+                      src={this.state.resdata != null ? this.state.value.imageUrl.replace("type=m1", "") : null}></img>
                   </Col>
                   <Col xs={{ span: 14, offset: 2 }}>
                     <Row>
@@ -265,8 +267,8 @@ class Banner extends Component {
                     <Row>
                       <Col style={{}} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null && this.state.value.registeredCount != 0 ? "재고 : " + this.state.value.registeredCount
-                            : this.state.resdata != null && this.state.value.registeredCount == 0 ? "재고 : 재고 없음"
+                          {this.state.resdata != null && this.state.value.regiCount > 0 ? "재고 : " + this.state.value.regiCount.toString()
+                            : this.state.resdata != null && this.state.value.regiCount == 0 ? "재고 : 재고 없음"
                               : null}
                         </small>
                       </Col>
@@ -288,13 +290,13 @@ class Banner extends Component {
                       <Row>
                         <Col xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && this.state.value.lowestPrice != 0 ? "북을 판매가 : " : null}
+                            {this.state.resdata != null && this.state.value.regiPrice != "" ? "북을 판매가 : " : ""}
                             {this.state.resdata != null ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={this.state.value.lowestPrice} displayType={'text'} thousandSeparator={true} />
+                                <NumberFormat value={this.state.value.regiPrice} displayType={'text'} thousandSeparator={true} />
                               </small>
                               : null}
-                            {this.state.resdata != null && this.state.value.lowestPrice != 0 ?
+                            {this.state.resdata != null && this.state.value.regiPrice != "" ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                               null}
                           </small>
@@ -345,7 +347,7 @@ class Banner extends Component {
                                 this.setState({ inSubDetail: true });
                                 this.setState({ sellItem: value });
                               }}
-                              src={this.state.resdata != null ? this.state.value.image.replace("type=m1", "") : null}></img>
+                              src={this.state.resdata != null ? value.regiImageUrlList[0].replace("type=m1", "") : null}></img>
                           </div>
                         </Col>
                         <Col xs={{ span: 18, offset: 2 }}>
@@ -373,7 +375,7 @@ class Banner extends Component {
                                   textAlign: "center", padding: "auto"
                                 }} />
                                 &nbsp;  | &nbsp; {moment(value.date).add(9, 'hours').format('YYYY.MM.DD')}
-                                &nbsp;  | &nbsp; {value.deal == "direct" ? "직거래" : "북을박스 거래"}
+                                &nbsp;  | &nbsp; {value.dealType == 0 ? "직거래" : "북을박스 거래"}
                               </small>
                             </Col>
                           </Row>
@@ -553,6 +555,7 @@ class Banner extends Component {
               </Col>
             </Row>
           </Col>
+          <Link to="/signin">
           <Col xs={{ span: 6, offset: 0 }}>
             <Row>
               <Col span={24}>
@@ -560,15 +563,14 @@ class Banner extends Component {
               </Col>
             </Row>
             <Row>
-              <Col span={24}>
-                <Link to="/signin">
+              <Col span={24}>       
                   <small style={{ color: "#666666"}}>
                     마이페이지
                   </small>
-                </Link>
               </Col>
             </Row>
           </Col>
+          </Link>
         </Row>
       </section>
     );
