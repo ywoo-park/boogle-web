@@ -5,6 +5,7 @@ import { Row, Col, Icon, List, Divider, Rate } from 'antd';
 import Navbar from '../Navbar/Navbar';
 import Search from '../Navbar/Search';
 import { withRouter, Link } from "react-router-dom";
+import NavigationBar from 'react-bootstrap/Navbar';
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import axios from 'axios';
@@ -398,7 +399,7 @@ class Banner extends Component {
                   </Row>
                 </div>
                 :
-                <div id="banner-list">
+                <div id="banner-list" style={{border : "3px solid black"}}>
                   <Row clasnsName="banner-list-title">
                     <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>방금 올라온 책</h5></Col>
                   </Row>
@@ -521,7 +522,7 @@ class Banner extends Component {
                   </Row>
                 </div>
         }
-        <Row id="banner-bottom-navbar" className={this.state.scrolledDownClass}>
+        <NavigationBar style={{border : "3px solid red"}} fixed="bottom" id="banner-bottom-navbar" >
           <Col xs={{ span: 6, offset: 0 }}>
             <Row>
               <Col span={24}>
@@ -558,7 +559,6 @@ class Banner extends Component {
               </Col>
             </Row>
           </Col>
-          <Link to="/signin">
           <Col xs={{ span: 6, offset: 0 }}>
             <Row>
               <Col span={24}>
@@ -573,8 +573,7 @@ class Banner extends Component {
               </Col>
             </Row>
           </Col>
-          </Link>
-        </Row>
+        </NavigationBar>
       </section>
     );
   };

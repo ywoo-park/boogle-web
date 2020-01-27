@@ -17,14 +17,10 @@ class App extends Component {
         <Route path="/sell" component={Sell} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
-<<<<<<< HEAD
-        <Route path="/detailsubject" component={DetailSubject} />
         <Route path="mypage" component={MyPage} />
-=======
         <Route path="/buy/detail/:id" component={DetailSubject} />
         <Route path="mypage" component={MyPage}/>
         </Switch>
->>>>>>> 05ad15fc22bde7cf656aa86bb8c647474ab1d355
       </Router>
     );
   }
