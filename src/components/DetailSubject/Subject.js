@@ -4,6 +4,7 @@ import { Col, Row, Carousel, Icon, Divider, Popconfirm, message, Tag } from "ant
 import { Link, RouteComponentProps } from "react-router-dom";
 import axios from "axios";
 import NumberFormat from 'react-number-format';
+import "./Subject.css";
 
 function Subject({match}) {
 
@@ -91,9 +92,7 @@ function Subject({match}) {
   };
 
   return (
-    <div style={{ width: "100%",
-      height: "100vh",
-      overflow: "auto"}}>
+    <div id = "subject-container">
       <header>
         <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
           <Col xs={{ span: 8 }}>
@@ -222,7 +221,7 @@ function Subject({match}) {
           <span style={{fontSize : "2vh", color : "#656565"}}>{item.comment}</span>
           </Col>
       </Row>
-      <Row style={{marginBottom : "7vh"}}>
+      <Row style={{marginBottom : "12vh"}}>
         <Col xs={{offset : 1, span : 22}}>
           <Popconfirm
             placement="bottom"
