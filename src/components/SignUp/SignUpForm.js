@@ -100,26 +100,29 @@ export default function SignUpForm() {
                 <div class={formStyle[0]}>
                     <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
                         <Col xs={{ span: 8 }}>
-                            <Link to="/signin">
-                                <Icon style={{
-                                    marginLeft: "25%",
-                                    fontSize: "3vh", color: "#707070"
-                                }} type="arrow-left"
-                                />
-                            </Link>
+                        <Link to="/signin">
+                            <img style={{
+                                width: "32px",
+                                height: "auto",
+                                marginLeft: "25%",
+                            }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                        </Link>
                         </Col>
                         <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
                             <h5 style={{ color: "#707070" }}>회원가입</h5>
                         </Col>
                         <Col xs={{ offset: 4, span: 2 }}>
                             <Link to="/signin">
-                                <Icon style={{
+                                <img style={{
+                                    width: "22px",
+                                    height: "auto",
                                     marginLeft: "25%",
-                                    fontSize: "3vh", color: "#707070"
-                                }} type="close"
+                                }}
                                     onClick={() => {
                                         if (step == 1) setStep(0);
-                                    }} />
+                                    }}
+                                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/x_mark.png" />
                             </Link>
                         </Col>
                     </Row>
@@ -128,12 +131,12 @@ export default function SignUpForm() {
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>이메일</span>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                        <Col xs={{ span: 20, offset: 2 }} >
+                    <Row >
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
                                     width: "100%", border: "none",
-                                    borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
+                                    borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
                                 name="email" placeholder="이메일"
@@ -158,12 +161,12 @@ export default function SignUpForm() {
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>비밀번호</span>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                        <Col xs={{ span: 20, offset: 2 }} >
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
                                     width: "100%", border: "none",
-                                    borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
+                                    borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
                                 name="password" placeholder="비밀번호" ref={register({
@@ -180,12 +183,12 @@ export default function SignUpForm() {
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>비밀번호 확인</span>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh" }}>
-                        <Col xs={{ span: 20, offset: 2 }} >
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
                                     width: "100%", border: "none",
-                                    borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
+                                    borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
                                 name="confirmPassword" placeholder="비밀번호 확인" ref={register({
@@ -299,32 +302,31 @@ export default function SignUpForm() {
                     </Row>
                 </div>
                 <div class={formStyle[1]}>
-                    <Row style={{ marginTop: "3vh" }}>
+                    <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
                         <Col xs={{ span: 8 }}>
-                            <Icon style={{
+                            <img style={{
+                                width: "32px",
+                                height: "auto",
                                 marginLeft: "25%",
-                                fontSize: "3vh", color: "#707070"
-                            }} type="arrow-left"
+                            }}
                                 onClick={() => {
                                     if (step == 1) setStep(0);
-                                }} />
+                                }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
                         </Col>
                         <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
                             <h5 style={{ color: "#707070" }}>회원가입</h5>
                         </Col>
                         <Col xs={{ offset: 4, span: 2 }}>
-                            <Icon style={{
-                                marginLeft: "25%",
-                                fontSize: "3vh", color: "#707070"
-                            }} type="close"
-                                onClick={() => {
-                                    if (step == 1) setStep(0);
-                                }} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col offset={2} span={20}>
-                            <Divider />
+                            <img style={{
+                                    width: "22px",
+                                    height: "auto",
+                                    marginLeft: "25%",
+                                }}
+                                    onClick={() => {
+                                        if (step == 1) setStep(0);
+                                    }}
+                                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/x_mark.png" />
                         </Col>
                     </Row>
                     <Row>
@@ -332,8 +334,8 @@ export default function SignUpForm() {
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>이름</span>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                        <Col xs={{ span: 20, offset: 2 }} >
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
                                     width: "100%", border: "none",
@@ -349,8 +351,8 @@ export default function SignUpForm() {
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>닉네임</span>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                        <Col xs={{ span: 20, offset: 2 }} >
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
                                     width: "100%", border: "none",
@@ -375,8 +377,8 @@ export default function SignUpForm() {
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교</span>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                        <Col xs={{ span: 20, offset: 2 }} >
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
                             <select onChange={(e) => { setValue('semester', e.target.value) }} name="campus"
                                 style={{
                                     width: "100%", border: "none",
@@ -398,8 +400,8 @@ export default function SignUpForm() {
                                     <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학과</span>
                                 </Col>
                             </Row>
-                            <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                                <Col xs={{ span: 23, offset: 0 }} >
+                            <Row>
+                                <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 23, offset: 0 }} >
                                     <select onChange={(e) => { setMajor(e.target.value) }} name="major"
                                         style={{
                                             width: "100%", border: "none",
@@ -420,8 +422,8 @@ export default function SignUpForm() {
                                     <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학기</span>
                                 </Col>
                             </Row>
-                            <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                                <Col xs={{ span: 23, offset: 1 }} >
+                            <Row>
+                                <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 23, offset: 1 }} >
                                     <select onChange={(e) => { setSemester(e.target.value[0].toString()) }} name="semester"
                                         style={{
                                             width: "100%", border: "none",
@@ -440,8 +442,8 @@ export default function SignUpForm() {
                     <Row>
                         <Col xs={{ span: 4, offset: 2 }}><span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>핸드폰</span></Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
-                        <Col xs={{ span: 6, offset: 2 }}>
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 6, offset: 2 }}>
                             <select name="semester"
                                 style={{
                                     width: "100%", border: "none",
@@ -454,7 +456,7 @@ export default function SignUpForm() {
                                     })}
                             </select>
                         </Col>
-                        <Col xs={{ span: 6, offset: 1 }}>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
                                     width: "100%", border: "none",
@@ -463,7 +465,7 @@ export default function SignUpForm() {
                                 }}
                                 name="phone_2" ref={register({ required: "핸드폰 번호를 입력해주세요" })} />
                         </Col>
-                        <Col xs={{ span: 6, offset: 1 }}>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
                                     width: "100%", border: "none",
@@ -478,28 +480,32 @@ export default function SignUpForm() {
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 인증</span>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh"}}>
-                        <Col xs={{ span: 10, offset: 2 }}>
+                    <Row>
+                        <Col style={{marginTop : "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 2 }}>
                             <button
-                                style={{ width : "100%",
-                                color : "#666666",
-                                backgroundColor : "#b0dae2",
-                                border : "#666666 0.3px solid",
-                                fontSize: "1.8vh",
-                                height : "5vh" }}
-                                >학교 이메일 인증</button>
+                                style={{
+                                    width: "100%",
+                                    color: "#666666",
+                                    backgroundColor: "#b0dae2",
+                                    border: "#666666 0.3px solid",
+                                    fontSize: "1.8vh",
+                                    height: "5vh"
+                                }}
+                            >학교 이메일 인증</button>
                         </Col>
-                        <Col xs={{ span: 10, offset: 0 }}>
+                        <Col style={{marginTop : "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 0 }}>
                             <button
-                                style={{ width : "100%",
-                                color : "#666666",
-                                border : "#666666 0.3px solid",
-                                fontSize: "1.8vh",
-                                height : "5vh" }}
-                                >학생증 인증</button>
+                                style={{
+                                    width: "100%",
+                                    color: "#666666",
+                                    border: "#666666 0.3px solid",
+                                    fontSize: "1.8vh",
+                                    height: "5vh"
+                                }}
+                            >학생증 인증</button>
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "5vh", marginBottom: "20vh" }}>
+                    <Row style={{ marginTop: "3vh", marginBottom: "20vh" }}>
                         <Col xs={{ span: 20, offset: 2 }}>
                             <input style={{
                                 padding: "0",

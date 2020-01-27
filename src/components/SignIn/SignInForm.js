@@ -34,8 +34,6 @@ export default function SignInForm(props) {
   };
 
   return (
-
-
     <div style={{
       background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
       height: "100vh", backgroundSize: "cover"
@@ -45,7 +43,7 @@ export default function SignInForm(props) {
       <Link to="/">
         <Row style={{ marginBottom: "5vh" }}>
           <Col xs={{ offset : 1, span: 2 }}><img style={{
-            width: "22px",
+            width: "32px",
             height: "auto",
             marginLeft: "40%",
             filter: "brightness(0) invert(1)"
