@@ -7,10 +7,9 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
-import firebase from 'firebase';
+// import firebase from 'firebase';
 
 class App extends Component {
-
   render() {
     return (
       <Router>
@@ -19,7 +18,7 @@ class App extends Component {
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <Route path="/detailsubject" component={DetailSubject} />
-        <Route path="mypage" component={MyPage}/>
+        <Route path="mypage" component={MyPage} />
       </Router>
     );
   }

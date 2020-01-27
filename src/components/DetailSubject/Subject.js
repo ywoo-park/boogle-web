@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
-import { Col, Row, Carousel, Icon, Divider, Popconfirm, message } from "antd";
-import { Link } from "react-router-dom";
+import {
+  Col,
+  Row,
+  Carousel,
+  Icon,
+  Divider,
+  Popconfirm,
+  message,
+  Tag
+} from "antd";
+import { Link, RouteComponentProps } from "react-router-dom";
 import axios from "axios";
+import NumberFormat from "react-number-format";
+import "./Subject.css";
 
-export default function Subject() {
-  const [id, setId] = useState("5e2d39aa3eb3ee04d828414d");
+function Subject({ match }) {
+  //const [id, setId] = useState("5e2d39aa3eb3ee04d828414d");
+  const [id, setId] = useState("");
   const [item, setItem] = useState({});
   const [seller, setSeller] = useState({});
   const [isBookmarked, setIsBookmarked] = useState(0);
@@ -17,18 +29,25 @@ export default function Subject() {
   const transaction_url = `${server_url}/transaction`;
 
   useEffect(() => {
-    const getItemData = async () => {
-      const result = await axios.get(detail_sub_url, {
-        headers: { Authorization: authToken }
-      });
-      // console.log(result.data.data);
-      // 로그인 인증 정보 보내기. 에러 처리 필요
-      setItem(result.data.data.sellItem);
-      setSeller(result.data.data.sellerUser);
-      setIsBookmarked(result.data.data.bookmarked);
-    };
-    getItemData();
+    const id = window.location.pathname.substring(12);
+    setId(id);
   }, []);
+
+  useEffect(() => {
+    if (id != "") {
+      const getItemData = async () => {
+        const result = await axios.get(detail_sub_url, {
+          headers: { Authorization: authToken }
+        });
+        // console.log(result.data.data);
+        // 로그인 인증 정보 보내기. 에러 처리 필요
+        setItem(result.data.data.sellItem);
+        setSeller(result.data.data.sellerUser);
+        setIsBookmarked(result.data.data.bookmarked);
+      };
+      getItemData();
+    }
+  }, [id]);
 
   const dateFormat = rawDate => {
     const date = rawDate.slice(0, 10).split("-");
@@ -42,11 +61,15 @@ export default function Subject() {
     const qualValueLi = qualValueOut.concat(qualValueIn);
 
     return (
-      <ul>
+      <Row>
         {qualValueLi.map((val, i) => {
-          return qualLi[i] == 1 ? <li key={val}>{val}</li> : null;
+          return qualLi[i] == 1 ? (
+            <Col xs={{ offset: 1, span: 2 }}>
+              <Tag color="#44a0ac">{val}</Tag>
+            </Col>
+          ) : null;
         })}
-      </ul>
+      </Row>
     );
   };
 
@@ -76,7 +99,7 @@ export default function Subject() {
   };
 
   return (
-    <div>
+    <div id="subject-container">
       <header>
         <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
           <Col xs={{ span: 8 }}>
@@ -112,7 +135,14 @@ export default function Subject() {
               ? item.regiImageUrlList.map((imgUrl, i) => {
                   return (
                     <div>
-                      <img src={imgUrl}></img>
+                      <img
+                        style={{
+                          width: "100vh",
+                          height: "40vh",
+                          backgroundSize: "contain"
+                        }}
+                        src={imgUrl}
+                      ></img>
                     </div>
                   );
                 })
@@ -121,33 +151,69 @@ export default function Subject() {
         </Col>
       </Row>
 
-      <Row>
+      <Row style={{ marginTop: "3vh" }}>
         <Row>
-          <Col>
-            <h1>{item.title}</h1>
+          <Col xs={{ span: 22, offset: 1 }}>
+            <h1
+              style={{ fontSize: "3.5vh", color: "#656565", fontWeight: "500" }}
+            >
+              {item.title}
+            </h1>
           </Col>
         </Row>
         <Row>
           <Row>
-            <Col>
-              <h2>{item.author}</h2>
+            <Col style={{ marginBottom: "-1vh" }} xs={{ span: 22, offset: 1 }}>
+              <h2 style={{ fontSize: "1.75vh", color: "#656565" }}>
+                {item.author}
+              </h2>
             </Col>
           </Row>
           <Row>
-            <Col>
-              <h3>{item.publisher}</h3>
+            <Col xs={{ span: 22, offset: 1 }}>
+              <h3 style={{ fontSize: "1.75vh", color: "#656565" }}>
+                {item.publisher}
+              </h3>
             </Col>
           </Row>
         </Row>
-        <Row>
+        <Row style={{ marginTop: "1.25vh" }}>
           <Row>
-            <Col>
-              <p>{item.price}</p>
+            <Col xs={{ span: 22, offset: 1 }}>
+              <span
+                style={{
+                  fontSize: "1.75vh",
+                  color: "#656565",
+                  textDecoration: "line-through"
+                }}
+              >
+                정가 :
+                <NumberFormat
+                  value={item.price}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                />
+                원
+              </span>
             </Col>
           </Row>
           <Row>
-            <Col>
-              <p>{item.regiPrice}</p>
+            <Col xs={{ span: 22, offset: 1 }}>
+              <span
+                style={{
+                  fontSize: "2.25vh",
+                  color: "#44a0ac",
+                  fontWeight: "600"
+                }}
+              >
+                북을 판매가 :{" "}
+                <NumberFormat
+                  value={item.regiPrice}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                />
+                원
+              </span>
             </Col>
           </Row>
         </Row>
@@ -158,19 +224,27 @@ export default function Subject() {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col xs={{ span: 2, offset: 1 }}>
           <Icon type="user" />
         </Col>
         {/* 아직 셀러 정보 조회 API 없음 */}
-        <Col>
+        <Col xs={{ span: 10, offset: 1 }}>
           <Row>
-            <Col>{seller.nickname}</Col>
-            <Col>{seller.major}</Col>
+            <Col>
+              <span style={{ fontSize: "2vh", color: "#656565" }}>
+                {seller.nickname}
+              </span>
+            </Col>
+            <Col>
+              <span style={{ fontSize: "2vh", color: "#656565" }}>
+                {seller.major}
+              </span>
+            </Col>
           </Row>
         </Col>
-        <Col>
+        <Col xs={{ span: 6, offset: 4 }}>
           <Link>
-            <span>판매자 정보 더보기</span>
+            <span style={{ fontSize: "1.5vh" }}>판매자 정보 더보기</span>
           </Link>
         </Col>
       </Row>
@@ -182,29 +256,27 @@ export default function Subject() {
       <Row>
         <Col>
           <Row>
-            <Col>별점</Col>
-            {/* item.qualOut 개수에 따라서 별점 */}
-            <Col>
-              {item.regiTime != undefined ? dateFormat(item.regiTime) : null}
-            </Col>
-            <Col>
-              {item.dealType == 0 ? <span>북을박스</span> : <span>직거래</span>}
+            <Col xs={{ span: 23, offset: 1 }}>
+              <span style={{ fontSize: "2vh", color: "#656565" }}>
+                {item.regiTime != undefined ? dateFormat(item.regiTime) : null}
+                {item.dealType == 0 ? " | 북을박스" : " | 직거래"}
+              </span>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              {item.qualityIn != undefined && item.qualityOut != undefined
-                ? qualDisplay(item.qualityIn, item.qualityOut)
-                : null}
-            </Col>
-          </Row>
+          {item.qualityIn != undefined && item.qualityOut != undefined
+            ? qualDisplay(item.qualityIn, item.qualityOut)
+            : null}
         </Col>
       </Row>
-      <Row>
-        <Col align="center">{item.comment}</Col>
+      <Row style={{ marginTop: "2vh", marginBottom: "2vh" }}>
+        <Col xs={{ span: 22, offset: 1 }}>
+          <span style={{ fontSize: "2vh", color: "#656565" }}>
+            {item.comment}
+          </span>
+        </Col>
       </Row>
-      <Row>
-        <Col align="center">
+      <Row style={{ marginBottom: "12vh" }}>
+        <Col xs={{ offset: 1, span: 22 }}>
           <Popconfirm
             placement="bottom"
             title="판매자에게 구매 신청을 보내겠습니까?"
@@ -232,3 +304,4 @@ export default function Subject() {
     </div>
   );
 }
+export default Subject;
