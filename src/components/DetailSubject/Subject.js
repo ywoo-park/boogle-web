@@ -9,23 +9,31 @@ export default function Subject() {
   const [item, setItem] = useState({});
   const [seller, setSeller] = useState({});
   const [isBookmarked, setIsBookmarked] = useState(0);
-  const detail_sub_url = `http://13.124.113.72:8080/sell/detail?id=${id}`;
+  const authToken =
+    localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
+  const server_url = `http://13.124.113.72:8080`;
+  const detail_sub_url = `${server_url}/sell/detail?id=${id}`;
+  const bookmark_url = `${server_url}/bookmark?sellItemId=${id}`;
+  const transaction_url = `${server_url}/transaction`;
 
   useEffect(() => {
     const getItemData = async () => {
-      const result = await axios.get(detail_sub_url);
+      const result = await axios.get(detail_sub_url, {
+        headers: { Authorization: authToken }
+      });
       // console.log(result.data.data);
-      // 에러 처리 필요
+      // 로그인 인증 정보 보내기. 에러 처리 필요
       setItem(result.data.data.sellItem);
       setSeller(result.data.data.sellerUser);
-      // setIsBookmarked(result.data.data.sellItem.isBookmarked);
+      setIsBookmarked(result.data.data.bookmarked);
     };
     getItemData();
   }, []);
 
   const dateFormat = rawDate => {
     const date = rawDate.slice(0, 10).split("-");
-    return date[0] + "." + date[1] + "." + date[2];
+    // return date[0] + "." + date[1] + "." + date[2];
+    return `${date[0]}.${date[1]}.${date[2]}`;
   };
   const qualDisplay = (qualInList, qualOutList) => {
     const qualLi = qualOutList.concat(qualInList);
@@ -53,13 +61,18 @@ export default function Subject() {
       boxId: "",
       boxPassword: ""
     };
-    axios.post(`http://13.124.113.72:8080/transaction`, buyReq, {
-      headers: { Authorization: localStorage.getItem("token") }
+    axios.post(transaction_url, buyReq, {
+      headers: { Authorization: authToken }
     });
   };
 
   const updateBookmark = isBookmarked => {
     isBookmarked = setIsBookmarked(!isBookmarked);
+    axios
+      .get(bookmark_url, {
+        headers: { Authorization: authToken }
+      })
+      .then(res => console.log(res));
   };
 
   return (
@@ -83,7 +96,7 @@ export default function Subject() {
               type="heart"
               theme={isBookmarked == 1 ? "filled" : "outlined"}
               onClick={() => {
-                updateBookmark(isBookmarked);
+                return authToken != "" ? updateBookmark(isBookmarked) : null;
               }}
             />
           </Col>
