@@ -333,7 +333,9 @@ class Banner extends Component {
                 {this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
                   this.state.sellItemList != null && this.state.sellItemList.length != 0 ?
                   this.state.sellItemList.map((value, index) => {
+                    console.log(value);
                     return (
+                      <Link to={"/buy/detail/" + value._id}>
                       <Row>
                         <Col xs={{ span: 3, offset: 1 }}>
                           <div style={{
@@ -381,6 +383,7 @@ class Banner extends Component {
                           </Row>
                         </Col>
                       </Row>
+                      </Link>
                     )
                   }) : null}
               </div>
