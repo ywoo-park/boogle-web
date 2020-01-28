@@ -564,6 +564,7 @@ class Banner extends Component {
                 <Icon className="navbar-top-icon" type="user" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
               </Col>
             </Row>
+            
             <Row>
               <Col span={24}>       
                   <small style={{ color: "#666666"}}>
