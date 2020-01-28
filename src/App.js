@@ -19,7 +19,7 @@ class App extends Component {
         <Route path="/signin" component={SignIn} />
         <Route path="mypage" component={MyPage} />
         <Route path="/buy/detail/:id" component={DetailSubject} />
-        <Route path="mypage" component={MyPage}/>
+        <Route path="/mypage" component={MyPage}/>
         </Switch>
       </Router>
     );

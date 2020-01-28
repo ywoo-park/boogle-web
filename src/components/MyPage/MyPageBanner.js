@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
-import Axios from "axios";
+import axios from 'axios';
 import './MyPageBanner.css';
 import Banner from '../Home/Banner.js';
 
@@ -33,7 +33,18 @@ export default function MyPageBanner() {
             name,
             isLogIn,
           });
+          getMyPage();
     }, []);
+
+    const getMyPage = () => {
+      axios.get('http://13.124.113.72:8080/myPage', {
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      .then((response) => {
+        console.log(response);
+        setName(response.data.data.userName)
+      });
+    }
 
     const changeToken = tokenValue => {
         //setToken(tokenValue); // for UI test

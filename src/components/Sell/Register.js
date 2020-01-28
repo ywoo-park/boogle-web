@@ -122,7 +122,6 @@ export default function Register() {
     };
 
     const saveSellItem = (sellItem, imageFileList) => {
-        console.log({ sellItem: sellItem, imageFileList: imageFileList })
 
         let form = new FormData();
         form.append('sellItemString', JSON.stringify(sellItem));
@@ -132,7 +131,7 @@ export default function Register() {
         });
 
         axios.post('http://13.124.113.72:8080/sell', form, {
-            //axios.post('http://localhost:8080/sell', form, {
+
             headers: {
                 'Content-Type': 'multipart/form-data',
             }

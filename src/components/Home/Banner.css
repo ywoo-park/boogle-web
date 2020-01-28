@@ -4,9 +4,9 @@
         height: 100vh;
         -webkit-overflow-scrolling: touch;
         overflow: auto;
-        overscroll-behavior : none;
         margin-bottom : 20vh;
         padding-bottom : 13vh;
+        z-index: 100;
     }
     #banner-list{
         width : 100%;
@@ -14,7 +14,6 @@
         background : white;
         padding-top : 3vh;
         margin-bottom : 6vh;
-        z-index : -1;
     }
     .banner-list-title{
         margin-top : 3vh;
@@ -68,9 +67,9 @@
         height: 100vh;
         -webkit-overflow-scrolling: touch;
         overflow: auto;
-        overscroll-behavior : none;
         margin-bottom : 20vh;
         padding-bottom : 13vh;
+        z-index: 100;
     }
     #banner-list{
         width : 100%;
@@ -78,7 +77,6 @@
         background : white;
         padding-top : 3vh;
         margin-bottom : 6vh;
-        z-index : -1;
     }
     .banner-list-title{
         margin-top : 3vh;

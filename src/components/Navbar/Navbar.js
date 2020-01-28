@@ -222,6 +222,12 @@ class Navbar extends Component {
                       margin: "auto",
                       marginTop: "1vh"
                     }}
+                    onClick={()=>{
+                      localStorage.removeItem('token');
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 500);
+                  }}
                   ></Icon>
                 </Col>
               </Row>
