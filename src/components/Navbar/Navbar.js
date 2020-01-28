@@ -167,19 +167,19 @@ class Navbar extends Component {
           <header>
             <Row id="navbar-search-row-after-focused">
               <Col xs={{ span: 4 }}>
-                <Icon
-                  style={{
+                <img style={{
+                    width: "22px",
+                    height: "auto",
                     marginLeft: "40%",
-                    fontSize: "3vh",
-                    color: "white"
+                    filter: "brightness(0) invert(1)"
                   }}
-                  type="arrow-left"
                   onClick={() => {
                     this.setState({ isFocused: false });
                     this.setState({ isFocusedClass: "" });
                     this.props.unFocusOnSearch();
+                    this.updateInputValue(null);
                   }}
-                />
+                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png"/>
               </Col>
               <Col xs={{ span: 18, offset: 0 }}>
                 <Search

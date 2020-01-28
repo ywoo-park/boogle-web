@@ -114,29 +114,29 @@ class Banner extends Component {
                 <Row>
                   <Col offset={1} span={22}><Divider /></Col>
                 </Row>
-                <Row key={index} className="search-result-row" style={{ paddingTop: "1vh" }}>
-                  <Col xs={{ span: 5, offset: 1 }}>
-                    <img style={{
-                      width: "14vh", height: "21vh", backgroundSize: "contain",
-                      borderRadius: "7px"
-                    }}
-                      onClick={() => {
-                        if (value.registeredCount != 0) {
+                <Row  key={index} className="search-result-row" style={{ paddingTop: "1vh" }}
+                    onClick={() => {
+                      if (value.registeredCount != 0) {
                           this.setState({ value: value });
                           this.setState({ inDetail: true });
                           this.getSellItemList(value.itemId);
                         }
-                      }}
+                    }}>                
+                  <Col xs={{ span: 5, offset: 1 }}>
+                    <img style={{
+                      width: "16vh", height: "25vh", backgroundSize: "contain",
+                      borderRadius: "7px"
+                    }}
                       src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") :""}></img>
                   </Col>
-                  <Col xs={{ span: 14, offset: 2 }}>
+                  <Col xs={{ span: 14, offset: 3 }}>
                     <Row>
                       <Col xs={{ span: 24 }}>
-                        <span style={{ color: "#656565", fontSize: "2.2vh" }}>{this.state.resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
+                        <span style={{ color: "#656565", fontSize: "2.4vh" }}>{this.state.resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
                       </Col>
                     </Row>
                     <Row>
-                      <Col style={{ marginTop: "2.5vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
+                      <Col style={{ marginTop: "2.0vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
                           {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
                           {this.state.resdata != null ? " / " : null}
@@ -155,7 +155,7 @@ class Banner extends Component {
                     <Row>
                       <Col style={{}} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null && value.regiCount != 0 ? "재고 : " + value.regiCount
+                          {this.state.resdata != null && value.regiCount != 0 ? "재고 : " + value.regiCount + "부"
                             : this.state.resdata != null && value.regiCount == 0 ? "재고 : 재고 없음"
                               : null}
                         </small>
@@ -229,7 +229,7 @@ class Banner extends Component {
             </div>
             : this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
               !this.state.inSubDetail ?
-              <div>
+              <div style={{marginBottom : "12vh"}}> 
                 <Row className="search-result-row" style={{ paddingTop: "5vh", paddingBottom: "-5vh", marginBottom: "-5vh" }}>
                   <Col xs={{ span: 5, offset: 1 }}>
                     <img style={{
@@ -334,6 +334,7 @@ class Banner extends Component {
                   this.state.sellItemList != null && this.state.sellItemList.length != 0 ?
                   this.state.sellItemList.map((value, index) => {
                     return (
+                      <Link to={"/buy/detail/" + value._id}>
                       <Row>
                         <Col xs={{ span: 3, offset: 1 }}>
                           <div style={{
@@ -381,6 +382,7 @@ class Banner extends Component {
                           </Row>
                         </Col>
                       </Row>
+                      </Link>
                     )
                   }) : null}
               </div>

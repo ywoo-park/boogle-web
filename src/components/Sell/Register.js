@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Row, Col, notification, Layout, Icon, List, Card, Divider, Rate, Radio } from 'antd';
 import Search from '../Navbar/Search';
-import { withRouter,  Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
 import CurrencyInput from 'react-currency-input';
 import axios from 'axios';
@@ -37,7 +37,7 @@ export default function Register() {
     const [sellItemReq, setSellItemReq] = useState();
 
     const [didMount, setDidMount] = useState(false);
-    
+
     const { register, handleSubmit } = useForm();
 
     const focusOnSearch = (isFocused) => {
@@ -50,14 +50,14 @@ export default function Register() {
     }
 
     React.useEffect(() => {
-        if(didMount){
+        if (didMount) {
             setUserImagesDiv(addImage());
         }
     }, [imageUrls])
 
     React.useEffect(() => {
 
-        if(didMount){
+        if (didMount) {
             saveSellItem(sellItem, imageFileList)
         }
 
@@ -100,46 +100,47 @@ export default function Register() {
             data.regiImages = userImages;
 
             setSellItem({
-                itemId : selectedItem.itemId,
-                title : data.title,
-                author : data.author,
-                publisher : data.publisher,
-                pubdate : data.pubdate.substring(0,4) + data.pubdate.substring(6,8),
-                price : (data.price.replace(",", "")).replace(" 원", ""),
-                regiPrice : data.regiPrice,
-                regiImageUrlList : [],
-                dealType : data.dealType,
-                qualityIn : data.qualityIn,
-                qualityOut : data.qualityOut,
-                sellerId : 0,
-                comment : data.comment,
-                imageUrl : selectedItem.imageUrl,
-                regiTime : new Date()
-              })
+                itemId: selectedItem.itemId,
+                title: data.title,
+                author: data.author,
+                publisher: data.publisher,
+                pubdate: data.pubdate.substring(0, 4) + data.pubdate.substring(6, 8),
+                price: (data.price.replace(",", "")).replace(" 원", ""),
+                regiPrice: data.regiPrice,
+                regiImageUrlList: [],
+                dealType: data.dealType,
+                qualityIn: data.qualityIn,
+                qualityOut: data.qualityOut,
+                sellerId: 0,
+                comment: data.comment,
+                imageUrl: selectedItem.imageUrl,
+                regiTime: new Date()
+            })
 
-              setImageFileList(data.regiImages);
+            setImageFileList(data.regiImages);
         }
     };
-  
-    const saveSellItem = (sellItem, imageFileList) => {
-        console.log({sellItem : sellItem, imageFileList : imageFileList})
 
-        let form = new FormData(); 
+    const saveSellItem = (sellItem, imageFileList) => {
+        console.log({ sellItem: sellItem, imageFileList: imageFileList })
+
+        let form = new FormData();
         form.append('sellItemString', JSON.stringify(sellItem));
 
         imageFileList.forEach(i => {
             form.append("imageFileList", i);
         });
-        
-        //axios.post('http://13.124.113.72:8080/sell', form, {
-        axios.post('http://localhost:8080/sell', form, {
+
+        axios.post('http://13.124.113.72:8080/sell', form, {
+            //axios.post('http://localhost:8080/sell', form, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
-            
+
         })
             .then((response) => {
                 console.log(response);
+                setStep(3);
             })
             .catch((error) => {
                 console.log(error);
@@ -154,13 +155,13 @@ export default function Register() {
                     <div>
                         <Row style={{ marginTop: "3vh" }}>
                             <Col xs={{ span: 8 }}>
-                            <Link to="/">
-                                <Icon style={{
-                                    marginLeft: "25%",
-                                    fontSize: "3vh", color: "#707070"
-                                }} type="arrow-left"
-                                     />
-                            </Link>
+                                <Link to="/">
+                                    <Icon style={{
+                                        marginLeft: "25%",
+                                        fontSize: "3vh", color: "#707070"
+                                    }} type="arrow-left"
+                                    />
+                                </Link>
                             </Col>
                             <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
                                 <h5 style={{ color: "#707070" }}>판매하기</h5>
@@ -170,13 +171,13 @@ export default function Register() {
                         </Row>
                         <Row>
                             <Col xs={{ span: 24 }}>
-                            <div onClick={() => { setStep(1) }} style={{
+                                <div onClick={() => { setStep(1) }} style={{
                                     width: "35vh", height: "35vh",
-                                    backgroundSize :"cover",
-                                    backgroundImage : "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
+                                    backgroundSize: "cover",
+                                    backgroundImage: "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
                                     margin: "auto", marginTop: "4vh", marginBottom: "2vh", borderRadius: "50%",
                                     filter: "grayscale(100%)",
-                                    opacity : "0.4"
+                                    opacity: "0.4"
                                 }}>
                                     <Row>
                                         <Col style={{ marginTop: "10vh" }} xs={{ span: 6, offset: 9 }}>
@@ -202,8 +203,8 @@ export default function Register() {
                             <Col xs={{ span: 24 }}>
                                 <div onClick={() => { setStep(1) }} style={{
                                     width: "35vh", height: "35vh",
-                                    backgroundSize :"cover",
-                                    backgroundImage : "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
+                                    backgroundSize: "cover",
+                                    backgroundImage: "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
                                     margin: "auto", marginTop: "4vh", marginBottom: "2vh", borderRadius: "50%"
                                 }}>
                                     <Row>
@@ -264,8 +265,8 @@ export default function Register() {
                                                             <span style={{ color: "#656565", fontSize: "2.5vh" }}>{resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "2vh"}}>
-                                                        <Col  xs={{ span: 24 }}>
+                                                    <Row style={{ marginTop: "2vh" }}>
+                                                        <Col xs={{ span: 24 }}>
                                                             <small style={{ color: "#656565", fontSize: "1.v6h" }}>
                                                                 {resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
                                                                 {resdata != null ? " / " : null}
@@ -273,7 +274,7 @@ export default function Register() {
                                                             </small>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "-1vh"}}>
+                                                    <Row style={{ marginTop: "-1vh" }}>
                                                         <Col xs={{ span: 24 }}>
                                                             <small style={{ color: "#656565", fontSize: "1.75vh" }}>
                                                                 {resdata != null ? value.pubdate.toString().substring(0, 4) + "년 " +
@@ -281,37 +282,37 @@ export default function Register() {
                                                             </small>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "-1vh"}}>
+                                                    <Row style={{ marginTop: "-1vh" }}>
                                                         <Col xs={{ span: 24 }}>
                                                             <small style={{ color: "#656565", fontSize: "1.75vh" }}>
                                                                 {resdata != null ? "ISBN : " + value.itemId : null}
                                                             </small>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "1.75vh"}}>
+                                                    <Row style={{ marginTop: "1.75vh" }}>
                                                         <Col xs={{ span: 12 }}>
-                                                                <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                                                                    {resdata != null ? "정가 : " : null}
-                                                                    {resdata != null ?
-                                                                        <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
-                                                                        : null}
-                                                                    {resdata != null ? "원" : null}
-                                                                </small>
-                                                            </Col>
-                                                            <Col xs={{ span: 12 }}>
-                                                                <button style={{
-                                                                    borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                                                                    color: "white", border: "none", fontSize: "1.6vh", height: "3.5vh", width: "100%",
-                                                                    padding : "auto"
+                                                            <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                                                                {resdata != null ? "정가 : " : null}
+                                                                {resdata != null ?
+                                                                    <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
+                                                                    : null}
+                                                                {resdata != null ? "원" : null}
+                                                            </small>
+                                                        </Col>
+                                                        <Col xs={{ span: 12 }}>
+                                                            <button style={{
+                                                                borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                                color: "white", border: "none", fontSize: "1.6vh", height: "3.5vh", width: "100%",
+                                                                padding: "auto"
+                                                            }}
+                                                                onClick={() => {
+                                                                    setSelectedItem(value);
+                                                                    setStep(2);
                                                                 }}
-                                                                    onClick={() => {
-                                                                        setSelectedItem(value);
-                                                                        setStep(2);
-                                                                    }}
-                                                                ><span>판매 등록하기</span></button>
-                                                            </Col>
-                                                        </Row>
-                                                    </Col>
+                                                            ><span>판매 등록하기</span></button>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
                                             </Row>
                                         </div>
                                     );
@@ -339,7 +340,7 @@ export default function Register() {
                                             fontSize: "3vh", color: "#707070"
                                         }} type="arrow-left"
                                             onClick={() => {
-                                                if(step == 2) setStep(1);
+                                                if (step == 2) setStep(1);
                                             }} />
                                     </Col>
                                     <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
@@ -657,7 +658,7 @@ export default function Register() {
                                                 width: "100%",
                                                 background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                                 border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh",
-                                                padding : "auto"
+                                                padding: "auto"
                                             }}
                                                 type="submit"
                                                 onClick={() => setIsFinalSubmit(true)}><span>판매 등록하기</span></button>
@@ -666,7 +667,47 @@ export default function Register() {
                                 </form>
                             </div>
                             :
-                            null
+                            step == 3 ?
+                                <div>
+                                    <Row style={{ marginTop: "3vh" }}>
+                                        <Col xs={{ span: 8 }}>
+                                        </Col>
+                                        <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
+                                            <h5 style={{ color: "#707070" }}>구매하기</h5>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "20vh" }}>
+                                            <img style={{ width: "70%", height: "auto" }}
+                                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/Group+289%403x.png"></img>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{ offset: 2, span: 20 }} style={{ textAlign: "center", marginTop: "8vh" }}>
+                                            <h5 style={{ textAlign: "center", color: "#707070", fontWeight: "400",
+                                            fontSize : "1.75vh", marginBottom : "1.75vh"}}>
+                                                {sellItem.title} 등록이 정상적으로 완료 되었습니다.
+                                            </h5>
+                                            <h5 style={{ textAlign: "center", color: "#707070", fontWeight: "400", fontSize : "1vh", }}>
+                                                이 책을 구매하고자 하는 분이 나타나면 북을 앱을 통해 알람이 올거에요.
+                                            </h5>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginTop: "10vh" }}>
+                                        <Col xs={{ span: 20, offset: 2 }}>
+                                            <Link to="/">
+                                                <button style={{
+                                                    padding: "0",
+                                                    width: "100%",
+                                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                                    border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                                                }}
+                                                >홈으로</button>
+                                            </Link>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                : null
             }
         </section>
     )
