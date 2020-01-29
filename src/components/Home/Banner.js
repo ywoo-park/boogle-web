@@ -88,8 +88,8 @@ class Banner extends Component {
   componentWillMount() {
     this.getHomeData();
     inobounce.enable();
-    
   }
+  
   componentDidMount(){
     console.log(inobounce.isEnabled);
   }
