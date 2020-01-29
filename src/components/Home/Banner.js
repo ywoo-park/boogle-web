@@ -57,11 +57,6 @@ class Banner extends Component {
   
   componentWillMount() {
     this.getHomeData();
-    inobounce.enable();
-    
-  }
-  componentDidMount(){
-    console.log(inobounce.isEnabled);
   }
   
   render() {
@@ -70,8 +65,7 @@ class Banner extends Component {
       this.setState({ isDoubleFocused: false });
     }
     return (
-      <section id="banner-container">
-        
+      <section id="banner-container" onScroll={this.handleScroll} >
         <Navbar focusOnSearch={this.focusOnSearch} updateInputValue={this.updateInputValue}
           unFocusOnSearch={this.unFocusOnSearch}
           search={<Search searchType="buy"/>}
@@ -490,8 +484,6 @@ class Banner extends Component {
                   </Row>
                 </div>
         }
-        
-        
       </section>
     );
   };

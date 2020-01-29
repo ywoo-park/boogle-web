@@ -4,6 +4,7 @@ import NavBar from "react-bootstrap/Navbar";
 import "./Navbar.css";
 
 import { Navbar as Navigation } from "react-bootstrap";
+import { withRouter, Link } from "react-router-dom";
 
 import { Modal, Button, Col, Row, Icon, Carousel } from "antd";
 import Search from "./Search";
@@ -92,7 +93,7 @@ class Navbar extends Component {
   render() {
 
     return (
-      <div id="navbar" className={this.state.isFocusedClass}>
+      <div id="navbar">
         {this.state.isFocused == true ? (
           <header>
             <Row id="navbar-search-row-after-focused">
@@ -130,7 +131,7 @@ class Navbar extends Component {
                     src="https://s3.ap-northeast-2.amazonaws.com/boogle.shop/logo.png"
                   ></img>
                 </Col>
-                <Col xs={{ span: 1, offset: 11 }}>
+                <Col xs={{ span: 1, offset: 8 }}>
                   <Icon
                     className="navbar-top-icon"
                     type="mail"
@@ -153,10 +154,22 @@ class Navbar extends Component {
                       marginTop: "1vh"
                     }}
                     onClick={()=>{
-                      localStorage.removeItem('token');
-                      setTimeout(() => {
-                        window.location.reload();
-                      }, 500);
+                      this.props.history.push('/mypage');
+                  }}
+                  ></Icon>
+                </Col>
+                <Col xs={{ span: 1, offset: 2 }}>
+                  <Icon
+                    className="navbar-top-icon"
+                    type="edit"
+                    theme="outlined"
+                    style={{
+                      color: "lightgrey",
+                      margin: "auto",
+                      marginTop: "1vh"
+                    }}
+                    onClick={()=>{
+                      this.props.history.push('/sell');
                   }}
                   ></Icon>
                 </Col>
@@ -209,4 +222,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withRouter(Navbar);
