@@ -62,9 +62,11 @@ function Subject({ match }) {
 
     return (
       <Row>
+          <Col xs={{ offset: 0, span: 1 }}>
+          </Col>
         {qualValueLi.map((val, i) => {
           return qualLi[i] == 1 ? (
-            <Col xs={{ offset: 1, span: 3 }}>
+            <Col xs={{ offset: 0, span: 4 }}>
               <Tag color="#44a0ac">{val}</Tag>
             </Col>
           ) : null;

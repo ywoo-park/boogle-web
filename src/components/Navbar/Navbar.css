@@ -3,7 +3,6 @@
 @media (min-width: 320px) and (max-width : 374px){
     #navbar{
         background-image: url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/banner_background.png');
-        overflow : hidden;
         width : 100%;
         top : 0;
         padding : 0;
@@ -67,7 +66,6 @@
 @media (min-width : 375px) and (max-width: 576px){
     #navbar{
         background-image: url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/banner_background.png');
-        overflow : hidden;
         width : 100%;
         top : 0;
         padding : 0;
