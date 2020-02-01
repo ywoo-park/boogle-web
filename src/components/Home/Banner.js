@@ -4,7 +4,7 @@ import '../Navbar/Search.css';
 import { Row, Col, Icon, List, Divider, Rate } from 'antd';
 import Navbar from '../Navbar/Navbar';
 import Search from '../Navbar/Search';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import axios from 'axios';
@@ -14,43 +14,13 @@ class Banner extends Component {
   state = {
     isScrolled: false,
     bannerList: "banner-list",
-    scrolledDown: false,
-    scrollTop: 0,
-    scrolledDownClass: "",
     isFocused: false,
     inDetail: false,
     isDoubleFocused: false
   }
 
-  handleScroll = e => {
-    const element = e.target;
-    if (element.clientHeight > element.scrollHeight - element.scrollTop - 10) {
-      return;
-    }
-    if (element.scrollTop > this.state.scrollTop && element.scrollTop != 0
-      && element.scrollTop + 30 < element.scrollHeight && element.scrollTop > 30) {
-      this.setState({ scrolledDown: true })
-      this.setState({ scrolledDownClass: "scrolled-down" })
-    }
-    else {
-      this.setState({ scrolledDown: false });
-      this.setState({ scrolledDownClass: "" })
-    }
-
-    this.setState({ scrollTop: element.scrollTop })
-
-    if (element.scrollTop > 188 && !this.state.isScrolled) {
-      this.setState({ isScrolled: true });
-      this.setState({ bannerList: "banner-list-after-scrolled" })
-    }
-    if (element.scrollTop < 188 && this.state.isScrolled) {
-      this.setState({ isScrolled: false });
-      this.setState({ bannerList: "banner-list" })
-    }
-  }
-
   getHomeData = async () => {
-    axios.get('http://13.125.191.60:8080/home')
+    axios.get('http://13.124.113.72:8080/home')
       .then((response) => {
         this.setState({
           bookResList1: response.data.data.bookResList1,
@@ -61,7 +31,7 @@ class Banner extends Component {
   }
 
   getSellItemList = async (itemId) => {
-    axios.get('http://13.125.191.60:8080/sell?itemId=' + itemId)
+    axios.get('http://13.124.113.72:8080/sell?itemId=' + itemId)
       .then((response) => {
         console.log(response);
         this.setState({
@@ -87,11 +57,6 @@ class Banner extends Component {
   
   componentWillMount() {
     this.getHomeData();
-    inobounce.enable();
-    
-  }
-  componentDidMount(){
-    console.log(inobounce.isEnabled);
   }
   
   render() {
@@ -103,7 +68,8 @@ class Banner extends Component {
       <section id="banner-container" onScroll={this.handleScroll} >
         <Navbar focusOnSearch={this.focusOnSearch} updateInputValue={this.updateInputValue}
           unFocusOnSearch={this.unFocusOnSearch}
-          search={<Search />} id="navbar"></Navbar>
+          search={<Search searchType="buy"/>}
+          id="navbar"></Navbar>
 
         {this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
           this.state.resdata.map((value, index) => {
@@ -112,29 +78,29 @@ class Banner extends Component {
                 <Row>
                   <Col offset={1} span={22}><Divider /></Col>
                 </Row>
-                <Row key={index} className="search-result-row" style={{ paddingTop: "1vh" }}>
-                  <Col xs={{ span: 5, offset: 1 }}>
-                    <img style={{
-                      width: "14vh", height: "21vh", backgroundSize: "contain",
-                      borderRadius: "7px"
-                    }}
-                      onClick={() => {
-                        if (value.registeredCount != 0) {
+                <Row  key={index} className="search-result-row" style={{ paddingTop: "1vh" }}
+                    onClick={() => {
+                      if (value.registeredCount != 0) {
                           this.setState({ value: value });
                           this.setState({ inDetail: true });
                           this.getSellItemList(value.itemId);
                         }
-                      }}
-                      src={this.state.resdata != null ? value.image.replace("type=m1", "") : null}></img>
+                    }}>                
+                  <Col xs={{ span: 5, offset: 1 }}>
+                    <img style={{
+                      width: "16vh", height: "25vh", backgroundSize: "contain",
+                      borderRadius: "7px"
+                    }}
+                      src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") :""}></img>
                   </Col>
-                  <Col xs={{ span: 14, offset: 2 }}>
+                  <Col xs={{ span: 14, offset: 3 }}>
                     <Row>
                       <Col xs={{ span: 24 }}>
-                        <span style={{ color: "#656565", fontSize: "2.2vh" }}>{this.state.resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
+                        <span style={{ color: "#656565", fontSize: "2.4vh" }}>{this.state.resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
                       </Col>
                     </Row>
                     <Row>
-                      <Col style={{ marginTop: "2.5vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
+                      <Col style={{ marginTop: "2.0vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
                           {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
                           {this.state.resdata != null ? " / " : null}
@@ -153,8 +119,8 @@ class Banner extends Component {
                     <Row>
                       <Col style={{}} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null && value.registeredCount != 0 ? "재고 : " + value.registeredCount
-                            : this.state.resdata != null && value.registeredCount == 0 ? "재고 : 재고 없음"
+                          {this.state.resdata != null && value.regiCount != 0 ? "재고 : " + value.regiCount + "부"
+                            : this.state.resdata != null && value.regiCount == 0 ? "재고 : 재고 없음"
                               : null}
                         </small>
                       </Col>
@@ -175,13 +141,13 @@ class Banner extends Component {
                       <Row>
                         <Col xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.lowestPrice != 0 ? "북을 판매가 : " : null}
+                            {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가 : " : null}
                             {this.state.resdata != null ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={value.lowestPrice} displayType={'text'} thousandSeparator={true} />
+                                <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
                               </small>
                               : null}
-                            {this.state.resdata != null && value.lowestPrice != 0 ?
+                            {this.state.resdata != null && value.regiPrice != "" ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                               null}
                           </small>
@@ -191,13 +157,13 @@ class Banner extends Component {
                       <Row>
                         <Col xs={{ span: 12 }}>
                           <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.lowestPrice != 0 ? "북을 판매가 : " : null}
+                            {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가 : " : null}
                             {this.state.resdata != null ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={value.lowestPrice} displayType={'text'} thousandSeparator={true} />
+                                <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
                               </small>
                               : null}
-                            {this.state.resdata != null && value.lowestPrice != 0 ?
+                            {this.state.resdata != null && value.regiPrice != "" ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                               null}
                           </small>
@@ -227,7 +193,7 @@ class Banner extends Component {
             </div>
             : this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
               !this.state.inSubDetail ?
-              <div>
+              <div style={{marginBottom : "12vh"}}> 
                 <Row className="search-result-row" style={{ paddingTop: "5vh", paddingBottom: "-5vh", marginBottom: "-5vh" }}>
                   <Col xs={{ span: 5, offset: 1 }}>
                     <img style={{
@@ -237,7 +203,7 @@ class Banner extends Component {
                       onClick={() => {
                         this.setState({ inDetail: true });
                       }}
-                      src={this.state.resdata != null ? this.state.value.image.replace("type=m1", "") : null}></img>
+                      src={this.state.resdata != null ? this.state.value.imageUrl.replace("type=m1", "") : null}></img>
                   </Col>
                   <Col xs={{ span: 14, offset: 2 }}>
                     <Row>
@@ -265,8 +231,8 @@ class Banner extends Component {
                     <Row>
                       <Col style={{}} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null && this.state.value.registeredCount != 0 ? "재고 : " + this.state.value.registeredCount
-                            : this.state.resdata != null && this.state.value.registeredCount == 0 ? "재고 : 재고 없음"
+                          {this.state.resdata != null && this.state.value.regiCount > 0 ? "재고 : " + this.state.value.regiCount.toString()
+                            : this.state.resdata != null && this.state.value.regiCount == 0 ? "재고 : 재고 없음"
                               : null}
                         </small>
                       </Col>
@@ -288,13 +254,13 @@ class Banner extends Component {
                       <Row>
                         <Col xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && this.state.value.lowestPrice != 0 ? "북을 판매가 : " : null}
+                            {this.state.resdata != null && this.state.value.regiPrice != "" ? "북을 판매가 : " : ""}
                             {this.state.resdata != null ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={this.state.value.lowestPrice} displayType={'text'} thousandSeparator={true} />
+                                <NumberFormat value={this.state.value.regiPrice} displayType={'text'} thousandSeparator={true} />
                               </small>
                               : null}
-                            {this.state.resdata != null && this.state.value.lowestPrice != 0 ?
+                            {this.state.resdata != null && this.state.value.regiPrice != "" ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                               null}
                           </small>
@@ -332,6 +298,7 @@ class Banner extends Component {
                   this.state.sellItemList != null && this.state.sellItemList.length != 0 ?
                   this.state.sellItemList.map((value, index) => {
                     return (
+                      <Link to={"/buy/detail/" + value._id}>
                       <Row>
                         <Col xs={{ span: 3, offset: 1 }}>
                           <div style={{
@@ -345,7 +312,7 @@ class Banner extends Component {
                                 this.setState({ inSubDetail: true });
                                 this.setState({ sellItem: value });
                               }}
-                              src={this.state.resdata != null ? this.state.value.image.replace("type=m1", "") : null}></img>
+                              src={this.state.resdata != null ? value.regiImageUrlList[0].replace("type=m1", "") : null}></img>
                           </div>
                         </Col>
                         <Col xs={{ span: 18, offset: 2 }}>
@@ -373,12 +340,13 @@ class Banner extends Component {
                                   textAlign: "center", padding: "auto"
                                 }} />
                                 &nbsp;  | &nbsp; {moment(value.date).add(9, 'hours').format('YYYY.MM.DD')}
-                                &nbsp;  | &nbsp; {value.deal == "direct" ? "직거래" : "북을박스 거래"}
+                                &nbsp;  | &nbsp; {value.dealType == 0 ? "직거래" : "북을박스 거래"}
                               </small>
                             </Col>
                           </Row>
                         </Col>
                       </Row>
+                      </Link>
                     )
                   }) : null}
               </div>
@@ -516,56 +484,6 @@ class Banner extends Component {
                   </Row>
                 </div>
         }
-        <Row id="banner-bottom-navbar" className={this.state.scrolledDownClass}>
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="home" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <small>홈</small>
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="heart" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <small>관심상품</small>
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="edit" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col onClick={() => { this.props.history.push('/sell'); }} span={24}>
-                <small >판매하기</small>
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="user" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <small>마이페이지</small>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
       </section>
     );
   };
