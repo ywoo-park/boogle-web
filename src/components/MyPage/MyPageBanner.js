@@ -247,20 +247,18 @@ export default function MyPageBanner() {
                     </Col>
                     <Col xs={{span: 4}}>
                       <Row>
-                        <Link to = "/customerinquiry">
-                          <Col xs={{span: 24}}>
-                            <Icon style={{
-                              color: "#ffffff",
-                              fontSize: "3vh",
-                            }}type="phone"
-                            //onClick = {() => {showModal(); showCallCenter();}}
-                            />
-                          </Col>
-                        </Link>
+                        <Col xs={{span: 24}}>
+                          <Icon style={{
+                            color: "#ffffff",
+                            fontSize: "3vh",
+                          }}type="phone"
+                          onClick = {() => {showModal(); showCallCenter();}}
+                          />
+                        </Col>
                       </Row>
                       <Row>
                         <Col xs={{span: 24}}>
-                        <label style={{  
+                        <label style={{ 
                               color: "#ffffff",
                               fontSize: "2vh"}}>
                             고객센터
@@ -416,7 +414,7 @@ export default function MyPageBanner() {
                         </Col>
                       </Row>
                     </Col>
-                  </Link>
+                    </Link>
                     <Col xs={{ span: 6, offset: 0 }}>
                       <Row>
                         <Col span={24}>

@@ -6,7 +6,10 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
+<<<<<<< HEAD
 import CustomerInquiry from "./pages/CustomerInquiry";
+=======
+>>>>>>> 39963c4d89af7981bb7c5a63778d7ea67a68d7f1
 // import firebase from 'firebase';
 
 class App extends Component {
@@ -21,7 +24,10 @@ class App extends Component {
         <Route path="mypage" component={MyPage} />
         <Route path="/buy/detail/:id" component={DetailSubject} />
         <Route path="/mypage" component={MyPage}/>
+<<<<<<< HEAD
         <Route path="/customerinquiry" component={CustomerInquiry}/>
+=======
+>>>>>>> 39963c4d89af7981bb7c5a63778d7ea67a68d7f1
         </Switch>
       </Router>
     );
