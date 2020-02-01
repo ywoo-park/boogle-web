@@ -14,39 +14,9 @@ class Banner extends Component {
   state = {
     isScrolled: false,
     bannerList: "banner-list",
-    scrolledDown: false,
-    scrollTop: 0,
-    scrolledDownClass: "",
     isFocused: false,
     inDetail: false,
     isDoubleFocused: false
-  }
-
-  handleScroll = e => {
-    const element = e.target;
-    if (element.clientHeight > element.scrollHeight - element.scrollTop - 10) {
-      return;
-    }
-    if (element.scrollTop > this.state.scrollTop && element.scrollTop != 0
-      && element.scrollTop + 30 < element.scrollHeight && element.scrollTop > 30) {
-      this.setState({ scrolledDown: true })
-      this.setState({ scrolledDownClass: "scrolled-down" })
-    }
-    else {
-      this.setState({ scrolledDown: false });
-      this.setState({ scrolledDownClass: "" })
-    }
-
-    this.setState({ scrollTop: element.scrollTop })
-
-    if (element.scrollTop > 188 && !this.state.isScrolled) {
-      this.setState({ isScrolled: true });
-      this.setState({ bannerList: "banner-list-after-scrolled" })
-    }
-    if (element.scrollTop < 188 && this.state.isScrolled) {
-      this.setState({ isScrolled: false });
-      this.setState({ bannerList: "banner-list" })
-    }
   }
 
   getHomeData = async () => {
@@ -87,11 +57,6 @@ class Banner extends Component {
   
   componentWillMount() {
     this.getHomeData();
-    inobounce.enable();
-    
-  }
-  componentDidMount(){
-    console.log(inobounce.isEnabled);
   }
   
   render() {
@@ -101,7 +66,6 @@ class Banner extends Component {
     }
     return (
       <section id="banner-container" onScroll={this.handleScroll} >
-        
         <Navbar focusOnSearch={this.focusOnSearch} updateInputValue={this.updateInputValue}
           unFocusOnSearch={this.unFocusOnSearch}
           search={<Search searchType="buy"/>}
@@ -520,60 +484,6 @@ class Banner extends Component {
                   </Row>
                 </div>
         }
-        <Row id="banner-bottom-navbar" className={this.state.scrolledDownClass}>
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="home" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <small>홈</small>
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="heart" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <small>관심상품</small>
-              </Col>
-            </Row>
-          </Col>
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="edit" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col onClick={() => { this.props.history.push('/sell'); }} span={24}>
-                <small >판매하기</small>
-              </Col>
-            </Row>
-          </Col>
-          <Link to="/signin">
-          <Col xs={{ span: 6, offset: 0 }}>
-            <Row>
-              <Col span={24}>
-                <Icon className="navbar-top-icon" type="user" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>       
-                  <small style={{ color: "#666666"}}>
-                    마이페이지
-                  </small>
-              </Col>
-            </Row>
-          </Col>
-          </Link>
-        </Row>
       </section>
     );
   };

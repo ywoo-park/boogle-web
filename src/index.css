@@ -10,10 +10,9 @@
     }
 
     html, body {
-      position: fixed;
-      overflow: hidden;
-      
+
     }
+
     button:focus { outline:0 !important; }
     input {
       -webkit-appearance: none;
