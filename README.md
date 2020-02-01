@@ -22,6 +22,9 @@ $ npm start
 
 <북을>의 React 프로젝트입니다.
 
+## Server API WIKI
+https://github.com/ywoo21/Boogle-Server/wiki
+
 ## Used Skills
 
 - React.js
