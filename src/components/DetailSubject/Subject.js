@@ -51,7 +51,6 @@ function Subject({ match }) {
 
   const dateFormat = rawDate => {
     const date = rawDate.slice(0, 10).split("-");
-    // return date[0] + "." + date[1] + "." + date[2];
     return `${date[0]}.${date[1]}.${date[2]}`;
   };
   const qualDisplay = (qualInList, qualOutList) => {
