@@ -23,7 +23,16 @@ $ npm start
 <북을>의 React 프로젝트입니다.
 
 ## Server API WIKI
-https://github.com/ywoo21/Boogle-Server/wiki
+
+#### BASE URL : 13.124.113.72:8080
+---
+#### [회원(USERS) API](https://github.com/ywoo21/Boogle-Server/wiki/회원(USERS)-API)
+#### [판매 상품(SELL ITEM) API](https://github.com/ywoo21/Boogle-Server/wiki/%ED%8C%90%EB%A7%A4-%EC%83%81%ED%92%88-(SELL-ITEM))
+#### [거래(TRANSACTION) API](https://github.com/ywoo21/Boogle-Server/wiki/%EA%B1%B0%EB%9E%98(TRANSACTION))
+#### [찜하기(USER BOOKMARK) API](https://github.com/ywoo21/Boogle-Server/wiki/%EC%B0%9C%ED%95%98%EA%B8%B0(UserBookmark))
+#### [마이페이지(MY PAGE) API](https://github.com/ywoo21/Boogle-Server/wiki/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80(MY-PAGE)-API)
+#### [네이버 도서 검색(NAVER BOOK API) API]()
+#### [고객의 소리(CUSTOMER INQUIRY) API](https://github.com/ywoo21/Boogle-Server/wiki/%EA%B3%A0%EA%B0%9D%EC%9D%98-%EC%86%8C%EB%A6%AC(Customer-Inquiry)-API)
 
 ## Used Skills
 
