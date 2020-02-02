@@ -24,8 +24,8 @@ $ npm start
 
 ## Server API WIKI
 
-#### BASE URL : 13.124.113.72:8080
----
+### BASE URL : 13.124.113.72:8080
+
 #### [회원(USERS) API](https://github.com/ywoo21/Boogle-Server/wiki/회원(USERS)-API)
 #### [판매 상품(SELL ITEM) API](https://github.com/ywoo21/Boogle-Server/wiki/%ED%8C%90%EB%A7%A4-%EC%83%81%ED%92%88-(SELL-ITEM))
 #### [거래(TRANSACTION) API](https://github.com/ywoo21/Boogle-Server/wiki/%EA%B1%B0%EB%9E%98(TRANSACTION))
