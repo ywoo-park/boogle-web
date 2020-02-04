@@ -14,7 +14,6 @@ import {
 } from "react-device-detect";
 
 import CustomerInquiry from "./pages/CustomerInquiry";
-// import firebase from 'firebase';
 
 class App extends Component {
   render() {
@@ -39,3 +38,4 @@ class App extends Component {
     }
   }
 }
+export default App;
