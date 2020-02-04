@@ -8,17 +8,14 @@ import Banner from '../Home/Banner.js';
 
 export default function MyPageBanner() {
     const[name, setName] = useState("");
-    const[likeList, setLikeList] = useState("");
-    const[buyList, setBuyList] = useState("");
-    const[sellList, setSellList] = useState("");
+    const[likeList, setLikeList] = useState([]);
+    const[buyList, setBuyList] = useState([]);
+    const[sellList, setSellList] = useState([]);
 
     const[likeProduct, setLikeProduct] = useState(true);
     const[buyProduct, setBuyProduct] = useState(false);
     const[sellProduct, setSellProduct] = useState(false);
 
-    const[notice, setNotice] = useState(false);
-    const[callCenter, setCallCenter] = useState(false);
-    const[setting, setSetting] = useState(false);
     const[level, setLevel] = useState(false);
     const[modal, setModal] = useState(false);
 
@@ -28,16 +25,88 @@ export default function MyPageBanner() {
     }, []);
 
     const getMyPage = () => {
-      axios.get('http://13.124.113.72:8080/myPage', {
-        headers: { Authorization: localStorage.getItem('token') }
-      })
-      .then((response) => {
-        console.log(response);
-        setName(response.data.data.userName)
-        setLikeList(response.data.data.bookmarkedItemList)
-        setBuyList(response.data.data.buyTransList)
-        setSellList(response.data.data.sellTransList)
-      });
+      // axios.get('http://13.124.113.72:8080/myPage', {
+      //   headers: { Authorization: localStorage.getItem('token') }
+      // })
+      // .then((response) => {
+      //   console.log(response);
+      //   setName(response.data.data.userName)
+      //   setLikeList(response.data.data.bookmarkedItemList)
+      //   setBuyList(response.data.data.buyTransList)
+      //   setSellList(response.data.data.sellTransList)
+      // });
+      setName("김유진");
+      setLikeList([
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "20000"
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "20000"
+        }
+      ]);
+      setBuyList([
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "traderName": "북을",
+          "traderPhoneNumber": "01012345678",
+          "title": "맨큐의 경제학",
+          "transactionType": 0,
+          "transPrice": "20000",
+          "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:17:13.576+0000"
+          ],
+          "transactionStep": 0
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "traderName": "북을북을",
+          "traderPhoneNumber": "01012345678",
+          "title": "맨큐의 경제학",
+          "transactionType": 1,
+          "transPrice": "20000",
+          "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:17:13.576+0000"
+          ],
+          "transactionStep": 3
+        }
+      ]);
+      setSellList([
+        {
+          "sellItemId": "5e302c68cf6c2a2fab5324fe",
+          "traderName": "북을",
+          "traderPhoneNumber": "01012345678",
+          "title": "대학수학",
+          "transactionType": 1,
+          "transPrice": "8000",
+          "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:31:19.317+0000"
+           ],
+          "transactionStep": 0
+        },
+        {
+          "sellItemId": "5e302c68cf6c2a2fab5324fe",
+          "traderName": "북을",
+          "traderPhoneNumber": "01012345678",
+          "title": "대학수학",
+          "transactionType": 1,
+          "transPrice": "8000",
+          "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:31:19.317+0000"
+           ],
+          "transactionStep": 0
+        }
+      ]
+      );
     }
 
     const viewLikeProduct = e => {
@@ -66,31 +135,7 @@ export default function MyPageBanner() {
       setModal(false);
     }
 
-    const showNotice = e => {
-      setNotice(true);
-      setCallCenter(false);
-      setSetting(false);
-      setLevel(false);
-    }
-
-    const showCallCenter = e => {
-      setNotice(false);
-      setCallCenter(true);
-      setSetting(false);
-      setLevel(false);
-    }
-
-    const showSetting = e => {
-      setNotice(false);
-      setCallCenter(false);
-      setSetting(true);
-      setLevel(false);
-    }
-
     const showLevel = e => {
-      setNotice(false);
-      setCallCenter(false);
-      setSetting(false);
       setLevel(true);
     }
 
@@ -114,7 +159,7 @@ export default function MyPageBanner() {
                     마이페이지
                 </label>
             </Col>
-            <Link to='/'>
+            {/* <Link to='/'>
               <Col xs={{ span: 3, offset: 5 }}>
                 <Icon style={{
                   fontSize: "3vh", color: "#ffffff"
@@ -122,7 +167,7 @@ export default function MyPageBanner() {
                 type="search"
                 />
               </Col>
-            </Link>
+            </Link> */}
           </Row>
           <Row style={{marginTop: "7vh"}}>
             <Col>
@@ -156,7 +201,7 @@ export default function MyPageBanner() {
                     color: "#ffffff",
                     fontSize: "3vh",
                   }}type="bell"
-                  onClick = {() => {showModal(); showNotice();}}
+                  onClick = {() => {}}
                   />
                 </Col>
               </Row>
@@ -165,7 +210,7 @@ export default function MyPageBanner() {
                 <label style={{ 
                       color: "#ffffff",
                       fontSize: "2vh"}}>
-                    알림
+                    공지사항
                   </label>
                 </Col>
               </Row>
@@ -177,7 +222,7 @@ export default function MyPageBanner() {
                     color: "#ffffff",
                     fontSize: "3vh",
                   }}type="phone"
-                  onClick = {() => {showModal(); showCallCenter();}}
+                  onClick = {() => {}}
                   />
                 </Col>
               </Row>
@@ -198,7 +243,7 @@ export default function MyPageBanner() {
                     color: "#ffffff",
                     fontSize: "3vh",
                   }}type="setting"
-                  onClick = {() => {showModal(); showSetting();}}
+                  onClick = {() => {}}
                   />
                 </Col>
               </Row>
@@ -219,19 +264,9 @@ export default function MyPageBanner() {
             visible={modal}
             onOk={() => {closeModal();}}
             onCancel={() => {closeModal();}}>
-              {notice == true ?
-                <p>notice</p>
-              : null }
-              {callCenter == true ?
-                <p>callCenter</p>
-              : null }
-              {setting == true ?
-                <p>setting</p> 
-              : null }
               {level == true ?
                 <p>User Level Image</p> 
               : null }
-
             </Modal>
           : null }
           
@@ -304,86 +339,154 @@ export default function MyPageBanner() {
           <Row id="user-product"
           style={{marginTop: "5%", height: "45%"}}>
             {likeProduct == true ?
-            <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
-              <p style={{color: "#000000"}}>관심상품이 없습니다.</p>
-              <Icon style={{
-                color: "#000000",
-                fontSize: "5vh",
-            }}type="plus"></Icon>
+            <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff", border: 0, }}>
+              {likeList != null ?
+              <div>
+                {likeList.map((value, index) => (
+                    <div>
+                      <Row>
+                        <Col span={5} offset={3}>
+                        <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                                  borderRadius: "7px", overflow: "hidden"}}
+                        onClick={() => {}}
+                        src={value.imageUrl}></img>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={5} offset={3}>
+                          <label>{value.title}</label>
+                        </Col>
+                      </Row>
+                      <Row>
+                      <Col span={5} offset={3}>
+                          <label>{value.regiPrice}원</label>
+                        </Col>
+                      </Row>
+                    </div>
+                ))}
+                <Link to="/">
+                  <button style={{
+                    padding: "0",
+                    width: "100%",
+                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                    border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                    }}
+                  >더 담으러 가기</button>
+                </Link>
+              </div>
+              : 
+              <div>
+                <Row>
+                  <p style={{color: "#000000"}}>관심상품이 없습니다.</p>
+                </Row>
+                <Row>
+                  <Icon style={{
+                    color: "#000000",
+                    fontSize: "5vh",
+                  }}type="plus"></Icon>
+                </Row>
+                <Row>
+                  <Link to="/">
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                      }}
+                    >더 담으러 가기</button>
+                  </Link>
+                </Row>
+              </div>
+            }
             </Card>
             : null }
             {buyProduct == true ?
-            <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
-              <p>구매상품 프로세스</p>
+            <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff", border: 0, }}>
+              {buyProduct != null ?
+                buyList.map((value,index) => (
+                  <div>
+                    {value.transactionType == 0 ?
+                      <Card style={{ width: "90%", height: "40%", backgroundColor: "#e5fdfc" }}>
+                        <Row>
+                          <Col span={6} offset={6}> </Col>
+                          <Col span={6} offset={6}>직거래</Col>
+                        </Row>
+                        <Row>
+                          <Col span={10} offset={1}>
+                            <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={10} offset={2}>
+                            <Row>{value.title}</Row>
+                            <Row>
+                              <Col>{value.traderName} | </Col>
+                              <Col>{value.traderPhoneNumber}</Col>
+                            </Row>
+                            <Row>
+                            <Col>{value.transactionCreatedTime[0]}{/*나중에 수정하기*/}
+                            {value.transactionCreatedTime[1]}
+                            {value.transactionCreatedTime[2]}
+                            {value.transactionCreatedTime[3]}.
+                            {value.transactionCreatedTime[5]}
+                            {value.transactionCreatedTime[6]}.
+                            {value.transactionCreatedTime[8]}
+                            {value.transactionCreatedTime[9]}.
+                               | </Col>
+                              <Col>{value.transPrice}원</Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Card>
+                    :
+                      <Card style={{ width: "90%", height: "40%", backgroundColor: "#e8f5ff" }}>
+                        <Row>
+                        <Col span={7} offset={5}> </Col>
+                          <Col span={7} offset={5}>북을박스</Col>
+                        </Row>
+                        <Row>
+                          <Col span={10} offset={1}>
+                            <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={10} offset={2}>
+                            <Row>{value.title}</Row>
+                            <Row>
+                              <Col>{value.traderName} | </Col>
+                              <Col>{value.traderPhoneNumber}</Col>
+                            </Row>
+                            <Row>
+                            <Col>{value.transactionCreatedTime[0]}{/*나중에 수정하기*/}
+                            {value.transactionCreatedTime[1]}
+                            {value.transactionCreatedTime[2]}
+                            {value.transactionCreatedTime[3]}.
+                            {value.transactionCreatedTime[5]}
+                            {value.transactionCreatedTime[6]}.
+                            {value.transactionCreatedTime[8]}
+                            {value.transactionCreatedTime[9]}.
+                               | </Col>
+                              <Col>{value.transPrice}원</Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Card>
+                    }
+                  </div>
+                ))
+              : 
+              <div>
+
+              </div>
+              }
             </Card>
             : null }
             {sellProduct == true ?
-            <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
               <p>판매상품 프로세스</p>
-            </Card>
             : null }
           </Row>
-
-
-          <Row id="banner-bottom-navbar">
-          <Link to='/'>
-            <Col xs={{ span: 6, offset: 0 }}>
-              <Row>
-                <Col span={24}>
-                  <Icon className="navbar-top-icon" type="home" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
-                  <small>홈</small>
-                </Col>
-              </Row>
-            </Col>
-            </Link>
-            <Col xs={{ span: 6, offset: 0 }}>
-              <Row>
-                <Col span={24}>
-                  <Icon className="navbar-top-icon" type="heart" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
-                  <small>관심상품</small>
-                </Col>
-              </Row>
-            </Col>
-            <Link to='/sell'>
-            <Col xs={{ span: 6, offset: 0 }}>
-              <Row>
-                <Col span={24}>
-                  <Icon className="navbar-top-icon" type="edit" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
-                  <small >판매하기</small>
-                </Col>
-              </Row>
-            </Col>
-            </Link>
-            <Link to="/mypage">
-            <Col xs={{ span: 6, offset: 0 }}>
-              <Row>
-                <Col span={24}>
-                  <Icon className="navbar-top-icon" type="user" theme="outlined" style={{ color: "#666666", margin: "auto", marginTop: "1vh" }}></Icon>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
-                    <small style={{ color: "#666666"}}>
-                      마이페이지
-                    </small>
-                </Col>
-              </Row>
-            </Col>
-            </Link>
-          </Row>
-
       </div>
   )
 }
