@@ -23,9 +23,9 @@ class Banner extends Component {
     axios.get('http://13.124.113.72:8080/home')
       .then((response) => {
         this.setState({
-          bookResList1: response.data.data.bookResList1,
-          bookResList2: response.data.data.bookResList2,
-          bookResList3: response.data.data.bookResList3
+          bookResList1: response.data.data[0],
+          bookResList2: response.data.data[1],
+          bookResList3: response.data.data[2]
         })
       });
   }
@@ -359,12 +359,14 @@ class Banner extends Component {
                             key={item.title}
                           >
                             <Row>
-                              <Col span={24}>
-                                <img
-                                  style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                  src={item.imageUrl.replace("type=m1", "")}
-                                ></img>
-                              </Col>
+                              <Link to={"/buy/detail/" + item._id}>
+                                <Col span={24}>
+                                  <img
+                                    style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                    src={item.imageUrl.replace("type=m1", "")}
+                                  ></img>
+                                </Col>
+                              </Link>
                             </Row>
                             <Row>
                               <Col span={24}>
@@ -399,12 +401,14 @@ class Banner extends Component {
                             key={item.title}
                           >
                             <Row>
-                              <Col span={24}>
-                                <img
-                                  style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                  src={item.imageUrl.replace("type=m1", "")}
-                                ></img>
-                              </Col>
+                              <Link to={"/buy/detail/" + item._id}>
+                                <Col span={24}>
+                                  <img                             
+                                    style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                    src={item.imageUrl.replace("type=m1", "")}
+                                  ></img>
+                                </Col>
+                              </Link>
                             </Row>
                             <Row>
                               <Col span={24}>
@@ -439,12 +443,14 @@ class Banner extends Component {
                             key={item.title}
                           >
                             <Row>
-                              <Col span={24}>
-                                <img
-                                  style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                  src={item.imageUrl.replace("type=m1", "")}
-                                ></img>
-                              </Col>
+                              <Link to={"/buy/detail/" + item._id}>
+                                <Col span={24}>
+                                  <img
+                                    style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                    src={item.imageUrl.replace("type=m1", "")}
+                                  ></img>
+                                </Col>
+                              </Link>
                             </Row>
                             <Row>
                               <Col span={24}>
