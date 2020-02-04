@@ -38,32 +38,7 @@ class Navbar extends Component {
   componentDidMount() {
     
   }
-
-<<<<<<< HEAD
-  setModal1Visible = v => {
-    this.setState({
-      modal1Visible: v
-    });
-  };
-
-  setModal2Visible = v => {
-    this.setState({
-      modal2Visible: v
-    });
-  };
-
-  setTokenValue = () => {
-    const localToken = localStorage.getItem("token");
-    return localToken;
-  };
-
-  setNameValue = () => {
-    const localName = localStorage.getItem("name");
-    return localName;
-  };
-
-=======
->>>>>>> 2e027f6869c665dc9a91e708ca090fbb502ff145
+  
   focusOnSearch = isFocused => {
     this.setState({ isFocused: isFocused });
     this.setState({ isFocusedClass: "isFocused" });
