@@ -38,7 +38,7 @@ class Navbar extends Component {
   componentDidMount() {
     
   }
-  
+
   focusOnSearch = isFocused => {
     this.setState({ isFocused: isFocused });
     this.setState({ isFocusedClass: "isFocused" });
@@ -81,7 +81,7 @@ class Navbar extends Component {
           </header>
         ) : (
           <div>
-            <header>
+            <header id="navbar-fixed">
               <Row id="navbar-top-row">
                 <Col xs={{ span: 5, offset: 2 }}>
                   <img
@@ -147,7 +147,7 @@ class Navbar extends Component {
                 </Col>
               </Row>
             </header>
-            <header>
+            <header id="navbar-unfixed">
               <Row>
                 <Col xs={{ span: 20, offset: 2 }}>
                   <Carousel className="navbar-carousel" autoplay>
