@@ -6,7 +6,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
-<<<<<<< HEAD
 import {
   BrowserView,
   MobileView,
@@ -40,5 +39,3 @@ class App extends Component {
     }
   }
 }
-
-export default App;

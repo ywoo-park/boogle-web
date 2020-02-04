@@ -62,17 +62,6 @@ function Subject({ match }) {
 
     return (
       <Row>
-<<<<<<< HEAD
-          <Col xs={{ offset: 0, span: 1 }}>
-          </Col>
-        {qualValueLi.map((val, i) => {
-          return qualLi[i] == 1 ? (
-            <Col xs={{ offset: 0, span: 4 }}>
-              <Tag color="#44a0ac">{val}</Tag>
-            </Col>
-          ) : null;
-        })}
-=======
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
           <Tag color="#656565">책 상태(외부)</Tag>
@@ -93,7 +82,6 @@ function Subject({ match }) {
             })}
           </Col>
         </Row>
->>>>>>> 2e027f6869c665dc9a91e708ca090fbb502ff145
       </Row>
     );
   };
