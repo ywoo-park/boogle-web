@@ -10,6 +10,8 @@ import { Collapse } from 'react-collapse';
 
 import './SignUpForm.css';
 import Term1 from '../../texts/Term1';
+import Term2 from '../../texts/Term2';
+import Term3 from '../../texts/Term3';
 
 export default function SignUpForm() {
 
@@ -302,7 +304,7 @@ export default function SignUpForm() {
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
                                     }}
-                                    value="내용" />
+                                    value={Term2} />
                             </Collapse>
                         </Col>
                     </Row>
@@ -323,10 +325,28 @@ export default function SignUpForm() {
                                 }
                             }} className="sign-up-check" type="check" />
                         </Col>
-                        <Col offset={0} span={20}>
-                            <small>
-                                이벤트 등 프로모션 알림 메일 수신
-                                    </small>
+                        <Col offset={0} span={16}>
+                        <small>
+                        이메일, SMS 광고 수신 동의
+                                        <span style={{ color: "#e95513" }}>(선택)</span>
+                            </small>
+                        </Col>
+                        <Col offset={0} span={2}>
+                            <img style = {{width : "100%", height : "auto"}}
+                            onClick={()=>{handleOpenCollapse(2)}}
+                            src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                            <Collapse isOpened={isCollapseOpenList[2]}>
+                                <textarea
+                                    style={{
+                                        width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
+                                        color: "transparent", textShadow: "0 0 0 black",
+                                    }}
+                                    value={Term3} />
+                            </Collapse>
                         </Col>
                     </Row>
                     <Row style={{ marginBottom: "20vh" }}>

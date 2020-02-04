@@ -6,7 +6,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
-<<<<<<< HEAD
 import {
   BrowserView,
   MobileView,
@@ -15,7 +14,6 @@ import {
 } from "react-device-detect";
 
 import CustomerInquiry from "./pages/CustomerInquiry";
-// import firebase from 'firebase';
 
 class App extends Component {
   render() {
@@ -40,5 +38,4 @@ class App extends Component {
     }
   }
 }
-
 export default App;
