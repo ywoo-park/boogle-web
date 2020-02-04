@@ -36,29 +36,10 @@ class Navbar extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      element: {
-        element: document.getElementById("navbar"),
-        speed: 100,
-        minDuration: 700
-      }
-    });
-    if (document.getElementById("main") != null) {
-      this.setState({
-        elementTop: {
-          element: document.getElementById("main"),
-          speed: 100,
-          minDuration: 700
-        }
-      });
-    }
-    if (document.getElementById("banner") != null) {
-      this.setState({
-        height: document.getElementById("banner").clientHeight
-      });
-    }
+    
   }
 
+<<<<<<< HEAD
   setModal1Visible = v => {
     this.setState({
       modal1Visible: v
@@ -81,6 +62,8 @@ class Navbar extends Component {
     return localName;
   };
 
+=======
+>>>>>>> 2e027f6869c665dc9a91e708ca090fbb502ff145
   focusOnSearch = isFocused => {
     this.setState({ isFocused: isFocused });
     this.setState({ isFocusedClass: "isFocused" });
@@ -141,6 +124,12 @@ class Navbar extends Component {
                       margin: "auto",
                       marginTop: "1vh"
                     }}
+                    onClick={()=>{
+                      localStorage.removeItem('token');
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1000);
+                    }}
                   ></Icon>
                 </Col>
                 <Col xs={{ span: 1, offset: 2 }}>
@@ -154,7 +143,7 @@ class Navbar extends Component {
                       marginTop: "1vh"
                     }}
                     onClick={()=>{
-                      this.props.history.push('/mypage');
+                      this.props.history.push('/signin');
                   }}
                   ></Icon>
                 </Col>
