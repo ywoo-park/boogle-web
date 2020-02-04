@@ -134,8 +134,9 @@ export default function Register() {
 
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': localStorage.getItem('token') != null ? 
+                    localStorage.getItem('token') : ""
             }
-
         })
             .then((response) => {
                 console.log(response);
@@ -146,12 +147,11 @@ export default function Register() {
             })
     }
 
-
     return (
         <section id="register-container">
             {
                 step == 0 ?
-                    <div>
+                    <div stlye={{overflow : "scroll"}}>
                         <Row style={{ marginTop: "3vh" }}>
                             <Col xs={{ span: 8 }}>
                                 <Link to="/">
@@ -647,11 +647,12 @@ export default function Register() {
                                     <Row style={{ marginBottom: "1.5vh" }}>
                                         <Col xs={{ span: 20, offset: 2 }} >
                                             <textarea
-                                                style={{ width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px" }}
-                                                name="comment" ref={register} />
+                                                style={{ width: "100%", height : "80px", border: "#656565 solid 0.3px", borderRadius: "5px" }}
+                                                name="comment" ref={register}
+                                                placeholder="판매자의 연락처를 직접 기입할 경우 판매 등록이 취소될 수 있습니다." />
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "10vh" }}>
+                                    <Row style={{ marginBottom: "15vh" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
                                             <button style={{
                                                 width: "100%",
