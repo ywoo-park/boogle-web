@@ -393,12 +393,14 @@ export default function MyPageBanner() {
           <Row id="user-product"
             style={{ marginTop: "5%", height: "45%" }}>
             {likeProduct == true && bookmarkedItemList.length == 0 ?
-              <div style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
-                <p style={{ color: "#000000" }}>관심상품이 없습니다.</p>
-                <Icon style={{
-                  color: "#000000",
-                  fontSize: "5vh",
-                }} type="plus"></Icon>
+              <div style={{ width: "100%", height: "100vh", backgroundColor: "#ffffff"}}>
+                <div style={{height : "100%", paddingTop : "25%"}}>
+                  <p style={{ color: "#000000" }}>관심상품이 없습니다.</p>
+                  <Icon style={{
+                    color: "#000000",
+                    fontSize: "5vh",
+                  }} type="plus"></Icon>
+                </div>
               </div>
               : likeProduct == true && bookmarkedItemList.length != 0 ?
                 <div style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
