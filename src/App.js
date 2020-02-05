@@ -6,14 +6,14 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
+import CustomerInquiry from "./pages/CustomerInquiry";
+
 import {
   BrowserView,
   MobileView,
   isBrowser,
   isMobile
 } from "react-device-detect";
-
-import CustomerInquiry from "./pages/CustomerInquiry";
 
 class App extends Component {
   render() {

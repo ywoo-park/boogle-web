@@ -1,454 +1,546 @@
-import React, { useState, useEffect } from "react";
+mport React, { useState, useEffect } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
 import axios from 'axios';
 import './MyPageBanner.css';
-import NumberFormat from "react-number-format";
 import Banner from '../Home/Banner.js';
 
 export default function MyPageBanner() {
-  const [token, setToken] = useState("");
-  const [isLogIn, setIsLogIn] = useState(false);
+    const[name, setName] = useState("");
+    const[likeList, setLikeList] = useState([]);
+    const[buyList, setBuyList] = useState([]);
+    const[sellList, setSellList] = useState([]);
 
-  const [name, setName] = useState("");
-  const [bookmarkedItemList, setBookmarkedItemList] = useState([]);
+    const[likeProduct, setLikeProduct] = useState(true);
+    const[buyProduct, setBuyProduct] = useState(false);
+    const[sellProduct, setSellProduct] = useState(false);
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  //const[bannerList, setBannerList] = useState("banner-list");
-  const [scrolledDown, setScrolledDown] = useState(false);
-  const [scrollTop, setScrollTop] = useState(0);
-  const [scrolledDownClass, setScrolledDownClass] = useState("");
-
-  const [likeProduct, setLikeProduct] = useState(true);
-  const [buyProduct, setBuyProduct] = useState(false);
-  const [sellProduct, setSellProduct] = useState(false);
-
-  const [notice, setNotice] = useState(false);
-  const [callCenter, setCallCenter] = useState(false);
-  const [setting, setSetting] = useState(false);
-  const [level, setLevel] = useState(false);
-  const [modal, setModal] = useState(false);
+    const[level, setLevel] = useState(false);
+    const[modal, setModal] = useState(false);
 
 
-  useEffect(() => {
-    console.log({
-      name,
-      isLogIn,
-    });
-    getMyPage();
-  }, []);
+    useEffect(() => {
+          getMyPage();
+    }, []);
 
-  const getMyPage = () => {
-    axios.get('http://13.124.113.72:8080/myPage', {
-      headers: { Authorization: localStorage.getItem('token') }
-    })
-      .then((response) => {
-        console.log(response);
-        setName(response.data.data.userName)
-        setBookmarkedItemList(response.data.data.bookmarkedItemList);
-      });
-  }
-
-  const changeToken = tokenValue => {
-    //setToken(tokenValue); // for UI test
-    setToken("1234567"); // for UI test
-  }
-
-  const changeIsLogIn = e => {
-    setIsLogIn(true);
-  }
-
-  const changeName = e => {
-    //setName(e.target.value); // for UI test
-    setName("김유진"); // for UI test
-  }
-
-  const viewLikeProduct = e => {
-    setLikeProduct(true);
-    setBuyProduct(false);
-    setSellProduct(false);
-  }
-
-  const viewBuyProduct = e => {
-    setLikeProduct(false);
-    setBuyProduct(true);
-    setSellProduct(false);
-  }
-
-  const viewSellProduct = e => {
-    setLikeProduct(false);
-    setBuyProduct(false);
-    setSellProduct(true);
-  }
-
-  const showModal = e => {
-    setModal(true);
-  }
-
-  const closeModal = e => {
-    setModal(false);
-  }
-
-  const showNotice = e => {
-    setNotice(true);
-    setCallCenter(false);
-    setSetting(false);
-    setLevel(false);
-  }
-
-  const showCallCenter = e => {
-    setNotice(false);
-    setCallCenter(true);
-    setSetting(false);
-    setLevel(false);
-  }
-
-  const showSetting = e => {
-    setNotice(false);
-    setCallCenter(false);
-    setSetting(true);
-    setLevel(false);
-  }
-
-  const showLevel = e => {
-    setNotice(false);
-    setCallCenter(false);
-    setSetting(false);
-    setLevel(true);
-  }
-
-  const loginOk = props => {
-    if (localStorage.getItem('token') != null && token == "") {
-      changeToken(localStorage.getItem('token'));
-      changeName();
+    const getMyPage = () => {
+      // axios.get('http://13.124.113.72:8080/myPage', {
+      //   headers: { Authorization: localStorage.getItem('token') }
+      // })
+      // .then((response) => {
+      //   console.log(response);
+      //   setName(response.data.data.userName)
+      //   setLikeList(response.data.data.bookmarkedItemList)
+      //   setBuyList(response.data.data.buyTransList)
+      //   setSellList(response.data.data.sellTransList)
+      // });
+      setName("김유진");
+      setLikeList([
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "8000"
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "10000"
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "15000"
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "20000"
+        }
+      ]);
+      setBuyList([
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "traderName": "김판매",
+          "traderPhoneNumber": "01012345678",
+          "title": "맨큐의 경제학",
+          "transactionType": 0,
+          "transPrice": "20000",
+          "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:17:13.576+0000"
+          ],
+          "transactionStep": 0
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "traderName": "김중고",
+          "traderPhoneNumber": "01012345678",
+          "title": "선형대수학",
+          "transactionType": 1,
+          "transPrice": "20000",
+          "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:17:13.576+0000"
+          ],
+          "transactionStep": 3
+        }
+      ]);
+      setSellList([
+        {
+          "sellItemId": "5e302c68cf6c2a2fab5324fe",
+          "traderName": "북을",
+          "traderPhoneNumber": "01012345678",
+          "title": "대학수학",
+          "transactionType": 1,
+          "transPrice": "8000",
+          "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:31:19.317+0000"
+           ],
+          "transactionStep": 0
+        },
+        {
+          "sellItemId": "5e302c68cf6c2a2fab5324fe",
+          "traderName": "북을",
+          "traderPhoneNumber": "01012345678",
+          "title": "대학수학",
+          "transactionType": 1,
+          "transPrice": "8000",
+          "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
+          "transactionProcessedTimeList": [
+              "2020-02-01T10:31:19.317+0000"
+           ],
+          "transactionStep": 0
+        }
+      ]
+      );
     }
 
-    else if (token != "" && isLogIn == false) {
-      changeIsLogIn();
+    const viewLikeProduct = e => {
+        setLikeProduct(true);
+        setBuyProduct(false);
+        setSellProduct(false);
     }
-    else if (token == "") { // for UI test
-      changeToken(); // for UI test
-      changeName(); // for UI test 
-      changeIsLogIn(); // for UI test
-    }
+
+    const viewBuyProduct = e => {
+      setLikeProduct(false);
+      setBuyProduct(true);
+      setSellProduct(false);
   }
 
-  const handleScroll = e => {
-    const element = e.target;
-    if (element.clientHeight > element.scrollHeight - element.scrollTop - 10) {
-      return;
-    }
-    if (element.scrollTop > this.state.scrollTop && element.scrollTop != 0
-      && element.scrollTop + 30 < element.scrollHeight && element.scrollTop > 30) {
-      setScrolledDown(true);
-      setScrolledDownClass("scrolled-down");
-    }
-    else {
-      setScrolledDown(false);
-      setScrolledDownClass("");
-    }
-
-    setScrollTop(element.scrollTop);
-
-    if (element.scrollTop > 188 && !isScrolled) {
-      setIsScrolled(true);
-      //setBannerList("banner-list-after-scrolled")
-    }
-    if (element.scrollTop < 188 && isScrolled) {
-      setIsScrolled(false);
-      //setBannerList("banner-list")
-    }
+    const viewSellProduct = e => {
+      setLikeProduct(false);
+      setBuyProduct(false);
+      setSellProduct(true);
   }
 
-  if (localStorage.getItem('token') != null) {
-    //loginOk(); // for UI test
-  } else if (localStorage.getItem('token') === null) {
-    console.log("token: (" + localStorage.getItem('token') + ") Sign in, Please"); // for UI test
-    loginOk(); // for UI test
-  }
+    const showModal = e => {
+      setModal(true);
+    }
 
+    const closeModal = e => {
+      setModal(false);
+    }
 
-  const mypage = ({ token }) => (
-    // localStorage.getItem('token') === null ? ( // for UI test
-    token == "" ? (
-      <Redirect to="/signin" />
-    ) : (
-        <div style={{
-          background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
-          height: "100vh", backgroundSize: "cover"
-          , paddingTop: "1vh"
-        }} className="mypage">
-          <Row style={{ top: 10, marginBottom: "1vh" }}>
+    const showLevel = e => {
+      setLevel(true);
+    }
+
+    return (
+      <div style={{
+        background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
+        height: "100vh", backgroundSize: "cover"
+        ,paddingTop : "1vh"
+      }} className="mypage">
+          <Row style={{marginBottom: "1vh"}}>
             <Col xs={{ span: 3 }}>
-              <Link to="/">
-                <img style={{
-                  width: "32px",
-                  height: "auto",
-                  marginLeft: "40%",
-                  filter: "brightness(0) invert(1)"
-                }}
-                  src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
-              </Link>
+            <Link to="/">
+              <Icon style={{
+                fontSize: "3vh", color: "#ffffff"
+              }} type="home"
+              />
+            </Link>
             </Col>
             <Col xs={{ span: 8, offset: 5 }}>
-              <h5 style={{ color: "white" }}>
-                마이페이지
-                        </h5>
+                <label style={{color : "white"}}>
+                    마이페이지
+                </label>
             </Col>
-            <Link to='/'>
+            {/* <Link to='/'>
               <Col xs={{ span: 3, offset: 5 }}>
+                <Icon style={{
+                  fontSize: "3vh", color: "#ffffff"
+                }} 
+                type="search"
+                />
               </Col>
-            </Link>
+            </Link> */}
           </Row>
-          <Row style={{ marginTop: "7vh" }}>
+          <Row style={{marginTop: "7vh"}}>
             <Col>
               {/* <Icon style={{
-                        color: "#ffffff",
-                        fontSize: "10vh",
-                        marginLeft: "42%",
-                        marginTop: "10%",
-                      }} type="question-circle"
-                      id="profile-circle"
-                      onClick = {() => {}}
-                      /> 지금은 텍스트, 나중엔 이미지*/}
+                color: "#ffffff",
+                fontSize: "10vh",
+                marginLeft: "42%",
+                marginTop: "10%",
+              }} type="question-circle"
+              id="profile-circle"
+              onClick = {() => {}}
+              /> 지금은 텍스트, 나중엔 이미지*/}
               <Icon style={{
                 color: "#ffffff",
                 fontSize: "10vh",
               }} type="question-circle"
-                id="profile-circle"
-                onClick={() => { showModal(); showLevel(); }}
+              id="profile-circle"
+              onClick = {() => {showModal(); showLevel();}}
               />
             </Col>
           </Row>
-          <Row style={{ marginTop: "5vh" }}>
-            <label style={{ color: "#ffffff" }}>{name}님, 안녕하세요!</label>
+          <Row style={{marginTop: "5vh"}}>
+            <label style={{color: "#ffffff"}}>{name}님, 안녕하세요!</label> 
           </Row>
 
           <Row>
-            <Col xs={{ span: 4, offset: 6 }}>
+            <Col xs={{span: 4, offset: 6}}>
               <Row>
-                <Col xs={{ span: 24 }}>
+                <Col xs={{span: 24}}>
                   <Icon style={{
                     color: "#ffffff",
                     fontSize: "3vh",
-                  }} type="bell"
-                    onClick={() => { showModal(); showNotice(); }}
+                  }}type="bell"
+                  onClick = {() => {}}
                   />
                 </Col>
               </Row>
               <Row>
-                <Col xs={{ span: 24 }}>
-                  <label style={{
-                    color: "#ffffff",
-                    fontSize: "2vh"
-                  }}>
-                    알림
-                          </label>
+                <Col xs={{span: 24}}>
+                <label style={{ 
+                      color: "#ffffff",
+                      fontSize: "2vh"}}>
+                    공지사항
+                  </label>
                 </Col>
               </Row>
             </Col>
-            <Col xs={{ span: 4 }}>
+            <Col xs={{span: 4}}>
               <Row>
-                <Col xs={{ span: 24 }}>
+                <Col xs={{span: 24}}>
                   <Icon style={{
                     color: "#ffffff",
                     fontSize: "3vh",
-                  }} type="phone"
-                    onClick={() => { showModal(); showCallCenter(); }}
+                  }}type="phone"
+                  onClick = {() => {}}
                   />
                 </Col>
               </Row>
               <Row>
-                <Col xs={{ span: 24 }}>
-                  <label style={{
-                    color: "#ffffff",
-                    fontSize: "2vh"
-                  }}>
+                <Col xs={{span: 24}}>
+                <label style={{ 
+                      color: "#ffffff",
+                      fontSize: "2vh"}}>
                     고객센터
-                          </label >
+                  </label >
                 </Col>
               </Row>
             </Col>
-            <Col xs={{ span: 4 }}>
+            <Col xs={{span: 4}}>
               <Row>
-                <Col xs={{ span: 24 }}>
+                <Col xs={{span: 24}}>
                   <Icon style={{
                     color: "#ffffff",
                     fontSize: "3vh",
-                  }} type="setting"
-                    onClick={() => { showModal(); showSetting(); }}
+                  }}type="setting"
+                  onClick = {() => {}}
                   />
                 </Col>
               </Row>
               <Row>
-                <Col xs={{ span: 24 }}>
-                  <label style={{
-                    color: "#ffffff",
-                    fontSize: "2vh"
-                  }}>
+                <Col xs={{span: 24}}>
+                <label style={{ 
+                      color: "#ffffff",
+                      fontSize: "2vh"}}>
                     설정
-                          </label>
+                  </label>
                 </Col>
               </Row>
             </Col>
           </Row>
 
-          {modal == true ?
+          {modal == true ? 
             <Modal
-              visible={modal}
-              onOk={() => { closeModal(); }}
-              onCancel={() => { closeModal(); }}>
-              {notice == true ?
-                <p>notice</p>
-                : null}
-              {callCenter == true ?
-                <p>callCenter</p>
-                : null}
-              {setting == true ?
-                <p>setting</p>
-                : null}
+            visible={modal}
+            onOk={() => {closeModal();}}
+            onCancel={() => {closeModal();}}>
               {level == true ?
-                <p>User Level Image</p>
-                : null}
-
+                <p>User Level Image</p> 
+              : null }
             </Modal>
-            : null}
-
-          <Row style={{ marginTop: "5vh" }}>
-            <Col xs={{ span: 6, offset: 3 }}>
+          : null }
+          
+          <Row style={{marginTop: "5vh"}}>
+            <Col xs={{span: 6, offset: 3}}>
               <Row>
                 <Col span={24}>
-                  <Icon 
-                  theme={likeProduct == true ? "filled" : "outlined"}
-                  style={{
+                  {likeProduct == true ?
+                  <Icon style={{
                     color: "#ffffff",
                     fontSize: "5vh",
-                  }} type="heart"
-                    onClick={() => { viewLikeProduct(); }}
+                  }}type="heart"
+                  theme="filled"
+                  onClick = {() => {viewLikeProduct();}}
                   />
+                  :
+                  <Icon style={{
+                    color: "#ffffff",
+                    fontSize: "5vh",
+                  }}type="heart"
+                  onClick = {() => {viewLikeProduct();}}
+                  />
+                  }
                 </Col>
               </Row>
               <Row>
                 <Col span={24}>
-                  <small style={{
-                    color: "#ffffff",
-                    fontSize: "2vh"
-                  }}>
-                    관심상품
-                            </small>
+                <small style={{ 
+                      color: "#ffffff",
+                      fontSize: "2vh"}}>
+                      관심상품
+                    </small>
                 </Col>
               </Row>
             </Col>
-            <Col xs={{ span: 6 }}>
+            <Col xs={{span: 6}}>
               <Row>
                 <Col span={24}>
-                  <Icon 
-                  theme={buyProduct == true ? "filled" : "outlined"}
-                  style={{
+                {buyProduct == true ?
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }}type="heart"
+                theme="filled"
+                onClick = {() => {viewBuyProduct();}}
+                />
+                  :
+                  <Icon style={{
                     color: "#ffffff",
                     fontSize: "5vh",
-                  }} type="heart"
-                    onClick={() => { viewBuyProduct(); }}
+                  }}type="heart"
+                  onClick = {() => {viewBuyProduct();}}
                   />
+                }
                 </Col>
               </Row>
               <Row>
                 <Col span={24}>
-                  <small style={{
-                    color: "#ffffff",
-                    fontSize: "2vh"
-                  }}>
-                    구매상품
-                            </small>
+                <small style={{ 
+                      color: "#ffffff",
+                      fontSize: "2vh"}}>
+                      구매현황
+                    </small>
                 </Col>
               </Row>
             </Col>
-            <Col xs={{ span: 6 }}>
+            <Col xs={{span: 6}}>
               <Row>
                 <Col span={24}>
-                  <Icon 
-                  theme={sellProduct == true ? "filled" : "outlined"}
-                  style={{
-                    color: "#ffffff",
-                    fontSize: "5vh",
-                  }} type="heart"
-                    onClick={() => { viewSellProduct(); }}
-                  />
+                {sellProduct == true ?
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }}type="heart"
+                theme="filled"
+                onClick = {() => {viewSellProduct();}}
+                />
+                 : 
+                 <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }}type="heart"
+                onClick = {() => {viewSellProduct();}}
+                />
+                }
                 </Col>
               </Row>
               <Row>
                 <Col span={24}>
-                  <small style={{
-                    color: "#ffffff",
-                    fontSize: "2vh"
-                  }}>
-                    판매상품
-                            </small>
+                    <small style={{ 
+                      color: "#ffffff",
+                      fontSize: "2vh"}}>
+                      판매현황
+                    </small>
                 </Col>
               </Row>
             </Col>
           </Row>
 
           <Row id="user-product"
-            style={{ marginTop: "5%", height: "45%" }}>
-            {likeProduct == true && bookmarkedItemList.length == 0 ?
-              <div style={{ width: "100%", height: "100vh", backgroundColor: "#ffffff"}}>
-                <div style={{height : "100%", paddingTop : "25%"}}>
-                  <p style={{ color: "#000000" }}>관심상품이 없습니다.</p>
+          style={{marginTop: "5%", height: "45%"}}>
+            {likeProduct == true ?
+            <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
+              {likeList != null ?
+              <div>
+                <Row>
+                {likeList.map((value, index) => (
+                    
+                    <Col span={7} offset={1}>
+                      <Row>
+                        <Col span={24}>
+                        <img style={{ width: "9vh", height: "12vh", backgroundSize: "contain",
+                                  borderRadius: "7px", overflow: "hidden"}}
+                        onClick={() => {}}
+                        src={value.imageUrl}></img>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col span={24}>
+                          <label style={{marginBottom: "0vh",
+                            color: "rgba(51, 158, 172, 0.9)", fontSize: "2vh"}}>
+                            {value.title}</label>
+                        </Col>
+                      </Row>
+                      <Row>
+                      <Col span={24} style={{marginBottom:"2vh"}}>
+                          <label style={{fontSize: "2vh"}}>{value.regiPrice}원</label>
+                        </Col>
+                      </Row>
+                    </Col>
+                    
+                ))}
+                </Row>
+                <Row>
+                  <Link to="/">
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                      }}
+                    >더 담으러 가기</button>
+                  </Link>
+                </Row>
+              </div>
+              : 
+              <div>
+                <Row style={{padding: "2vh"}}> 
+                  <p style={{color: "#000000"}}>관심상품이 없습니다.</p>
+                </Row>
+                <Row>
                   <Icon style={{
                     color: "#000000",
                     fontSize: "5vh",
-                  }} type="plus"></Icon>
-                </div>
+                  }}type="plus"></Icon>
+                </Row>
+                <Row>
+                  <Link to="/">
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                      }}
+                    >더 담으러 가기</button>
+                  </Link>
+                </Row>
               </div>
-              : likeProduct == true && bookmarkedItemList.length != 0 ?
-                <div style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
-                  <Row>
-                    {bookmarkedItemList.map((val) => {
-                      return (
-                        <Col>
-                          <Row>
-                            <Col style={{ marginTop: "5vh" }} xs={{ span: 7, offset: 1 }}>
-                              <img style={{ width: "10vh", height: "15vh", backgroundSize: "contain", borderRadius: "7px" }}
-                                src={val.imageUrl}></img>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col style={{ marginTop: "1vh" }} xs={{ span: 7, offset: 1 }}>
-                              <small class="mypage-title">{val.title}</small>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col style={{ marginTop: "0vh" }} xs={{ span: 7, offset: 1 }}>
-                              <small class="mypage-title mypage-price">
-                                <NumberFormat
-                                  value={val.regiPrice}
-                                  displayType={"text"}
-                                  thousandSeparator={true}/>원
-                              </small>
-                            </Col>
-                          </Row>
-                        </Col>
-                      );
-                    })}
-                  </Row>
-                </div> : null
             }
+            </Card>
+            : null }
             {buyProduct == true ?
-              <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
-                <p>구매상품 프로세스</p>
-              </Card>
-              : null}
-            {sellProduct == true ?
-              <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff" }}>
-                <p>판매상품 프로세스</p>
-              </Card>
-              : null}
-          </Row>
-        </div>
-      )
-  );
+            <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
+              {buyProduct != null ?
+                buyList.map((value,index) => (
+                  <div style={{width: "95%", margin: "auto auto"}}>
+                    {value.transactionType == 0 ?
+                      <Card style={{ width: "100%", height: "40%", backgroundColor: "#e5fdfc",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",  }}>
+                        <Row>
+                          <Col span={6} offset={6}> </Col>
+                          <Col span={6} offset={6} style={{color: "#339eac"}}>직거래</Col>
+                        </Row>
+                        <Row>
+                          <Col span={7} offset={1}>
+                            <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={10} offset={2}>
+                            <Row>{value.title}</Row>
+                            <Row>
+                              <Col>{value.traderName} | </Col>
+                              <Col>{value.traderPhoneNumber}</Col>
+                            </Row>
+                            <Row>
+                            <Col>{value.transactionCreatedTime[0]}{/*나중에 수정하기*/}
+                            {value.transactionCreatedTime[1]}
+                            {value.transactionCreatedTime[2]}
+                            {value.transactionCreatedTime[3]}.
+                            {value.transactionCreatedTime[5]}
+                            {value.transactionCreatedTime[6]}.
+                            {value.transactionCreatedTime[8]}
+                            {value.transactionCreatedTime[9]}.
+                               | </Col>
+                              <Col>{value.transPrice}원</Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Card>
+                    :
+                      <Card style={{ width: "100%", height: "40%", backgroundColor: "#e8f5ff",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh", }}>
+                        <Row>
+                        <Col span={7} offset={5}> </Col>
+                          <Col span={7} offset={5} style={{color: "#0b308e"}}>북을박스</Col>
+                        </Row>
+                        <Row>
+                          <Col span={7} offset={1}>
+                            <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={10} offset={2}>
+                            <Row>{value.title}</Row>
+                            <Row>
+                              <Col>{value.traderName} | </Col>
+                              <Col>{value.traderPhoneNumber}</Col>
+                            </Row>
+                            <Row>
+                            <Col>{value.transactionCreatedTime[0]}{/*나중에 수정하기*/}
+                            {value.transactionCreatedTime[1]}
+                            {value.transactionCreatedTime[2]}
+                            {value.transactionCreatedTime[3]}.
+                            {value.transactionCreatedTime[5]}
+                            {value.transactionCreatedTime[6]}.
+                            {value.transactionCreatedTime[8]}
+                            {value.transactionCreatedTime[9]}.
+                               | </Col>
+                              <Col>{value.transPrice}원</Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </Card>
+                    }
+                  </div>
+                ))
+              : 
+              <div>
 
-  return mypage(token);
+              </div>
+              }
+            </Card>
+            : null }
+            {sellProduct == true ?
+              <p>판매상품 프로세스</p>
+            : null }
+          </Row>
+      </div>
+  )
 }
