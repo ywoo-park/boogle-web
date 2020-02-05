@@ -134,7 +134,7 @@ export default function Register() {
 
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': localStorage.getItem('token') != null ? 
+                'Authorization': localStorage.getItem('token') != null ?
                     localStorage.getItem('token') : ""
             }
         })
@@ -151,7 +151,7 @@ export default function Register() {
         <section id="register-container">
             {
                 step == 0 ?
-                    <div stlye={{overflow : "scroll"}}>
+                    <div stlye={{ overflow: "scroll" }}>
                         <Row style={{ marginTop: "3vh" }}>
                             <Col xs={{ span: 8 }}>
                                 <Link to="/">
@@ -333,16 +333,17 @@ export default function Register() {
                         step == 2 ?
                             <div>
                                 <Row style={{ marginTop: "3vh" }}>
-                                    <Col xs={{ span: 8 }}>
-                                        <Icon style={{
-                                            marginLeft: "25%",
-                                            fontSize: "3vh", color: "#707070"
-                                        }} type="arrow-left"
-                                            onClick={() => {
-                                                if (step == 2) setStep(1);
-                                            }} />
+                                    <Col xs={{ span: 2, offset: 1 }}>
+                                        <Link to="/">
+                                            <img style={{
+                                                width: "32px",
+                                                height: "auto",
+                                                marginLeft: "40%",
+                                            }}
+                                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                                        </Link>
                                     </Col>
-                                    <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
+                                    <Col style={{ textAlign: "center", padding: "auto" }} xs={{ offset : 5, span: 8 }}>
                                         <h5 style={{ color: "#707070" }}>판매하기</h5>
                                     </Col>
                                     <Col xs={{ span: 8 }}>
@@ -647,7 +648,7 @@ export default function Register() {
                                     <Row style={{ marginBottom: "1.5vh" }}>
                                         <Col xs={{ span: 20, offset: 2 }} >
                                             <textarea
-                                                style={{ width: "100%", height : "80px", border: "#656565 solid 0.3px", borderRadius: "5px" }}
+                                                style={{ width: "100%", height: "80px", border: "#656565 solid 0.3px", borderRadius: "5px" }}
                                                 name="comment" ref={register}
                                                 placeholder="판매자의 연락처를 직접 기입할 경우 판매 등록이 취소될 수 있습니다." />
                                         </Col>
@@ -684,11 +685,13 @@ export default function Register() {
                                     </Row>
                                     <Row>
                                         <Col xs={{ offset: 2, span: 20 }} style={{ textAlign: "center", marginTop: "8vh" }}>
-                                            <h5 style={{ textAlign: "center", color: "#707070", fontWeight: "400",
-                                            fontSize : "1.75vh", marginBottom : "1.75vh"}}>
+                                            <h5 style={{
+                                                textAlign: "center", color: "#707070", fontWeight: "400",
+                                                fontSize: "1.75vh", marginBottom: "1.75vh"
+                                            }}>
                                                 {sellItem.title} 등록이 정상적으로 완료 되었습니다.
                                             </h5>
-                                            <h5 style={{ textAlign: "center", color: "#707070", fontWeight: "400", fontSize : "1vh", }}>
+                                            <h5 style={{ textAlign: "center", color: "#707070", fontWeight: "400", fontSize: "1vh", }}>
                                                 이 책을 구매하고자 하는 분이 나타나면 북을 앱을 통해 알람이 올거에요.
                                             </h5>
                                         </Col>

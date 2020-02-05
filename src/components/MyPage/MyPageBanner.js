@@ -1,4 +1,4 @@
-mport React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
@@ -157,29 +157,27 @@ export default function MyPageBanner() {
         height: "100vh", backgroundSize: "cover"
         ,paddingTop : "1vh"
       }} className="mypage">
-          <Row style={{marginBottom: "1vh"}}>
+                    <Row style={{ top: 10, marginBottom: "1vh" }}>
             <Col xs={{ span: 3 }}>
-            <Link to="/">
-              <Icon style={{
-                fontSize: "3vh", color: "#ffffff"
-              }} type="home"
-              />
-            </Link>
+              <Link to="/">
+                <img style={{
+                  width: "32px",
+                  height: "auto",
+                  marginLeft: "40%",
+                  filter: "brightness(0) invert(1)"
+                }}
+                  src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+              </Link>
             </Col>
             <Col xs={{ span: 8, offset: 5 }}>
-                <label style={{color : "white"}}>
-                    마이페이지
-                </label>
+              <h5 style={{ color: "white" }}>
+                마이페이지
+                        </h5>
             </Col>
-            {/* <Link to='/'>
+            <Link to='/'>
               <Col xs={{ span: 3, offset: 5 }}>
-                <Icon style={{
-                  fontSize: "3vh", color: "#ffffff"
-                }} 
-                type="search"
-                />
               </Col>
-            </Link> */}
+            </Link>
           </Row>
           <Row style={{marginTop: "7vh"}}>
             <Col>
@@ -381,7 +379,7 @@ export default function MyPageBanner() {
           <Row id="user-product"
           style={{marginTop: "5%", height: "45%"}}>
             {likeProduct == true ?
-            <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
+            <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0,paddingBottom : "15vh" }}>
               {likeList != null ?
               <div>
                 <Row>
@@ -390,22 +388,20 @@ export default function MyPageBanner() {
                     <Col span={7} offset={1}>
                       <Row>
                         <Col span={24}>
-                        <img style={{ width: "9vh", height: "12vh", backgroundSize: "contain",
-                                  borderRadius: "7px", overflow: "hidden"}}
+                        <img style={{ width: "10vh", height: "15vh", backgroundSize: "contain", borderRadius: "7px" }}
                         onClick={() => {}}
                         src={value.imageUrl}></img>
                         </Col>
                       </Row>
                       <Row>
                         <Col span={24}>
-                          <label style={{marginBottom: "0vh",
-                            color: "rgba(51, 158, 172, 0.9)", fontSize: "2vh"}}>
+                          <label style={{marginTop : "1vh", marginBottom: "-1vh", fontSize: "2vh"}}>
                             {value.title}</label>
                         </Col>
                       </Row>
                       <Row>
                       <Col span={24} style={{marginBottom:"2vh"}}>
-                          <label style={{fontSize: "2vh"}}>{value.regiPrice}원</label>
+                          <label style={{fontSize: "2vh", color: "rgba(51, 158, 172, 0.9)"}}>{value.regiPrice}원</label>
                         </Col>
                       </Row>
                     </Col>
