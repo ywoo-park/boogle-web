@@ -23,9 +23,9 @@ class Banner extends Component {
     axios.get('http://13.124.113.72:8080/home')
       .then((response) => {
         this.setState({
-          bookResList1: response.data.data.bookResList1,
-          bookResList2: response.data.data.bookResList2,
-          bookResList3: response.data.data.bookResList3
+          bookResList1: response.data.data[0],
+          bookResList2: response.data.data[1],
+          bookResList3: response.data.data[2]
         })
       });
   }
@@ -54,11 +54,11 @@ class Banner extends Component {
   updateInputValue = (resdata) => {
     this.setState({ resdata: resdata });
   }
-  
+
   componentWillMount() {
     this.getHomeData();
   }
-  
+
   render() {
     if (this.state.isDoubleFocused) {
       this.setState({ inDetail: false });
@@ -68,7 +68,7 @@ class Banner extends Component {
       <section id="banner-container" onScroll={this.handleScroll} >
         <Navbar focusOnSearch={this.focusOnSearch} updateInputValue={this.updateInputValue}
           unFocusOnSearch={this.unFocusOnSearch}
-          search={<Search searchType="buy"/>}
+          search={<Search searchType="buy" />}
           id="navbar"></Navbar>
 
         {this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
@@ -78,20 +78,20 @@ class Banner extends Component {
                 <Row>
                   <Col offset={1} span={22}><Divider /></Col>
                 </Row>
-                <Row  key={index} className="search-result-row" style={{ paddingTop: "1vh" }}
-                    onClick={() => {
-                      if (value.registeredCount != 0) {
-                          this.setState({ value: value });
-                          this.setState({ inDetail: true });
-                          this.getSellItemList(value.itemId);
-                        }
-                    }}>                
+                <Row key={index} className="search-result-row" style={{ paddingTop: "1vh" }}
+                  onClick={() => {
+                    if (value.regiPrice != "") {
+                      this.setState({ value: value });
+                      this.setState({ inDetail: true });
+                      this.getSellItemList(value.itemId);
+                    }
+                  }}>
                   <Col xs={{ span: 5, offset: 1 }}>
                     <img style={{
                       width: "16vh", height: "25vh", backgroundSize: "contain",
                       borderRadius: "7px"
                     }}
-                      src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") :""}></img>
+                      src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") : ""}></img>
                   </Col>
                   <Col xs={{ span: 14, offset: 3 }}>
                     <Row>
@@ -102,17 +102,14 @@ class Banner extends Component {
                     <Row>
                       <Col style={{ marginTop: "2.0vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
-                          {this.state.resdata != null ? " / " : null}
-                          {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
+                          저자 : {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
                       </Col>
                     </Row>
                     <Row>
                       <Col style={{}} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null ? value.pubdate.toString().substring(0, 4) + "년 " +
-                            value.pubdate.toString().substring(4, 6) + "월" : null}
+                        출판사 : {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
                       </Col>
                     </Row>
@@ -125,57 +122,57 @@ class Banner extends Component {
                         </small>
                       </Col>
                     </Row>
-                    <Row style={{ marginTop: "3.5vh" }}>
-                      <Col style={{ marginBottom: "-1.0vh" }} xs={{ span: 24 }}>
-                        <small style={{ color: "#656565", fontSize: "1.75vh", textDecoration: "line-through" }}>
-                          {this.state.resdata != null ? "정가 : " : null}
+                    {
+                      this.state.resdata != null && value.regiPrice != "" ?
+
+                        <Row style={{ marginTop: "3.5vh" }}>
+                          <Col style={{ marginBottom: "-0.2vh" }} xs={{ span: 24 }}>
+                            <small style={{ color: "#656565", fontSize: "1.75vh", textDecoration: "line-through" }}>
+                              {this.state.resdata != null ? "정가 : " : null}
+                              {this.state.resdata != null ?
+                                <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
+                                : null}
+                              {this.state.resdata != null ? "원" : null}
+                            </small>
+                          </Col>
+                        </Row>
+
+                        :
+
+                        <Row style={{ marginTop: "3vh" }}>
+                          <Col style={{}} xs={{ span: 10 }}>
+                            <small style={{ color: "#656565", fontSize: "1.75vh", textDecoration: "line-through" }}>
+                              {this.state.resdata != null ? "정가 : " : null}
+                              {this.state.resdata != null ?
+                                <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
+                                : null}
+                              {this.state.resdata != null ? "원" : null}
+                            </small>
+                          </Col>
+                          <Col style={{marginTop : "-0.25vh"}} xs={{ span: 14 }}>
+                            <button style={{
+                              borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                              color: "white", border: "none", fontSize: "1.6vh", height: "3.5vh", width: "100%"
+                            }}>입고 알림 받기</button>
+                          </Col>
+                        </Row>
+                    }
+                    <Row>
+                      <Col xs={{ span: 24 }}>
+                        <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
+                          {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가  : " : null}
                           {this.state.resdata != null ?
-                            <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
+                            <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
+                              <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
+                            </small>
                             : null}
-                          {this.state.resdata != null ? "원" : null}
+                          {this.state.resdata != null && value.regiPrice != "" ?
+                            <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
+                            null}
                         </small>
                       </Col>
                     </Row>
 
-                    {this.state.resdata != null && value.lowestPrice != 0 ?
-                      <Row>
-                        <Col xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가 : " : null}
-                            {this.state.resdata != null ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
-                              </small>
-                              : null}
-                            {this.state.resdata != null && value.regiPrice != "" ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
-                              null}
-                          </small>
-                        </Col>
-                      </Row>
-                      :
-                      <Row>
-                        <Col xs={{ span: 12 }}>
-                          <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가 : " : null}
-                            {this.state.resdata != null ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
-                              </small>
-                              : null}
-                            {this.state.resdata != null && value.regiPrice != "" ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
-                              null}
-                          </small>
-                        </Col>
-                        <Col style={{ marginTop: "-2.95vh" }} xs={{ span: 12 }}>
-                          <button style={{
-                            borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                            color: "white", border: "none", fontSize: "1.6vh", height: "3.5vh", width: "110%"
-                          }}>재입고알림 신청하기</button>
-                        </Col>
-                      </Row>
-                    }
                   </Col>
                 </Row>
               </div>
@@ -193,7 +190,7 @@ class Banner extends Component {
             </div>
             : this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
               !this.state.inSubDetail ?
-              <div style={{marginBottom : "12vh"}}> 
+              <div style={{ marginBottom: "12vh" }}>
                 <Row className="search-result-row" style={{ paddingTop: "5vh", paddingBottom: "-5vh", marginBottom: "-5vh" }}>
                   <Col xs={{ span: 5, offset: 1 }}>
                     <img style={{
@@ -214,17 +211,14 @@ class Banner extends Component {
                     <Row>
                       <Col style={{ marginTop: "2.5vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null ? this.state.value.author.replace(/(<([^>]+)>)/ig, "") : null}
-                          {this.state.resdata != null ? " / " : null}
-                          {this.state.resdata != null ? this.state.value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
+                          저자 : {this.state.resdata != null ? this.state.value.author.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
                       </Col>
                     </Row>
                     <Row>
                       <Col style={{}} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                          {this.state.resdata != null ? this.state.value.pubdate.toString().substring(0, 4) + "년 " +
-                            this.state.value.pubdate.toString().substring(4, 6) + "월" : null}
+                        출판사 : {this.state.resdata != null ? this.state.value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
                       </Col>
                     </Row>
@@ -237,8 +231,8 @@ class Banner extends Component {
                         </small>
                       </Col>
                     </Row>
-                    <Row style={{ marginTop: "3.5vh" }}>
-                      <Col style={{ marginBottom: "-1.0vh" }} xs={{ span: 24 }}>
+                    <Row style={{ marginTop: "2.0vh" }}>
+                      <Col style={{ marginBottom: "-0.2vh" }} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "1.75vh", textDecoration: "line-through" }}>
                           {this.state.resdata != null ? "정가 : " : null}
                           {this.state.resdata != null ?
@@ -251,7 +245,7 @@ class Banner extends Component {
 
                     {this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
                       this.state.sellItemList != null && this.state.sellItemList.length != 0 ?
-                      <Row>
+                      <Row style={{}}>
                         <Col xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
                             {this.state.resdata != null && this.state.value.regiPrice != "" ? "북을 판매가 : " : ""}
@@ -267,27 +261,7 @@ class Banner extends Component {
                         </Col>
                       </Row>
                       :
-                      <Row>
-                        <Col xs={{ span: 12 }}>
-                          <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                            {this.state.resdata != null && this.state.value.lowestPrice != 0 ? "북을 판매가 : " : null}
-                            {this.state.resdata != null ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                <NumberFormat value={this.state.value.lowestPrice} displayType={'text'} thousandSeparator={true} />
-                              </small>
-                              : null}
-                            {this.state.resdata != null && this.state.value.lowestPrice != 0 ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
-                              null}
-                          </small>
-                        </Col>
-                        <Col style={{ marginTop: "-2.95vh" }} xs={{ span: 12 }}>
-                          <button style={{
-                            borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                            color: "white", border: "none", fontSize: "1.6vh", height: "3.5vh", width: "110%"
-                          }}>재입고알림 신청하기</button>
-                        </Col>
-                      </Row>
+                      null
                     }
                   </Col>
                 </Row>
@@ -299,53 +273,53 @@ class Banner extends Component {
                   this.state.sellItemList.map((value, index) => {
                     return (
                       <Link to={"/buy/detail/" + value._id}>
-                      <Row>
-                        <Col xs={{ span: 3, offset: 1 }}>
-                          <div style={{
-                            width: "10vh", height: "10vh"
-                          }}>
-                            <img style={{
-                              width: "10vh", height: "10vh", backgroundSize: "contain",
-                              borderRadius: "7px", overflow: "hidden"
-                            }}
-                              onClick={() => {
-                                this.setState({ inSubDetail: true });
-                                this.setState({ sellItem: value });
+                        <Row stlye={{marginBottom : "4.5vh"}}>
+                          <Col xs={{ span: 3, offset: 1 }}>
+                            <div style={{
+                              width: "10vh", height: "10vh"
+                            }}>
+                              <img style={{
+                                width: "10vh", height: "10vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
                               }}
-                              src={this.state.resdata != null ? value.regiImageUrlList[0].replace("type=m1", "") : null}></img>
-                          </div>
-                        </Col>
-                        <Col xs={{ span: 18, offset: 2 }}>
-                          <Row>
-                            <Col xs={{ span: 24 }}>
-                              <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                                {"북을 판매가 : "}
-                                {this.state.resdata != null ?
-                                  <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
-                                    <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />원
+                                onClick={() => {
+                                  this.setState({ inSubDetail: true });
+                                  this.setState({ sellItem: value });
+                                }}
+                                src={this.state.resdata != null ? value.regiImageUrlList[0].replace("type=m1", "") : null}></img>
+                            </div>
+                          </Col>
+                          <Col xs={{ span: 18, offset: 2 }}>
+                            <Row>
+                              <Col xs={{ span: 24 }}>
+                                <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
+                                  {"북을 판매가 : "}
+                                  {this.state.resdata != null ?
+                                    <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
+                                      <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />원
                               </small>
-                                  : null}
-                              </small>
-                            </Col>
-                          </Row>
-                          <Row>
-                            <Col xs={{ span: 24 }}>
-                              <small style={{ color: "#656565", fontSize: "1.75vh" }}>
-                                <Rate style={{
-                                  color: "rgba(51, 158, 172, 0.9)",
-                                  fontSize: "1.5vh", textAlign: "center"
-                                }} disabled defaultValue={value.quality} />
-                                <small style={{
-                                  color: "#656565", fontSize: "1.6vh", fontWeight: "500",
-                                  textAlign: "center", padding: "auto"
-                                }} />
-                                &nbsp;  | &nbsp; {moment(value.date).add(9, 'hours').format('YYYY.MM.DD')}
-                                &nbsp;  | &nbsp; {value.dealType == 0 ? "직거래" : "북을박스 거래"}
-                              </small>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
+                                    : null}
+                                </small>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col xs={{ span: 24 }}>
+                                <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                                  <Rate style={{
+                                    color: "rgba(51, 158, 172, 0.9)",
+                                    fontSize: "1.5vh", textAlign: "center"
+                                  }} disabled defaultValue={value.quality} />
+                                  <small style={{
+                                    color: "#656565", fontSize: "1.6vh", fontWeight: "500",
+                                    textAlign: "center", padding: "auto"
+                                  }} />
+                                  &nbsp;  | &nbsp; {moment(value.date).add(9, 'hours').format('YYYY.MM.DD')}
+                                  &nbsp;  | &nbsp; {value.dealType == 0 ? "직거래" : "북을박스 거래"}
+                                </small>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
                       </Link>
                     )
                   }) : null}
@@ -385,12 +359,14 @@ class Banner extends Component {
                             key={item.title}
                           >
                             <Row>
-                              <Col span={24}>
-                                <img
-                                  style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                  src={item.imageUrl.replace("type=m1", "")}
-                                ></img>
-                              </Col>
+                              <Link to={"/buy/detail/" + item._id}>
+                                <Col span={24}>
+                                  <img
+                                    style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                    src={item.imageUrl.replace("type=m1", "")}
+                                  ></img>
+                                </Col>
+                              </Link>
                             </Row>
                             <Row>
                               <Col span={24}>
@@ -425,12 +401,14 @@ class Banner extends Component {
                             key={item.title}
                           >
                             <Row>
-                              <Col span={24}>
-                                <img
-                                  style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                  src={item.imageUrl.replace("type=m1", "")}
-                                ></img>
-                              </Col>
+                              <Link to={"/buy/detail/" + item._id}>
+                                <Col span={24}>
+                                  <img                             
+                                    style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                    src={item.imageUrl.replace("type=m1", "")}
+                                  ></img>
+                                </Col>
+                              </Link>
                             </Row>
                             <Row>
                               <Col span={24}>
@@ -465,12 +443,14 @@ class Banner extends Component {
                             key={item.title}
                           >
                             <Row>
-                              <Col span={24}>
-                                <img
-                                  style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                  src={item.imageUrl.replace("type=m1", "")}
-                                ></img>
-                              </Col>
+                              <Link to={"/buy/detail/" + item._id}>
+                                <Col span={24}>
+                                  <img
+                                    style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                    src={item.imageUrl.replace("type=m1", "")}
+                                  ></img>
+                                </Col>
+                              </Link>
                             </Row>
                             <Row>
                               <Col span={24}>

@@ -36,81 +36,8 @@ class Navbar extends Component {
   };
 
   componentDidMount() {
-    this.setState({
-      element: {
-        element: document.getElementById("navbar"),
-        speed: 100,
-        minDuration: 700
-      }
-    });
-    if (document.getElementById("main") != null) {
-      this.setState({
-        elementTop: {
-          element: document.getElementById("main"),
-          speed: 100,
-          minDuration: 700
-        }
-      });
-    }
-    if (document.getElementById("banner") != null) {
-      this.setState({
-        height: document.getElementById("banner").clientHeight
-      });
-    }
+    
   }
-
-  setModal1Visible = v => {
-    this.setState({
-      modal1Visible: v
-    });
-  };
-
-  setModal2Visible = v => {
-    this.setState({
-      modal2Visible: v
-    });
-  };
-
-  setTokenValue = () => {
-    const localToken = localStorage.getItem("token");
-    return localToken;
-  };
-
-  setNameValue = () => {
-    const localName = localStorage.getItem("name");
-    return localName;
-  };
-
-  logOut = () => {
-    localStorage.clear();
-    this.setState({
-      tokenValue: "",
-      nameValue: "",
-      isLogIn: false
-    });
-    window.location.reload();
-  };
-
-  loginNavbarChange = () => {
-    if (localStorage.getItem("token") != null && this.state.tokenValue == "") {
-      const token = this.setTokenValue();
-      const name = this.setNameValue();
-
-      this.setState({
-        tokenValue: token,
-        nameValue: name
-      });
-    } else if (
-      this.state.tokenValue != "" &&
-      this.state.isLogIn == false &&
-      this.state.afterLogin != null
-    ) {
-      this.setState({
-        userNav: this.state.afterLogin,
-        isLogIn: true
-      });
-    }
-  };
 
   focusOnSearch = isFocused => {
     this.setState({ isFocused: isFocused });
@@ -122,45 +49,6 @@ class Navbar extends Component {
   };
 
   render() {
-    const logOut = this.logOut;
-    const fetchState = this.state.fetchState;
-
-    if (localStorage.getItem("token") != null) {
-      this.loginNavbarChange();
-    }
-
-    const beforeLogin = (
-      <Nav className="before-login-text">
-        <Nav.Link onClick={() => this.setModal1Visible(true)}>로그인</Nav.Link>
-        <Nav.Link href="/signup">회원가입</Nav.Link>
-      </Nav>
-    );
-
-    if (this.state.userNav == null) {
-      this.setState({
-        userNav: beforeLogin
-      });
-    }
-
-    if (
-      this.state.afterLogin == null &&
-      this.state.nameValue != "" &&
-      localStorage.getItem("token") != null
-    ) {
-      this.setState({
-        afterLogin: (
-          <Nav className="login">
-            <NavBar.Text className="nav-txt">
-              {this.state.nameValue}님 안녕하세요!
-            </NavBar.Text>
-            <Nav.Link className="nav-link" href="/myPage">
-              마이페이지
-            </Nav.Link>
-            <Nav.Link onClick={logOut}>로그아웃</Nav.Link>
-          </Nav>
-        )
-      });
-    }
 
     return (
       <div id="navbar">
@@ -211,6 +99,12 @@ class Navbar extends Component {
                       margin: "auto",
                       marginTop: "1vh"
                     }}
+                    onClick={()=>{
+                      localStorage.removeItem('token');
+                      setTimeout(() => {
+                        window.location.reload();
+                      }, 1000);
+                    }}
                   ></Icon>
                 </Col>
                 <Col xs={{ span: 1, offset: 2 }}>
@@ -224,7 +118,7 @@ class Navbar extends Component {
                       marginTop: "1vh"
                     }}
                     onClick={()=>{
-                      this.props.history.push('/mypage');
+                      this.props.history.push('/signin');
                   }}
                   ></Icon>
                 </Col>
