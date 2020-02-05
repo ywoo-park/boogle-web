@@ -41,7 +41,19 @@ export default function MyPageBanner() {
           "sellItemId": "5e302b91cf6c2a2fab5324fb",
           "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
           "title": "맨큐의 경제학",
-          "regiPrice": "20000"
+          "regiPrice": "8000"
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "10000"
+        },
+        {
+          "sellItemId": "5e302b91cf6c2a2fab5324fb",
+          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+          "title": "맨큐의 경제학",
+          "regiPrice": "15000"
         },
         {
           "sellItemId": "5e302b91cf6c2a2fab5324fb",
@@ -53,7 +65,7 @@ export default function MyPageBanner() {
       setBuyList([
         {
           "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "traderName": "북을",
+          "traderName": "김판매",
           "traderPhoneNumber": "01012345678",
           "title": "맨큐의 경제학",
           "transactionType": 0,
@@ -66,9 +78,9 @@ export default function MyPageBanner() {
         },
         {
           "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "traderName": "북을북을",
+          "traderName": "김중고",
           "traderPhoneNumber": "01012345678",
-          "title": "맨큐의 경제학",
+          "title": "선형대수학",
           "transactionType": 1,
           "transPrice": "20000",
           "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
@@ -274,12 +286,22 @@ export default function MyPageBanner() {
             <Col xs={{span: 6, offset: 3}}>
               <Row>
                 <Col span={24}>
+                  {likeProduct == true ?
+                  <Icon style={{
+                    color: "#ffffff",
+                    fontSize: "5vh",
+                  }}type="heart"
+                  theme="filled"
+                  onClick = {() => {viewLikeProduct();}}
+                  />
+                  :
                   <Icon style={{
                     color: "#ffffff",
                     fontSize: "5vh",
                   }}type="heart"
                   onClick = {() => {viewLikeProduct();}}
                   />
+                  }
                 </Col>
               </Row>
               <Row>
@@ -295,12 +317,22 @@ export default function MyPageBanner() {
             <Col xs={{span: 6}}>
               <Row>
                 <Col span={24}>
+                {buyProduct == true ?
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }}type="heart"
+                theme="filled"
+                onClick = {() => {viewBuyProduct();}}
+                />
+                  :
                   <Icon style={{
                     color: "#ffffff",
                     fontSize: "5vh",
                   }}type="heart"
                   onClick = {() => {viewBuyProduct();}}
                   />
+                }
                 </Col>
               </Row>
               <Row>
@@ -308,7 +340,7 @@ export default function MyPageBanner() {
                 <small style={{ 
                       color: "#ffffff",
                       fontSize: "2vh"}}>
-                      구매상품
+                      구매현황
                     </small>
                 </Col>
               </Row>
@@ -316,12 +348,22 @@ export default function MyPageBanner() {
             <Col xs={{span: 6}}>
               <Row>
                 <Col span={24}>
-                  <Icon style={{
-                    color: "#ffffff",
-                    fontSize: "5vh",
-                  }}type="heart"
-                  onClick = {() => {viewSellProduct();}}
-                  />
+                {sellProduct == true ?
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }}type="heart"
+                theme="filled"
+                onClick = {() => {viewSellProduct();}}
+                />
+                 : 
+                 <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }}type="heart"
+                onClick = {() => {viewSellProduct();}}
+                />
+                }
                 </Col>
               </Row>
               <Row>
@@ -329,7 +371,7 @@ export default function MyPageBanner() {
                     <small style={{ 
                       color: "#ffffff",
                       fontSize: "2vh"}}>
-                      판매상품
+                      판매현황
                     </small>
                 </Col>
               </Row>
@@ -339,44 +381,52 @@ export default function MyPageBanner() {
           <Row id="user-product"
           style={{marginTop: "5%", height: "45%"}}>
             {likeProduct == true ?
-            <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff", border: 0, }}>
+            <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
               {likeList != null ?
               <div>
+                <Row>
                 {likeList.map((value, index) => (
-                    <div>
+                    
+                    <Col span={7} offset={1}>
                       <Row>
-                        <Col span={5} offset={3}>
-                        <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                        <Col span={24}>
+                        <img style={{ width: "9vh", height: "12vh", backgroundSize: "contain",
                                   borderRadius: "7px", overflow: "hidden"}}
                         onClick={() => {}}
                         src={value.imageUrl}></img>
                         </Col>
                       </Row>
                       <Row>
-                        <Col span={5} offset={3}>
-                          <label>{value.title}</label>
+                        <Col span={24}>
+                          <label style={{marginBottom: "0vh",
+                            color: "rgba(51, 158, 172, 0.9)", fontSize: "2vh"}}>
+                            {value.title}</label>
                         </Col>
                       </Row>
                       <Row>
-                      <Col span={5} offset={3}>
-                          <label>{value.regiPrice}원</label>
+                      <Col span={24} style={{marginBottom:"2vh"}}>
+                          <label style={{fontSize: "2vh"}}>{value.regiPrice}원</label>
                         </Col>
                       </Row>
-                    </div>
+                    </Col>
+                    
                 ))}
-                <Link to="/">
-                  <button style={{
-                    padding: "0",
-                    width: "100%",
-                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                    border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
-                    }}
-                  >더 담으러 가기</button>
-                </Link>
+                </Row>
+                <Row>
+                  <Link to="/">
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                      }}
+                    >더 담으러 가기</button>
+                  </Link>
+                </Row>
               </div>
               : 
               <div>
-                <Row>
+                <Row style={{padding: "2vh"}}> 
                   <p style={{color: "#000000"}}>관심상품이 없습니다.</p>
                 </Row>
                 <Row>
@@ -401,18 +451,20 @@ export default function MyPageBanner() {
             </Card>
             : null }
             {buyProduct == true ?
-            <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff", border: 0, }}>
+            <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
               {buyProduct != null ?
                 buyList.map((value,index) => (
-                  <div>
+                  <div style={{width: "95%", margin: "auto auto"}}>
                     {value.transactionType == 0 ?
-                      <Card style={{ width: "90%", height: "40%", backgroundColor: "#e5fdfc" }}>
+                      <Card style={{ width: "100%", height: "40%", backgroundColor: "#e5fdfc",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",  }}>
                         <Row>
                           <Col span={6} offset={6}> </Col>
-                          <Col span={6} offset={6}>직거래</Col>
+                          <Col span={6} offset={6} style={{color: "#339eac"}}>직거래</Col>
                         </Row>
                         <Row>
-                          <Col span={10} offset={1}>
+                          <Col span={7} offset={1}>
                             <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
                                     borderRadius: "7px", overflow: "hidden"}}
                               onClick={() => {}}
@@ -440,13 +492,15 @@ export default function MyPageBanner() {
                         </Row>
                       </Card>
                     :
-                      <Card style={{ width: "90%", height: "40%", backgroundColor: "#e8f5ff" }}>
+                      <Card style={{ width: "100%", height: "40%", backgroundColor: "#e8f5ff",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh", }}>
                         <Row>
                         <Col span={7} offset={5}> </Col>
-                          <Col span={7} offset={5}>북을박스</Col>
+                          <Col span={7} offset={5} style={{color: "#0b308e"}}>북을박스</Col>
                         </Row>
                         <Row>
-                          <Col span={10} offset={1}>
+                          <Col span={7} offset={1}>
                             <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
                                     borderRadius: "7px", overflow: "hidden"}}
                               onClick={() => {}}
