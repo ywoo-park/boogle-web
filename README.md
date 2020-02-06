@@ -36,6 +36,6 @@ $ npm start
 
 ## Used Skills
 
-- React.js
+- React.js / React Hook
 - Axios(HTTP)
 - Ant Design / React BootStrap 3 (UI)
