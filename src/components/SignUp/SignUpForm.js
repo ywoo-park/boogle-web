@@ -6,8 +6,12 @@ import { withRouter, Link } from "react-router-dom";
 import Camera from 'react-html5-camera-photo';
 import Multiselect from 'react-bootstrap-multiselect';
 import axios from 'axios';
+import { Collapse } from 'react-collapse';
 
 import './SignUpForm.css';
+import Term1 from '../../texts/Term1';
+import Term2 from '../../texts/Term2';
+import Term3 from '../../texts/Term3';
 
 export default function SignUpForm() {
 
@@ -19,6 +23,7 @@ export default function SignUpForm() {
     const [confirmPassword, setConfirmPassword] = useState(0);
     const [formStyle, setFormStyle] = useState(["show", "hide", "hide"]);
     const [checkList, setCheckList] = useState(["0", "0", "0"]);
+    const [isCollapseOpenList, setIsCollapseOpenList] = useState([false, false, false]);
     const [campus, setCampus] = useState("서강대학교");
     const [semester, setSemester] = useState("1");
     const [major, setMajor] = useState("경영학과");
@@ -39,6 +44,19 @@ export default function SignUpForm() {
             })
         }
     };
+
+    const handleOpenCollapse = (i) => {
+        let tempArr = [...isCollapseOpenList];
+        let temp = tempArr[i];
+        temp = !temp;
+        tempArr[i] = temp;
+        setIsCollapseOpenList(tempArr);
+    }
+
+    React.useEffect(()=>{
+        fetch('../../texts/Term1.txt').then( r => r.text() )
+        .then( t => console.log(t) )
+    }, [])
 
     React.useEffect(() => {
         console.log(step);
@@ -100,14 +118,14 @@ export default function SignUpForm() {
                 <div class={formStyle[0]}>
                     <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
                         <Col xs={{ span: 8 }}>
-                        <Link to="/signin">
-                            <img style={{
-                                width: "32px",
-                                height: "auto",
-                                marginLeft: "25%",
-                            }}
-                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
-                        </Link>
+                            <Link to="/signin">
+                                <img style={{
+                                    width: "32px",
+                                    height: "auto",
+                                    marginLeft: "25%",
+                                }}
+                                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                            </Link>
                         </Col>
                         <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
                             <h5 style={{ color: "#707070" }}>회원가입</h5>
@@ -128,7 +146,7 @@ export default function SignUpForm() {
                     </Row>
                     <Row>
                         <Col xs={{ span: 8, offset: 2 }}>
-                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>이메일</span>
+                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>아이디(이메일)</span>
                         </Col>
                     </Row>
                     <Row >
@@ -223,11 +241,28 @@ export default function SignUpForm() {
                             }} className="sign-up-check"
                                 type="check" />
                         </Col>
-                        <Col offset={0} span={20}>
+                        <Col offset={0} span={16}>
                             <small>
                                 북을 이용약관 동의
                                 <span style={{ color: "#e95513" }}>(필수)</span>
                             </small>
+                        </Col>
+                        <Col offset={0} span={2}>
+                            <img style = {{width : "100%", height : "auto"}}
+                            onClick={()=>{handleOpenCollapse(0)}}
+                            src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                            <Collapse isOpened={isCollapseOpenList[0]}>
+                                <textarea
+                                    style={{
+                                        width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
+                                        color: "transparent", textShadow: "0 0 0 black",
+                                    }}
+                                    value={Term1} />
+                            </Collapse>
                         </Col>
                     </Row>
                     <Row style={{ marginBottom: "2vh" }}>
@@ -249,11 +284,28 @@ export default function SignUpForm() {
                                 className="sign-up-check"
                                 type="check" />
                         </Col>
-                        <Col offset={0} span={20}>
+                        <Col offset={0} span={16}>
                             <small>
                                 개인정보 수집 및 이용에 대한 안내
                                         <span style={{ color: "#e95513" }}>(필수)</span>
                             </small>
+                        </Col>
+                        <Col offset={0} span={2}>
+                            <img style = {{width : "100%", height : "auto"}}
+                            onClick={()=>{handleOpenCollapse(1)}}
+                            src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                            <Collapse isOpened={isCollapseOpenList[1]}>
+                                <textarea
+                                    style={{
+                                        width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
+                                        color: "transparent", textShadow: "0 0 0 black",
+                                    }}
+                                    value={Term2} />
+                            </Collapse>
                         </Col>
                     </Row>
                     <Row style={{ marginBottom: "6vh" }}>
@@ -273,10 +325,28 @@ export default function SignUpForm() {
                                 }
                             }} className="sign-up-check" type="check" />
                         </Col>
-                        <Col offset={0} span={20}>
-                            <small>
-                                이벤트 등 프로모션 알림 메일 수신
-                                    </small>
+                        <Col offset={0} span={16}>
+                        <small>
+                        이메일, SMS 광고 수신 동의
+                                        <span style={{ color: "#e95513" }}>(선택)</span>
+                            </small>
+                        </Col>
+                        <Col offset={0} span={2}>
+                            <img style = {{width : "100%", height : "auto"}}
+                            onClick={()=>{handleOpenCollapse(2)}}
+                            src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                            <Collapse isOpened={isCollapseOpenList[2]}>
+                                <textarea
+                                    style={{
+                                        width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
+                                        color: "transparent", textShadow: "0 0 0 black",
+                                    }}
+                                    value={Term3} />
+                            </Collapse>
                         </Col>
                     </Row>
                     <Row style={{ marginBottom: "20vh" }}>
@@ -319,14 +389,14 @@ export default function SignUpForm() {
                         </Col>
                         <Col xs={{ offset: 4, span: 2 }}>
                             <img style={{
-                                    width: "22px",
-                                    height: "auto",
-                                    marginLeft: "25%",
+                                width: "22px",
+                                height: "auto",
+                                marginLeft: "25%",
+                            }}
+                                onClick={() => {
+                                    if (step == 1) setStep(0);
                                 }}
-                                    onClick={() => {
-                                        if (step == 1) setStep(0);
-                                    }}
-                                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/x_mark.png" />
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/x_mark.png" />
                         </Col>
                     </Row>
                     <Row>
@@ -481,7 +551,7 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{marginTop : "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 2 }}>
+                        <Col style={{ marginTop: "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 2 }}>
                             <button
                                 style={{
                                     width: "100%",
@@ -493,7 +563,7 @@ export default function SignUpForm() {
                                 }}
                             >학교 이메일 인증</button>
                         </Col>
-                        <Col style={{marginTop : "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 0 }}>
+                        <Col style={{ marginTop: "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 0 }}>
                             <button
                                 style={{
                                     width: "100%",

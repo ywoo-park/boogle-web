@@ -99,6 +99,11 @@ export default function Search(props) {
          className="search-input" type="text" name="name"
           value={inputValue}
           onChange={evt => updateInputValue(evt)}
+          onKeyPress = {(e) => {
+            if(e.key == 'Enter'){
+              e.preventDefault();
+              e.target.blur();
+          }}}
           placeholder={props.placeHolder} />
         <Icon className="search-input-button" type="search" theme="outlined" style={{ color: "white", margin: "auto" }}></Icon>
       </form>
