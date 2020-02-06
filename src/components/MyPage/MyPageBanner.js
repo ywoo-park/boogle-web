@@ -19,6 +19,9 @@ export default function MyPageBanner() {
     const[level, setLevel] = useState(false);
     const[modal, setModal] = useState(false);
 
+    // const[directStep, setDirectStep] = useState("");
+    // const[boxStep, setBoxStep] = useState("");
+
 
     useEffect(() => {
           getMyPage();
@@ -87,7 +90,7 @@ export default function MyPageBanner() {
           "transactionProcessedTimeList": [
               "2020-02-01T10:17:13.576+0000"
           ],
-          "transactionStep": 3
+          "transactionStep": 4
         }
       ]);
       setSellList([
@@ -457,35 +460,47 @@ export default function MyPageBanner() {
                       padding: "2vh",  }}>
                         <Row>
                           <Col span={6} offset={6}> </Col>
-                          <Col span={6} offset={6} style={{color: "#339eac"}}>직거래</Col>
+                          <Col span={6} offset={6} style={{color: "#339eac", fontSize: "12pt"}}>직거래</Col>
                         </Row>
+
+                        {value.transactionStep == 0 ?
+                        <div>
                         <Row>
-                          <Col span={7} offset={1}>
-                            <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                          <Col span={5} offset={1}>
+                            <img style={{ width: "8vh", height: "12vh", backgroundSize: "contain",
                                     borderRadius: "7px", overflow: "hidden"}}
                               onClick={() => {}}
                               ></img>
                           </Col>
-                          <Col span={10} offset={2}>
-                            <Row>{value.title}</Row>
-                            <Row>
-                              <Col>{value.traderName} | </Col>
-                              <Col>{value.traderPhoneNumber}</Col>
+                          <Col span={17} offset={0}>
+                            <Row style={{fontStyle:"bold", fontSize: "12pt", textAlign:"left"}}>
+                              <Col offset={1}>
+                              {value.title}
+                              </Col>
                             </Row>
-                            <Row>
-                            <Col>{value.transactionCreatedTime[0]}{/*나중에 수정하기*/}
-                            {value.transactionCreatedTime[1]}
-                            {value.transactionCreatedTime[2]}
-                            {value.transactionCreatedTime[3]}.
-                            {value.transactionCreatedTime[5]}
-                            {value.transactionCreatedTime[6]}.
-                            {value.transactionCreatedTime[8]}
-                            {value.transactionCreatedTime[9]}.
-                               | </Col>
-                              <Col>{value.transPrice}원</Col>
+                            <Row style={{fontSize:"8pt", color:"gray",}}>
+                              <Col span={12}>
+                              주문일자 : {/*나중에 수정하기*/}
+                              {value.transactionCreatedTime[2]}
+                              {value.transactionCreatedTime[3]}.
+                              {value.transactionCreatedTime[5]}
+                              {value.transactionCreatedTime[6]}.
+                              {value.transactionCreatedTime[8]}
+                              {value.transactionCreatedTime[9]}
+                              </Col>
+                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize: "12pt", color:"gray", marginTop:"2vh"}}>
+                              <Col offset={3}>
+                              판매자 수락 대기 중
+                              </Col>
                             </Row>
                           </Col>
                         </Row>
+                        </div>
+                        : null}
+
                       </Card>
                     :
                       <Card style={{ width: "100%", height: "40%", backgroundColor: "#e8f5ff",
@@ -493,35 +508,180 @@ export default function MyPageBanner() {
                       padding: "2vh", }}>
                         <Row>
                         <Col span={7} offset={5}> </Col>
-                          <Col span={7} offset={5} style={{color: "#0b308e"}}>북을박스</Col>
+                          <Col span={7} offset={5} style={{color: "#0b308e", fontSize: "12pt"}}>북을박스</Col>
                         </Row>
+                        {value.transactionStep == 0 ?
+                        <div>
                         <Row>
-                          <Col span={7} offset={1}>
-                            <img style={{ width: "10vh", height: "10vh", backgroundSize: "contain",
+                          <Col span={5} offset={1}>
+                            <img style={{ width: "8vh", height: "12vh", backgroundSize: "contain",
                                     borderRadius: "7px", overflow: "hidden"}}
                               onClick={() => {}}
                               ></img>
                           </Col>
-                          <Col span={10} offset={2}>
-                            <Row>{value.title}</Row>
-                            <Row>
-                              <Col>{value.traderName} | </Col>
-                              <Col>{value.traderPhoneNumber}</Col>
+                          <Col span={17} offset={0}>
+                            <Row style={{fontStyle:"bold", fontSize: "12pt", textAlign:"left"}}>
+                              <Col offset={1}>
+                              {value.title}
+                              </Col>
                             </Row>
-                            <Row>
-                            <Col>{value.transactionCreatedTime[0]}{/*나중에 수정하기*/}
-                            {value.transactionCreatedTime[1]}
-                            {value.transactionCreatedTime[2]}
-                            {value.transactionCreatedTime[3]}.
-                            {value.transactionCreatedTime[5]}
-                            {value.transactionCreatedTime[6]}.
-                            {value.transactionCreatedTime[8]}
-                            {value.transactionCreatedTime[9]}.
-                               | </Col>
-                              <Col>{value.transPrice}원</Col>
+                            <Row style={{fontSize:"8pt", color:"gray",}}>
+                              <Col span={12}>
+                              주문일자 : {/*나중에 수정하기*/}
+                              {value.transactionCreatedTime[2]}
+                              {value.transactionCreatedTime[3]}.
+                              {value.transactionCreatedTime[5]}
+                              {value.transactionCreatedTime[6]}.
+                              {value.transactionCreatedTime[8]}
+                              {value.transactionCreatedTime[9]}
+                              </Col>
+                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize: "12pt", color:"gray", marginTop:"2vh"}}>
+                              <Col offset={3}>
+                              판매자 수락 대기 중
+                              </Col>
                             </Row>
                           </Col>
                         </Row>
+                        </div>
+
+                        :
+
+                        <div style={{fontSize: "12pt", fontStyle: "bold"}}>
+                        <Row>
+                          <Col span={5} offset={1}>
+                            <img style={{ width: "8vh", height: "12vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={17} offset={0}>
+                            <Row style={{fontStyle:"bold", fontSize: "12pt", textAlign:"left"}}>
+                              <Col offset={1}>
+                              {value.title}
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize:"8pt", color:"gray",}}>
+                              <Col span={12}>
+                              주문일자 : {/*나중에 수정하기*/}
+                              {value.transactionCreatedTime[2]}
+                              {value.transactionCreatedTime[3]}.
+                              {value.transactionCreatedTime[5]}
+                              {value.transactionCreatedTime[6]}.
+                              {value.transactionCreatedTime[8]}
+                              {value.transactionCreatedTime[9]}
+                              </Col>
+                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize: "8pt", color:"gray", marginTop:"2vh"}}>
+                              <Col offset={0} style={{fontStyle: "bold"}}>
+                              판매자 : {value.traderName} |
+                              연락처 : {value.traderPhoneNumber}
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                        <Row style={{margin: "2vh", color: "#44a0ac"}}>
+                            판매자 수락
+                        </Row>
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "#038155"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        <Row style={{marginTop: "2vh", color: "#038196"}}>
+                          결제 요청중
+                        </Row> 
+
+                        {value.transactionStep == 1 ?
+                        <div>
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }}
+                            onClick={() => {}}
+                          >결제 하기</button>
+                        </Row> 
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "gray"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        </div>
+                        :
+                        <div>
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "gray", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }}
+                          >결제 하기</button>
+                        </Row>   
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "#065d33"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        </div>
+                        }                   
+                        
+                        {value.transactionStep == 4 || value.transactionStep > 4 ?
+                          <Row style={{margin: "2vh", color: "#065d92"}}>
+                            물건 비치 완료
+                          </Row>
+                        :
+                          <Row style={{margin: "2vh", color: "gray"}}>
+                            물건 비치 완료
+                          </Row>
+                        }
+                        
+                        {value.transactionStep == 4 ?
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "#075e92", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }} onClick={() => {}}
+                          >수령 하기</button>
+                        </Row>
+                        :
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "gray", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }} onClick={() => {}}
+                          >수령 하기</button>
+                        </Row>
+                        }
+                        
+                        {value.transactionStep > 4 ?
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "#0b308e"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        :
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "gray"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        }
+                        
+                        {value.transactionStep == 5 || value.transactionStep > 5 ?
+                        <Row style={{marginBottom: "2vh", color: "#0b308e"}}>
+                          거래 완료
+                        </Row>
+                        :
+                        <Row style={{marginBottom: "2vh", color: "gray"}}>
+                          거래 완료
+                        </Row>
+                        }
+                        
+                        </div>
+
+                        }
                       </Card>
                     }
                   </div>
