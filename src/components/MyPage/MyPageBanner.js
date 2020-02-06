@@ -90,7 +90,7 @@ export default function MyPageBanner() {
           "transactionProcessedTimeList": [
               "2020-02-01T10:17:13.576+0000"
           ],
-          "transactionStep": 6
+          "transactionStep": 4
         }
       ]);
       setSellList([
