@@ -21,6 +21,7 @@ export default function ModifyInfoForm() {
   React.useEffect(() => {
     if (authToken != "" && authToken != null) {
       setIsSignedIn(true);
+      console.log(123);
     } else {
       setIsSignedIn(false);
     }
@@ -33,7 +34,6 @@ export default function ModifyInfoForm() {
           headers: { Authorization: authToken }
         });
         setUserData(result.data);
-        // console.log(userData);
       };
       getPrevData();
     }
@@ -59,8 +59,8 @@ export default function ModifyInfoForm() {
     }
   };
 
-  const modifyFin = data => {
-    //send data
+  const modifyFin = async data => {
+    console.log(data);
   };
 
   return (
@@ -93,7 +93,7 @@ export default function ModifyInfoForm() {
               backgroundColor: "transparent"
             }}
             name="name"
-            ref={register({ required: "이름을 입력해주세요" })}
+            ref={register}
           />
           <ErrorMessage
             style={{ marginBottom: "-2.5vh" }}
@@ -124,7 +124,6 @@ export default function ModifyInfoForm() {
             }}
             name="nickname"
             ref={register({
-              required: "닉네임을 입력해주세요.",
               validate: validatedNickname
             })}
             onChange={e => {
@@ -294,7 +293,7 @@ export default function ModifyInfoForm() {
               backgroundColor: "transparent"
             }}
             name="phone_2"
-            ref={register({ required: "핸드폰 번호를 입력해주세요" })}
+            ref={register}
           />
         </Col>
         <Col
@@ -309,7 +308,7 @@ export default function ModifyInfoForm() {
               backgroundColor: "transparent"
             }}
             name="phone_3"
-            ref={register({ required: "핸드폰 번호를 입력해주세요" })}
+            ref={register}
           />
         </Col>
       </Row>
@@ -334,9 +333,7 @@ export default function ModifyInfoForm() {
             }}
             name="password"
             placeholder="비밀번호"
-            ref={register({
-              required: "비밀번호를 입력해주세요."
-            })}
+            ref={register}
             onChange={e => {
               setPassword(e.target.value);
             }}
@@ -376,9 +373,7 @@ export default function ModifyInfoForm() {
             }}
             name="confirmPassword"
             placeholder="비밀번호 확인"
-            ref={register({
-              required: "비밀번호를 입력해주세요."
-            })}
+            ref={register}
             onChange={e => {
               setConfirmPassword(e.target.value);
             }}
@@ -389,6 +384,7 @@ export default function ModifyInfoForm() {
               비밀번호가 일치하지 않습니다.
             </p>
           )}
+
           <ErrorMessage
             style={{ marginBottom: "-2.5vh" }}
             errors={errors}
@@ -399,22 +395,20 @@ export default function ModifyInfoForm() {
       </Row>
       <Row style={{ marginTop: "10vh" }}>
         <Col xs={{ span: 20, offset: 2 }}>
-          <Link to="/">
-            <button
-              style={{
-                padding: "0",
-                width: "100%",
-                background: "rgba(51, 158, 172, 0.9)",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "2.25vh",
-                fontSize: "2.5vh",
-                height: "5vh"
-              }}
-            >
-              수정완료
-            </button>
-          </Link>
+          <input
+            style={{
+              padding: "0",
+              width: "100%",
+              background: "rgba(51, 158, 172, 0.9)",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: "2.25vh",
+              fontSize: "2.5vh",
+              height: "5vh"
+            }}
+            type="submit"
+            value="수정완료"
+          ></input>
         </Col>
       </Row>
     </form>
