@@ -63,7 +63,7 @@ function Subject({ match }) {
       <Row>
         {qualValueLi.map((val, i) => {
           return qualLi[i] == 1 ? (
-            <Col xs={{ offset: 1, span: 3 }}>
+            <Col xs={{ offset: 1, span: 2 }}>
               <Tag color="#44a0ac">{val}</Tag>
             </Col>
           ) : null;
@@ -99,59 +99,58 @@ function Subject({ match }) {
 
   return (
     <div id="subject-container">
-      <Row style={{ top : 20, left : 0, zIndex : 100, backgroundColor : "RGBA(255,255,255,0.0)"}}>
-        <Col xs={{ span: 2, offset: 1 }}>
-          <Link to="/">
-            <img style={{
-              width: "32px",
-              height: "auto",
-              marginLeft: "40%",
-              filter: "brightness(0) invert(1)"
-            }}
-              src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
-          </Link>
-        </Col>
-        <Col xs={{ span: 1, offset: 11 }}>
-          <Icon
-            type="heart"
-            theme={isBookmarked == 1 ? "filled" : "outlined"}
-            onClick={() => {
-              return authToken != "" ? updateBookmark(isBookmarked) : null;
-            }}
-          />
-        </Col>
-        <Col xs={{ span: 1, offset: 2 }}>
-          <Icon type="share-alt" />
-        </Col>
-      </Row>
-      <Row style={{ top : -27}}>
-        <Col
-          xs={{ span: 24 }}
-          style={{
-            height: "40vh"
-          }}>
+      <header>
+        <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
+          <Col xs={{ span: 8 }}>
+            <Link to="/">
+              <Icon
+                type="arrow-left"
+                style={{
+                  marginLeft: "25%",
+                  fontSize: "3vh"
+                  // color: "#ffffff"
+                }}
+              />
+            </Link>
+          </Col>
+          <Col xs={{ span: 1, offset: 11 }}>
+            <Icon
+              type="heart"
+              theme={isBookmarked == 1 ? "filled" : "outlined"}
+              onClick={() => {
+                return authToken != "" ? updateBookmark(isBookmarked) : null;
+              }}
+            />
+          </Col>
+          <Col xs={{ span: 1, offset: 2 }}>
+            <Icon type="share-alt" />
+          </Col>
+        </Row>
+      </header>
+      <Row>
+        <Col align="center">
           <Carousel>
             {item.regiImageUrlList != undefined
               ? item.regiImageUrlList.map((imgUrl, i) => {
-                return (
-                  <div>
-                    <img
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        margin: "auto"
-                      }}
-                      src={imgUrl}
-                    ></img>
-                  </div>
-                );
-              })
+                  return (
+                    <div>
+                      <img
+                        style={{
+                          width: "100vh",
+                          height: "40vh",
+                          backgroundSize: "contain"
+                        }}
+                        src={imgUrl}
+                      ></img>
+                    </div>
+                  );
+                })
               : null}
           </Carousel>
         </Col>
       </Row>
 
-      <Row style={{ marginTop: "5vh" }}>
+      <Row style={{ marginTop: "3vh" }}>
         <Row>
           <Col xs={{ span: 22, offset: 1 }}>
             <h1
