@@ -109,16 +109,16 @@ export default function MyPageBanner() {
         },
         {
           "sellItemId": "5e302c68cf6c2a2fab5324fe",
-          "traderName": "북을",
+          "traderName": "새내기",
           "traderPhoneNumber": "01012345678",
-          "title": "대학수학",
+          "title": "읽기와 쓰기",
           "transactionType": 1,
           "transPrice": "8000",
           "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
           "transactionProcessedTimeList": [
               "2020-02-01T10:31:19.317+0000"
            ],
-          "transactionStep": 0
+          "transactionStep": 1
         }
       ]
       );
@@ -160,7 +160,7 @@ export default function MyPageBanner() {
         height: "100vh", backgroundSize: "cover"
         ,paddingTop : "1vh"
       }} className="mypage">
-                    <Row style={{ top: 10, marginBottom: "1vh" }}>
+          <Row style={{ top: 10, marginBottom: "1vh" }}>
             <Col xs={{ span: 3 }}>
               <Link to="/">
                 <img style={{
@@ -228,6 +228,7 @@ export default function MyPageBanner() {
                 </Col>
               </Row>
             </Col>
+            <Link to='/customercenter'>
             <Col xs={{span: 4}}>
               <Row>
                 <Col xs={{span: 24}}>
@@ -249,6 +250,7 @@ export default function MyPageBanner() {
                 </Col>
               </Row>
             </Col>
+            </Link>
             <Col xs={{span: 4}}>
               <Row>
                 <Col xs={{span: 24}}>
@@ -693,9 +695,329 @@ export default function MyPageBanner() {
               }
             </Card>
             : null }
-            {sellProduct == true ?
-              <p>판매상품 프로세스</p>
+
+
+             {sellProduct == true ?
+            <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
+              {sellProduct != null ?
+                sellList.map((value,index) => (
+                  <div style={{width: "95%", margin: "auto auto"}}>
+                    {value.transactionType == 0 ?
+                      <Card style={{ width: "100%", height: "40%", backgroundColor: "#e5fdfc",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",  }}>
+                        <Row>
+                          <Col span={6} offset={6}> </Col>
+                          <Col span={6} offset={6} style={{color: "#339eac", fontSize: "12pt"}}>직거래</Col>
+                        </Row>
+
+                        {value.transactionStep == 0 ?
+                        <div>
+                        <Row>
+                          <Col span={5} offset={1}>
+                            <img style={{ width: "8vh", height: "12vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={17} offset={0}>
+                            <Row style={{fontStyle:"bold", fontSize: "12pt", textAlign:"left"}}>
+                              <Col offset={1}>
+                              {value.title}
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize:"8pt", color:"gray",}}>
+                              <Col span={12}>
+                              주문일자 : {/*나중에 수정하기*/}
+                              {value.transactionCreatedTime[2]}
+                              {value.transactionCreatedTime[3]}.
+                              {value.transactionCreatedTime[5]}
+                              {value.transactionCreatedTime[6]}.
+                              {value.transactionCreatedTime[8]}
+                              {value.transactionCreatedTime[9]}
+                              </Col>
+                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize: "10pt", color:"gray", marginTop:"2vh"}}>
+                              <Col span={4} offset={1}>
+                              <button style={{
+                                padding: "0",
+                                width: "100%",
+                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
+                                onClick={() => {}}
+                              >거절</button>
+                              </Col>
+                              <Col span={4} offset={1}>
+                              <button style={{
+                                padding: "0",
+                                width: "100%",
+                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
+                                onClick={() => {}}
+                              >수락</button>
+                              </Col>
+                              <Col span={4} offset={1}>
+                              <button style={{
+                                padding: "0",
+                                width: "100%",
+                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
+                                onClick={() => {}}
+                              >조회</button>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                        </div>
+                        : null}
+
+                      </Card>
+                    :
+                      <Card style={{ width: "100%", height: "40%", backgroundColor: "#e8f5ff",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh", }}>
+                        <Row>
+                        <Col span={7} offset={5}> </Col>
+                          <Col span={7} offset={5} style={{color: "#0b308e", fontSize: "12pt"}}>북을박스</Col>
+                        </Row>
+                        {value.transactionStep == 0 ?
+                        <div>
+                        <Row>
+                          <Col span={5} offset={1}>
+                            <img style={{ width: "8vh", height: "12vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={17} offset={0}>
+                            <Row style={{fontStyle:"bold", fontSize: "12pt", textAlign:"left"}}>
+                              <Col offset={1}>
+                              {value.title}
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize:"8pt", color:"gray",}}>
+                              <Col span={12}>
+                              주문일자 : {/*나중에 수정하기*/}
+                              {value.transactionCreatedTime[2]}
+                              {value.transactionCreatedTime[3]}.
+                              {value.transactionCreatedTime[5]}
+                              {value.transactionCreatedTime[6]}.
+                              {value.transactionCreatedTime[8]}
+                              {value.transactionCreatedTime[9]}
+                              </Col>
+                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize: "10pt", color:"gray", marginTop:"2vh"}}>
+                            <Col span={4} offset={1}>
+                              <button style={{
+                                padding: "0",
+                                width: "100%",
+                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
+                                onClick={() => {}}
+                              >거절</button>
+                              </Col>
+                              <Col span={4} offset={1}>
+                              <button style={{
+                                padding: "0",
+                                width: "100%",
+                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
+                                onClick={() => {}}
+                              >수락</button>
+                              </Col>
+                              <Col span={4} offset={1}>
+                              <button style={{
+                                padding: "0",
+                                width: "100%",
+                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
+                                onClick={() => {}}
+                              >조회</button>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                        </div>
+
+                        :
+
+                        <div style={{fontSize: "12pt", fontStyle: "bold"}}>
+                        <Row>
+                          <Col span={5} offset={1}>
+                            <img style={{ width: "8vh", height: "12vh", backgroundSize: "contain",
+                                    borderRadius: "7px", overflow: "hidden"}}
+                              onClick={() => {}}
+                              ></img>
+                          </Col>
+                          <Col span={17} offset={0}>
+                            <Row style={{fontStyle:"bold", fontSize: "12pt", textAlign:"left"}}>
+                              <Col offset={1}>
+                              {value.title}
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize:"8pt", color:"gray",}}>
+                              <Col span={12}>
+                              주문일자 : {/*나중에 수정하기*/}
+                              {value.transactionCreatedTime[2]}
+                              {value.transactionCreatedTime[3]}.
+                              {value.transactionCreatedTime[5]}
+                              {value.transactionCreatedTime[6]}.
+                              {value.transactionCreatedTime[8]}
+                              {value.transactionCreatedTime[9]}
+                              </Col>
+                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                              </Col>
+                            </Row>
+                            <Row style={{fontSize: "8pt", color:"gray", marginTop:"2vh"}}>
+                              <Col offset={0} style={{fontStyle: "bold"}}>
+                              구매자 : {value.traderName} |
+                              연락처 : {value.traderPhoneNumber}
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                        <Row style={{margin: "2vh", color: "#44a0ac"}}>
+                            판매자 수락
+                        </Row>
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "#038155"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        <Row style={{marginTop: "2vh", color: "#038196"}}>
+                          결제 요청중
+                        </Row> 
+
+                        {value.transactionStep == 1 ?
+                        <div>
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }}
+                            onClick={() => {}}
+                          >계좌 정보</button>
+                        </Row> 
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "gray"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        </div>
+                        :
+                        <div>
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "gray", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }}
+                          >계좌 정보</button>
+                        </Row>   
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "#065d33"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        </div>
+                        }                   
+                        
+                        {value.transactionStep == 4 || value.transactionStep > 4 ?
+                          <Row style={{margin: "2vh", color: "#065d92"}}>
+                            물건 비치 중
+                          </Row>
+                        :
+                          <Row style={{margin: "2vh", color: "gray"}}>
+                            물건 비치 중
+                          </Row>
+                        }
+                        
+                        {value.transactionStep == 4 ?
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "#075e92", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }} onClick={() => {}}
+                          >비치 완료</button>
+                        </Row>
+                        :
+                        <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "gray", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }} onClick={() => {}}
+                          >비치 완료</button>
+                        </Row>
+                        }
+                        
+                        {value.transactionStep > 4 ?
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "#0b308e"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        :
+                        <Row style={{fontSize: "5vh", margin: "2vh", color: "gray"}}>
+                          <Icon type="line" rotate="90"/>
+                        </Row>
+                        }
+                        
+                        {value.transactionStep == 5 || value.transactionStep > 5 ?
+                        <div>
+                          <Row style={{marginBottom: "2vh", color: "#0b308e"}}>
+                            거래 완료
+                          </Row>
+                          <Row style={{marginBottom: "2vh"}}>
+                          <button style={{
+                            padding: "0",
+                            width: "30%",
+                            background: "#075e92", color: "#ffffff",
+                            border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }} onClick={() => {}}
+                          >송금 문의</button>
+                          </Row>
+                        </div>
+                        :
+                        <div>
+                          <Row style={{marginBottom: "2vh", color: "gray"}}>
+                            거래 완료
+                          </Row>
+                          <Row style={{marginBottom: "2vh"}}>
+                            <button style={{
+                              padding: "0",
+                              width: "30%",
+                              background: "gray", color: "#ffffff",
+                              border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                              }} onClick={() => {}}
+                            >송금 문의</button>
+                          </Row>
+                        </div>
+                        }
+                        
+                        </div>
+
+                        }
+                      </Card>
+                    }
+                  </div>
+                ))
+              : 
+              <div>
+
+              </div>
+              }
+            </Card>
             : null }
+
           </Row>
       </div>
   )

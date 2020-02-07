@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
 import CustomerInquiry from "./pages/CustomerInquiry";
+import CustomerCenterPage from "./pages/CustomerCenterPage";
 
 import {
   BrowserView,
@@ -29,6 +30,7 @@ class App extends Component {
           <Route path="/buy/detail/:id" component={DetailSubject} />
           <Route path="/mypage" component={MyPage}/>
           <Route path="/customerinquiry" component={CustomerInquiry}/>
+          <Route path="/customercenter" component={CustomerCenterPage}/>
           </Switch>
         </Router>
       );
