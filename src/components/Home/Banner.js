@@ -336,7 +336,7 @@ class Banner extends Component {
                 </div>
                 :
                 <div id="banner-list">
-                  <Row clasnsName="banner-list-title">
+                  <Row clasnsName="banner-list-title" style={{marginBottom : "3vh"}}>
                     <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>방금 올라온 책</h5></Col>
                   </Row>
                   <Row>
