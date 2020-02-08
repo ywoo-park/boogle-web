@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import {
   Col,
   Row,
-  Carousel,
   Icon,
   Divider,
   Popconfirm,
@@ -13,6 +12,8 @@ import {
 import { Link, RouteComponentProps } from "react-router-dom";
 import axios from "axios";
 import NumberFormat from "react-number-format";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Subject.css";
 
 function Subject({ match }) {
@@ -57,17 +58,29 @@ function Subject({ match }) {
     const qualLi = qualOutList.concat(qualInList);
     const qualValueOut = ["깨끗", "이름기입", "긁힘/접힘", "찢어짐"];
     const qualValueIn = ["밑줄", "연필", "볼펜/형광펜", "문제풀음", "물에젖음"];
-    const qualValueLi = qualValueOut.concat(qualValueIn);
 
     return (
       <Row>
-        {qualValueLi.map((val, i) => {
-          return qualLi[i] == 1 ? (
-            <Col xs={{ offset: 1, span: 2 }}>
-              <Tag color="#44a0ac">{val}</Tag>
-            </Col>
-          ) : null;
-        })}
+        <Row>
+          <Col xs={{ offset: 1, span: 22 }}>
+          <Tag color="#656565">책 상태(외부)</Tag>
+            {qualValueOut.map((val, i) => {
+              return qualLi[i] == 1 ? (
+                <Tag color="#44a0ac">{val}</Tag>
+              ) : null;
+            })}
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={{ offset: 1, span: 22 }}>
+          <Tag color="#656565">책 상태(내부)</Tag>
+            {qualValueIn.map((val, i) => {
+              return qualLi[i] == 1 ? (
+                <Tag color="#44a0ac">{val}</Tag>
+              ) : null;
+            })}
+          </Col>
+        </Row>
       </Row>
     );
   };
@@ -99,58 +112,56 @@ function Subject({ match }) {
 
   return (
     <div id="subject-container">
-      <header>
-        <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
-          <Col xs={{ span: 8 }}>
-            <Link to="/">
-              <Icon
-                type="arrow-left"
-                style={{
-                  marginLeft: "25%",
-                  fontSize: "3vh"
-                  // color: "#ffffff"
-                }}
-              />
-            </Link>
-          </Col>
-          <Col xs={{ span: 1, offset: 11 }}>
-            <Icon
-              type="heart"
-              theme={isBookmarked == 1 ? "filled" : "outlined"}
-              onClick={() => {
-                return authToken != "" ? updateBookmark(isBookmarked) : null;
-              }}
-            />
-          </Col>
-          <Col xs={{ span: 1, offset: 2 }}>
-            <Icon type="share-alt" />
-          </Col>
-        </Row>
-      </header>
-      <Row>
-        <Col align="center">
-          <Carousel>
+      <Row style={{ top: 20, left: 0, zIndex: 100, backgroundColor: "RGBA(255,255,255,0.0)" }}>
+        <Col xs={{ span: 2, offset: 1 }}>
+          <Link to="/">
+            <img style={{
+              width: "32px",
+              height: "auto",
+              marginLeft: "40%",
+              filter: "brightness(0) invert(1)"
+            }}
+              src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+          </Link>
+        </Col>
+        <Col xs={{ span: 1, offset: 17 }}>
+          <Icon
+            type="heart"
+            theme={isBookmarked == 1 ? "filled" : "outlined"}
+            style={{ color: "white", fontSize: "4vh" }}
+            onClick={() => {
+              return authToken != "" ? updateBookmark(isBookmarked) : null;
+            }}
+          />
+        </Col>
+      </Row>
+      <Row style={{ top: -27 }}>
+        <Col
+          xs={{ span: 24 }}
+          style={{
+          }}>
+          <Carousel showThumbs={false}>
             {item.regiImageUrlList != undefined
               ? item.regiImageUrlList.map((imgUrl, i) => {
-                  return (
-                    <div>
-                      <img
-                        style={{
-                          width: "100vh",
-                          height: "40vh",
-                          backgroundSize: "contain"
-                        }}
-                        src={imgUrl}
-                      ></img>
-                    </div>
-                  );
-                })
+                return (
+                  <div style={{ margin: "auto" }}>
+                    <img
+                      style={{ width: "100%", height: "30vh", objectFit: "contain", margin: "auto" }}
+                      src={imgUrl}
+                    ></img>
+                  </div>
+                );
+              })
               : null}
           </Carousel>
         </Col>
       </Row>
 
+<<<<<<< HEAD
       <Row style={{ marginTop: "3vh" }}>
+=======
+      <Row style={{ marginTop: "0vh" }}>
+>>>>>>> 1ca505020c70822cbe0454cedd993ac48acc160c
         <Row>
           <Col xs={{ span: 22, offset: 1 }}>
             <h1
@@ -224,26 +235,32 @@ function Subject({ match }) {
       </Row>
       <Row>
         <Col xs={{ span: 2, offset: 1 }}>
-          <Icon type="user" />
+          <Icon style={{
+            color: "#44a0ac",
+            fontSize: "6vh",
+            fontWeight: "200"
+          }} type="question-circle"
+            id="profile-circle"
+          />
         </Col>
         {/* 아직 셀러 정보 조회 API 없음 */}
-        <Col xs={{ span: 10, offset: 1 }}>
+        <Col style={{ }} xs={{ span: 10, offset: 1 }}>
           <Row>
             <Col>
-              <span style={{ fontSize: "2vh", color: "#656565" }}>
+              <span style={{ fontSize: "2.25vh", color: "#656565" }}>
                 {seller.nickname}
               </span>
             </Col>
-            <Col>
-              <span style={{ fontSize: "2vh", color: "#656565" }}>
-                {seller.major}
+            <Col style={{ marginTop: "-1vh" }}>
+              <span style={{ fontSize: "1.7vh", color: "#656565" }}>
+                {seller.campus}
               </span>
             </Col>
           </Row>
         </Col>
-        <Col xs={{ span: 6, offset: 4 }}>
+        <Col xs={{ span: 7, offset: 2 }}>
           <Link>
-            <span style={{ fontSize: "1.5vh" }}>판매자 정보 더보기</span>
+            <span style={{ fontSize: "1.7vh", color: "#656565" }}>판매자 정보 더보기</span>
           </Link>
         </Col>
       </Row>
@@ -258,7 +275,7 @@ function Subject({ match }) {
             <Col xs={{ span: 23, offset: 1 }}>
               <span style={{ fontSize: "2vh", color: "#656565" }}>
                 {item.regiTime != undefined ? dateFormat(item.regiTime) : null}
-                {item.dealType == 0 ? " | 북을박스" : " | 직거래"}
+                {item.dealType == 0 ? " | 직거래 " : " | 북을박스"}
               </span>
             </Col>
           </Row>
@@ -267,14 +284,17 @@ function Subject({ match }) {
             : null}
         </Col>
       </Row>
-      <Row style={{ marginTop: "2vh", marginBottom: "2vh" }}>
+      <Row style={{ marginTop: "4vh", marginBottom: "3vh" }}>
         <Col xs={{ span: 22, offset: 1 }}>
-          <span style={{ fontSize: "2vh", color: "#656565" }}>
-            {item.comment}
-          </span>
+          <textarea
+            style={{
+              width: "100%", height : "80px", border: "#656565 solid 0.3px", borderRadius: "5px",
+              color: "transparent", textShadow: "0 0 0 #656565"
+            }}
+            value={item.comment} />
         </Col>
       </Row>
-      <Row style={{ marginBottom: "12vh" }}>
+      <Row style={{ marginBottom: "15vh" }}>
         <Col xs={{ offset: 1, span: 22 }}>
           <Popconfirm
             placement="bottom"

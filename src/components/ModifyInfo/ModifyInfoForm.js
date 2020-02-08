@@ -14,14 +14,14 @@ export default function ModifyInfoForm() {
   const [semester, setSemester] = useState("1");
   const [major, setMajor] = useState("경영학과");
 
-  const userData_url = "http://13.124.113.72:8080//users/modification";
+  const userData_url = "http://13.124.113.72:8080/users/modification";
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
 
   React.useEffect(() => {
     if (authToken != "" && authToken != null) {
       setIsSignedIn(true);
-      console.log(123);
+      // console.log(isSignedIn);
     } else {
       setIsSignedIn(false);
     }
@@ -29,6 +29,7 @@ export default function ModifyInfoForm() {
 
   useEffect(() => {
     if (isSignedIn) {
+      // console.log(123);
       const getPrevData = async () => {
         const result = await axios.get(userData_url, {
           headers: { Authorization: authToken }
@@ -37,7 +38,7 @@ export default function ModifyInfoForm() {
       };
       getPrevData();
     }
-  }, []);
+  });
 
   const validateNickname = async nickname => {
     if (nickname != undefined) {

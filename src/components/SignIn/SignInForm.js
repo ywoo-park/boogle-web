@@ -29,9 +29,12 @@ export default function SignInForm(props) {
       console.log(res.data.data);
       if(res.data.status == 200){
         localStorage.setItem('token', res.data.data);
+        window.location.reload();
+        /*
         setTimeout(() => {
           window.location.reload();
         }, 1000);
+        */
       }
     });
   };
