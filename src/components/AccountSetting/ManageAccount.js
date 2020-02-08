@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import AddAccount from "./AddAccount";
 
 export default function ManageAccount() {
+  const [addAccClicked, setAddAccClicked] = useState(false);
+  const [manageStep, setManageStep] = useState(0);
   return (
     <div>
       <Row
@@ -14,6 +17,7 @@ export default function ManageAccount() {
       >
         <Col xs={{ span: 3 }}>
           <Link to="/setting">
+            {/* step이 0이면 redirect 써주기 ; step이 1이면 link 대신 setManageStep */}
             <img
               style={{
                 width: "32px",
@@ -29,59 +33,73 @@ export default function ManageAccount() {
           <h5 style={{ color: "white" }}>계좌 관리</h5>
         </Col>
       </Row>
-      <Row id="account-list">
-        <Col>
-          <p>
-            Current Accounts API에서 리스트로 받으면, 그것을 map함수로 row를
-            만들어 그 안에 col - card를 넣기. 생성하기.
-          </p>
-          <Row>
+      {manageStep == 0 ? (
+        <div>
+          <Row id="account-list">
             <Col>
-              <Card
-                hoverable
-                style={{
-                  width: "100%",
-                  borderRadius: "18px",
-                  border: "solid 1px #a7a7a7",
-                  paddingBottom: "15vh"
-                }}
-              >
-                <Row>
-                  <Col>
-                    <span>국민은행 12344</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <span>예금주</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <button
-                      style={{
-                        padding: "0",
-                        width: "100%",
-                        background: "rgba(51, 158, 172, 0.9)",
-                        color: "#ffffff",
-                        border: "none",
-                        borderRadius: "2.25vh",
-                        fontSize: "2.5vh",
-                        height: "5vh"
-                      }}
-                    >
-                      삭제하기
-                    </button>
-                  </Col>
-                </Row>
-              </Card>
+              <p>
+                Current Accounts API에서 리스트로 받으면, 그것을 map함수로 row를
+                만들어 그 안에 col - card를 넣기. 생성하기.
+              </p>
+              <Row>
+                <Col>
+                  <Card
+                    hoverable
+                    style={{
+                      width: "100%",
+                      borderRadius: "18px",
+                      border: "solid 1px #a7a7a7",
+                      paddingBottom: "15vh"
+                    }}
+                  >
+                    <Row>
+                      <Col>
+                        <span>국민은행 12344</span>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>예금주</span>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <button
+                          style={{
+                            padding: "0",
+                            width: "100%",
+                            background: "rgba(51, 158, 172, 0.9)",
+                            color: "#ffffff",
+                            border: "none",
+                            borderRadius: "2.25vh",
+                            fontSize: "2.5vh",
+                            height: "5vh"
+                          }}
+                        >
+                          삭제하기
+                        </button>
+                      </Col>
+                    </Row>
+                  </Card>
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Col>
-      </Row>
-      <Row>
-        <Col>Add account button</Col>
-      </Row>
+          <Row>
+            <Col>
+              <div
+                onClick={() => {
+                  setManageStep(1);
+                }}
+              >
+                계좌 추가하기
+              </div>
+            </Col>
+          </Row>
+        </div>
+      ) : (
+        <AddAccount step={manageStep} />
+      )}
     </div>
   );
 }
