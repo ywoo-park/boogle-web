@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
-import {
-  Col,
-  Row,
-  Icon,
-  Divider,
-  Popconfirm,
-  message,
-  Tag
-} from "antd";
+import { Col, Row, Icon, Divider, Popconfirm, message, Tag } from "antd";
 import { Link, RouteComponentProps } from "react-router-dom";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Subject.css";
 
@@ -52,7 +44,6 @@ function Subject({ match }) {
 
   const dateFormat = rawDate => {
     const date = rawDate.slice(0, 10).split("-");
-    // return date[0] + "." + date[1] + "." + date[2];
     return `${date[0]}.${date[1]}.${date[2]}`;
   };
   const qualDisplay = (qualInList, qualOutList) => {
@@ -64,21 +55,17 @@ function Subject({ match }) {
       <Row>
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
-          <Tag color="#656565">책 상태(외부)</Tag>
+            <Tag color="#656565">책 상태(외부)</Tag>
             {qualValueOut.map((val, i) => {
-              return qualLi[i] == 1 ? (
-                <Tag color="#44a0ac">{val}</Tag>
-              ) : null;
+              return qualLi[i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
             })}
           </Col>
         </Row>
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
-          <Tag color="#656565">책 상태(내부)</Tag>
+            <Tag color="#656565">책 상태(내부)</Tag>
             {qualValueIn.map((val, i) => {
-              return qualLi[i] == 1 ? (
-                <Tag color="#44a0ac">{val}</Tag>
-              ) : null;
+              return qualLi[i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
             })}
           </Col>
         </Row>
@@ -113,16 +100,25 @@ function Subject({ match }) {
 
   return (
     <div id="subject-container">
-      <Row style={{ top: 20, left: 0, zIndex: 100, backgroundColor: "RGBA(255,255,255,0.0)" }}>
+      <Row
+        style={{
+          top: 20,
+          left: 0,
+          zIndex: 100,
+          backgroundColor: "RGBA(255,255,255,0.0)"
+        }}
+      >
         <Col xs={{ span: 2, offset: 1 }}>
           <Link to="/">
-            <img style={{
-              width: "32px",
-              height: "auto",
-              marginLeft: "40%",
-              filter: "brightness(0) invert(1)"
-            }}
-              src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+            <img
+              style={{
+                width: "32px",
+                height: "auto",
+                marginLeft: "40%",
+                filter: "brightness(0) invert(1)"
+              }}
+              src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png"
+            />
           </Link>
         </Col>
         <Col xs={{ span: 1, offset: 17 }}>
@@ -137,22 +133,24 @@ function Subject({ match }) {
         </Col>
       </Row>
       <Row style={{ top: -27 }}>
-        <Col
-          xs={{ span: 24 }}
-          style={{
-          }}>
+        <Col xs={{ span: 24 }} style={{}}>
           <Carousel showThumbs={false}>
             {item.regiImageUrlList != undefined
               ? item.regiImageUrlList.map((imgUrl, i) => {
-                return (
-                  <div style={{ margin: "auto" }}>
-                    <img
-                      style={{ width: "100%", height: "30vh", objectFit: "contain", margin: "auto" }}
-                      src={imgUrl}
-                    ></img>
-                  </div>
-                );
-              })
+                  return (
+                    <div style={{ margin: "auto" }}>
+                      <img
+                        style={{
+                          width: "100%",
+                          height: "30vh",
+                          objectFit: "contain",
+                          margin: "auto"
+                        }}
+                        src={imgUrl}
+                      ></img>
+                    </div>
+                  );
+                })
               : null}
           </Carousel>
         </Col>
@@ -232,16 +230,18 @@ function Subject({ match }) {
       </Row>
       <Row>
         <Col xs={{ span: 2, offset: 1 }}>
-          <Icon style={{
-            color: "#44a0ac",
-            fontSize: "6vh",
-            fontWeight: "200"
-          }} type="question-circle"
+          <Icon
+            style={{
+              color: "#44a0ac",
+              fontSize: "6vh",
+              fontWeight: "200"
+            }}
+            type="question-circle"
             id="profile-circle"
           />
         </Col>
         {/* 아직 셀러 정보 조회 API 없음 */}
-        <Col style={{ }} xs={{ span: 10, offset: 1 }}>
+        <Col style={{}} xs={{ span: 10, offset: 1 }}>
           <Row>
             <Col>
               <span style={{ fontSize: "2.25vh", color: "#656565" }}>
@@ -257,7 +257,9 @@ function Subject({ match }) {
         </Col>
         <Col xs={{ span: 7, offset: 2 }}>
           <Link>
-            <span style={{ fontSize: "1.7vh", color: "#656565" }}>판매자 정보 더보기</span>
+            <span style={{ fontSize: "1.7vh", color: "#656565" }}>
+              판매자 정보 더보기
+            </span>
           </Link>
         </Col>
       </Row>
@@ -285,10 +287,15 @@ function Subject({ match }) {
         <Col xs={{ span: 22, offset: 1 }}>
           <textarea
             style={{
-              width: "100%", height : "80px", border: "#656565 solid 0.3px", borderRadius: "5px",
-              color: "transparent", textShadow: "0 0 0 #656565"
+              width: "100%",
+              height: "80px",
+              border: "#656565 solid 0.3px",
+              borderRadius: "5px",
+              color: "transparent",
+              textShadow: "0 0 0 #656565"
             }}
-            value={item.comment} />
+            value={item.comment}
+          />
         </Col>
       </Row>
       <Row style={{ marginBottom: "15vh" }}>

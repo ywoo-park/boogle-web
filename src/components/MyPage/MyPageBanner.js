@@ -28,71 +28,71 @@ export default function MyPageBanner() {
     }, []);
 
     const getMyPage = () => {
-      // axios.get('http://13.124.113.72:8080/myPage', {
-      //   headers: { Authorization: localStorage.getItem('token') }
-      // })
-      // .then((response) => {
-      //   console.log(response);
-      //   setName(response.data.data.userName)
-      //   setLikeList(response.data.data.bookmarkedItemList)
-      //   setBuyList(response.data.data.buyTransList)
-      //   setSellList(response.data.data.sellTransList)
-      // });
-      setName("김유진");
-      setLikeList([
-        {
-          "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-          "title": "맨큐의 경제학",
-          "regiPrice": "8000"
-        },
-        {
-          "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-          "title": "맨큐의 경제학",
-          "regiPrice": "10000"
-        },
-        {
-          "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-          "title": "맨큐의 경제학",
-          "regiPrice": "15000"
-        },
-        {
-          "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-          "title": "맨큐의 경제학",
-          "regiPrice": "20000"
-        }
-      ]);
-      setBuyList([
-        {
-          "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "traderName": "김판매",
-          "traderPhoneNumber": "01012345678",
-          "title": "맨큐의 경제학",
-          "transactionType": 0,
-          "transPrice": "20000",
-          "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
-          "transactionProcessedTimeList": [
-              "2020-02-01T10:17:13.576+0000"
-          ],
-          "transactionStep": 0
-        },
-        {
-          "sellItemId": "5e302b91cf6c2a2fab5324fb",
-          "traderName": "김중고",
-          "traderPhoneNumber": "01012345678",
-          "title": "선형대수학",
-          "transactionType": 1,
-          "transPrice": "20000",
-          "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
-          "transactionProcessedTimeList": [
-              "2020-02-01T10:17:13.576+0000"
-          ],
-          "transactionStep": 4
-        }
-      ]);
+      axios.get('http://13.124.113.72:8080/myPage', {
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      .then((response) => {
+        console.log(response);
+        setName(response.data.data.userName)
+        setLikeList(response.data.data.bookmarkedItemList)
+        setBuyList(response.data.data.buyTransList)
+        //setSellList(response.data.data.sellTransList)
+       });
+      //setName("김유진");
+      // setLikeList([
+      //   {
+      //     "sellItemId": "5e302b91cf6c2a2fab5324fb",
+      //     "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+      //     "title": "맨큐의 경제학",
+      //     "regiPrice": "8000"
+      //   },
+      //   {
+      //     "sellItemId": "5e302b91cf6c2a2fab5324fb",
+      //     "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+      //     "title": "맨큐의 경제학",
+      //     "regiPrice": "10000"
+      //   },
+      //   {
+      //     "sellItemId": "5e302b91cf6c2a2fab5324fb",
+      //     "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+      //     "title": "맨큐의 경제학",
+      //     "regiPrice": "15000"
+      //   },
+      //   {
+      //     "sellItemId": "5e302b91cf6c2a2fab5324fb",
+      //     "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+      //     "title": "맨큐의 경제학",
+      //     "regiPrice": "20000"
+      //   }
+      // ]);
+      // setBuyList([
+      //   {
+      //     "sellItemId": "5e302b91cf6c2a2fab5324fb",
+      //     "traderName": "김판매",
+      //     "traderPhoneNumber": "01012345678",
+      //     "title": "맨큐의 경제학",
+      //     "transactionType": 0,
+      //     "transPrice": "20000",
+      //     "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
+      //     "transactionProcessedTimeList": [
+      //         "2020-02-01T10:17:13.576+0000"
+      //     ],
+      //     "transactionStep": 0
+      //   },
+      //   {
+      //     "sellItemId": "5e302b91cf6c2a2fab5324fb",
+      //     "traderName": "김중고",
+      //     "traderPhoneNumber": "01012345678",
+      //     "title": "선형대수학",
+      //     "transactionType": 1,
+      //     "transPrice": "20000",
+      //     "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
+      //     "transactionProcessedTimeList": [
+      //         "2020-02-01T10:17:13.576+0000"
+      //     ],
+      //     "transactionStep": 4
+      //   }
+      // ]);
       setSellList([
         {
           "sellItemId": "5e302c68cf6c2a2fab5324fe",
@@ -453,7 +453,7 @@ export default function MyPageBanner() {
             : null }
             {buyProduct == true ?
             <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
-              {buyProduct != null ?
+              {buyList != null ?
                 buyList.map((value,index) => (
                   <div style={{width: "95%", margin: "auto auto"}}>
                     {value.transactionType == 0 ?
