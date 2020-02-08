@@ -28,8 +28,8 @@ export default function ModifyInfoForm() {
   }, []);
 
   useEffect(() => {
+    console.log(123);
     if (isSignedIn) {
-      // console.log(123);
       const getPrevData = async () => {
         const result = await axios.get(userData_url, {
           headers: { Authorization: authToken }
