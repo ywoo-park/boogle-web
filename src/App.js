@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
 import CustomerInquiry from "./pages/CustomerInquiry";
+import CustomerCenterPage from "./pages/CustomerCenterPage";
 import ModifyInfo from "./pages/ModifyInfo";
 
 import {
@@ -22,15 +23,16 @@ class App extends Component {
       return (
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/sell" component={Sell} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="mypage" component={MyPage} />
-            <Route path="/buy/detail/:id" component={DetailSubject} />
-            <Route path="/mypage" component={MyPage} />
-            <Route path="/customerinquiry" component={CustomerInquiry} />
-            <Route path="/modifyInfo" component={ModifyInfo} />
+          <Route exact path="/" component={Home} />
+          <Route path="/sell" component={Sell} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="mypage" component={MyPage} />
+          <Route path="/buy/detail/:id" component={DetailSubject} />
+          <Route path="/mypage" component={MyPage}/>
+          <Route path="/customerinquiry" component={CustomerInquiry}/>
+          <Route path="/customercenter" component={CustomerCenterPage}/>
+          <Route path="/modifyInfo" component={ModifyInfo} />
           </Switch>
         </Router>
       );
