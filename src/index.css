@@ -17,6 +17,10 @@
       -webkit-appearance: none;
       -webkit-border-radius: 0;
    }
+   select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+  }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

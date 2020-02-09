@@ -55,6 +55,10 @@
         font-size: 4vh;
         color : #44a0ac;  
     }
+    input::placeholder{
+        color : black;
+    }
+    .major-input:focus { outline: none; }
 }
 
 
@@ -114,6 +118,56 @@
         color : #44a0ac;  
     }
 
+    .major-search-input{
+        width : 100%;
+        background : rgba(255,255,255,0.22);
+        border : #707070 1px solid;
+        border-radius: 15px;
+        padding : 0 3vh 0 3vh;
+        color : black;
+        line-height: normal;
+        height : 30px;
+    }
+
+    .major-search-result{
+        min-width: 30%;
+        max-width: 100%;
+        background : rgba(255,255,255,0.22);
+        border : rgba(51, 158, 172, 0.9) 1px solid;
+        border-radius: 15px;
+        color : black;
+        line-height: normal;
+        height : 30px;
+        text-align: center;
+    }
+
+    .major-search-button{
+        position: absolute;
+        top : 2.5vh;
+        right : 10px;
+        z-index : 100;
+    }    
+
+    .major-search-button_2{
+        position: absolute;
+        top : 11.5vh;
+        right : 10px;
+        z-index : 100;
+    }    
+    .major-search-button_3{
+        position: absolute;
+        top : 20.5vh;
+        right : 10px;
+        z-index : 100;
+    }    
+
+    .major-search-input-button{
+        position: absolute;
+        bottom: 8px;
+        right : 15px;
+        z-index : 100;
+    }    
+    .major-input:focus { outline: none; }
 }
 
 @media (min-width: 577px) and (max-height : 1199px){
