@@ -18,6 +18,7 @@ export default function MyPageBanner() {
 
     const[level, setLevel] = useState(false);
     const[modal, setModal] = useState(false);
+    const[boogleBank, setBoogleBank] = useState(false);
 
     // const[directStep, setDirectStep] = useState("");
     // const[boxStep, setBoxStep] = useState("");
@@ -36,7 +37,7 @@ export default function MyPageBanner() {
         setName(response.data.data.userName)
         setLikeList(response.data.data.bookmarkedItemList)
         setBuyList(response.data.data.buyTransList)
-        //setSellList(response.data.data.sellTransList)
+        setSellList(response.data.data.sellTransList)
        });
       //setName("김유진");
       // setLikeList([
@@ -93,35 +94,51 @@ export default function MyPageBanner() {
       //     "transactionStep": 4
       //   }
       // ]);
-      setSellList([
-        {
-          "sellItemId": "5e302c68cf6c2a2fab5324fe",
-          "traderName": "북을",
-          "traderPhoneNumber": "01012345678",
-          "title": "대학수학",
-          "transactionType": 1,
-          "transPrice": "8000",
-          "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
-          "transactionProcessedTimeList": [
-              "2020-02-01T10:31:19.317+0000"
-           ],
-          "transactionStep": 0
-        },
-        {
-          "sellItemId": "5e302c68cf6c2a2fab5324fe",
-          "traderName": "새내기",
-          "traderPhoneNumber": "01012345678",
-          "title": "읽기와 쓰기",
-          "transactionType": 1,
-          "transPrice": "8000",
-          "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
-          "transactionProcessedTimeList": [
-              "2020-02-01T10:31:19.317+0000"
-           ],
-          "transactionStep": 1
-        }
-      ]
-      );
+      // setSellList([
+      //   {
+      //     "sellItemId": "5e302c68cf6c2a2fab5324fe",
+      //     "traderName": "북을",
+      //     "traderPhoneNumber": "01012345678",
+      //     "title": "대학수학",
+      //     "transactionType": 1,
+      //     "transPrice": "8000",
+      //     "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
+      //     "transactionProcessedTimeList": [
+      //         "2020-02-01T10:31:19.317+0000"
+      //      ],
+      //     "transactionStep": 0
+      //   },
+      //   {
+      //     "sellItemId": "5e302c68cf6c2a2fab5324fe",
+      //     "traderName": "새내기",
+      //     "traderPhoneNumber": "01012345678",
+      //     "title": "읽기와 쓰기",
+      //     "transactionType": 1,
+      //     "transPrice": "8000",
+      //     "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
+      //     "transactionProcessedTimeList": [
+      //         "2020-02-01T10:31:19.317+0000"
+      //      ],
+      //     "transactionStep": 1
+      //   }
+      // ]
+      // );
+    }
+
+    const changeTransactionStep = (sellItemId) => {
+
+      axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+
+      .then((response) => {
+        console.log(response);
+       });
+
+    }
+
+    const payConfirmOnClickHandler = (sellItemId) => {
+        changeTransactionStep(sellItemId);
     }
 
     const viewLikeProduct = e => {
@@ -152,7 +169,14 @@ export default function MyPageBanner() {
 
     const showLevel = e => {
       setLevel(true);
+      setBoogleBank(false);
     }
+
+    const showBoogleBank = e => {
+      setLevel(false);
+      setBoogleBank(true);
+    }
+
 
     return (
       <div style={{
@@ -201,6 +225,16 @@ export default function MyPageBanner() {
               onClick = {() => {showModal(); showLevel();}}
               />
             </Col>
+            {modal == true ? 
+              <Modal
+              visible={modal}
+              onOk={() => {closeModal();}}
+              onCancel={() => {closeModal();}}>
+                {level == true ?
+                  <p>User Level Image</p> 
+                : null }
+              </Modal>
+            : null }
           </Row>
           <Row style={{marginTop: "5vh"}}>
             <label style={{color: "#ffffff"}}>{name}님, 안녕하세요!</label> 
@@ -273,17 +307,6 @@ export default function MyPageBanner() {
               </Row>
             </Col>
           </Row>
-
-          {modal == true ? 
-            <Modal
-            visible={modal}
-            onOk={() => {closeModal();}}
-            onCancel={() => {closeModal();}}>
-              {level == true ?
-                <p>User Level Image</p> 
-              : null }
-            </Modal>
-          : null }
           
           <Row style={{marginTop: "5vh"}}>
             <Col xs={{span: 6, offset: 3}}>
@@ -605,9 +628,20 @@ export default function MyPageBanner() {
                             background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                             border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
                             }}
-                            onClick={() => {}}
+                            onClick={() => {showModal(); showBoogleBank();}}
                           >결제 하기</button>
                         </Row> 
+                        {modal == true ? 
+                          <Modal
+                          visible={modal}
+                          onOk={() => {payConfirmOnClickHandler(value.sellItemId)}}
+                          onCancel={() => {closeModal();}}>
+                            {boogleBank == true ?
+                              <p style={{color: "#000000", fontSize: "3vh"}}>
+                                북을 계좌번호로 입금해주세요</p> 
+                            : null }
+                          </Modal>
+                        : null }
                         <Row style={{fontSize: "5vh", margin: "2vh", color: "gray"}}>
                           <Icon type="line" rotate="90"/>
                         </Row>
