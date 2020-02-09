@@ -30,6 +30,7 @@
     "react-scripts": "3.1.2",
     "react-select": "^3.0.8",
     "react-smooth-scrollbar": "^8.0.6",
+    "react-spinners": "^0.8.0",
     "react-sticky-el": "^1.0.20",
     "react-tag-autocomplete": "^5.11.2",
     "react-tag-box": "^1.6.0",
