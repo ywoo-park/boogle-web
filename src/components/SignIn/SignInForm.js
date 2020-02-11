@@ -25,16 +25,9 @@ export default function SignInForm(props) {
 
   const loginSend = async data => {
     Axios.post(login_check_url, data).then(res => {
-      console.log(res.data.status);
-      console.log(res.data.data);
       if(res.data.status == 200){
         localStorage.setItem('token', res.data.data);
         window.location.reload();
-        /*
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-        */
       }
     });
   };
@@ -43,11 +36,11 @@ export default function SignInForm(props) {
     <div style={{
       background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
       height: "100vh", backgroundSize: "cover"
-      , paddingTop: "5vh"
+      , paddingTop: "30px"
     }}>
       {isSignedIn == true ? <Redirect to="/mypage"/>: <div></div>}
       <Link to="/">
-        <Row style={{ marginBottom: "5vh" }}>
+        <Row style={{ marginBottom: "20px" }}>
           <Col xs={{ offset : 1, span: 2 }}><img style={{
             width: "32px",
             height: "auto",
@@ -58,20 +51,21 @@ export default function SignInForm(props) {
             </Col>
         </Row>
       </Link>
-      <Row style={{ marginBottom: "10vh" }}>
+      <Row style={{ marginBottom: "40px" }}>
         <Col xs={{ span: 4, offset: 10 }}>
           <img style={{ width: "100%", height: "auto" }}
             src="https://s3.ap-northeast-2.amazonaws.com/boogle.shop/logo.png"></img>
         </Col>
       </Row>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
+        <Row style={{ marginTop: "10px", marginBottom: "10px" }}>
           <Col xs={{ span: 20, offset: 2 }} align="center">
             <input
               style={{
                 width: "100%",
+                height : "40px",
                 border: "#ffffff solid 1px",
-                borderRadius: "3vh",
+                borderRadius: "20px",
                 background: "RGBA(255, 255, 255,0.3)",
                 color: "#ffffff"
               }}
@@ -88,13 +82,14 @@ export default function SignInForm(props) {
             <ErrorMessage errors={errors} name="id" as="p" />
           </Col>
         </Row>
-        <Row style={{ marginTop: "1.5vh", marginBottom: "1.5vh" }}>
+        <Row style={{ marginTop: "10px", marginBottom: "10px" }}>
           <Col xs={{ span: 20, offset: 2 }} align="center">
             <input
               style={{
                 width: "100%",
+                height : "40px",
                 border: "#ffffff solid 1px",
-                borderRadius: "3vh",
+                borderRadius: "20px",
                 background: "RGBA(255, 255, 255,0.3)",
                 color: "#ffffff"
               }}
@@ -105,13 +100,14 @@ export default function SignInForm(props) {
             ></input>
           </Col>
         </Row>
-        <Row style={{ marginTop: "3.5vh", marginBottom: "3.5vh" }}>
+        <Row style={{ marginTop: "20px", marginBottom: "20px" }}>
           <Col style={{ textAlign: "center" }} xs={{ span: 20, offset: 2 }}>
             <input
               style={{
                 width: "100%",
+                height : "40px",
                 border: "#ffffff solid 1px",
-                borderRadius: "3vh",
+                borderRadius: "20px",
                 background: "#ffffff",
                 color: "#666666",
               }}
@@ -120,19 +116,19 @@ export default function SignInForm(props) {
         </Row>
       </form>
       <Row>
-        <Col offset={2} span={20}><Divider style={{ background: "#ffffff", height: "0.18vh" }} /></Col>
+        <Col offset={2} span={20}><Divider style={{ background: "#ffffff", height: "1px" }} /></Col>
       </Row>
-      <Row style={{ marginBottom: "1.5vh" }}>
+      <Row style={{ marginBottom: "15px" }}>
         <Col align="center">
           <Link><span style={{ color: "#ffffff" }}>아이디 찾기</span></Link>
         </Col>
       </Row>
-      <Row style={{ marginBottom: "1.5vh" }}>
+      <Row style={{ marginBottom: "15px" }}>
         <Col align="center">
           <Link><span style={{ color: "#ffffff" }}>비밀번호 찾기</span></Link>
         </Col>
       </Row>
-      <Row style={{ marginBottom: "1.5vh" }}>
+      <Row style={{ marginBottom: "15px" }}>
         <Col align="center">
           <Link to="/signup"><span style={{ color: "#ffffff" }}>회원가입</span></Link>
         </Col>
