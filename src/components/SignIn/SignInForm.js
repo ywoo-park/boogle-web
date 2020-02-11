@@ -76,11 +76,7 @@ export default function SignInForm(props) {
               name="email"
               placeholder="아이디"
               ref={register({
-                required: "이메일을 입력해주세요",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "이메일의 형태로 입력해주세요."
-                }
+                required: "아이디 또는 이메일을 입력해주세요",
               })}
             ></input>
             <ErrorMessage errors={errors} name="id" as="p" />
