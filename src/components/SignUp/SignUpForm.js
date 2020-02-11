@@ -192,7 +192,7 @@ export default function SignUpForm() {
         <section id="signup-form-container">
             <form name="firstForm" onSubmit={handleSubmit(onSubmitFirstForm)}>
                 <div class={formStyle[0]}>
-                    <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
+                    <Row style={{ marginTop: "30px", marginBottom: "40px" }}>
                         <Col xs={{ span: 8 }}>
                             <Link to="/signin">
                                 <img style={{
@@ -226,10 +226,10 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row >
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -246,8 +246,8 @@ export default function SignUpForm() {
                                         validateEmail(e.target.value)
                                     }
                                 }} />
-                            {!validatedEmail && <p style={{ marginBottom: "-2.5vh" }}>중복된 이메일입니다.</p>}
-                            <ErrorMessage style={{ marginBottom: "-2.5vh" }} errors={errors} name="email" as="p" />
+                            {!validatedEmail && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>중복된 이메일입니다.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="email" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -256,10 +256,10 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -268,8 +268,8 @@ export default function SignUpForm() {
                                 })}
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 type="password" />
-                            {password.length < 8 && password.length > 0 && <p style={{ marginBottom: "-2.5vh" }}>8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요.</p>}
-                            <ErrorMessage style={{ marginBottom: "-2.5vh" }} errors={errors} name="password" as="p" />
+                            {password.length < 8 && password.length > 0 && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="password" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -278,10 +278,10 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -290,16 +290,16 @@ export default function SignUpForm() {
                                 })}
                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
                                 type="password" />
-                            {confirmPassword != password && confirmPassword.length > 0 && <p style={{ marginBottom: "-2.5vh" }}>비밀번호가 일치하지 않습니다.</p>}
-                            <ErrorMessage style={{ marginBottom: "-2.5vh" }} errors={errors} name="password" as="p" />
+                            {confirmPassword != password && confirmPassword.length > 0 && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>비밀번호가 일치하지 않습니다.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="password" as="p" />
                         </Col>
                     </Row>
-                    <Row style={{ marginTop: "4.0vh", marginBottom: "2.0vh" }}>
+                    <Row style={{ marginTop: "15px", marginBottom: "15px" }}>
                         <Col offset={2} span={20}>
                             <Divider style={{ background: "lightgray" }} />
                         </Col>
                     </Row>
-                    <Row style={{ marginBottom: "2vh" }}>
+                    <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[0] == "0") {
@@ -330,19 +330,19 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[0]}>
                                 <textarea
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
-                                        height: "20vh"
+                                        height: "100px"
                                     }}
                                     value={Term1} />
                             </Collapse>
                         </Col>
                     </Row>
-                    <Row style={{ marginBottom: "2vh" }}>
+                    <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[1] == "0") {
@@ -367,27 +367,26 @@ export default function SignUpForm() {
                                         <span style={{ color: "#e95513" }}>(필수)</span>
                             </small>
                         </Col>
-                        <Col offset={0
-                        } span={2}>
+                        <Col offset={0} span={2}>
                             <img style={{ width: "100%", height: "auto" }}
                                 onClick={() => { handleOpenCollapse(1) }}
                                 src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[1]}>
                                 <textarea
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
-                                        height: "20vh"
+                                        height: "100px"
                                     }}
                                     value={Term2} />
                             </Collapse>
                         </Col>
                     </Row>
-                    <Row style={{ marginBottom: "6vh" }}>
+                    <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[2] == "0") {
@@ -417,19 +416,19 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[2]}>
                                 <textarea
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
-                                        height: "20vh"
+                                        height: "100px"
                                     }}
                                     value={Term3} />
                             </Collapse>
                         </Col>
                     </Row>
-                    <Row style={{ marginBottom: "15vh" }}>
+                    <Row style={{ marginBottom: "100px" }}>
                         <Col xs={{ span: 20, offset: 2 }}>
                             <button
                                 type="button"
@@ -445,14 +444,14 @@ export default function SignUpForm() {
                                     padding: "0",
                                     width: "100%",
                                     background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                    border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh",
+                                    border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                 }}
                             >다음 단계</button>
                         </Col>
                     </Row>
                 </div>
                 <div class={formStyle[1]}>
-                    <Row style={{ marginTop: "3vh", marginBottom: "5vh" }}>
+                    <Row style={{ marginTop: "30px", marginBottom: "40px" }}>
                         <Col xs={{ span: 8 }}>
                             <img style={{
                                 width: "32px",
@@ -485,15 +484,15 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
                                 name="name" ref={register({ required: "이름을 입력해주세요" })} />
-                            <ErrorMessage style={{ marginBottom: "-2.5vh" }} errors={errors} name="name" as="p" />
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="name" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -502,10 +501,10 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -518,8 +517,8 @@ export default function SignUpForm() {
                                         validateNickname(e.target.value)
                                     }
                                 }} />
-                            {!validatedNickname && <p style={{ marginBottom: "-2.5vh" }}>중복된 닉네임입니다.</p>}
-                            <ErrorMessage style={{ marginBottom: "-2.5vh" }} errors={errors} name="nickname" as="p" />
+                            {!validatedNickname && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>중복된 닉네임입니다.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="nickname" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -528,16 +527,16 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <select onChange={(e) => { setValue('semester', e.target.value) }} name="campus"
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent",
                                 }}>
                                 {["서강대학교"]
                                     .map((value, index) => {
-                                        return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "2vh" }}
+                                        return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }}
                                             key={index}>{value}</option>
                                     })}
                             </select>
@@ -551,13 +550,12 @@ export default function SignUpForm() {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 24, offset: 0 }}>
-
+                                <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 24, offset: 0 }}>
                                     <input
                                         readonly
                                         className="major-input"
                                         style={{
-                                            width: "100%", border: "none",
+                                            width: "100%", height : "40px", border: "none",
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                             backgroundColor: "transparent"
                                         }}
@@ -573,11 +571,11 @@ export default function SignUpForm() {
                                     {(majorList.length == 1 && majorCount == 1 && majorList.length == majorCount)
                                         || (majorList.length > 1) ?
 
-                                        <div style={{ marginTop: "3vh" }}>
-
+                                        <div>
                                             <input
                                                 style={{
-                                                    width: "100%", border: "none",
+                                                    marginTop : "22px",
+                                                    width: "100%", height : "40px", border: "none",
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
@@ -590,7 +588,7 @@ export default function SignUpForm() {
                                         </div>
 
                                         : majorList.length == 1 && majorCount == 0 ?
-                                            <div style={{ margin: "3vh auto auto auto", textAlign: "center" }}>
+                                            <div style={{ margin: "10px auto 20px auto", textAlign: "center" }}>
                                                 <Icon onClick={() => {
                                                     let currentMajorCount = majorCount + 1;
                                                     setMajorCount(currentMajorCount);
@@ -602,10 +600,11 @@ export default function SignUpForm() {
 
                                     {(majorList.length == 2 && majorCount == 2 && majorList.length == majorCount)
                                         || (majorList.length > 2) ?
-                                        <div style={{ marginTop: "3vh" }}>
+                                        <div>
                                             <input
                                                 style={{
-                                                    width: "100%", border: "none",
+                                                    marginTop : "22px",
+                                                    width: "100%", height : "40px", border: "none",
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
@@ -617,7 +616,7 @@ export default function SignUpForm() {
                                         </div>
 
                                         : majorList.length == 2 && majorCount == 1 ?
-                                            <div style={{ margin: "3vh auto auto auto", textAlign: "center" }}>
+                                            <div style={{ margin: "10px auto 20px auto", textAlign: "center" }}>
                                                 <Icon onClick={() => {
                                                     let currentMajorCount = majorCount + 1;
                                                     setMajorCount(currentMajorCount);
@@ -657,7 +656,7 @@ export default function SignUpForm() {
                                                 searchedMajorList.map((major) => {
                                                     console.log(major);
                                                     return (
-                                                        <Row style={{ marginTop: "3vh" }}>
+                                                        <Row style={{ marginTop: "20px" }}>
                                                             <Col xs={{ span: 24, offset: 0 }}>
                                                                 <input
                                                                     value={major}
@@ -690,19 +689,19 @@ export default function SignUpForm() {
                                 </Col>
                             </Row>
                             <Row>
-                                <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 24, offset: 0 }} >
+                                <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 24, offset: 0 }} >
                                     <select onChange={(e) => { 
                                         if(e.target.value == "졸업생") setSemester("10");
                                         else setSemester(e.target.value[0].toString());
                                     }} name="semester"
                                         style={{
-                                            width: "100%", border: "none",
+                                            width: "100%", height : "40px", border: "none",
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                             backgroundColor: "transparent"
                                         }}>
                                         {["1학기", "2학기", "3학기", "4학기", "5학기", "6학기", "7학기", "8학기", "9학기 이상", "졸업생"]
                                             .map((value, index) => {
-                                                return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "2vh" }} key={index}>{value}</option>
+                                                return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>{value}</option>
                                             })}
                                     </select>
                                 </Col>
@@ -713,32 +712,32 @@ export default function SignUpForm() {
                         <Col xs={{ span: 4, offset: 2 }}><span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>핸드폰</span></Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 6, offset: 2 }}>
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 2 }}>
                             <select name="semester"
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}>
                                 {["010"]
                                     .map((value, index) => {
-                                        return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "2vh" }} key={index}>{value}</option>
+                                        return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>{value}</option>
                                     })}
                             </select>
                         </Col>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 6, offset: 1 }}>
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
                                 name="phone_2" ref={register({ required: "핸드폰 번호를 입력해주세요" })} />
                         </Col>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 6, offset: 1 }}>
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -751,7 +750,7 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 2 }}>
+                        <Col style={{ marginTop: "20px", marginBottom: "20px" }} xs={{ span: 10, offset: 2 }}>
                             <button
                                 type="button"
                                 style={{
@@ -759,25 +758,24 @@ export default function SignUpForm() {
                                     color: "#666666",
                                     backgroundColor: "#b0dae2",
                                     border: "#666666 0.3px solid",
-                                    borderTopLeftRadius: "2.25vh",
-                                    borderBottomLeftRadius: "2.25vh",
-                                    fontSize: "1.8vh",
-                                    height: "5vh"
+                                    borderTopLeftRadius: "8px",
+                                    borderBottomLeftRadius: "8px",
+                                    fontSize: "12px",
+                                    height: "36px"
                                 }}
                             >학교 이메일 인증</button>
                         </Col>
-                        <Col style={{ marginTop: "2.0vh", marginBottom: "3.0vh" }} xs={{ span: 10, offset: 0 }}>
+                        <Col style={{ marginTop: "20px", marginBottom: "20px" }} xs={{ span: 10, offset: 0 }}>
                             <button
                                 type="button"
                                 style={{
                                     width: "100%",
                                     color: "#666666",
                                     border: "#666666 0.3px solid",
-                                    borderLeft: "none",
-                                    borderTopRightRadius: "2.25vh",
-                                    borderBottomRightRadius: "2.25vh",
-                                    fontSize: "1.8vh",
-                                    height: "5vh"
+                                    borderTopRightRadius: "8px",
+                                    borderBottomRightRadius: "8px",
+                                    fontSize: "12px",
+                                    height: "36px"
                                 }}
                             >학생증 인증</button>
                         </Col>
@@ -788,23 +786,23 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{ marginTop: "-0.5vh", marginBottom: "3.0vh" }} xs={{ span: 20, offset: 2 }} >
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", border: "none",
+                                    width: "100%", height : "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
                                 onChange={(e) => {
                                     setCampusWebMail(e.target.value);
                                 }} />
-                                {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-2.5vh" }}>서강대학교 웹메일이 아닙니다.</p>}
+                                {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
                         </Col>
                     </Row>
 
                     {
                         emailAuthStep == 0 ?
-                            <Row style={{ marginBottom: "15vh" }}>
+                            <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
                                 <Col xs={{ span: 20, offset: 2 }}>
                                     <button
                                         type="button"
@@ -812,7 +810,7 @@ export default function SignUpForm() {
                                             padding: "0",
                                             width: "100%",
                                             background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                            border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                                            border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                         }}
                                         onClick={() => {
 
@@ -830,7 +828,7 @@ export default function SignUpForm() {
                                 </Col>
                             </Row>
                             : emailAuthStep == 1 ?
-                                <Row style={{ marginTop: "-15vh", marginBottom: "15vh" }}>
+                                <Row style={{ marginTop: "-70px", marginBottom: "70px" }}>
                                     <Col xs={{ span: 14, offset: 2 }}>
                                         <input
                                             style={{
@@ -847,11 +845,11 @@ export default function SignUpForm() {
                                         <button
                                             type="button"
                                             style={{
-                                                marginTop: "2vh",
+                                                marginTop: "10px",
                                                 padding: "0",
                                                 width: "100%",
                                                 background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                                border: "none", borderRadius: "3.0vh", fontSize: "2.5vh", height: "4vh"
+                                                border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                             }}
                                             onClick={() => {
 
@@ -873,18 +871,18 @@ export default function SignUpForm() {
                                                     padding: "0",
                                                     width: "100%",
                                                     background: "#ffffff", color: "#47a7b4",
-                                                    border: "#47a7b4 1px solid", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                                                    border: "#47a7b4 1px solid", borderRadius: "14px", fontSize: "18px", height: "32px"
                                                 }}
                                             >인증 완료</button>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginTop: "-12vh", marginBottom: "15vh" }}>
+                                    <Row style={{ marginTop: "-80px", marginBottom: "100px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
                                             <input style={{
                                                 padding: "0",
                                                 width: "100%",
                                                 background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                                border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                                                border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                             }}
                                                 type="submit" value="가입완료"
                                             />
@@ -898,7 +896,7 @@ export default function SignUpForm() {
 
                 {step == 2 ?
 
-                    <Row style={{ marginTop: "45vh" }}>
+                    <Row style={{ marginTop: "50%"}}>
                         <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
                             <BeatLoader
                                 size={"15px"}
@@ -910,7 +908,7 @@ export default function SignUpForm() {
 
                     : step == 3 ?
                         <div>
-                            <Row style={{ marginTop: "3vh" }}>
+                            <Row style={{ marginTop: "20px" }}>
                                 <Col xs={{ span: 8 }}>
                                 </Col>
                                 <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
