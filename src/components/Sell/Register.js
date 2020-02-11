@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Row, Col, notification, Layout, Icon, List, Card, Divider, Rate, Radio } from 'antd';
+import { Row, Col, Icon, Divider } from 'antd';
 import Search from '../Navbar/Search';
 import { withRouter, Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';

@@ -20,6 +20,7 @@ export default function SignUpForm() {
 
     const { register, handleSubmit, errors, getValues, setValue } = useForm();
     const [step, setStep] = useState(0);
+    const [email, setEmail] = useState("");
     const [validatedEmail, setValidatedEmail] = useState(true);
     const [validatedNickname, setValidatedNickname] = useState(true);
     const [password, setPassword] = useState(0);
@@ -242,11 +243,13 @@ export default function SignUpForm() {
                                     }
                                 })}
                                 onChange={(e) => {
+                                    setEmail(e.target.value);
                                     if (e.target.value.length > 0 && e.target.value != undefined) {
                                         validateEmail(e.target.value)
                                     }
                                 }} />
                             {!validatedEmail && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>중복된 이메일입니다.</p>}
+                            {validatedEmail && email.length > 0 && !email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>이메일 형식으로 입력해주세요.</p>}
                             <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="email" as="p" />
                         </Col>
                     </Row>
@@ -333,6 +336,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[0]}>
                                 <textarea
+                                    readOnly
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
@@ -377,6 +381,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[1]}>
                                 <textarea
+                                readOnly
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
@@ -419,6 +424,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[2]}>
                                 <textarea
+                                readOnly
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
@@ -552,7 +558,7 @@ export default function SignUpForm() {
                             <Row>
                                 <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 24, offset: 0 }}>
                                     <input
-                                        readonly
+                                        readOnly
                                         className="major-input"
                                         style={{
                                             width: "100%", height : "40px", border: "none",
@@ -562,17 +568,44 @@ export default function SignUpForm() {
                                         value={majorList.length != 0 ? majorList[0] : ""}
                                     />
 
-                                    <Icon className="major-search-button" type="search" theme="outlined"
+                                    {
+                                        majorList.length == 0 ?
+
+                                        <Icon className="major-search-button" type="search" theme="outlined"
 
                                         style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
                                         onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+
+                                        :
+
+                                        <Icon className="major-search-button" type="close-circle"
+
+                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+
+                                        onClick={() => { 
+
+                                            let currMajorList = majorList;
+                                            currMajorList.splice(0, 1)
+                                            setMajorList(currMajorList);
+
+                                            let currMajorCount = majorCount;
+                                            currMajorCount = currMajorCount - 1;
+                                            setMajorCount(currMajorCount);
+
+                                            setMajorSearchKeyword("");
+                                            setSearchedMajorList([]);;
+
+                                        }}></Icon>
+                                    }
+                                   
 
                                     {(majorList.length == 1 && majorCount == 1 && majorList.length == majorCount)
                                         || (majorList.length > 1) ?
 
                                         <div>
                                             <input
+                                            readOnly
                                                 style={{
                                                     marginTop : "22px",
                                                     width: "100%", height : "40px", border: "none",
@@ -582,9 +615,37 @@ export default function SignUpForm() {
                                                 value={majorList.length != 0 ? majorList[1] : null}
                                             />
 
-                                            <Icon className="major-search-button_2" type="search" theme="outlined"
-                                                style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
-                                                onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                        {
+
+                                        majorList.length == 1 ?
+
+                                        <Icon className="major-search-button_2" type="search" theme="outlined"
+
+                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+
+                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+
+                                        :
+
+                                        <Icon className="major-search-button_2" type="close-circle"
+
+                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+
+                                        onClick={() => { 
+
+                                            let currMajorList = majorList;
+                                            currMajorList.splice(1, 1)
+                                            setMajorList(currMajorList);
+
+                                            let currMajorCount = majorCount;
+                                            currMajorCount = currMajorCount - 1;
+                                            setMajorCount(currMajorCount);
+
+                                            setMajorSearchKeyword("");
+                                            setSearchedMajorList([]);;
+
+                                        }}></Icon>
+                                    }
                                         </div>
 
                                         : majorList.length == 1 && majorCount == 0 ?
@@ -602,6 +663,7 @@ export default function SignUpForm() {
                                         || (majorList.length > 2) ?
                                         <div>
                                             <input
+                                            readOnly
                                                 style={{
                                                     marginTop : "22px",
                                                     width: "100%", height : "40px", border: "none",
@@ -610,9 +672,36 @@ export default function SignUpForm() {
                                                 }}
                                                 value={majorList.length != 0 ? majorList[2] : null}
                                             />
-                                            <Icon className="major-search-button_3" type="search" theme="outlined"
-                                                style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
-                                                onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                        {
+                                        majorList.length == 2 ?
+
+                                        <Icon className="major-search-button_3" type="search" theme="outlined"
+
+                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+
+                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+
+                                        :
+
+                                        <Icon className="major-search-button_3" type="close-circle"
+
+                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+
+                                        onClick={() => { 
+
+                                            let currMajorList = majorList;
+                                            currMajorList.splice(2, 1)
+                                            setMajorList(currMajorList);
+
+                                            let currMajorCount = majorCount;
+                                            currMajorCount = currMajorCount - 1;
+                                            setMajorCount(currMajorCount);
+
+                                            setMajorSearchKeyword("");
+                                            setSearchedMajorList([]);;
+
+                                        }}></Icon>
+                                    }
                                         </div>
 
                                         : majorList.length == 2 && majorCount == 1 ?
@@ -659,6 +748,7 @@ export default function SignUpForm() {
                                                         <Row style={{ marginTop: "20px" }}>
                                                             <Col xs={{ span: 24, offset: 0 }}>
                                                                 <input
+                                                                readOnly
                                                                     value={major}
                                                                     className="major-search-result"
                                                                     onClick={() => {
@@ -808,14 +898,14 @@ export default function SignUpForm() {
                                         type="button"
                                         style={{
                                             padding: "0",
-                                            width: "100%",
+                                            width: "100%", 
                                             background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                             border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                         }}
                                         onClick={() => {
 
-                                            if(!((campusWebMail.length > 0) && 
-                                            (campusWebMail.indexOf("sogang.ac.kr") == -1))){
+                                            if(campusWebMail.length > 0 && 
+                                            campusWebMail.indexOf("sogang.ac.kr") != -1){
                                                 
                                                 const userName = getValues().name;
                                                 const email = getValues().email;
@@ -832,7 +922,7 @@ export default function SignUpForm() {
                                     <Col xs={{ span: 14, offset: 2 }}>
                                         <input
                                             style={{
-                                                width: "100%", border: "none",
+                                                width: "100%", height : "40px", border: "none",
                                                 borderBottom: "#44a0ac solid 1.0px",
                                                 backgroundColor: "transparent"
                                             }}
@@ -863,7 +953,7 @@ export default function SignUpForm() {
                                 </Row>
                                 :
                                 <div>
-                                    <Row style={{ marginBottom: "15vh" }}>
+                                    <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
                                             <button
                                                 type="button"
@@ -914,26 +1004,15 @@ export default function SignUpForm() {
                                 <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
                                     <h5 style={{ color: "#707070" }}>회원가입</h5>
                                 </Col>
-                                <Col xs={{ offset: 4, span: 2 }}>
-                                    <Link to="/">
-                                        <Icon style={{
-                                            marginLeft: "25%",
-                                            fontSize: "3vh", color: "#707070"
-                                        }} type="close"
-                                            onClick={() => {
-                                                return
-                                            }} />
-                                    </Link>
-                                </Col>
                             </Row>
                             <Row>
-                                <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "20vh" }}>
+                                <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "20%" }}>
                                     <img style={{ width: "70%", height: "auto" }}
                                         src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/Group+289%403x.png"></img>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "8vh" }}>
+                                <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "30px" }}>
                                     <h5 style={{ textAlign: "center", color: "#44a0ac", fontWeight: "800" }}>회원 가입 완료!</h5>
                                 </Col>
                             </Row>
