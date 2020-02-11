@@ -48,11 +48,11 @@
         display : none;
     }
     .sign-up-check{
-        font-size: 4vh;
+        font-size: 25px;
         color: #666666;
     }
     .sign-up-check-selected{
-        font-size: 4vh;
+        font-size: 25px;
         color : #44a0ac;  
     }
     input::placeholder{
@@ -110,11 +110,11 @@
         display : none;
     }
     .sign-up-check{
-        font-size: 4vh;
+        font-size: 25px;
         color: #666666;
     }
     .sign-up-check-selected{
-        font-size: 4vh;
+        font-size: 25px;
         color : #44a0ac;  
     }
 
