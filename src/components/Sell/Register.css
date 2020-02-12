@@ -29,20 +29,22 @@
     textarea:focus { outline: none; }
     .register-button{
         width : 100%;
+        height : 25px;
         background-color: #f7f7f7;
         color : #666666;
         border : #666666 0.3px solid;
-        font-size: 1.8vh;
+        font-size: 12px;
     }
     .register-button-big{
         height : 1.5vh;
     }
     .register-button-active{
         width : 100%;
+        height : 25px;
         color : #666666;
         background-color : #b0dae2;
         border : #666666 0.3px solid;
-        font-size: 1.8vh;
+        font-size: 12px;
     }
     small{
         font-weight: 900;
@@ -71,20 +73,22 @@
     textarea:focus { outline: none; }
     .register-button{
         width : 100%;
+        height : 25px;
         background-color: #f7f7f7;
         color : #666666;
         border : #666666 0.3px solid;
-        font-size: 1.8vh;
+        font-size: 12px;
     }
     .register-button-big{
         height : 1.5vh;
     }
     .register-button-active{
         width : 100%;
+        height : 25px;
         color : #666666;
         background-color : #b0dae2;
         border : #666666 0.3px solid;
-        font-size: 1.8vh;
+        font-size: 12px;
     }
     small{
         font-weight: 900;
