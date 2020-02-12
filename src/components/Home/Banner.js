@@ -78,7 +78,7 @@ class Banner extends Component {
                 <Row>
                   <Col offset={1} span={22}><Divider /></Col>
                 </Row>
-                <Row key={index} className="search-result-row" style={{ paddingTop: "1vh" }}
+                <Row key={index} className="search-result-row" 
                   onClick={() => {
                     if (value.regiPrice != "") {
                       this.setState({ value: value });
@@ -100,14 +100,14 @@ class Banner extends Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col style={{ marginTop: "2.0vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
+                      <Col style={{ marginTop: "10px", marginBottom: "-9px" }} xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "12px" }}>
                           저자 : {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
                       </Col>
                     </Row>
                     <Row>
-                      <Col style={{}} xs={{ span: 24 }}>
+                      <Col xs={{ span: 24 }}>
                         <small style={{ color: "#656565", fontSize: "12px" }}>
                         출판사 : {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
@@ -152,7 +152,7 @@ class Banner extends Component {
                           <Col style={{marginTop : "-0.25vh"}} xs={{ span: 12 }}>
                             <button style={{
                               borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                              color: "white", border: "none", fontSize: "10px", height: "22px", width: "100%"
+                              color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%"
                             }}>입고 알림 받기</button>
                           </Col>
                         </Row>

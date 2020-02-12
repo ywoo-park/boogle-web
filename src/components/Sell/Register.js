@@ -152,14 +152,15 @@ export default function Register() {
             {
                 step == 0 ?
                     <div stlye={{ overflow: "scroll" }}>
-                        <Row style={{ marginTop: "3vh" }}>
+                        <Row style={{ marginTop: "30px" }}>
                             <Col xs={{ span: 8 }}>
                                 <Link to="/">
-                                    <Icon style={{
+                                    <img style={{
+                                        width: "32px",
+                                        height: "auto",
                                         marginLeft: "25%",
-                                        fontSize: "3vh", color: "#707070"
-                                    }} type="arrow-left"
-                                    />
+                                    }}
+                                        src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
                                 </Link>
                             </Col>
                             <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
@@ -227,13 +228,18 @@ export default function Register() {
                             <div id="navbar">
                                 <header>
                                     <Row id="navbar-search-row-after-focused">
-                                        <Col xs={{ span: 4 }}><Icon style={{
-                                            marginLeft: "40%",
-                                            fontSize: "3vh", color: "white"
-                                        }} type="arrow-left"
-                                            onClick={() => {
-                                                { setStep(0) }
-                                            }} /></Col>
+                                        <Col xs={{ span: 4 }}>
+                                            <img style={{
+                                                width: "22px",
+                                                height: "auto",
+                                                marginLeft: "40%",
+                                                filter: "brightness(0) invert(1)"
+                                            }}
+                                                onClick={() => {
+                                                    { setStep(0) }
+                                                }}
+                                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                                        </Col>
                                         <Col xs={{ span: 18, offset: 0 }} >
                                             <Search focusOnSearch={focusOnSearch}
                                                 updateInputValue={updateInputValue}
@@ -253,7 +259,7 @@ export default function Register() {
                                             <Row key={index} className="search-result-row" style={{ paddingTop: "1vh" }}>
                                                 <Col xs={{ span: 5, offset: 1 }}>
                                                     <img style={{
-                                                        width: "14vh", height: "21vh", backgroundSize: "contain",
+                                                        width: "100px", height: "150px", backgroundSize: "contain",
                                                         borderRadius: "7px"
                                                     }}
                                                         src={resdata != null && value.imageUrl != null ? value.imageUrl.replace("type=m1", "") : ""}></img>
@@ -261,36 +267,41 @@ export default function Register() {
                                                 <Col xs={{ span: 14, offset: 2 }}>
                                                     <Row>
                                                         <Col xs={{ span: 24 }}>
-                                                            <span style={{ color: "#656565", fontSize: "2.5vh" }}>{resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
+                                                            <span style={{ color: "#656565", fontSize: "17px" }}>{resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "2vh" }}>
-                                                        <Col xs={{ span: 24 }}>
-                                                            <small style={{ color: "#656565", fontSize: "1.v6h" }}>
-                                                                {resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
-                                                                {resdata != null ? " / " : null}
-                                                                {resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
+                                                    <Row>
+                                                        <Col style={{ marginTop: "10px", marginBottom: "-9px" }} xs={{ span: 24 }}>
+                                                            <small style={{ color: "#656565", fontSize: "12px" }}>
+                                                                저자 : {resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
                                                             </small>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "-1vh" }}>
+                                                    <Row>
+                                                        <Col style={{}} xs={{ span: 24 }}>
+                                                            <small style={{ color: "#656565", fontSize: "12px" }}>
+                                                                출판사 : {resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
+                                                            </small>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row style={{ marginTop: "-10px" }}>
                                                         <Col xs={{ span: 24 }}>
-                                                            <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                                                            <small style={{ color: "#656565", fontSize: "12px" }}>
                                                                 {resdata != null ? value.pubdate.toString().substring(0, 4) + "년 " +
                                                                     value.pubdate.toString().substring(4, 6) + "월" : null}
                                                             </small>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "-1vh" }}>
+                                                    <Row style={{ marginTop: "-10px" }}>
                                                         <Col xs={{ span: 24 }}>
-                                                            <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                                                            <small style={{ color: "#656565", fontSize: "12px" }}>
                                                                 {resdata != null ? "ISBN : " + value.itemId : null}
                                                             </small>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "1.75vh" }}>
+                                                    <Row style={{ marginTop: "10px" }}>
                                                         <Col xs={{ span: 12 }}>
-                                                            <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                                                            <small style={{ color: "#656565", fontSize: "12px"}}>
                                                                 {resdata != null ? "정가 : " : null}
                                                                 {resdata != null ?
                                                                     <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
@@ -301,7 +312,7 @@ export default function Register() {
                                                         <Col xs={{ span: 12 }}>
                                                             <button style={{
                                                                 borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                                                                color: "white", border: "none", fontSize: "1.6vh", height: "3.5vh", width: "100%",
+                                                                color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
                                                                 padding: "auto"
                                                             }}
                                                                 onClick={() => {
@@ -332,7 +343,7 @@ export default function Register() {
                         :
                         step == 2 ?
                             <div>
-                                <Row style={{ marginTop: "3vh" }}>
+                                <Row style={{ marginTop: "30px", marginBottom: "30px"}}>
                                     <Col xs={{ span: 2, offset: 1 }}>
                                         <Link to="/">
                                             <img style={{
@@ -343,17 +354,17 @@ export default function Register() {
                                                 src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
                                         </Link>
                                     </Col>
-                                    <Col style={{ textAlign: "center", padding: "auto" }} xs={{ offset : 5, span: 8 }}>
+                                    <Col style={{ textAlign: "center", padding: "auto" }} xs={{ offset: 5, span: 8 }}>
                                         <h5 style={{ color: "#707070" }}>판매하기</h5>
                                     </Col>
                                     <Col xs={{ span: 8 }}>
                                     </Col>
                                 </Row>
-                                <Row style={{ marginTop: "2vh" }}>
+                                <Row>
                                     <Col xs={{ span: 6, offset: 9 }}>
                                         <img
                                             style={{
-                                                width: "14vh", height: "21vh", backgroundSize: "contain",
+                                                width: "100px", height: "150px", backgroundSize: "contain",
                                                 borderRadius: "7px"
                                             }}
                                             src={selectedItem.imageUrl.replace("type=m1", "")}></img>
@@ -370,10 +381,11 @@ export default function Register() {
                                     </Col>
                                 </Row>
                                 <form onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }} >
 
                                             <input
+                                            readOnly
                                                 style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                                 name="title" ref={register}
                                                 value={selectedItem.title.replace(/(<([^>]+)>)/ig, "")} />
@@ -384,9 +396,10 @@ export default function Register() {
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>저자</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }} >
                                             <input
+                                            readOnly
                                                 style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                                 name="author" ref={register}
                                                 value={selectedItem.author.replace(/(<([^>]+)>)/ig, "")} />
@@ -397,15 +410,16 @@ export default function Register() {
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>출판사</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }} >
                                             <input
+                                            readOnly
                                                 style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                                 name="publisher" ref={register}
                                                 value={selectedItem.publisher.replace(/(<([^>]+)>)/ig, "")} />
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 9, offset: 2 }}>
                                             <Row>
                                                 <Col xs={{ span: 24 }}>
@@ -415,6 +429,7 @@ export default function Register() {
                                             <Row>
                                                 <Col xs={{ span: 24 }} >
                                                     <input
+                                                    readOnly
                                                         style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                                         name="pubdate" ref={register}
                                                         value={selectedItem.pubdate.toString().substring(0, 4) + "년 " +
@@ -431,6 +446,7 @@ export default function Register() {
                                             <Row>
                                                 <Col xs={{ span: 24 }} >
                                                     <input
+                                                    readOnly
                                                         style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
                                                         name="price" ref={register}
                                                         value={selectedItem.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원"} />
@@ -438,12 +454,12 @@ export default function Register() {
                                             </Row>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }}>
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>거래방식</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 10, offset: 2 }}>
                                             <button
                                                 class={dealType == 0 ? "register-button-active" : "register-button"}
@@ -456,12 +472,12 @@ export default function Register() {
                                                 onClick={() => { setDealType(1) }}>북을박스</button>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }}>
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>사진</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }}>
                                             <input id="selectedFile" type="file" accept="image/*;capture=camera"
                                                 onChange={(e) => {
@@ -493,12 +509,12 @@ export default function Register() {
                                         </Col>
                                         {userImagesDiv}
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{marginBottom: "10px" }}>
                                         <Col xs={{ span: 8, offset: 2 }}>
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(외관)</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }} >
                                             <button
                                                 class={qualityOut[0] == true ? "register-button-active" : "register-button"}
@@ -551,12 +567,12 @@ export default function Register() {
                                                 }}>물에젖음</button>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 8, offset: 2 }}>
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(내부)</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }} >
                                             <button
                                                 class={qualityIn[0] == true ? "register-button-active" : "register-button"}
@@ -624,7 +640,7 @@ export default function Register() {
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>희망가격</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 10, offset: 2 }} >
                                             <CurrencyInput
                                                 precision="0"
@@ -645,7 +661,7 @@ export default function Register() {
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>코멘트</span>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "1.5vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }} >
                                             <textarea
                                                 style={{ width: "100%", height: "80px", border: "#656565 solid 0.3px", borderRadius: "5px" }}
@@ -653,7 +669,7 @@ export default function Register() {
                                                 placeholder="판매자의 연락처를 직접 기입할 경우 판매 등록이 취소될 수 있습니다." />
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "15vh" }}>
+                                    <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
                                             <button style={{
                                                 width: "100%",
