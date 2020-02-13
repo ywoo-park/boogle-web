@@ -71,7 +71,12 @@ class Banner extends Component {
           search={<Search searchType="buy" />}
           id="navbar"></Navbar>
 
-        {this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
+        {
+          this.state.mode == "sell" ?
+          <div></div> : null
+        }
+
+        {this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
           this.state.resdata.map((value, index) => {
             return (
               <div>

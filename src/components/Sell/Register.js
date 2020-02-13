@@ -9,7 +9,7 @@ import axios from 'axios';
 import './Register.css';
 
 export default function Register() {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(1);
     const [resdata, setResdata] = useState();
     const [isFocused, setIsFocused] = useState();
     const [isFocusedClass, setIsFocusedClass] = useState();
