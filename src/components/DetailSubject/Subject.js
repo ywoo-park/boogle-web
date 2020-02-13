@@ -28,15 +28,22 @@ function Subject({ match }) {
 
   useEffect(() => {
     if (id != "") {
+
       const getItemData = async () => {
+
         const result = await axios.get(detail_sub_url, {
+
           headers: { Authorization: authToken }
+          
         });
+
         // console.log(result.data.data);
         // 로그인 인증 정보 보내기. 에러 처리 필요
+
         setItem(result.data.data.sellItem);
         setSeller(result.data.data.sellerUser);
         setIsBookmarked(result.data.data.bookmarked);
+
       };
       getItemData();
     }

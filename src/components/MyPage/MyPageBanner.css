@@ -4,7 +4,6 @@
     height: 100vh;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
-    padding-bottom: 15vh;
 }
 
 .ant-card-body{
