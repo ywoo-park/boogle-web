@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, ErrorMessage } from 'react-hook-form';
-import { Row, Col, Icon, List, Card, Divider, Rate, Radio, Modal } from 'antd';
+import { Row, Col, Icon, List, Card, Divider, Rate, Radio, Modal, Popover } from 'antd';
 import Search from '../Navbar/Search';
 import { withRouter, Link } from "react-router-dom";
 import Camera from 'react-html5-camera-photo';
@@ -214,9 +214,6 @@ export default function SignUpForm() {
                                     height: "auto",
                                     marginLeft: "25%",
                                 }}
-                                    onClick={() => {
-                                        if (step == 1) setStep(0);
-                                    }}
                                     src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/x_mark.png" />
                             </Link>
                         </Col>
@@ -835,8 +832,29 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={{ span: 8, offset: 2 }}>
+                        <Col xs={{ span: 4, offset: 2 }}>
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 인증</span>
+                        </Col>
+                        <Col style={{position : "relative", top : -3.5, marginLeft : "5px"}} xs={{ span: 5, offset: 0 }}>
+                            <Popover 
+                            trigger="click"
+                            content={
+                                <div>
+                                    <span>학교 이메일 인증</span>
+                                    <ul>
+                                        <li>________@sogang.ac.kr 형식의 이메일로 학교 인증을 해주세요.</li>
+                                        <li>https://mail.sogang.ac.kr 혹은 SAINT 로그인 후 메일함을 확인해주세요.</li>
+                                        <li>북을에서 전송한 인증번호 4자리를 입력해주세요.</li>
+                                    </ul>
+                                    <span>학생증 인증</span>
+                                    <ul>
+                                        <li>실물(모바일) 학생증 혹은 SAINT 첫 화면을 촬영(캡쳐)하여 업로드해주세요.</li>
+                                        <li>학생증 인증 시 회원가입 승인까지 최대 2일이 소요될 수 있습니다</li>
+                                    </ul>
+                                </div>
+                            } title="학교 인증 도움말">
+                                <Icon type="question-circle"/>
+                            </Popover>
                         </Col>
                     </Row>
                     <Row>
@@ -966,7 +984,7 @@ export default function SignUpForm() {
                                             >인증 완료</button>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginTop: "-80px", marginBottom: "100px" }}>
+                                    <Row style={{ marginBottom: "100px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
                                             <input style={{
                                                 padding: "0",
@@ -1027,7 +1045,7 @@ export default function SignUpForm() {
                                         }}
                                         onClick={()=>{
                                         }}
-                                        >다음 단계</button>
+                                        >마이페이지로</button>
                                     </Link>
                                 </Col>
                             </Row>
