@@ -101,14 +101,14 @@ class Banner extends Component {
                     </Row>
                     <Row>
                       <Col style={{ marginTop: "10px", marginBottom: "-9px" }} xs={{ span: 24 }}>
-                        <small style={{ color: "#656565", fontSize: "12px" }}>
+                        <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
                           저자 : {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
                       </Col>
                     </Row>
                     <Row>
                       <Col xs={{ span: 24 }}>
-                        <small style={{ color: "#656565", fontSize: "12px" }}>
+                        <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
                         출판사 : {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
                         </small>
                       </Col>
