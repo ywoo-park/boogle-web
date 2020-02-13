@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Row, Col, Icon, Divider } from 'antd';
 import Search from '../Navbar/Search';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Redirect, Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
 import CurrencyInput from 'react-currency-input';
 import axios from 'axios';
@@ -159,95 +159,22 @@ export default function Register() {
     return (
         <section id="register-container">
             {
-                step == 0 ?
-                    <div stlye={{ overflow: "scroll" }}>
-                        <Row style={{ marginTop: "30px" }}>
-                            <Col xs={{ span: 8 }}>
-                                <Link to="/">
-                                    <img style={{
-                                        width: "32px",
-                                        height: "auto",
-                                        marginLeft: "25%",
-                                    }}
-                                        src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
-                                </Link>
-                            </Col>
-                            <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
-                                <h5 style={{ color: "#707070" }}>판매하기</h5>
-                            </Col>
-                            <Col xs={{ span: 8 }}>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ span: 24 }}>
-                                <div onClick={() => { setStep(1) }} style={{
-                                    width: "35vh", height: "35vh",
-                                    backgroundSize: "cover",
-                                    backgroundImage: "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
-                                    margin: "auto", marginTop: "4vh", marginBottom: "2vh", borderRadius: "50%",
-                                    filter: "grayscale(100%)",
-                                    opacity: "0.4"
-                                }}>
-                                    <Row>
-                                        <Col style={{ marginTop: "10vh" }} xs={{ span: 6, offset: 9 }}>
-                                            <Icon style={{
-                                                fontSize: "9vh", color: "white"
-                                            }} type="camera" />
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col style={{ padding: "auto", marginTop: "1.0vh" }} xs={{ span: 24 }}>
-                                            <h6 style={{ fontSize: "2.0vh", color: "white", textAlign: "center" }}>바코드 스캔</h6>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ offset: 2, span: 20 }}>
-                                <Divider />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ span: 24 }}>
-                                <div onClick={() => { setStep(1) }} style={{
-                                    width: "35vh", height: "35vh",
-                                    backgroundSize: "cover",
-                                    backgroundImage: "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
-                                    margin: "auto", marginTop: "4vh", marginBottom: "2vh", borderRadius: "50%"
-                                }}>
-                                    <Row>
-                                        <Col style={{ marginTop: "10vh" }} xs={{ span: 6, offset: 9 }}>
-                                            <Icon style={{
-                                                fontSize: "8vh", color: "white"
-                                            }} type="search" />
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col style={{ padding: "auto", marginTop: "1.0vh" }} xs={{ span: 24 }}>
-                                            <h6 style={{ fontSize: "2.0vh", color: "white", textAlign: "center" }}>검색 또는 직접 입력</h6>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div> :
                     step == 1 ?
                         <div>
                             <div id="navbar">
                                 <header>
                                     <Row id="navbar-search-row-after-focused">
                                         <Col xs={{ span: 4 }}>
-                                            <img style={{
-                                                width: "22px",
-                                                height: "auto",
-                                                marginLeft: "40%",
-                                                filter: "brightness(0) invert(1)"
-                                            }}
-                                                onClick={() => {
-                                                    { setStep(0) }
+                                            <Link to="/">
+                                                <img style={{
+                                                    width: "22px",
+                                                    height: "auto",
+                                                    marginLeft: "40%",
+                                                    filter: "brightness(0) invert(1)"
                                                 }}
-                                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                                                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                                            </Link>
+
                                         </Col>
                                         <Col xs={{ span: 18, offset: 0 }} >
                                             <Search focusOnSearch={focusOnSearch}

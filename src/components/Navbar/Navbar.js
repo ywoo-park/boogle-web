@@ -34,7 +34,7 @@ class Navbar extends Component {
 
     afterScrolled: "before-scrolled",
     isFocused: false,
-    mode : "buy"
+    mode: "buy"
   };
 
   componentDidMount() {
@@ -46,9 +46,14 @@ class Navbar extends Component {
     this.setState({ isFocusedClass: "isFocused" });
     this.props.focusOnSearch(isFocused);
   };
+
   updateInputValue = resdata => {
     this.props.updateInputValue(resdata);
   };
+
+  changeMode = (mode) => {
+    this.props.changeMode(mode);
+  }
 
   render() {
 
@@ -76,7 +81,10 @@ class Navbar extends Component {
                 <Search
                   focusOnSearch={this.focusOnSearch}
                   updateInputValue={this.updateInputValue}
-                  placeHoldere="구매할 도서의 제목, 저자를 입력해주세요."
+                  mode={this.state.mode}
+                  placeHolder={this.state.mode == "buy" ?
+                    "구매할 도서의 제목, 저자를 입력해주세요."
+                    : "판매할 도서의 제목, 저자를 입력해주세요."}
                 ></Search>
               </Col>
             </Row>
@@ -91,7 +99,7 @@ class Navbar extends Component {
                       src="https://s3.ap-northeast-2.amazonaws.com/boogle.shop/logo.png"
                     ></img>
                   </Col>
-                  <Col xs={{span : 4, offset : 0}}>
+                  <Col xs={{ span: 4, offset: 0 }}>
                     <button
                       class={this.state.mode == "sell" ? "mode-button-active" : "mode-button"}
                       style={{
@@ -104,13 +112,17 @@ class Navbar extends Component {
                         borderBottomRightRadius: "0px",
                         fontSize: "11px",
                         height: "30px",
-                        marginTop : "7.5%"
+                        marginTop: "7.5%"
                       }}
-                      onClick={() => this.setState({
-                        mode : "sell"
-                      })}>판매하기</button>
+                      onClick={() => {
+                        if (this.state.mode == "buy") {
+                          this.changeMode("sell");
+                          this.setState({ mode: "sell" });
+                        }
+                      }
+                      }>판매하기</button>
                   </Col>
-                  <Col xs={{span : 4, offset : 0}}>
+                  <Col xs={{ span: 4, offset: 0 }}>
                     <button
                       class={this.state.mode == "buy" ? "mode-button-active" : "mode-button"}
                       style={{
@@ -123,11 +135,14 @@ class Navbar extends Component {
                         borderBottomLeftRadius: "0px",
                         fontSize: "11px",
                         height: "30px",
-                        marginTop : "7.5%"
+                        marginTop: "7.5%"
                       }}
-                      onClick={() => this.setState({
-                        mode : "buy"
-                      })}>구매하기</button>
+                      onClick={() => {
+                        if (this.state.mode == "sell") {
+                          this.changeMode("buy");
+                          this.setState({ mode: "buy" });
+                        }
+                      }}>구매하기</button>
                   </Col>
                   <Col xs={{ span: 1, offset: 3 }}>
                     <Icon
@@ -163,14 +178,21 @@ class Navbar extends Component {
                     ></Icon>
                   </Col>
                 </Row>
-                <Row id="navbar-search-row">
-                  <Col xs={{ span: 20, offset: 2 }}>
-                    <Search
-                      focusOnSearch={this.focusOnSearch}
-                      placeHolder="구매할 도서의 제목, 저자를 입력해주세요."
-                    ></Search>
-                  </Col>
-                </Row>
+                {this.state.mode == "buy" ?
+                  <Row id="navbar-search-row">
+                    <Col xs={{ span: 20, offset: 2 }}>
+                      <Search
+                        focusOnSearch={this.focusOnSearch}
+                        placeHolder={this.state.mode == "buy" ?
+                          "구매할 도서의 제목, 저자를 입력해주세요."
+                          : "판매할 도서의 제목, 저자를 입력해주세요."}
+                        mode={this.state.mode}
+                      ></Search>
+                    </Col>
+                  </Row>
+                  : <Row></Row>
+                }
+
               </header>
               <header id="navbar-unfixed">
                 <Row>
