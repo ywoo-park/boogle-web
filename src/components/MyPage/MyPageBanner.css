@@ -1,0 +1,11 @@
+.mypage{
+    text-align: center;
+    width: 100%;
+    height: 100vh;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+}
+
+.ant-card-body{
+    padding: 2vh;
+}

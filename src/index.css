@@ -10,15 +10,17 @@
     }
 
     html, body {
-      position: fixed;
-      overflow: hidden;
-      
     }
+
     button:focus { outline:0 !important; }
     input {
       -webkit-appearance: none;
       -webkit-border-radius: 0;
    }
+   select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0px;
+  }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

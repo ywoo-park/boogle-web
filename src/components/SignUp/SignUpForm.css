@@ -8,7 +8,6 @@
         overscroll-behavior : none;
     }
     #navbar{
-        background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
         overflow : hidden;
         width : 100%;
         top : 0;
@@ -48,13 +47,64 @@
         display : none;
     }
     .sign-up-check{
-        font-size: 4vh;
+        font-size: 25px;
         color: #666666;
     }
     .sign-up-check-selected{
-        font-size: 4vh;
+        font-size: 25px;
         color : #44a0ac;  
     }
+
+    .major-search-input{
+        width : 100%;
+        background : rgba(255,255,255,0.22);
+        border : #707070 1px solid;
+        border-radius: 15px;
+        padding : 0 3vh 0 3vh;
+        color : black;
+        line-height: normal;
+        height : 30px;
+    }
+
+    .major-search-result{
+        min-width: 30%;
+        max-width: 100%;
+        background : rgba(255,255,255,0.22);
+        border : rgba(51, 158, 172, 0.9) 1px solid;
+        border-radius: 15px;
+        color : black;
+        line-height: normal;
+        height : 30px;
+        text-align: center;
+    }
+
+    .major-search-button{
+        position: absolute;
+        top : 13px;
+        right : 10px;
+        z-index : 100;
+    }    
+
+    .major-search-button_2{
+        position: absolute;
+        top : 73px;
+        right : 10px;
+        z-index : 100;
+    }    
+    .major-search-button_3{
+        position: absolute;
+        top : 133px;
+        right : 10px;
+        z-index : 100;
+    }    
+
+    .major-search-input-button{
+        position: absolute;
+        bottom: 8px;
+        right : 15px;
+        z-index : 100;
+    }    
+    .major-input:focus { outline: none; }
 }
 
 
@@ -67,7 +117,6 @@
         overscroll-behavior : none;
     }
     #navbar{
-        background-image: linear-gradient(to right, rgba(0, 161, 153, 0.9), rgba(5, 107, 147, 0.9));
         overflow : hidden;
         width : 100%;
         top : 0;
@@ -107,14 +156,64 @@
         display : none;
     }
     .sign-up-check{
-        font-size: 4vh;
+        font-size: 25px;
         color: #666666;
     }
     .sign-up-check-selected{
-        font-size: 4vh;
+        font-size: 25px;
         color : #44a0ac;  
     }
 
+    .major-search-input{
+        width : 100%;
+        background : rgba(255,255,255,0.22);
+        border : #707070 1px solid;
+        border-radius: 15px;
+        padding : 0 3vh 0 3vh;
+        color : black;
+        line-height: normal;
+        height : 30px;
+    }
+
+    .major-search-result{
+        min-width: 30%;
+        max-width: 100%;
+        background : rgba(255,255,255,0.22);
+        border : rgba(51, 158, 172, 0.9) 1px solid;
+        border-radius: 15px;
+        color : black;
+        line-height: normal;
+        height : 30px;
+        text-align: center;
+    }
+
+    .major-search-button{
+        position: absolute;
+        top : 13px;
+        right : 10px;
+        z-index : 100;
+    }    
+
+    .major-search-button_2{
+        position: absolute;
+        top : 73px;
+        right : 10px;
+        z-index : 100;
+    }    
+    .major-search-button_3{
+        position: absolute;
+        top : 133px;
+        right : 10px;
+        z-index : 100;
+    }    
+
+    .major-search-input-button{
+        position: absolute;
+        bottom: 8px;
+        right : 15px;
+        z-index : 100;
+    }    
+    .major-input:focus { outline: none; }
 }
 
 @media (min-width: 577px) and (max-height : 1199px){

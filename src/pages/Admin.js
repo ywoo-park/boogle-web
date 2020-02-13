@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import SignUpForm from "../components/SignUp/SignUpForm";
+import DashBoard from "../components/Admin/DashBoard";
 
 import axios from "axios";
 
-class SignUp extends Component {
+class Admin extends Component {
   state = {};
 
   componentDidMount() {}
@@ -12,11 +12,11 @@ class SignUp extends Component {
 
   render() {
     return (
-      <section id="signUp" >
-        <SignUpForm></SignUpForm>
+      <section id="admin">
+        <DashBoard></DashBoard>
       </section>
     );
   }
 }
 
-export default SignUp;
+export default Admin;
