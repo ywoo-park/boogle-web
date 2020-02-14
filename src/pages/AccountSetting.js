@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import ManageAccount from "../components/AccountSetting/ManageAccount";
+// import ManageAccount from "../components/AccountSetting/ManageAccount";
 
 import axios from "axios";
+import AccountForm from "../components/AccountSetting/AccountForm";
 
 class AccountSetting extends Component {
   state = {};
@@ -13,7 +14,7 @@ class AccountSetting extends Component {
   render() {
     return (
       <section id="accountSetting">
-        <ManageAccount></ManageAccount>
+        <AccountForm></AccountForm>
       </section>
     );
   }

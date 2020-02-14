@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col } from "antd";
 
-export default function AddAccount(props) {
-  const step = props.step;
+export default function AddAccount() {
+  const { step, dispatch } = useContext(ManageContext);
   const bankList = ["국민은행", "NH농협", "신한은행"];
   //나중에는 server에서 받아서 setBankList 하기.
 
   return (
     <Row>
       <Col>
-        은행 리스트 보여주기
         {bankList.map(bank => {
           return <span>{bank}</span>;
         })}
