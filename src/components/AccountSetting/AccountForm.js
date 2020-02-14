@@ -144,20 +144,6 @@ export default function AccountForm() {
             </Col>
           );
         })}
-
-        {/* <br />
-        onClick 하면 그 value 값을 <br />
-        새로운 div에 보내기
-        <br />
-        은행 채워져 있고
-        <br />
-        계좌번호 입력
-        <br />
-        예금주 입력
-        <br />
-        입력완료버튼
-        <br />
-        ManageAccount 띄우기 */}
       </Row>
     );
   }

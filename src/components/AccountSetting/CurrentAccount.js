@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Col, Row, Card } from "antd";
+import { ManageContext } from "./ManageAccount";
 
 export default function CurrentAccount() {
   const { step, dispatch } = useContext(ManageContext);
@@ -61,7 +62,7 @@ export default function CurrentAccount() {
           <Col>
             <button
               onClick={() => {
-                // setManageStep(1);
+                dispatch({ type: "ADD_ACCOUNT" });
               }}
             >
               계좌 추가하기
