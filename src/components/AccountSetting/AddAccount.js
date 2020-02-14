@@ -1,31 +1,41 @@
 import React, { useContext } from "react";
 import { Row, Col } from "antd";
+import { ManageContext } from "./ManageAccount";
 
 export default function AddAccount() {
   const { step, dispatch } = useContext(ManageContext);
-  const bankList = ["국민은행", "NH농협", "신한은행"];
+  const bankList = [
+    "국민은행",
+    "NH농협",
+    "신한은행",
+    "우리은행",
+    "기업은행",
+    "SC은행",
+    "부산은행"
+  ];
   //나중에는 server에서 받아서 setBankList 하기.
 
   return (
     <Row>
-      <Col>
-        {bankList.map(bank => {
-          return <span>{bank}</span>;
-        })}
-        {/* <br />
-      onClick 하면 그 value 값을 <br />
-      새로운 div에 보내기
-      <br />
-      은행 채워져 있고
-      <br />
-      계좌번호 입력
-      <br />
-      예금주 입력
-      <br />
-      입력완료버튼
-      <br />
-      ManageAccount 띄우기 */}
-      </Col>
+      {bankList.map(bank => {
+        return (
+          <Col
+            xs={{ span: 6, offset: 2 }}
+            onClick={() => {
+              // setNewBank(bank);
+              // return setManageStep(2);
+              dispatch({ type: "DETAIL_ACCOUNT" });
+            }}
+          >
+            <Row>
+              <Col>이미지</Col>
+            </Row>
+            <Row>
+              <Col>{bank}</Col>
+            </Row>
+          </Col>
+        );
+      })}
     </Row>
   );
 }
