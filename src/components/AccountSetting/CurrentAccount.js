@@ -3,7 +3,7 @@ import { Col, Row, Card } from "antd";
 import { ManageContext } from "./ManageAccount";
 
 export default function CurrentAccount() {
-  const { step, dispatch } = useContext(ManageContext);
+  const { manageSet, dispatch } = useContext(ManageContext);
 
   return (
     <Row id="refer-accounts">

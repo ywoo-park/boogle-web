@@ -3,7 +3,7 @@ import { Row, Col } from "antd";
 import { ManageContext } from "./ManageAccount";
 
 export default function AddAccount() {
-  const { step, dispatch } = useContext(ManageContext);
+  const { manageSet, dispatch } = useContext(ManageContext);
   const bankList = [
     "국민은행",
     "NH농협",
