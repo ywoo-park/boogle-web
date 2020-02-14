@@ -28,12 +28,7 @@ export default function DetailAccount() {
           </Row>
           <Row>
             <Col>
-              <input
-                title="bank"
-                onChange={e => {
-                  dispatch({ type: "CURRENT_ACCOUNTS" });
-                }}
-              />
+              <input title="bank" />
             </Col>
           </Row>
         </Col>
@@ -56,7 +51,7 @@ export default function DetailAccount() {
         <Col>
           <button
             onClick={() => {
-              // setManageStep(0);
+              dispatch({ type: "CURRENT_ACCOUNTS" });
             }}
           >
             입력완료
