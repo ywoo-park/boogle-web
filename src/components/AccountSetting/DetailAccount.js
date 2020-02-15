@@ -3,7 +3,7 @@ import { Row, Col } from "antd";
 import { ManageContext } from "./ManageAccount";
 
 export default function DetailAccount() {
-  const { step, dispatch } = useContext(ManageContext);
+  const { manageSet, dispatch } = useContext(ManageContext);
 
   return (
     <Row>
@@ -15,7 +15,7 @@ export default function DetailAccount() {
         </Row>
         <Row>
           <Col>
-            <span>arst</span>
+            <span>{manageSet.newAccount}</span>
           </Col>
         </Row>
       </Row>

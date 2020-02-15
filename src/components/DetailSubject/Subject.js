@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
 import { Col, Row, Icon, Divider, Popconfirm, message, Tag } from "antd";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps, Redirect } from "react-router-dom";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import { Carousel } from "react-responsive-carousel";
@@ -14,12 +14,24 @@ function Subject({ match }) {
   const [item, setItem] = useState({});
   const [seller, setSeller] = useState({});
   const [isBookmarked, setIsBookmarked] = useState(0);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
   const server_url = `http://13.124.113.72:8080`;
   const detail_sub_url = `${server_url}/sell/detail?id=${id}`;
   const bookmark_url = `${server_url}/bookmark?sellItemId=${id}`;
   const transaction_url = `${server_url}/transaction`;
+  useEffect(() => {
+    if (
+      localStorage.getItem("token") != "" &&
+      localStorage.getItem("token") != null
+    ) {
+      setIsSignedIn(true);
+    } else {
+      setIsSignedIn(false);
+    }
+  }, []);
 
   useEffect(() => {
     const id = window.location.pathname.substring(12);
@@ -28,13 +40,9 @@ function Subject({ match }) {
 
   useEffect(() => {
     if (id != "") {
-
       const getItemData = async () => {
-
         const result = await axios.get(detail_sub_url, {
-
           headers: { Authorization: authToken }
-          
         });
 
         // console.log(result.data.data);
@@ -43,7 +51,6 @@ function Subject({ match }) {
         setItem(result.data.data.sellItem);
         setSeller(result.data.data.sellerUser);
         setIsBookmarked(result.data.data.bookmarked);
-
       };
       getItemData();
     }
@@ -103,6 +110,13 @@ function Subject({ match }) {
         headers: { Authorization: authToken }
       })
       .then(res => console.log(res));
+  };
+
+  const goToSignIn = () => {
+    // if (authToken != "" && authToken != null) {
+    if (!isSignedIn) {
+      return <Redirect to="/signin" />;
+    }
   };
 
   return (
@@ -325,6 +339,7 @@ function Subject({ match }) {
                 fontSize: "2.5vh",
                 height: "5vh"
               }}
+              onClick={goToSignIn()}
             >
               구매하기
             </button>
