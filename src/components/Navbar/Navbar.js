@@ -190,7 +190,7 @@ class Navbar extends Component {
                       ></Search>
                     </Col>
                   </Row>
-                  : <Row></Row>
+                  : null
                 }
 
               </header>

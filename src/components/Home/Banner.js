@@ -17,6 +17,7 @@ class Banner extends Component {
     isFocused: false,
     inDetail: false,
     isDoubleFocused: false,
+    mode: "buy"
   }
 
   getHomeData = async () => {
@@ -69,18 +70,19 @@ class Banner extends Component {
       this.setState({ isDoubleFocused: false });
     }
     return (
-      <section id="banner-container" onScroll={this.handleScroll} >
+      <section id="banner-container" onScroll={this.handleScroll}>
         <Navbar focusOnSearch={this.focusOnSearch} updateInputValue={this.updateInputValue}
           unFocusOnSearch={this.unFocusOnSearch}
           changeMode={this.changeMode}
           search={<Search searchType="buy" />}
           id="navbar"></Navbar>
 
+
         {
           this.state.mode == "sell" ?
             <Row>
               <Col xs={{ span: 24 }}>
-                <div onClick={() => {this.props.history.push('/sell');}} style={{
+                <div onClick={() => { this.props.history.push('/sell'); }} style={{
                   width: "35vh", height: "35vh",
                   backgroundSize: "cover",
                   backgroundImage: "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
@@ -103,8 +105,8 @@ class Banner extends Component {
             </Row> : null
         }
         {
-          this.state.mode == "sell" ? null : this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
-            this.state.resdata.map((value, index) => {
+          this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
+            this.state.resdata.filter(r => r.regiPrice != "").map((value, index) => {
               return (
                 <div>
                   <Row>
@@ -140,7 +142,7 @@ class Banner extends Component {
                       </Row>
                       <Row>
                         <Col xs={{ span: 24 }}>
-                          <small stysle={{ color: "#656565", fontSize: "12px", fontWeight: "400" }}>
+                          <small style={{ color: "#656565", fontSize: "12px", fontWeight: "400" }}>
                             출판사 : {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
                           </small>
                         </Col>
@@ -154,41 +156,17 @@ class Banner extends Component {
                           </small>
                         </Col>
                       </Row>
-                      {
-                        this.state.mode == "buy" && this.state.resdata != null && value.regiPrice != "" ?
-
-                          <Row style={{ marginTop: "3.5vh" }}>
-                            <Col style={{ marginBottom: "-0.2vh" }} xs={{ span: 24 }}>
-                              <small style={{ color: "#656565", fontSize: "13px", textDecoration: "line-through" }}>
-                                {this.state.resdata != null ? "정가 : " : null}
-                                {this.state.resdata != null ?
-                                  <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
-                                  : null}
-                                {this.state.resdata != null ? "원" : null}
-                              </small>
-                            </Col>
-                          </Row>
-
-                          :
-
-                          <Row style={{ marginTop: "3vh" }}>
-                            <Col style={{}} xs={{ span: 12 }}>
-                              <small style={{ color: "#656565", fontSize: "14px", textDecoration: "line-through" }}>
-                                {this.state.resdata != null ? "정가 : " : null}
-                                {this.state.resdata != null ?
-                                  <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
-                                  : null}
-                                {this.state.resdata != null ? "원" : null}
-                              </small>
-                            </Col>
-                            <Col style={{ marginTop: "-0.25vh" }} xs={{ span: 12 }}>
-                              <button style={{
-                                borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                                color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%"
-                              }}>입고 알림 받기</button>
-                            </Col>
-                          </Row>
-                      }
+                      <Row style={{ marginTop: "3.5vh" }}>
+                        <Col style={{ marginBottom: "-0.2vh" }} xs={{ span: 24 }}>
+                          <small style={{ color: "#656565", fontSize: "13px", textDecoration: "line-through" }}>
+                            {this.state.resdata != null ? "정가 : " : null}
+                            {this.state.resdata != null ?
+                              <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
+                              : null}
+                            {this.state.resdata != null ? "원" : null}
+                          </small>
+                        </Col>
+                      </Row>
                       <Row>
                         <Col xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "15px", fontWeight: "500" }}>
@@ -249,7 +227,7 @@ class Banner extends Component {
                       </Row>
                       <Row>
                         <Col style={{}} xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                          <small style={{ color: "#656565", fontSize: "1.75vh", fontWeight: "400" }}>
                             출판사 : {this.state.resdata != null ? this.state.value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
                           </small>
                         </Col>
@@ -305,13 +283,10 @@ class Banner extends Component {
                     this.state.sellItemList.map((value, index) => {
                       return (
                         <Link to={"/buy/detail/" + value._id}>
-                          <Row stlye={{ marginBottom: "4.5vh" }}>
+                          <Row style={{ marginBottom: "40px" }}>
                             <Col xs={{ span: 3, offset: 1 }}>
-                              <div style={{
-                                width: "10vh", height: "10vh"
-                              }}>
                                 <img style={{
-                                  width: "10vh", height: "10vh", backgroundSize: "contain",
+                                  width: "60px", height: "60px", backgroundSize: "contain",
                                   borderRadius: "7px", overflow: "hidden"
                                 }}
                                   onClick={() => {
@@ -319,30 +294,29 @@ class Banner extends Component {
                                     this.setState({ sellItem: value });
                                   }}
                                   src={this.state.resdata != null ? value.regiImageUrlList[0].replace("type=m1", "") : null}></img>
-                              </div>
                             </Col>
-                            <Col xs={{ span: 18, offset: 2 }}>
+                            <Col style={{marginTop : "5.5px"}} xs={{ span: 18, offset: 2 }}>
                               <Row>
                                 <Col xs={{ span: 24 }}>
-                                  <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
+                                  <small style={{ color: "#656565", fontSize: "15px", fontWeight: "500" }}>
                                     {"북을 판매가 : "}
                                     {this.state.resdata != null ?
-                                      <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
+                                      <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "15px" }}>
                                         <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />원
-                              </small>
+                                      </small>
                                       : null}
                                   </small>
                                 </Col>
                               </Row>
                               <Row>
                                 <Col xs={{ span: 24 }}>
-                                  <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                                  <small style={{ color: "#656565", fontSize: "12px" }}>
                                     <Rate style={{
                                       color: "rgba(51, 158, 172, 0.9)",
-                                      fontSize: "1.5vh", textAlign: "center"
+                                      fontSize: "10px", textAlign: "center"
                                     }} disabled defaultValue={value.quality} />
                                     <small style={{
-                                      color: "#656565", fontSize: "1.6vh", fontWeight: "500",
+                                      color: "#656565", fontSize: "12px",
                                       textAlign: "center", padding: "auto"
                                     }} />
                                     &nbsp;  | &nbsp; {moment(value.date).add(9, 'hours').format('YYYY.MM.DD')}
@@ -356,135 +330,138 @@ class Banner extends Component {
                       )
                     }) : null}
                 </div>
-                  :
-                  <div id="banner-list">
-                    <Row clasnsName="banner-list-title" style={{ marginBottom: "3vh" }}>
-                      <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>방금 올라온 책</h5></Col>
-                    </Row>
-                    <Row>
-                      <Col xs={{ span: 22, offset: 1 }}>
-                        <List
-                          className="list"
-                          grid={{
-                            gutter: 16,
-                            xs: 4,
-                            sm: 1,
-                            md: 4,
-                            lg: 4,
-                            xl: 4,
-                            xxl: 3,
-                          }}
-                          dataSource={this.state.bookResList1}
-                          renderItem={item => (
+                : null}
+        {
+          this.state.mode == "buy" && this.state.isFocused == false  ?
+            <div id="banner-list">
+              <Row clasnsName="banner-list-title" style={{ marginBottom: "3vh" }}>
+                <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>방금 올라온 책</h5></Col>
+              </Row>
+              <Row>
+                <Col xs={{ span: 22, offset: 1 }}>
+                  <List
+                    className="list"
+                    grid={{
+                      gutter: 16,
+                      xs: 4,
+                      sm: 1,
+                      md: 4,
+                      lg: 4,
+                      xl: 4,
+                      xxl: 3,
+                    }}
+                    dataSource={this.state.bookResList1}
+                    renderItem={item => (
 
-                            <List.Item
-                              key={item.title}
-                            >
-                              <Row>
-                                <Link to={"/buy/detail/" + item._id}>
-                                  <Col span={24}>
-                                    <img
-                                      style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                      src={item.imageUrl.replace("type=m1", "")}
-                                    ></img>
-                                  </Col>
-                                </Link>
-                              </Row>
-                              <Row>
-                                <Col span={24}>
-                                  <small class="banner-list-item-title">{item.title}</small>
-                                </Col>
-                              </Row>
-                            </List.Item>
-                          )}
-                        />
-                      </Col>
-                    </Row>
-                    <Row className="banner-list-title">
-                      <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>금주의 핫딜</h5></Col>
-                    </Row>
-                    <Row>
-                      <Col xs={{ span: 22, offset: 1 }}>
-                        <List
-                          className="list"
-                          grid={{
-                            gutter: 16,
-                            xs: 4,
-                            sm: 1,
-                            md: 4,
-                            lg: 4,
-                            xl: 4,
-                            xxl: 3,
-                          }}
-                          dataSource={this.state.bookResList2}
-                          renderItem={item => (
+                      <List.Item
+                        key={item.title}
+                      >
+                        <Row>
+                          <Link to={"/buy/detail/" + item._id}>
+                            <Col span={24}>
+                              <img
+                                style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                src={item.imageUrl.replace("type=m1", "")}
+                              ></img>
+                            </Col>
+                          </Link>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <small class="banner-list-item-title">{item.title}</small>
+                          </Col>
+                        </Row>
+                      </List.Item>
+                    )}
+                  />
+                </Col>
+              </Row>
+              <Row className="banner-list-title">
+                <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>금주의 핫딜</h5></Col>
+              </Row>
+              <Row>
+                <Col xs={{ span: 22, offset: 1 }}>
+                  <List
+                    className="list"
+                    grid={{
+                      gutter: 16,
+                      xs: 4,
+                      sm: 1,
+                      md: 4,
+                      lg: 4,
+                      xl: 4,
+                      xxl: 3,
+                    }}
+                    dataSource={this.state.bookResList2}
+                    renderItem={item => (
 
-                            <List.Item
-                              key={item.title}
-                            >
-                              <Row>
-                                <Link to={"/buy/detail/" + item._id}>
-                                  <Col span={24}>
-                                    <img
-                                      style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                      src={item.imageUrl.replace("type=m1", "")}
-                                    ></img>
-                                  </Col>
-                                </Link>
-                              </Row>
-                              <Row>
-                                <Col span={24}>
-                                  <small class="banner-list-item-title">{item.title}</small>
-                                </Col>
-                              </Row>
-                            </List.Item>
-                          )}
-                        />
-                      </Col>
-                    </Row>
-                    <Row className="banner-list-title">
-                      <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>인기 도서</h5></Col>
-                    </Row>
-                    <Row>
-                      <Col xs={{ span: 22, offset: 1 }}>
-                        <List
-                          className="list"
-                          grid={{
-                            gutter: 16,
-                            xs: 4,
-                            sm: 1,
-                            md: 4,
-                            lg: 4,
-                            xl: 4,
-                            xxl: 3,
-                          }}
-                          dataSource={this.state.bookResList3}
-                          renderItem={item => (
+                      <List.Item
+                        key={item.title}
+                      >
+                        <Row>
+                          <Link to={"/buy/detail/" + item._id}>
+                            <Col span={24}>
+                              <img
+                                style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                src={item.imageUrl.replace("type=m1", "")}
+                              ></img>
+                            </Col>
+                          </Link>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <small class="banner-list-item-title">{item.title}</small>
+                          </Col>
+                        </Row>
+                      </List.Item>
+                    )}
+                  />
+                </Col>
+              </Row>
+              <Row className="banner-list-title">
+                <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>인기 도서</h5></Col>
+              </Row>
+              <Row>
+                <Col xs={{ span: 22, offset: 1 }}>
+                  <List
+                    className="list"
+                    grid={{
+                      gutter: 16,
+                      xs: 4,
+                      sm: 1,
+                      md: 4,
+                      lg: 4,
+                      xl: 4,
+                      xxl: 3,
+                    }}
+                    dataSource={this.state.bookResList3}
+                    renderItem={item => (
 
-                            <List.Item
-                              key={item.title}
-                            >
-                              <Row>
-                                <Link to={"/buy/detail/" + item._id}>
-                                  <Col span={24}>
-                                    <img
-                                      style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                      src={item.imageUrl.replace("type=m1", "")}
-                                    ></img>
-                                  </Col>
-                                </Link>
-                              </Row>
-                              <Row>
-                                <Col span={24}>
-                                  <small class="banner-list-item-title">{item.title}</small>
-                                </Col>
-                              </Row>
-                            </List.Item>
-                          )}
-                        />
-                      </Col>
-                    </Row>
-                  </div>
+                      <List.Item
+                        key={item.title}
+                      >
+                        <Row>
+                          <Link to={"/buy/detail/" + item._id}>
+                            <Col span={24}>
+                              <img
+                                style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                src={item.imageUrl.replace("type=m1", "")}
+                              ></img>
+                            </Col>
+                          </Link>
+                        </Row>
+                        <Row>
+                          <Col span={24}>
+                            <small class="banner-list-item-title">{item.title}</small>
+                          </Col>
+                        </Row>
+                      </List.Item>
+                    )}
+                  />
+                </Col>
+              </Row>
+            </div>
+            : null
         }
 
       </section>
