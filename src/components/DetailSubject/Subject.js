@@ -307,6 +307,7 @@ function Subject({ match }) {
       <Row style={{ marginTop: "4vh", marginBottom: "3vh" }}>
         <Col xs={{ span: 22, offset: 1 }}>
           <textarea
+            readOnly
             style={{
               width: "100%",
               height: "80px",
