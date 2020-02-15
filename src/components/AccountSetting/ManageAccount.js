@@ -26,7 +26,11 @@ function reducer(state, action) {
     case ADD_ACCOUNT:
       return { step: 1, accounts: state.accounts };
     case DETAIL_ACCOUNT:
-      return { step: 2, accounts: state.accounts, newAccount: action.bank };
+      return {
+        step: 2,
+        accounts: state.accounts,
+        newAccount: action.newAccount
+      };
     default:
       return initialState;
   }

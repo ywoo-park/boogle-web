@@ -24,7 +24,7 @@ export default function AddAccount() {
             onClick={() => {
               // setNewBank(bank);
               // return setManageStep(2);
-              dispatch({ type: "DETAIL_ACCOUNT" });
+              dispatch({ type: "DETAIL_ACCOUNT", newAccount: bank });
             }}
           >
             <Row>
