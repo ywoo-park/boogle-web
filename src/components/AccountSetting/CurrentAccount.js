@@ -26,13 +26,13 @@ export default function CurrentAccount() {
                       <Row>
                         <Col>
                           <span>
-                            {account.bank} {account.accNumber}
+                            {account.bankId} {account.accountNumber}
                           </span>
                         </Col>
                       </Row>
                       <Row>
                         <Col>
-                          <span>{account.owner}</span>
+                          <span>{account.depositorName}</span>
                         </Col>
                       </Row>
                       <Row>
