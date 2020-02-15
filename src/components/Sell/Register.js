@@ -619,7 +619,7 @@ export default function Register() {
                                                 value={regiPrice}
                                                 onChangeEvent={(e) => {
                                                     let value = e.target.value;
-                                                    value = value.replace(",", "");
+                                                    value = value.replace(/,/g, "")
                                                     value = value.replace(" 원", "");
                                                     setRegiPrice(value)
                                                 }

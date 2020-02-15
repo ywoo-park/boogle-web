@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Banner.css';
 import '../Navbar/Search.css';
-import { Row, Col, Icon, List, Divider, Rate } from 'antd';
+import { Row, Col, Icon, List, Divider, Rate, message } from 'antd';
 import Navbar from '../Navbar/Navbar';
 import Search from '../Navbar/Search';
 import { withRouter, Link } from "react-router-dom";
@@ -17,7 +17,8 @@ class Banner extends Component {
     isFocused: false,
     inDetail: false,
     isDoubleFocused: false,
-    mode: "buy"
+    mode: "buy",
+    isAlarmNeedSectionAppened : false
   }
 
   getHomeData = async () => {
@@ -60,6 +61,10 @@ class Banner extends Component {
     this.setState({ mode: mode });
   }
 
+  changeIsAlarmNeedSectionAppened = (isAlarmNeedSectionAppened) => {
+    this.setState({ isAlarmNeedSectionAppened : isAlarmNeedSectionAppened });
+  }
+
   componentWillMount() {
     this.getHomeData();
   }
@@ -74,6 +79,7 @@ class Banner extends Component {
         <Navbar focusOnSearch={this.focusOnSearch} updateInputValue={this.updateInputValue}
           unFocusOnSearch={this.unFocusOnSearch}
           changeMode={this.changeMode}
+          changeIsAlarmNeedSectionAppened = {this.changeIsAlarmNeedSectionAppened}
           search={<Search searchType="buy" />}
           id="navbar"></Navbar>
 
@@ -105,8 +111,10 @@ class Banner extends Component {
             </Row> : null
         }
         {
-          this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null && this.state.inDetail == false ?
-            this.state.resdata.filter(r => r.regiPrice != "").map((value, index) => {
+          this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null 
+          && this.state.inDetail == false && this.state.isAlarmNeedSectionAppened == false ?
+            
+          this.state.resdata.filter(r => r.regiPrice != "").map((value, index) => {
               return (
                 <div>
                   <Row>
@@ -187,7 +195,9 @@ class Banner extends Component {
                   </Row>
                 </div>
               );
-            })
+              } 
+            )
+
             :
             this.state.isFocused && this.state.resdata == null ?
               <div style={{ height: "100%" }}>
@@ -198,6 +208,7 @@ class Banner extends Component {
                   }}>구매할 도서를<br /> 검색해주세요!</h5>
                 </div>
               </div>
+              
               : this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
                 !this.state.inSubDetail ?
                 <div style={{ marginBottom: "12vh" }}>
@@ -331,8 +342,112 @@ class Banner extends Component {
                     }) : null}
                 </div>
                 : null}
+
+        {this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null 
+          && this.state.inDetail == false && this.state.isAlarmNeedSectionAppened == false ? 
+          <div>
+            <Row>
+              <Col offset={1} span={22}><Divider /></Col>
+            </Row>
+            <Row>
+              <Col xs={{offset : 2, span : 20}}>
+                <h5 style={{color : "#707070"}}>찾고있는 서적이 없다면…</h5>     
+              </Col>
+            </Row> 
+            <Row>
+              <Col xs={{offset : 1, span : 22}}>
+                <ul style={{color : "#707070"}}>
+                  <li>핵심 단어를 띄어쓰기 하여 입력해주세요.</li>
+                  <li>오타가 있는지 다시 확인해보세요.</li>
+                  <li>‘입고 알림 신청하기’를 눌러 입고 알림을 신청해보세요.</li>
+                </ul>            
+              </Col>
+            </Row> 
+            <Row style={{ marginBottom: "100px" }}>
+              <Col xs={{offset : 2, span : 20}}>
+                <button
+                  style={{
+                    padding: "0",
+                    width: "100%",
+                    background: "rgba(51, 158, 172, 0.9)",
+                    color: "#ffffff",
+                    border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                  }}
+                  onClick={()=>{this.setState({isAlarmNeedSectionAppened : true})}}
+                >
+                  입고 알림 신청하기
+                </button>
+              </Col>
+            </Row>
+          </div>
+          
+          : null}
+        {this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null 
+          && this.state.inDetail == false && this.state.isAlarmNeedSectionAppened == true ? 
+          this.state.resdata.filter(r => r.regiPrice == "").map((value, index) => {
+            return (
+              <div>
+                <Row>
+                  <Col offset={1} span={22}><Divider /></Col>
+                </Row>
+                <Row key={index} className="search-result-row"
+                  onClick={() => {
+                    if (value.regiPrice != "") {
+                      this.setState({ value: value });
+                      this.setState({ inDetail: true });
+                      this.getSellItemList(value.itemId);
+                    }
+                  }}>
+                  <Col xs={{ span: 5, offset: 1 }}>
+                    <img style={{
+                      width: "100px", height: "150px", backgroundSize: "contain",
+                      borderRadius: "7px"
+                    }}
+                      src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") : ""}></img>
+                  </Col>
+                  <Col xs={{ span: 14, offset: 3 }}>
+                    <Row>
+                      <Col xs={{ span: 24 }}>
+                        <span style={{ color: "#656565", fontSize: "17px" }}>{this.state.resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col style={{ marginTop: "10px", marginBottom: "-9px" }} xs={{ span: 24 }}>
+                        <small style={{ color: "#656565", fontSize: "12px", fontWeight: "400" }}>
+                          저자 : {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
+                        </small>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={{ span: 24 }}>
+                        <small style={{ color: "#656565", fontSize: "12px", fontWeight: "400" }}>
+                          출판사 : {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
+                        </small>
+                      </Col>
+                    </Row>
+                    <Row style={{ marginTop: "3.5vh" }}>
+                      <Col style={{ marginBottom: "-0.2vh" }} xs={{ span: 24 }}>
+                        <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "15px", fontWeight: "500"}}>
+                          {this.state.resdata != null ?
+                            <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
+                            : null}
+                          {this.state.resdata != null ? "원" : null}
+                        </small>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={{ offset : 18, span: 4 }}>
+                        <Icon type="bell" style={{color : "#e95513", fontSize : "45px"}}
+                        onClick={()=>{message.success("입고 알림이 정상적으로 신청되었습니다!");}}></Icon>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </div>
+          )})
+          : null}
         {
-          this.state.mode == "buy" && this.state.isFocused == false  ?
+          this.state.mode == "buy" && this.state.isFocused == false?
             <div id="banner-list">
               <Row clasnsName="banner-list-title" style={{ marginBottom: "3vh" }}>
                 <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>방금 올라온 책</h5></Col>

@@ -55,6 +55,10 @@ class Navbar extends Component {
     this.props.changeMode(mode);
   }
 
+  changeIsAlarmNeedSectionAppened = (isAlarmNeedSectionAppened) => {
+    this.props.changeIsAlarmNeedSectionAppened(false);
+  }
+
   render() {
 
     return (
@@ -74,6 +78,7 @@ class Navbar extends Component {
                     this.setState({ isFocusedClass: "" });
                     this.props.unFocusOnSearch();
                     this.updateInputValue(null);
+                    this.props.changeIsAlarmNeedSectionAppened(false);
                   }}
                   src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
               </Col>
