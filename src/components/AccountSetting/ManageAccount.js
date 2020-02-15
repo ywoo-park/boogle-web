@@ -13,7 +13,7 @@ const ADD_ACCOUNT = "ADD_ACCOUNT";
 const DETAIL_ACCOUNT = "DETAIL_ACCOUNT";
 const initialState = {
   step: 0,
-  accounts: null,
+  accounts: [{ bank: "국민은행", accNumber: "1234-12341234", owner: "히히힛" }],
   newAccount: null
 };
 
