@@ -92,6 +92,7 @@ export default function SignUpForm() {
 
     React.useEffect(() => {
         if (searchedDepartmentMajorList.length != 0) {
+            /*
             const arr = [];
             searchedDepartmentMajorList.map((departmentMajor, index) => {
                 departmentMajor.majorList.map((m, i) => {
@@ -99,6 +100,8 @@ export default function SignUpForm() {
                 })
             })
             setSearchedMajorList(arr);
+            */
+           setSearchedMajorList(searchedDepartmentMajorList);
         }
     }, [searchedDepartmentMajorList])
 
@@ -152,7 +155,7 @@ export default function SignUpForm() {
         axios.get('http://13.124.113.72:8080/majors?campus=서강대학교&keyword=' + keyword, {
         })
             .then((response) => {
-                console.log(response);
+                console.log(response.data.data);
                 setSearchedDepartmentMajorList(response.data.data);
             })
             .catch((error) => {
@@ -747,7 +750,7 @@ export default function SignUpForm() {
                                                                 <input
                                                                 readOnly
                                                                     value={major}
-                                                                    className="major-search-result"
+                                                                    className="major-search-result"                                                    
                                                                     onClick={() => {
                                                                         let currMajorList = majorList;
                                                                         currMajorList.push(major);
@@ -832,7 +835,7 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={{ span: 4, offset: 2 }}>
+                        <Col xs={{ span: 5, offset: 2 }}>
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 인증</span>
                         </Col>
                         <Col style={{position : "relative", top : -3.5, marginLeft : "5px"}} xs={{ span: 5, offset: 0 }}>

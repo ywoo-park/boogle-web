@@ -18,12 +18,11 @@ export default function Register() {
     const [contactType, setContactType] = useState(0);
 
     const [userImages, setUserImages] = useState([]);
-    const [userImagesDiv, setUserImagesDiv] = useState();
     const [imageUrls, setImageUrls] = useState([]);
     const [imageDiv, setImageDiv] = useState();
 
     const initialQualityOut = [false, false, false, false, false];
-    const initialQualityIn = [false, false, false, false, false, false];
+    const initialQualityIn = [false, false, false];
 
     const [qualityOut, setQualityOut] = useState(initialQualityOut);
     const [qualityIn, setQualityIn] = useState(initialQualityIn);
@@ -37,6 +36,9 @@ export default function Register() {
 
     const [didMount, setDidMount] = useState(false);
 
+    const [isQualityOutFilled, setIsQualityOutFilled] = useState(true);
+    const [isRegiImagesFilled, setIsRegiImagesFilled] = useState(true);
+
     const { register, handleSubmit } = useForm();
 
     const focusOnSearch = (isFocused) => {
@@ -46,6 +48,31 @@ export default function Register() {
 
     const updateInputValue = (resdata) => {
         setResdata(resdata);
+    }
+
+    const validateForm = () => {
+                                                            
+        let isQualityOutFilled = false;
+
+        for(let i = 0; i<qualityOut.length; i++){
+            if(qualityOut == true){
+                isQualityOutFilled = true;
+                break;
+            }
+        }
+        if(isQualityOutFilled && userImages.length != 0){
+            setIsFinalSubmit(true);
+        }
+        else if(isQualityOutFilled && userImages.length == 0){
+            setIsRegiImagesFilled(false);
+        }
+        else if(!isQualityOutFilled && userImages.length != 0){
+            setIsQualityOutFilled(false);
+        }
+        else{
+            setIsRegiImagesFilled(false);
+            setIsQualityOutFilled(false);
+        }
     }
 
     React.useEffect(() => {
@@ -265,7 +292,7 @@ export default function Register() {
                                 })
                                 :
                                 <div style={{ height: "100%" }}>
-                                    <div style={{ marginTop: "50%" }}>
+                                    <div style={{ marginTop: "25%" }}>
                                         <h5 style={{
                                             textAlign: "center",
                                             color: "gray", fontWeight: "600"
@@ -392,7 +419,7 @@ export default function Register() {
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>거래방식</span>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>거래방식<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
@@ -432,8 +459,9 @@ export default function Register() {
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
-                                        <Col xs={{ span: 10, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>사진(최대 3장)</span>
+                                        <Col xs={{ span: 22, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>사진(최대 3장)<span style={{color : "#e95513"}}>*</span></span>
+                                            {!isRegiImagesFilled && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>1장 이상의 사진을 등록해 주세요.</p>}
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
@@ -478,8 +506,9 @@ export default function Register() {
                                         {imageDiv != undefined ? imageDiv : null}
                                     </Row>
                                     <Row style={{marginBottom: "10px" }}>
-                                        <Col xs={{ span: 8, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(외관)</span>
+                                        <Col xs={{ span: 20, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(외관)<span style={{color : "#e95513"}}>*</span></span>
+                                            {!isQualityOutFilled && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>1개 이상의 항목을 선택해 주세요.</p>}
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
@@ -540,7 +569,7 @@ export default function Register() {
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 8, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(내부)</span>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>기타</span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
@@ -553,7 +582,7 @@ export default function Register() {
                                                     else old[0] = false
                                                     setQualityIn(old)
                                                 }}
-                                            >깨끗</button>
+                                            >밑줄</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
@@ -563,7 +592,7 @@ export default function Register() {
                                                     if (old[1] == false) old[1] = true
                                                     else old[1] = false
                                                     setQualityIn(old)
-                                                }}>밑줄</button>
+                                                }}>필기</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
@@ -573,42 +602,12 @@ export default function Register() {
                                                     if (old[2] == false) old[2] = true
                                                     else old[2] = false
                                                     setQualityIn(old)
-                                                }}>연필</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 2 }}>
-                                            <button
-                                                class={qualityIn[3] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[3] == false) old[3] = true
-                                                    else old[3] = false
-                                                    setQualityIn(old)
-                                                }}>볼펜/형광펜</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[4] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[4] == false) old[4] = true
-                                                    else old[4] = false
-                                                    setQualityIn(old)
                                                 }}>문제풀음</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[5] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[5] == false) old[5] = true
-                                                    else old[5] = false
-                                                    setQualityIn(old)
-                                                }}>물에젖음</button>
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col xs={{ span: 5, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>희망가격</span>
+                                        <Col xs={{ span: 8, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>판매 희망가격<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
@@ -650,7 +649,8 @@ export default function Register() {
                                                 border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                             }}
                                                 type="submit"
-                                                onClick={() => setIsFinalSubmit(true)}><span>판매 등록하기</span></button>
+                                                onClick={() => validateForm()}>
+                                                    <span>판매 등록하기</span></button>
                                         </Col>
                                     </Row>
                                 </form>

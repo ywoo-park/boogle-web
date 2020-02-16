@@ -201,7 +201,7 @@ class Banner extends Component {
             :
             this.state.isFocused && this.state.resdata == null ?
               <div style={{ height: "100%" }}>
-                <div style={{ marginTop: "50%" }}>
+                <div style={{ marginTop: "25%" }}>
                   <h5 style={{
                     textAlign: "center",
                     color: "gray", fontWeight: "500"
@@ -359,7 +359,7 @@ class Banner extends Component {
                 <ul style={{color : "#707070"}}>
                   <li>핵심 단어를 띄어쓰기 하여 입력해주세요.</li>
                   <li>오타가 있는지 다시 확인해보세요.</li>
-                  <li>‘입고 알림 신청하기’를 눌러 입고 알림을 신청해보세요.</li>
+                  <li style={{color : "#e95513"}}>‘입고 알림 신청하기’를 눌러 입고 알림을 신청해보세요.</li>
                 </ul>            
               </Col>
             </Row> 
