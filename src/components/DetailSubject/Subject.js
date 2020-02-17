@@ -63,7 +63,7 @@ function Subject({ match }) {
   const qualDisplay = (qualInList, qualOutList) => {
     const qualLi = qualOutList.concat(qualInList);
     const qualValueOut = ["깨끗", "이름기입", "긁힘/접힘", "찢어짐"];
-    const qualValueIn = ["밑줄", "연필", "볼펜/형광펜", "문제풀음", "물에젖음"];
+    const qualValueIn = ["밑줄", "필기", "문제풀음"];
 
     return (
       <Row>
@@ -77,7 +77,7 @@ function Subject({ match }) {
         </Row>
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
-            <Tag color="#656565">책 상태(내부)</Tag>
+            <Tag color="#656565">책 상태(기타)</Tag>
             {qualValueIn.map((val, i) => {
               return qualLi[i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
             })}
@@ -227,7 +227,7 @@ function Subject({ match }) {
             <Col xs={{ span: 22, offset: 1 }}>
               <span
                 style={{
-                  fontSize: "2.25vh",
+                  fontSize: "2.75vh",
                   color: "#44a0ac",
                   fontWeight: "600"
                 }}

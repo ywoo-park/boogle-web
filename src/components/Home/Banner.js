@@ -231,7 +231,7 @@ class Banner extends Component {
                       </Row>
                       <Row>
                         <Col style={{ marginTop: "2.5vh", marginBottom: "-1.5vh" }} xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "1.75vh" }}>
+                          <small style={{ color: "#656565", fontSize: "1.75vh", fontWeight: "400" }}>
                             저자 : {this.state.resdata != null ? this.state.value.author.replace(/(<([^>]+)>)/ig, "") : null}
                           </small>
                         </Col>
