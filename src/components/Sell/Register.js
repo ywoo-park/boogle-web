@@ -55,7 +55,7 @@ export default function Register() {
         let isQualityOutFilled = false;
 
         for(let i = 0; i<qualityOut.length; i++){
-            if(qualityOut == true){
+            if(qualityOut[i] == true){
                 isQualityOutFilled = true;
                 break;
             }

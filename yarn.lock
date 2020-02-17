@@ -6476,6 +6476,11 @@ fs.realpath@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
+fscreen@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/fscreen/-/fscreen-1.0.2.tgz#c4c51d96d819d75a19d728e0df445f9be9bb984f"
+  integrity sha1-xMUdltgZ11oZ1yjg30Rfm+m7mE8=
+
 fsevents@2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.0.7.tgz#382c9b443c6cbac4c57187cdda23aa3bf1ccfc2a"
@@ -12247,6 +12252,14 @@ react-error-overlay@^6.0.3:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.4.tgz#0d165d6d27488e660bc08e57bdabaad741366f7a"
   integrity sha512-ueZzLmHltszTshDMwyfELDq8zOA803wQ1ZuzCccXa1m57k1PxSHfflPD5W9YIiTXLs0JTLzoj6o1LuM5N6zzNA==
 
+react-full-screen@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-full-screen/-/react-full-screen-0.2.4.tgz#e5bda9535abb6523b65e0e46526c8f21be65ef7e"
+  integrity sha512-K6V87g/uopQnnebg6/jM7VL3FcurgCIQU4nTkzknbjGOT9XOOxr3XVwRweI8QPn1TFRZH7j5OpHanUdk5uYlBQ==
+  dependencies:
+    "@types/react" "*"
+    fscreen "^1.0.1"
+
 react-hook-form@^4.2.0:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-4.4.4.tgz#dc22029adb4d1bce3ead56951a819f73c1864fb5"
@@ -12305,6 +12318,11 @@ react-overlays@^2.1.0:
     prop-types "^15.7.2"
     uncontrollable "^7.0.0"
     warning "^4.0.3"
+
+react-request-fullscreen@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-request-fullscreen/-/react-request-fullscreen-1.1.2.tgz#c9e1a510ea143e4964d61fb0806bb40e41f73c18"
+  integrity sha512-WsQ/htbZag9qNfWPb2fEm0if+oUsRK3rTKKJ007n64Mk0PY82gAbLwVKZ+7OmzkHm6f/PSkxf8pdYlzBUmXR/Q==
 
 react-responsive-carousel@^3.1.51:
   version "3.1.51"

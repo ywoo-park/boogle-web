@@ -6,6 +6,7 @@ import { withRouter, Link } from "react-router-dom";
 import Camera from 'react-html5-camera-photo';
 import Multiselect from 'react-bootstrap-multiselect';
 import axios from 'axios';
+import Fullscreen from "react-full-screen";
 import { Collapse } from 'react-collapse';
 import { BeatLoader } from "react-spinners";
 
@@ -41,13 +42,14 @@ export default function SignUpForm() {
     const [campusWebMail, setCampusWebMail] = useState("");
     const [emailAuthStep, setEmailAuthStep] = useState(0);
     const [authCode, setAuthCode] = useState("0000");
+    const [authType, setAuthType] = useState(0);
 
     const onSubmitFirstForm = (data) => {
 
         let majorListAsString = ""
 
-        if(majorList.length == 1) majorListAsString = majorList[0];
-        else if(majorList.length == 2) majorListAsString = majorList[0] + "," + majorList[1];
+        if (majorList.length == 1) majorListAsString = majorList[0];
+        else if (majorList.length == 2) majorListAsString = majorList[0] + "," + majorList[1];
         else majorListAsString = majorList[0] + "," + majorList[1] + "," + majorList[2];
 
         if (validatedEmail && validatedNickname) {
@@ -75,7 +77,8 @@ export default function SignUpForm() {
 
     React.useEffect(() => {
         fetch('../../texts/Term1.txt').then(r => r.text())
-            .then(t => console.log(t))
+            .then(t => console.log(t));
+        window.scrollTo(0, 1);
     }, [])
 
     React.useEffect(() => {
@@ -101,7 +104,7 @@ export default function SignUpForm() {
             })
             setSearchedMajorList(arr);
             */
-           setSearchedMajorList(searchedDepartmentMajorList);
+            setSearchedMajorList(searchedDepartmentMajorList);
         }
     }, [searchedDepartmentMajorList])
 
@@ -230,7 +233,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -248,9 +251,9 @@ export default function SignUpForm() {
                                         validateEmail(e.target.value)
                                     }
                                 }} />
-                            {!validatedEmail && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>중복된 이메일입니다.</p>}
-                            {validatedEmail && email.length > 0 && !email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>이메일 형식으로 입력해주세요.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="email" as="p" />
+                            {!validatedEmail && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>중복된 이메일입니다.</p>}
+                            {validatedEmail && email.length > 0 && !email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>이메일 형식으로 입력해주세요.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="email" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -262,7 +265,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -271,8 +274,8 @@ export default function SignUpForm() {
                                 })}
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 type="password" />
-                            {password.length < 8 && password.length > 0 && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="password" as="p" />
+                            {password.length < 8 && password.length > 0 && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="password" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -284,7 +287,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -293,8 +296,8 @@ export default function SignUpForm() {
                                 })}
                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
                                 type="password" />
-                            {confirmPassword != password && confirmPassword.length > 0 && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>비밀번호가 일치하지 않습니다.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="password" as="p" />
+                            {confirmPassword != password && confirmPassword.length > 0 && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>비밀번호가 일치하지 않습니다.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="password" as="p" />
                         </Col>
                     </Row>
                     <Row style={{ marginTop: "15px", marginBottom: "15px" }}>
@@ -304,6 +307,17 @@ export default function SignUpForm() {
                     </Row>
                     <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
+                            <img style={{ width: "100%", height: "auto" }}
+                                onClick={() => { handleOpenCollapse(0) }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                        <Col offset={0} span={16}>
+                            <small>
+                                북을 이용약관 동의
+                                <span style={{ color: "#e95513" }}>(필수)</span>
+                            </small>
+                        </Col>
+                        <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[0] == "0") {
                                     const temp = checkList;
@@ -319,17 +333,6 @@ export default function SignUpForm() {
                                 }
                             }} className="sign-up-check"
                                 type="check" />
-                        </Col>
-                        <Col offset={0} span={16}>
-                            <small>
-                                북을 이용약관 동의
-                                <span style={{ color: "#e95513" }}>(필수)</span>
-                            </small>
-                        </Col>
-                        <Col offset={0} span={2}>
-                            <img style={{ width: "100%", height: "auto" }}
-                                onClick={() => { handleOpenCollapse(0) }}
-                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
                         </Col>
                     </Row>
                     <Row>
@@ -348,6 +351,17 @@ export default function SignUpForm() {
                     </Row>
                     <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
+                            <img style={{ width: "100%", height: "auto" }}
+                                onClick={() => { handleOpenCollapse(1) }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                        <Col offset={0} span={16}>
+                            <small>
+                                개인정보 수집 및 이용에 대한 안내
+                                        <span style={{ color: "#e95513" }}>(필수)</span>
+                            </small>
+                        </Col>
+                        <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[1] == "0") {
                                     const temp = checkList;
@@ -365,23 +379,12 @@ export default function SignUpForm() {
                                 className="sign-up-check"
                                 type="check" />
                         </Col>
-                        <Col offset={0} span={16}>
-                            <small>
-                                개인정보 수집 및 이용에 대한 안내
-                                        <span style={{ color: "#e95513" }}>(필수)</span>
-                            </small>
-                        </Col>
-                        <Col offset={0} span={2}>
-                            <img style={{ width: "100%", height: "auto" }}
-                                onClick={() => { handleOpenCollapse(1) }}
-                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
-                        </Col>
                     </Row>
                     <Row>
                         <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[1]}>
                                 <textarea
-                                readOnly
+                                    readOnly
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
@@ -393,6 +396,17 @@ export default function SignUpForm() {
                     </Row>
                     <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
+                            <img style={{ width: "100%", height: "auto" }}
+                                onClick={() => { handleOpenCollapse(2) }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                        <Col offset={0} span={16}>
+                            <small>
+                                이메일, SMS 광고 수신 동의
+                                        <span style={{ color: "#e95513" }}>(선택)</span>
+                            </small>
+                        </Col>
+                        <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[2] == "0") {
                                     const temp = checkList;
@@ -408,23 +422,12 @@ export default function SignUpForm() {
                                 }
                             }} className="sign-up-check" type="check" />
                         </Col>
-                        <Col offset={0} span={16}>
-                            <small>
-                                이메일, SMS 광고 수신 동의
-                                        <span style={{ color: "#e95513" }}>(선택)</span>
-                            </small>
-                        </Col>
-                        <Col offset={0} span={2}>
-                            <img style={{ width: "100%", height: "auto" }}
-                                onClick={() => { handleOpenCollapse(2) }}
-                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
-                        </Col>
                     </Row>
                     <Row>
                         <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[2]}>
                                 <textarea
-                                readOnly
+                                    readOnly
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
@@ -493,12 +496,12 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
                                 name="name" ref={register({ required: "이름을 입력해주세요" })} />
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="name" as="p" />
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="name" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -510,7 +513,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -523,8 +526,8 @@ export default function SignUpForm() {
                                         validateNickname(e.target.value)
                                     }
                                 }} />
-                            {!validatedNickname && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>중복된 닉네임입니다.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="nickname" as="p" />
+                            {!validatedNickname && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>중복된 닉네임입니다.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="nickname" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -536,7 +539,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <select onChange={(e) => { setValue('semester', e.target.value) }} name="campus"
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent",
                                 }}>
@@ -561,7 +564,7 @@ export default function SignUpForm() {
                                         readOnly
                                         className="major-input"
                                         style={{
-                                            width: "100%", height : "40px", border: "none",
+                                            width: "100%", height: "40px", border: "none",
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                             backgroundColor: "transparent"
                                         }}
@@ -571,81 +574,81 @@ export default function SignUpForm() {
                                     {
                                         majorList.length == 0 ?
 
-                                        <Icon className="major-search-button" type="search" theme="outlined"
+                                            <Icon className="major-search-button" type="search" theme="outlined"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                                onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
 
-                                        :
+                                            :
 
-                                        <Icon className="major-search-button" type="close-circle"
+                                            <Icon className="major-search-button" type="close-circle"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { 
+                                                onClick={() => {
 
-                                            let currMajorList = majorList;
-                                            currMajorList.splice(0, 1)
-                                            setMajorList(currMajorList);
+                                                    let currMajorList = majorList;
+                                                    currMajorList.splice(0, 1)
+                                                    setMajorList(currMajorList);
 
-                                            let currMajorCount = majorCount;
-                                            currMajorCount = currMajorCount - 1;
-                                            setMajorCount(currMajorCount);
+                                                    let currMajorCount = majorCount;
+                                                    currMajorCount = currMajorCount - 1;
+                                                    setMajorCount(currMajorCount);
 
-                                            setMajorSearchKeyword("");
-                                            setSearchedMajorList([]);;
+                                                    setMajorSearchKeyword("");
+                                                    setSearchedMajorList([]);;
 
-                                        }}></Icon>
+                                                }}></Icon>
                                     }
-                                   
+
 
                                     {(majorList.length == 1 && majorCount == 1 && majorList.length == majorCount)
                                         || (majorList.length > 1) ?
 
                                         <div>
                                             <input
-                                            readOnly
+                                                readOnly
                                                 style={{
-                                                    marginTop : "22px",
-                                                    width: "100%", height : "40px", border: "none",
+                                                    marginTop: "22px",
+                                                    width: "100%", height: "40px", border: "none",
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
                                                 value={majorList.length != 0 ? majorList[1] : null}
                                             />
 
-                                        {
+                                            {
 
-                                        majorList.length == 1 ?
+                                                majorList.length == 1 ?
 
-                                        <Icon className="major-search-button_2" type="search" theme="outlined"
+                                                    <Icon className="major-search-button_2" type="search" theme="outlined"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
 
-                                        :
+                                                    :
 
-                                        <Icon className="major-search-button_2" type="close-circle"
+                                                    <Icon className="major-search-button_2" type="close-circle"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { 
+                                                        onClick={() => {
 
-                                            let currMajorList = majorList;
-                                            currMajorList.splice(1, 1)
-                                            setMajorList(currMajorList);
+                                                            let currMajorList = majorList;
+                                                            currMajorList.splice(1, 1)
+                                                            setMajorList(currMajorList);
 
-                                            let currMajorCount = majorCount;
-                                            currMajorCount = currMajorCount - 1;
-                                            setMajorCount(currMajorCount);
+                                                            let currMajorCount = majorCount;
+                                                            currMajorCount = currMajorCount - 1;
+                                                            setMajorCount(currMajorCount);
 
-                                            setMajorSearchKeyword("");
-                                            setSearchedMajorList([]);;
+                                                            setMajorSearchKeyword("");
+                                                            setSearchedMajorList([]);;
 
-                                        }}></Icon>
-                                    }
+                                                        }}></Icon>
+                                            }
                                         </div>
 
                                         : majorList.length == 1 && majorCount == 0 ?
@@ -663,45 +666,45 @@ export default function SignUpForm() {
                                         || (majorList.length > 2) ?
                                         <div>
                                             <input
-                                            readOnly
+                                                readOnly
                                                 style={{
-                                                    marginTop : "22px",
-                                                    width: "100%", height : "40px", border: "none",
+                                                    marginTop: "22px",
+                                                    width: "100%", height: "40px", border: "none",
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
                                                 value={majorList.length != 0 ? majorList[2] : null}
                                             />
-                                        {
-                                        majorList.length == 2 ?
+                                            {
+                                                majorList.length == 2 ?
 
-                                        <Icon className="major-search-button_3" type="search" theme="outlined"
+                                                    <Icon className="major-search-button_3" type="search" theme="outlined"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
 
-                                        :
+                                                    :
 
-                                        <Icon className="major-search-button_3" type="close-circle"
+                                                    <Icon className="major-search-button_3" type="close-circle"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { 
+                                                        onClick={() => {
 
-                                            let currMajorList = majorList;
-                                            currMajorList.splice(2, 1)
-                                            setMajorList(currMajorList);
+                                                            let currMajorList = majorList;
+                                                            currMajorList.splice(2, 1)
+                                                            setMajorList(currMajorList);
 
-                                            let currMajorCount = majorCount;
-                                            currMajorCount = currMajorCount - 1;
-                                            setMajorCount(currMajorCount);
+                                                            let currMajorCount = majorCount;
+                                                            currMajorCount = currMajorCount - 1;
+                                                            setMajorCount(currMajorCount);
 
-                                            setMajorSearchKeyword("");
-                                            setSearchedMajorList([]);;
+                                                            setMajorSearchKeyword("");
+                                                            setSearchedMajorList([]);;
 
-                                        }}></Icon>
-                                    }
+                                                        }}></Icon>
+                                            }
                                         </div>
 
                                         : majorList.length == 2 && majorCount == 1 ?
@@ -748,9 +751,9 @@ export default function SignUpForm() {
                                                         <Row style={{ marginTop: "20px" }}>
                                                             <Col xs={{ span: 24, offset: 0 }}>
                                                                 <input
-                                                                readOnly
+                                                                    readOnly
                                                                     value={major}
-                                                                    className="major-search-result"                                                    
+                                                                    className="major-search-result"
                                                                     onClick={() => {
                                                                         let currMajorList = majorList;
                                                                         currMajorList.push(major);
@@ -780,12 +783,12 @@ export default function SignUpForm() {
                             </Row>
                             <Row>
                                 <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 24, offset: 0 }} >
-                                    <select onChange={(e) => { 
-                                        if(e.target.value == "졸업생") setSemester("10");
+                                    <select onChange={(e) => {
+                                        if (e.target.value == "졸업생") setSemester("10");
                                         else setSemester(e.target.value[0].toString());
                                     }} name="semester"
                                         style={{
-                                            width: "100%", height : "40px", border: "none",
+                                            width: "100%", height: "40px", border: "none",
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                             backgroundColor: "transparent"
                                         }}>
@@ -805,7 +808,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 2 }}>
                             <select name="semester"
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}>
@@ -818,7 +821,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -827,7 +830,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -835,115 +838,127 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={{ span: 5, offset: 2 }}>
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 5, offset: 2 }}>
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 인증</span>
                         </Col>
-                        <Col style={{position : "relative", top : -3.5, marginLeft : "5px"}} xs={{ span: 5, offset: 0 }}>
-                            <Popover 
-                            trigger="click"
-                            content={
-                                <div>
-                                    <span>학교 이메일 인증</span>
-                                    <ul>
-                                        <li>________@sogang.ac.kr 형식의 이메일로 학교 인증을 해주세요.</li>
-                                        <li>https://mail.sogang.ac.kr 혹은 SAINT 로그인 후 메일함을 확인해주세요.</li>
-                                        <li>북을에서 전송한 인증번호 4자리를 입력해주세요.</li>
-                                    </ul>
-                                    <span>학생증 인증</span>
-                                    <ul>
-                                        <li>실물(모바일) 학생증 혹은 SAINT 첫 화면을 촬영(캡쳐)하여 업로드해주세요.</li>
-                                        <li>학생증 인증 시 회원가입 승인까지 최대 2일이 소요될 수 있습니다</li>
-                                    </ul>
-                                </div>
-                            } title="학교 인증 도움말">
-                                <Icon type="question-circle"/>
+                        <Col style={{ position: "relative", top: -3.5, marginLeft: "5px" }} xs={{ span: 5, offset: 0 }}>
+                            <Popover
+                                trigger="click"
+                                content={
+                                    <div>
+                                        <span>학교 이메일 인증</span>
+                                        <ul>
+                                            <li>________@sogang.ac.kr 형식의 이메일로 학교 인증을 해주세요.</li>
+                                            <li>https://mail.sogang.ac.kr 혹은 SAINT 로그인 후 메일함을 확인해주세요.</li>
+                                            <li>북을에서 전송한 인증번호 4자리를 입력해주세요.</li>
+                                        </ul>
+                                        <span>학생증 인증</span>
+                                        <ul>
+                                            <li>실물(모바일) 학생증 혹은 SAINT 첫 화면을 촬영(캡쳐)하여 업로드해주세요.</li>
+                                            <li>학생증 인증 시 회원가입 승인까지 최대 2일이 소요될 수 있습니다</li>
+                                        </ul>
+                                    </div>
+                                } title="학교 인증 도움말">
+                                <Icon type="question-circle" />
                             </Popover>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col style={{ marginTop: "20px", marginBottom: "20px" }} xs={{ span: 10, offset: 2 }}>
+                    <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
+                        <Col xs={{ span: 10, offset: 2 }}>
                             <button
                                 type="button"
+                                class={authType == 0 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
                                 style={{
                                     width: "100%",
                                     color: "#666666",
-                                    backgroundColor: "#b0dae2",
                                     border: "#666666 0.3px solid",
+                                    borderRight: "none",
                                     borderTopLeftRadius: "8px",
                                     borderBottomLeftRadius: "8px",
+                                    borderTopRightRadius: "0px",
+                                    borderBottomRightRadius: "0px",
                                     fontSize: "12px",
                                     height: "36px"
                                 }}
-                            >학교 이메일 인증</button>
+                                onClick={() => setAuthType(0)}>학교 이메일 인증</button>
                         </Col>
-                        <Col style={{ marginTop: "20px", marginBottom: "20px" }} xs={{ span: 10, offset: 0 }}>
+                        <Col xs={{ span: 10, offset: 0 }}>
                             <button
                                 type="button"
+                                class={authType == 1 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
                                 style={{
                                     width: "100%",
                                     color: "#666666",
                                     border: "#666666 0.3px solid",
+                                    borderLeft: "none",
                                     borderTopRightRadius: "8px",
                                     borderBottomRightRadius: "8px",
+                                    borderTopLeftRadius: "0px",
+                                    borderBottomLeftRadius: "0px",
                                     fontSize: "12px",
                                     height: "36px"
                                 }}
-                            >학생증 인증</button>
+                                onClick={() => { setAuthType(1) }}>학생증 인증</button>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col xs={{ span: 8, offset: 2 }}>
-                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 웹메일</span>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
-                            <input
-                                style={{
-                                    width: "100%", height : "40px", border: "none",
-                                    borderBottom: "#44a0ac solid 1.0px",
-                                    backgroundColor: "transparent"
-                                }}
-                                onChange={(e) => {
-                                    setCampusWebMail(e.target.value);
-                                }} />
-                                {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
-                        </Col>
-                    </Row>
+                    {authType == 0 ?
+                        <div>
 
-                    {
-                        emailAuthStep == 0 ?
+                            <Row>
+                                <Col xs={{ span: 8, offset: 2 }}>
+                                    <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 웹메일</span>
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
+                                    <input
+                                        style={{
+                                            width: "100%", height: "40px", border: "none",
+                                            borderBottom: "#44a0ac solid 1.0px",
+                                            backgroundColor: "transparent"
+                                        }}
+                                        onChange={(e) => {
+                                            setCampusWebMail(e.target.value);
+                                        }} />
+                                    {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
+                                </Col>
+                            </Row>
+                        </div>
+
+
+                        : authType == 0 && emailAuthStep == 0 ?
                             <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
                                 <Col xs={{ span: 20, offset: 2 }}>
                                     <button
                                         type="button"
                                         style={{
                                             padding: "0",
-                                            width: "100%", 
+                                            width: "100%",
                                             background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                             border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                         }}
                                         onClick={() => {
 
-                                            if(campusWebMail.length > 0 && 
-                                            campusWebMail.indexOf("sogang.ac.kr") != -1){
-                                                
+                                            if (campusWebMail.length > 0 &&
+                                                campusWebMail.indexOf("sogang.ac.kr") != -1) {
+
                                                 const userName = getValues().name;
                                                 const email = getValues().email;
                                                 const campusEmail = campusWebMail;
-    
+
                                                 sendAuthCode(userName, email, campusEmail);
                                             }
                                         }}
                                     >인증번호 보내기</button>
                                 </Col>
                             </Row>
-                            : emailAuthStep == 1 ?
+                            : authType == 0 && emailAuthStep == 1 ?
                                 <Row style={{ marginTop: "-70px", marginBottom: "70px" }}>
                                     <Col xs={{ span: 14, offset: 2 }}>
                                         <input
                                             style={{
-                                                width: "100%", height : "40px", border: "none",
+                                                width: "100%", height: "40px", border: "none",
                                                 borderBottom: "#44a0ac solid 1.0px",
                                                 backgroundColor: "transparent"
                                             }}
@@ -972,42 +987,42 @@ export default function SignUpForm() {
                                         >인증</button>
                                     </Col>
                                 </Row>
-                                :
-                                <div>
-                                    <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
-                                        <Col xs={{ span: 20, offset: 2 }}>
-                                            <button
-                                                type="button"
-                                                style={{
+                                : authType == 0 && emailAuthStep == 2 ?
+                                    <div>
+                                        <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
+                                            <Col xs={{ span: 20, offset: 2 }}>
+                                                <button
+                                                    type="button"
+                                                    style={{
+                                                        padding: "0",
+                                                        width: "100%",
+                                                        background: "#ffffff", color: "#47a7b4",
+                                                        border: "#47a7b4 1px solid", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                                    }}
+                                                >인증 완료</button>
+                                            </Col>
+                                        </Row>
+                                        <Row style={{ marginBottom: "100px" }}>
+                                            <Col xs={{ span: 20, offset: 2 }}>
+                                                <input style={{
                                                     padding: "0",
                                                     width: "100%",
-                                                    background: "#ffffff", color: "#47a7b4",
-                                                    border: "#47a7b4 1px solid", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                                    border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                                 }}
-                                            >인증 완료</button>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ marginBottom: "100px" }}>
-                                        <Col xs={{ span: 20, offset: 2 }}>
-                                            <input style={{
-                                                padding: "0",
-                                                width: "100%",
-                                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                                border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
-                                            }}
-                                                type="submit" value="가입완료"
-                                            />
-                                        </Col>
-                                    </Row>
-                                </div>
-                    }
+                                                    type="submit" value="가입완료"
+                                                />
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                    : null}
                 </div>
             </form>
             <div class={formStyle[2]}>
 
                 {step == 2 ?
 
-                    <Row style={{ marginTop: "50%"}}>
+                    <Row style={{ marginTop: "50%" }}>
                         <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
                             <BeatLoader
                                 size={"15px"}
@@ -1046,8 +1061,8 @@ export default function SignUpForm() {
                                             background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                             border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
                                         }}
-                                        onClick={()=>{
-                                        }}
+                                            onClick={() => {
+                                            }}
                                         >마이페이지로</button>
                                     </Link>
                                 </Col>

@@ -26,8 +26,8 @@ export default function Search(props,{ location, match, history }) {
   }
 
   const getAllSearchedBuyItems = async (keyword) => {
-    axios.get('http://13.124.113.72:8080/naver/bookApi/buy?keyword=' + keyword)
-    //axios.get('http://localhost:8080/naver/bookApi/buy?keyword=' + keyword)
+    if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
+      axios.get('http://13.124.113.72:8080/naver/bookApi/buy/title?keyword=' + keyword)
       .then((response) => {
 
         console.log(response);
@@ -48,11 +48,38 @@ export default function Search(props,{ location, match, history }) {
           }
         }
       );
+    }
+    else{
+      axios.get('http://13.124.113.72:8080/naver/bookApi/buy/isbn?keyword=' + keyword)
+      .then((response) => {
+
+        console.log(response);
+        console.log(keyword);
+
+        if(response.data != null){
+
+          const items = response.data;
+          
+          if(items!= undefined && items.length > 0 && keyword !=''){
+            setResdata(items);
+          }
+
+          if(keyword == ''){
+              setResdata(null);
+          }
+
+          }
+        }
+      );
+    }
+
   }
 
   const getAllSearchedSellItems = async (keyword) => {
-    axios.get('http://13.124.113.72:8080/naver/bookApi/sell?keyword=' + keyword)
-    //axios.get('http://localhost:8080/naver/bookApi/sell?keyword=' + keyword)
+    
+    if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
+
+      axios.get('http://13.124.113.72:8080/naver/bookApi/sell/title?keyword=' + keyword)
       .then((response) => {
         console.log(response);
         if(response.data != null){
@@ -72,6 +99,30 @@ export default function Search(props,{ location, match, history }) {
           }
       }
       );
+    }
+    else{
+      axios.get('http://13.124.113.72:8080/naver/bookApi/sell/isbn?keyword=' + keyword)
+      .then((response) => {
+        console.log(response);
+        if(response.data != null){
+
+          const items = response.data;
+          
+          if(items!= undefined && items.length > 0 && keyword !=''){
+            setResdata(items);
+          }
+
+          if(keyword == ''){
+              setResdata(null);
+          }
+
+          props.updateInputValue(resdata);
+
+          }
+      }
+      );
+    }
+    
   }
 
   const onFocusHandler = () =>{

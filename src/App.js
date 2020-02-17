@@ -20,6 +20,7 @@ import {
 } from "react-device-detect";
 
 class App extends Component {
+
   render() {
     if (isMobile) {
       return (
