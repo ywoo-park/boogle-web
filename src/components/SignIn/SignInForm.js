@@ -8,6 +8,7 @@ import './SignInForm.css';
 export default function SignInForm(props) {
   const { register, handleSubmit, errors } = useForm();
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isLoginFailed, setIsLoginFailed] = useState(false);
 
   React.useEffect(() => {
     if(localStorage.getItem('token') != '' && localStorage.getItem('token') != null){
@@ -28,6 +29,9 @@ export default function SignInForm(props) {
       if(res.data.status == 200){
         localStorage.setItem('token', res.data.data);
         window.location.reload();
+      }
+      else{
+        setIsLoginFailed(true);
       }
     });
   };
@@ -72,11 +76,7 @@ export default function SignInForm(props) {
               name="email"
               placeholder="아이디"
               ref={register({
-                required: "이메일을 입력해주세요",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "이메일의 형태로 입력해주세요."
-                }
+                required: "아이디 또는 이메일을 입력해주세요",
               })}
             ></input>
             <ErrorMessage errors={errors} name="id" as="p" />
@@ -114,6 +114,11 @@ export default function SignInForm(props) {
               type="submit" value="로그인" />
           </Col>
         </Row>
+        <Row>
+          <Col xs={{span : 18, offset : 3}}>
+          {isLoginFailed && <p style={{ marginBottom: "0px", fontSize : "12px", color : "#ffffff"}}>가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</p>}
+          </Col>
+        </Row> 
       </form>
       <Row>
         <Col offset={2} span={20}><Divider style={{ background: "#ffffff", height: "1px" }} /></Col>

@@ -11,6 +11,8 @@ import CustomerCenterPage from "./pages/CustomerCenterPage";
 import ModifyInfo from "./pages/ModifyInfo";
 import BoxCheckPage from "./pages/BoxCheckPage";
 import BoxInputPage from "./pages/BoxInputPage";
+import Setting from "./pages/Setting";
+import AccountSetting from "./pages/AccountSetting";
 
 import {
   BrowserView,
@@ -37,6 +39,8 @@ class App extends Component {
           <Route path="/modifyInfo" component={ModifyInfo} />
           <Route path="/boxinput" component={BoxInputPage}/>
           <Route path="/boxcheck" component={BoxCheckPage}/>
+          <Route path="/setting" component={Setting} />
+          <Route path="/accountSetting" component={AccountSetting} />
           </Switch>
         </Router>
       );

@@ -59,7 +59,17 @@ export default function SettingMenu() {
         </Link>
       </Row>
       <Row>
-        <Col>결제수단관리</Col>
+        <Link to="/accountSetting">
+          <Col xs={{ offset: 1, span: 1 }}>
+            <Icon type="credit-card" />
+          </Col>
+          <Col xs={{ offset: 2, span: 15 }}>
+            <span>계좌 관리</span>
+          </Col>
+          <Col xs={{ offset: 2, span: 2 }}>
+            <Icon type="right" />
+          </Col>
+        </Link>
       </Row>
     </div>
   );
