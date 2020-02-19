@@ -88,8 +88,8 @@ class Navbar extends Component {
                   updateInputValue={this.updateInputValue}
                   mode={this.state.mode}
                   placeHolder={this.state.mode == "buy" ?
-                    "구매할 도서의 제목, 저자를 입력해주세요."
-                    : "판매할 도서의 제목, 저자를 입력해주세요."}
+                    "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
+                    : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
                 ></Search>
               </Col>
             </Row>
@@ -189,8 +189,8 @@ class Navbar extends Component {
                       <Search
                         focusOnSearch={this.focusOnSearch}
                         placeHolder={this.state.mode == "buy" ?
-                          "구매할 도서의 제목, 저자를 입력해주세요."
-                          : "판매할 도서의 제목, 저자를 입력해주세요."}
+                        "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
+                        : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
                         mode={this.state.mode}
                       ></Search>
                     </Col>

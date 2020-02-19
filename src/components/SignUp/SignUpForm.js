@@ -44,6 +44,10 @@ export default function SignUpForm() {
     const [authCode, setAuthCode] = useState("0000");
     const [authType, setAuthType] = useState(0);
 
+    const [userImages, setUserImages] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
+    const [imageDiv, setImageDiv] = useState();
+
     const onSubmitFirstForm = (data) => {
 
         let majorListAsString = ""
@@ -62,7 +66,8 @@ export default function SignUpForm() {
                 campus: campus,
                 semester: semester,
                 majorList: majorListAsString,
-                phoneNumber: "010" + data.phone_2 + data.phone_3
+                phoneNumber: "010" + data.phone_2 + data.phone_3,
+                isAuthComplete : authType == 0 ? true : false
             })
         }
     };
@@ -108,16 +113,80 @@ export default function SignUpForm() {
         }
     }, [searchedDepartmentMajorList])
 
+    React.useEffect(() => {
+        setImageDiv(imageUrls.map((i, index) => (
+            <Col xs={{ span: 4, offset: 1 }}>
+                <div
+                    style={{
+                        border: "#44a0ac 1px solid",
+                        height: "65px", width: "65px",
+                        position: "relative", borderRadius: "10px",
+                        top: "50%", left: "50%"
+                    }}>
+                    <Icon type="close-circle"
+                        style={{
+                            color: "rgba(51, 158, 172, 0.9)", margin: "auto", position: "relative",
+                            left: 45, top: -5, zIndex: 100
+                        }}
+                        onClick={() => {
+                            let currImageUrls = imageUrls;
+                            currImageUrls.splice(index, 1);
+                            console.log(index);
+                            console.log(currImageUrls);
+                            setImageUrls(currImageUrls);
+                        }}>
+                    </Icon>
+                    <img style={{
+                        width: "100%", height: "100%",
+                        position: "absolute",
+                        top: "0", left: "0",
+                        objectFit: "contain"
+                    }} src={i}
+                    />
+                </div>
+            </Col>
+        )));
+
+    }, [imageUrls]);
+
+    React.useEffect(() => {
+        if (userImages.length > 0)
+            console.log(userImages);
+    }, [userImages])
+
     const saveUser = () => {
+
         axios.post('http://13.124.113.72:8080/users/signup', signUpReq, {
         })
             .then((response) => {
                 console.log(response);
                 localStorage.setItem('token', response.data.data);
-                setStep(2);
-                setTimeout(() => {
-                    setStep(3);
-                }, 3000);
+
+                if (authType == 1) {
+                    let form = new FormData();
+                    form.append('userCampusAuthImage', {
+
+                    })
+                    form.append('userCampusAuthImageFile', userImages[0])
+                    axios.post('http://13.124.113.72:8080/authImage', form, {
+                        headers: { Authorization: response.data.data }
+                    })
+                        .then((response) => {
+                            setStep(2);
+                            setTimeout(() => {
+                                setStep(3);
+                            }, 3000);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                }
+                else {
+                    setStep(2);
+                    setTimeout(() => {
+                        setStep(3);
+                    }, 3000);
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -924,10 +993,6 @@ export default function SignUpForm() {
                                     {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
                                 </Col>
                             </Row>
-                        </div>
-
-
-                        : authType == 0 && emailAuthStep == 0 ?
                             <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
                                 <Col xs={{ span: 20, offset: 2 }}>
                                     <button
@@ -953,7 +1018,7 @@ export default function SignUpForm() {
                                     >인증번호 보내기</button>
                                 </Col>
                             </Row>
-                            : authType == 0 && emailAuthStep == 1 ?
+                            {authType == 0 && emailAuthStep == 1 ?
                                 <Row style={{ marginTop: "-70px", marginBottom: "70px" }}>
                                     <Col xs={{ span: 14, offset: 2 }}>
                                         <input
@@ -986,36 +1051,97 @@ export default function SignUpForm() {
                                             }}
                                         >인증</button>
                                     </Col>
-                                </Row>
-                                : authType == 0 && emailAuthStep == 2 ?
-                                    <div>
-                                        <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
-                                            <Col xs={{ span: 20, offset: 2 }}>
-                                                <button
-                                                    type="button"
-                                                    style={{
-                                                        padding: "0",
-                                                        width: "100%",
-                                                        background: "#ffffff", color: "#47a7b4",
-                                                        border: "#47a7b4 1px solid", borderRadius: "14px", fontSize: "18px", height: "32px"
-                                                    }}
-                                                >인증 완료</button>
-                                            </Col>
-                                        </Row>
-                                        <Row style={{ marginBottom: "100px" }}>
-                                            <Col xs={{ span: 20, offset: 2 }}>
-                                                <input style={{
+                                </Row> : null}
+                            {authType == 0 && emailAuthStep == 2 ?
+                                <div>
+                                    <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
+                                        <Col xs={{ span: 20, offset: 2 }}>
+                                            <button
+                                                type="button"
+                                                style={{
                                                     padding: "0",
                                                     width: "100%",
-                                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                                    border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                                    background: "#ffffff", color: "#47a7b4",
+                                                    border: "#47a7b4 1px solid", borderRadius: "14px", fontSize: "18px", height: "32px"
                                                 }}
-                                                    type="submit" value="가입완료"
-                                                />
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                    : null}
+                                            >인증 완료</button>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "100px" }}>
+                                        <Col xs={{ span: 20, offset: 2 }}>
+                                            <input style={{
+                                                padding: "0",
+                                                width: "100%",
+                                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                                border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                            }}
+                                                type="submit" value="가입완료"
+                                            />
+                                        </Col>
+                                    </Row>
+                                </div> : null}</div>
+                        : authType == 1 ?
+                            <div>
+                                <Row>
+                                    <Col xs={{ span: 8, offset: 2 }}>
+                                        <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학생증 등록</span>
+                                    </Col>
+                                </Row>
+                                <Row style={{ marginTop: "20px", marginBottom: "20px" }}>
+                                    <Col xs={{ span: 2, offset: 2 }}>
+                                        <input id="selectedFile" type="file" accept="image/*;capture=camera"
+                                            onChange={(e) => {
+
+                                                if (userImages.length < 3) {
+
+                                                    const file = e.target.files[0];
+                                                    setUserImages(userImages => [...userImages, file]);
+
+                                                    let reader = new FileReader();
+
+                                                    reader.onloadend = () => {
+                                                        setImageUrls(imageUrls => [...imageUrls, reader.result])
+                                                    }
+
+                                                    reader.readAsDataURL(file)
+
+                                                }
+                                            }}
+                                            style={{ display: "none" }}
+                                        />
+                                        <div onClick={() => {
+                                            if (userImages.length < 3)
+                                                document.getElementById('selectedFile').click()
+                                        }}
+                                            style={{
+                                                border: "#44a0ac 1px solid",
+                                                height: "65px", width: "65px",
+                                                position: "relative", borderRadius: "10px"
+                                            }}>
+                                            <Icon type="camera"
+                                                style={{
+                                                    fontSize: "5vh", position: "absolute",
+                                                    textAlign: "center", width: "100%", transform: "translate(-50%, -50%)",
+                                                    top: "50%", left: "50%", color: "#44a0ac"
+                                                }} />
+                                        </div>
+                                    </Col>
+                                    {imageDiv != undefined ? imageDiv : null}
+                                </Row>
+                                <Row style={{ marginBottom: "100px" }}>
+                                    <Col xs={{ span: 20, offset: 2 }}>
+                                        <input style={{
+                                            padding: "0",
+                                            width: "100%",
+                                            background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                            border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                        }}
+                                            type="submit" value="가입완료"
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                            : null}
                 </div>
             </form>
             <div class={formStyle[2]}>
