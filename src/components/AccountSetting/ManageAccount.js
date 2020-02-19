@@ -17,24 +17,33 @@ const FETCH_ACCOUNTS = "FETCH_ACCOUNT";
 
 const initialState = {
   step: 0,
-  accounts: [{ bank: "국민은행", accNumber: "1234-12341234", owner: "히히힛" }],
-  newAccount: null
+  accounts: [
+    {
+      _id: "1234",
+      userId: "arst",
+      bankId: "국민은행",
+      accountNumber: "1234-12341234",
+      depositorName: "히히힛"
+    }
+  ],
+  newAccount: { bankId: null, accountNumber: null, depositorName: null },
+  bankList: []
 };
 
 function reducer(state, action) {
   switch (action.type) {
-    // case FETCH_ACCOUNTS:
-    //   return { step: 0, accounts: action.accounts };
     case CURRENT_ACCOUNTS:
-      return { step: 0, accounts: action.accounts };
+      return { step: 0, accounts: action.accounts, bankList: state.bankList };
     case ADD_ACCOUNT:
-      return { step: 1, accounts: state.accounts };
+      return { step: 1, accounts: state.accounts, bankList: state.bankList };
     case DETAIL_ACCOUNT:
       return {
         step: 2,
         accounts: state.accounts,
         newAccount: action.newAccount
       };
+    case "BANK_LIST":
+      return { bankList: action.bankList };
     case "FAILURE":
       return initialState;
     default:
@@ -46,8 +55,19 @@ export default function ManageAccount() {
   const [manageSet, dispatch] = useReducer(reducer, initialState);
   const server_url = `http://13.124.113.72:8080`;
   const getAcc_url = `${server_url}/userBankAccount`;
+  const bankData_url = `${server_url}/bank`;
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
+
+  useEffect(() => {
+    const getBankData = async () => {
+      const result = await axios.get(bankData_url).then(res => {
+        dispatch({ type: "BANK_LIST", bankList: res.data.data });
+        // console.log(res.data.data);
+      });
+    };
+    getBankData();
+  }, [dispatch]);
 
   useEffect(() => {
     const getAccData = async () => {
@@ -57,7 +77,7 @@ export default function ManageAccount() {
         })
         .then(res => {
           dispatch({ type: "CURRENT_ACCOUNTS", accounts: res.data.data });
-          console.log(res.data);
+          // console.log(res.data);
         })
         .catch(error => {
           dispatch({ type: "FAILURE" });

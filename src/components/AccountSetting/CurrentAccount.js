@@ -5,6 +5,12 @@ import { ManageContext } from "./ManageAccount";
 export default function CurrentAccount() {
   const { manageSet, dispatch } = useContext(ManageContext);
 
+  const bankNameList = accId => {
+    return manageSet.bankList.filter(b => b._id == accId)[0] != undefined
+      ? manageSet.bankList.filter(b => b._id == accId)[0].name
+      : null;
+  };
+
   return (
     <Row id="refer-accounts">
       <Col>
@@ -26,13 +32,14 @@ export default function CurrentAccount() {
                       <Row>
                         <Col>
                           <span>
-                            {account.bankId} {account.accountNumber}
+                            {bankNameList(account.bankId)}
+                            {account.accountNumber}
                           </span>
                         </Col>
                       </Row>
                       <Row>
                         <Col>
-                          <span>{account.depositorName}</span>
+                          <span>예금주 : {account.depositorName}</span>
                         </Col>
                       </Row>
                       <Row>

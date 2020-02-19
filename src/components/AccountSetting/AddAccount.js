@@ -13,6 +13,7 @@ export default function AddAccount() {
     "SC은행",
     "부산은행"
   ];
+
   //나중에는 server에서 받아서 setBankList 하기.
 
   return (
