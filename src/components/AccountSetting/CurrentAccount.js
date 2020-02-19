@@ -1,13 +1,24 @@
 import React, { useContext } from "react";
 import { Col, Row, Card } from "antd";
 import { ManageContext } from "./ManageAccount";
+import Axios from "axios";
 
 export default function CurrentAccount() {
   const { manageSet, dispatch } = useContext(ManageContext);
+  const authToken =
+    localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
+  const delAcc = bankAccId => {
+    const delAcc_url = `http://13.124.113.72:8080/userBankAccount?userBankAccountId=${bankAccId}`;
+    Axios.delete(
+      delAcc_url,
+      { userBankAccountId: bankAccId },
+      { headers: { Authorization: authToken } }
+    );
+  };
 
   const bankNameList = accId => {
-    return manageSet.bankList.filter(b => b._id == accId)[0] != undefined
-      ? manageSet.bankList.filter(b => b._id == accId)[0].name
+    return manageSet.bankList.filter(b => b._id === accId)[0] !== undefined
+      ? manageSet.bankList.filter(b => b._id === accId)[0].name
       : null;
   };
 
@@ -54,6 +65,10 @@ export default function CurrentAccount() {
                               borderRadius: "2.25vh",
                               fontSize: "2.5vh",
                               height: "5vh"
+                            }}
+                            onClick={async () => {
+                              console.log(account._id);
+                              return await delAcc(account._id);
                             }}
                           >
                             삭제하기

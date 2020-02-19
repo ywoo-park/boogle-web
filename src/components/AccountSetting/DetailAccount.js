@@ -13,8 +13,8 @@ export default function DetailAccount() {
   const { register, handleSubmit, errors } = useForm();
   const [accNum, setAccNum] = useState("");
   const [depName, setDepName] = useState("");
-  const onSubmit = data => {
-    console.log(data);
+  const onSubmit = async data => {
+    await console.log(data);
   };
 
   return (
@@ -29,7 +29,6 @@ export default function DetailAccount() {
           <Row>
             <Col>
               <span>{manageSet.newAccount.name}</span>
-              {/* {console.log(manageSet.newAccount)} */}
             </Col>
           </Row>
         </Row>
@@ -42,7 +41,7 @@ export default function DetailAccount() {
             </Row>
             <Row>
               <Col>
-                <input title="bank" ref={register({ required: true })} />
+                <input ref={register({ required: true })}></input>
               </Col>
             </Row>
           </Col>
@@ -56,7 +55,7 @@ export default function DetailAccount() {
             </Row>
             <Row>
               <Col>
-                <input title="ownerName" ref={register({ required: true })} />
+                <input ref={register({ required: true })}></input>
               </Col>
             </Row>
           </Col>

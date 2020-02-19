@@ -19,11 +19,11 @@ const initialState = {
   step: 0,
   accounts: [
     {
-      _id: "1234",
-      userId: "arst",
-      bankId: "국민은행",
-      accountNumber: "1234-12341234",
-      depositorName: "히히힛"
+      _id: null,
+      userId: null,
+      bankId: null,
+      accountNumber: null,
+      depositorName: null
     }
   ],
   newAccount: { bankId: null, accountNumber: null, depositorName: null },
