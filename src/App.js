@@ -9,6 +9,8 @@ import MyPage from "./pages/MyPage";
 import CustomerInquiry from "./pages/CustomerInquiry";
 import CustomerCenterPage from "./pages/CustomerCenterPage";
 import ModifyInfo from "./pages/ModifyInfo";
+import BoxCheckPage from "./pages/BoxCheckPage";
+import BoxInputPage from "./pages/BoxInputPage";
 import Setting from "./pages/Setting";
 import AccountSetting from "./pages/AccountSetting";
 
@@ -26,18 +28,20 @@ class App extends Component {
       return (
         <Router>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/sell" component={Sell} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="mypage" component={MyPage} />
-            <Route path="/buy/detail/:id" component={DetailSubject} />
-            <Route path="/mypage" component={MyPage} />
-            <Route path="/customerinquiry" component={CustomerInquiry} />
-            <Route path="/customercenter" component={CustomerCenterPage} />
-            <Route path="/modifyInfo" component={ModifyInfo} />
-            <Route path="/setting" component={Setting} />
-            <Route path="/accountSetting" component={AccountSetting} />
+          <Route exact path="/" component={Home} />
+          <Route path="/sell" component={Sell} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="mypage" component={MyPage} />
+          <Route path="/buy/detail/:id" component={DetailSubject} />
+          <Route path="/mypage" component={MyPage}/>
+          <Route path="/customerinquiry" component={CustomerInquiry}/>
+          <Route path="/customercenter" component={CustomerCenterPage}/>
+          <Route path="/modifyInfo" component={ModifyInfo} />
+          <Route path="/boxinput" component={BoxInputPage}/>
+          <Route path="/boxcheck" component={BoxCheckPage}/>
+          <Route path="/setting" component={Setting} />
+          <Route path="/accountSetting" component={AccountSetting} />
           </Switch>
         </Router>
       );
