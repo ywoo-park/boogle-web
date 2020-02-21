@@ -13,8 +13,18 @@ export default function DetailAccount() {
   const { register, handleSubmit, errors } = useForm();
   const [accNum, setAccNum] = useState("");
   const [depName, setDepName] = useState("");
-  const onSubmit = async data => {
-    await console.log(data);
+  const onSubmit = data => {
+    const newAcc = {
+      bankId: manageSet.newAccount._id,
+      accountNumber: data.accountNumber,
+      depositorName: data.depositorName
+    };
+
+    // sendNewAcc(newAcc);
+  };
+
+  const sendNewAcc = async data => {
+    // axios.post(regNewAcc_url, new);
   };
 
   return (
@@ -41,7 +51,10 @@ export default function DetailAccount() {
             </Row>
             <Row>
               <Col>
-                <input ref={register({ required: true })}></input>
+                <input
+                  name="accountNumber"
+                  ref={register({ required: true })}
+                ></input>
               </Col>
             </Row>
           </Col>
@@ -55,7 +68,10 @@ export default function DetailAccount() {
             </Row>
             <Row>
               <Col>
-                <input ref={register({ required: true })}></input>
+                <input
+                  name="depositorName"
+                  ref={register({ required: true })}
+                ></input>
               </Col>
             </Row>
           </Col>
