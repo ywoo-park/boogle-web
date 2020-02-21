@@ -28,6 +28,7 @@ export default function SignUpForm() {
     const [confirmPassword, setConfirmPassword] = useState(0);
     const [formStyle, setFormStyle] = useState(["show", "hide", "hide"]);
     const [checkList, setCheckList] = useState(["0", "0", "0"]);
+    const [isCheckComplete, setIsCheckComplete] = useState(true);
     const [isCollapseOpenList, setIsCollapseOpenList] = useState([false, false, false]);
     const [campus, setCampus] = useState("서강대학교");
     const [semester, setSemester] = useState("1");
@@ -380,11 +381,12 @@ export default function SignUpForm() {
                                 onClick={() => { handleOpenCollapse(0) }}
                                 src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
                         </Col>
-                        <Col offset={0} span={16}>
+                        <Col offset={1} span={15}>
                             <small>
                                 북을 이용약관 동의
                                 <span style={{ color: "#e95513" }}>(필수)</span>
                             </small>
+                            {!isCheckComplete && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>필수 항목에 체크해주세요.</p>}
                         </Col>
                         <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
@@ -402,6 +404,7 @@ export default function SignUpForm() {
                                 }
                             }} className="sign-up-check"
                                 type="check" />
+                            {/*<input type="checkbox"></input>*/}
                         </Col>
                     </Row>
                     <Row>
@@ -424,11 +427,12 @@ export default function SignUpForm() {
                                 onClick={() => { handleOpenCollapse(1) }}
                                 src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
                         </Col>
-                        <Col offset={0} span={16}>
+                        <Col offset={1} span={15}>
                             <small>
                                 개인정보 수집 및 이용에 대한 안내
                                         <span style={{ color: "#e95513" }}>(필수)</span>
                             </small>
+                            {!isCheckComplete && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>필수 항목에 체크해주세요.</p>}
                         </Col>
                         <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
@@ -469,7 +473,7 @@ export default function SignUpForm() {
                                 onClick={() => { handleOpenCollapse(2) }}
                                 src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
                         </Col>
-                        <Col offset={0} span={16}>
+                        <Col offset={1} span={15}>
                             <small>
                                 이메일, SMS 광고 수신 동의
                                         <span style={{ color: "#e95513" }}>(선택)</span>
@@ -506,13 +510,23 @@ export default function SignUpForm() {
                             </Collapse>
                         </Col>
                     </Row>
+                    <Row>
+                    </Row>
                     <Row style={{ marginBottom: "100px" }}>
                         <Col xs={{ span: 20, offset: 2 }}>
                             <button
                                 type="button"
                                 onClick={() => {
                                     const formValues = getValues();
-                                    if (formValues.email != "" && formValues.password != ""
+
+                                    if(checkList.length > 0 && checkList[0] == "0" || checkList[1] == "0"){
+                                        setIsCheckComplete(false);
+                                    }
+                                    else{
+                                        setIsCheckComplete(true);
+                                    }
+
+                                    if(formValues.email != "" && formValues.password != ""
                                         && formValues.confirmPassword != "" && checkList[0] == "1"
                                         && checkList[1] == "1" && validatedEmail) {
                                         setStep(1);
@@ -638,6 +652,7 @@ export default function SignUpForm() {
                                             backgroundColor: "transparent"
                                         }}
                                         value={majorList.length != 0 ? majorList[0] : ""}
+                                        onClick={() => { setIsSearchMajorModalOpended(true) }}
                                     />
 
                                     {

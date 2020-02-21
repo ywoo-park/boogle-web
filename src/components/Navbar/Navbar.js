@@ -102,6 +102,7 @@ class Navbar extends Component {
                     <img
                       style={{ width: "6.0vh", height: "auto" }}
                       src="https://s3.ap-northeast-2.amazonaws.com/boogle.shop/logo.png"
+                      onClick={()=>{window.location.reload()}}
                     ></img>
                   </Col>
                   <Col xs={{ span: 4, offset: 0 }}>
