@@ -8,16 +8,18 @@ export default function CurrentAccount() {
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
   const delAcc = bankAccId => {
+    // console.log(bankAccId);
     const delAcc_url = `http://13.124.113.72:8080/userBankAccount?userBankAccountId=${bankAccId}`;
-    Axios.delete(
-      delAcc_url,
-      { userBankAccountId: bankAccId },
-      { headers: { Authorization: authToken } }
+    Axios.delete(delAcc_url, { headers: { Authorization: authToken } }).then(
+      res => {
+        if (res.data.status == 200) {
+          window.location.reload();
+        }
+      }
     );
   };
 
   const bankNameList = accId => {
-    console.log(manageSet);
     return manageSet.bankList.filter(b => b._id === accId)[0] !== undefined
       ? manageSet.bankList.filter(b => b._id === accId)[0].name
       : null;
@@ -68,7 +70,6 @@ export default function CurrentAccount() {
                               height: "5vh"
                             }}
                             onClick={async () => {
-                              console.log(account._id);
                               return await delAcc(account._id);
                             }}
                           >

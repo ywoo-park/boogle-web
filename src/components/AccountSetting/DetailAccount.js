@@ -24,9 +24,15 @@ export default function DetailAccount() {
   };
 
   const sendNewAcc = async data => {
-    axios.post(regNewAcc_url, data, {
-      headers: { Authorization: authToken }
-    });
+    axios
+      .post(regNewAcc_url, data, {
+        headers: { Authorization: authToken }
+      })
+      .then(res => {
+        // if (res.data.status == 200) {
+        window.location.reload();
+        // }
+      });
   };
 
   return (
@@ -83,7 +89,7 @@ export default function DetailAccount() {
             <input
               type="submit"
               onClick={() => {
-                window.location.reload();
+                // window.location.reload();
               }}
               value="입력완료"
             />
