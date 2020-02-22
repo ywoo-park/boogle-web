@@ -189,10 +189,26 @@ export default function MyPageBanner() {
         });
     }
 
+  const completePayment = (sellItemId) => {
+    axios.get('http://13.124.113.72:8080/transaction/payment?sellItemId=' + sellItemId, {
+    })
+      .then((response) => {
+          setNeedRender(true);
+      });    
+  }
 
-    
-       
+  const setBoogleBoxInfo = (boxId, boxPassword, sellItemId) => {
 
+    axios.post('http://13.124.113.72:8080/transaction/booglebox', {
+      "sellItemId" : sellItemId,
+      "id" : boxId,
+      "password" : boxPassword
+    })
+      .then((response) => {
+          setNeedRender(true);
+      });    
+
+  }
 
   const changeTransactionStep = (sellItemId) => {
 
@@ -206,8 +222,12 @@ export default function MyPageBanner() {
 
   }
 
+  const setBoogleBoxInfoOnClickHandler = (boxId, boxPassword, sellItemId) => {
+    setBoogleBoxInfo(boxId, boxPassword, sellItemId);
+  }
+
   const payConfirmOnClickHandler = (sellItemId) => {
-    changeTransactionStep(sellItemId);
+    completePayment(sellItemId)
   }
 
   const viewLikeProduct = e => {
