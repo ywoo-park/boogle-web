@@ -71,113 +71,26 @@ export default function MyPageBanner() {
         });
     }
 
+  const completePayment = (sellItemId) => {
+    axios.get('http://13.124.113.72:8080/transaction/payment?sellItemId=' + sellItemId, {
+    })
+      .then((response) => {
+          setNeedRender(true);
+      });    
+  }
 
-    //setName("김유진");
-    /*
-    setLikeList([
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-        "title": "맨큐의 경제학",
-        "regiPrice": "8000"
-      },
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-        "title": "맨큐의 경제학",
-        "regiPrice": "10000"
+  const setBoogleBoxInfo = (boxId, boxPassword, sellItemId) => {
 
-      },
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-        "title": "맨큐의 경제학",
-        "regiPrice": "15000"
-      },
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
-        "title": "맨큐의 경제학",
-        "regiPrice": "20000"
-      }
-    ]);
-    setBuyList([
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "traderName": "김판매",
-        "traderPhoneNumber": "01012345678",
-        "title": "맨큐의 경제학",
-        "transactionType": 0,
-        "transPrice": "20000",
-         "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/140/134/14013423.jpg?type=m1&udate=20190204",
-        "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-01T10:17:13.576+0000"
-        ],
-        "transactionStep": 1
-      },
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "traderName": "김중고",
-        "traderPhoneNumber": "01012345678",
-        "title": "선형대수학",
-        "transactionType": 1,
-        "transPrice": "20000",
-         "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/140/134/14013423.jpg?type=m1&udate=20190204",
-        "transactionCreatedTime": "2020-02-01T10:17:13.576+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-01T10:17:13.576+0000"
-        ],
-        "transactionStep": 4
-      }
-    ]);
-    setSellList([
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "traderName": "북을",
-        "traderPhoneNumber": "01012345678",
-        "title": "프랑스어",
-        "transactionType": 1,
-        "transPrice": "8000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/140/134/14013423.jpg?type=m1&udate=20190204",
-        "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-01T10:31:19.317+0000"
-        ],
-        "transactionStep": -1
-      },
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "traderName": "북을",
-        "traderPhoneNumber": "01012345678",
-        "title": "대학수학",
-        "transactionType": 1,
-        "transPrice": "8000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/140/134/14013423.jpg?type=m1&udate=20190204",
-        "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-01T10:31:19.317+0000"
-        ],
-        "transactionStep": 4
-      },
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "traderName": "새내기",
-        "traderPhoneNumber": "01012345678",
-        "title": "읽기와 쓰기",
-        "transactionType": 1,
-        "transPrice": "8000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/140/134/14013423.jpg?type=m1&udate=20190204",
-        "transactionCreatedTime": "2020-02-01T10:31:19.317+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-01T10:31:19.317+0000"
-        ],
-        "transactionStep": 4
-      }
-    ]
-    );
-       */
+    axios.post('http://13.124.113.72:8080/transaction/booglebox', {
+      "sellItemId" : sellItemId,
+      "id" : boxId,
+      "password" : boxPassword
+    })
+      .then((response) => {
+          setNeedRender(true);
+      });    
 
+  }
 
   const changeTransactionStep = (sellItemId) => {
 
@@ -191,8 +104,12 @@ export default function MyPageBanner() {
 
   }
 
+  const setBoogleBoxInfoOnClickHandler = (boxId, boxPassword, sellItemId) => {
+    setBoogleBoxInfo(boxId, boxPassword, sellItemId);
+  }
+
   const payConfirmOnClickHandler = (sellItemId) => {
-    changeTransactionStep(sellItemId);
+    completePayment(sellItemId)
   }
 
   const viewLikeProduct = e => {
