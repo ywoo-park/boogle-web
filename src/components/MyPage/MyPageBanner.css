@@ -1,5 +1,6 @@
 .mypage{
     text-align: center;
+<<<<<<< HEAD
 }
 
 #banner-bottom-navbar{
@@ -26,4 +27,14 @@
 }
 .scrolled-down{
     margin-bottom : -100px;
+=======
+    width: 100%;
+    height: 100vh;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+}
+
+.ant-card-body{
+    padding: 2vh;
+>>>>>>> a4c7a6d14a288f65123c3785f05f609448c4b3c7
 }

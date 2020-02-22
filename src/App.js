@@ -1,26 +1,72 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Sell from "./pages/Sell";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
+import CustomerInquiry from "./pages/CustomerInquiry";
+import CustomerCenterPage from "./pages/CustomerCenterPage";
+import ModifyInfo from "./pages/ModifyInfo";
+import BoxCheckPage from "./pages/BoxCheckPage";
+import BoxInputPage from "./pages/BoxInputPage";
+import Setting from "./pages/Setting";
+import AccountSetting from "./pages/AccountSetting";
+import Admin from "./pages/Admin";
+
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 class App extends Component {
+
   render() {
-    return (
+
+    const warning = () =>{return(<h1>모바일로 접속하세요.</h1>)}
+    
+    if (isMobile) {
+      return (
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/sell" component={Sell} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="mypage" component={MyPage} />
+            <Route path="/buy/detail/:id" component={DetailSubject} />
+            <Route path="/mypage" component={MyPage} />
+            <Route path="/customerinquiry" component={CustomerInquiry} />
+            <Route path="/customercenter" component={CustomerCenterPage} />
+            <Route path="/modifyInfo" component={ModifyInfo} />
+            <Route path="/setting" component={Setting} />
+            <Route path="/accountSetting" component={AccountSetting} />
+            <Route path="/admin" component={Admin}/>
+          </Switch>
+        </Router>
+      );
+    } else {
+      return(
       <Router>
+<<<<<<< HEAD
         <Route exact path="/" component={Home} />
         <Route path="/sell" component={Sell} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
         <Route path="/detailsubject" component={DetailSubject} />
         <Route path="/mypage" component={MyPage}/>
+=======
+        <Switch>
+          <Route exact path="/" component={warning}></Route>
+          <Route path="/admin" component={Admin}></Route>
+        </Switch>
+>>>>>>> a4c7a6d14a288f65123c3785f05f609448c4b3c7
       </Router>
-    );
+      );
+    }
   }
 }
-
 export default App;
