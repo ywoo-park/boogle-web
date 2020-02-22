@@ -22,7 +22,7 @@ export default function SignInForm(props) {
   }, []);
 
   const onSubmit = data => {
-    console.log(data);
+    loginSend(data);
   };
   const login_check_url = "http://13.124.113.72:8080/users/signin";
 
