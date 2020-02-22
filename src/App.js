@@ -51,19 +51,10 @@ class App extends Component {
     } else {
       return(
       <Router>
-<<<<<<< HEAD
-        <Route exact path="/" component={Home} />
-        <Route path="/sell" component={Sell} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/signin" component={SignIn} />
-        <Route path="/detailsubject" component={DetailSubject} />
-        <Route path="/mypage" component={MyPage}/>
-=======
         <Switch>
           <Route exact path="/" component={warning}></Route>
           <Route path="/admin" component={Admin}></Route>
         </Switch>
->>>>>>> a4c7a6d14a288f65123c3785f05f609448c4b3c7
       </Router>
       );
     }

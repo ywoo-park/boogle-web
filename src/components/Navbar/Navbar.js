@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import React, { Component, Link } from "react";
-
-=======
 import React, { Component } from "react";
->>>>>>> a4c7a6d14a288f65123c3785f05f609448c4b3c7
 import Nav from "react-bootstrap/Nav";
 import NavBar from "react-bootstrap/Navbar";
 import "./Navbar.css";
@@ -100,61 +95,6 @@ class Navbar extends Component {
             </Row>
           </header>
         ) : (
-<<<<<<< HEAD
-          <div>
-            <header id="navbar-fixed">
-              <Row id="navbar-top-row">
-                <Col xs={{ span: 5, offset: 2 }}>
-                  <img
-                    style={{ width: "6.0vh", height: "auto" }}
-                    src="https://s3.ap-northeast-2.amazonaws.com/boogle.shop/logo.png"
-                  ></img>
-                </Col>
-                <Col xs={{ span: 1, offset: 11 }}>
-                  <Icon
-                    className="navbar-top-icon"
-                    type="mail"
-                    theme="outlined"
-                    style={{
-                      color: "lightgrey",
-                      margin: "auto",
-                      marginTop: "1vh"
-                    }}
-                  ></Icon>
-                </Col>
-                <Col xs={{ span: 1, offset: 2 }}>
-
-                  <Icon
-                    className="navbar-top-icon"
-                    type="user"
-                    theme="outlined"
-                    style={{
-                      color: "lightgrey",
-                      margin: "auto",
-                      marginTop: "1vh"
-                    }}
-                  ></Icon>
-                
-                </Col>
-              </Row>
-              <Row id="navbar-search-row">
-                <Col xs={{ span: 20, offset: 2 }}>
-                  <Search
-                    focusOnSearch={this.focusOnSearch}
-                    placeHolder="구매할 도서의 제목, 저자를 입력해주세요."
-                  ></Search>
-                </Col>
-              </Row>
-            </header>
-            <header id="navbar-unfixed">
-              <Row>
-                <Col xs={{ span: 20, offset: 2 }}>
-                  <Carousel className="navbar-carousel" autoplay>
-                    <div className="navbar-carousel-div">
-                      <h3 className="navbar-carousel-title">판매 등록 시, </h3>
-                      <h3 className="navbar-carousel-title">
-                        50% 선 지급 이벤트
-=======
             <div>
               <header id="navbar-fixed">
                 <Row id="navbar-top-row">
@@ -268,7 +208,6 @@ class Navbar extends Component {
                         <h3 className="navbar-carousel-title">판매 등록 시, </h3>
                         <h3 className="navbar-carousel-title">
                           50% 선 지급 이벤트
->>>>>>> a4c7a6d14a288f65123c3785f05f609448c4b3c7
                       </h3>
                         <h3 className="navbar-carousel-title">진행 중!</h3>
                       </div>
@@ -300,8 +239,4 @@ class Navbar extends Component {
   }
 }
 
-<<<<<<< HEAD
-export default Navbar;
-=======
 export default withRouter(Navbar);
->>>>>>> a4c7a6d14a288f65123c3785f05f609448c4b3c7
