@@ -11,7 +11,7 @@ export default function ModifyAuth() {
             "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)"
         }}
       >
-        <Col xs={{ span: 3 }}>
+        <Col xs={{ span: 2, offset: 1 }}>
           <Link to="/setting">
             <img
               style={{
@@ -33,8 +33,8 @@ export default function ModifyAuth() {
         <Col xs={{ span: 8, offset: 2 }}>자동 로그인</Col>
         <Col xs={{ span: 4 }}>토글</Col>
       </Row>
-      <Row>
-        <Col>
+      <Row style={{ marginBottom: "15vh" }}>
+        <Col xs={{ offset: 1, span: 22 }}>
           <Link to="/">
             <button
               style={{
