@@ -47,25 +47,25 @@ export default function MyPageBanner() {
     setName("김유진");
     setLikeList([
       {
-        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
         "title": "맨큐의 경제학",
         "regiPrice": "8000"
       },
       {
-        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
         "title": "맨큐의 경제학",
         "regiPrice": "10000"
       },
       {
-        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
         "title": "맨큐의 경제학",
         "regiPrice": "15000"
       },
       {
-        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
         "title": "맨큐의 경제학",
         "regiPrice": "20000"
@@ -73,7 +73,7 @@ export default function MyPageBanner() {
     ]);
     setBuyList([
       {
-        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "김판매",
         "traderPhoneNumber": "01012345678",
         "title": "맨큐의 경제학",
@@ -87,7 +87,7 @@ export default function MyPageBanner() {
         "transactionStep": 1
       },
       {
-        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "김중고",
         "traderPhoneNumber": "01012345678",
         "title": "선형대수학",
@@ -103,7 +103,7 @@ export default function MyPageBanner() {
     ]);
     setSellList([
       {
-        "sellItemId": "5e302c68cf6c2a2fab5324fe",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "북을",
         "traderPhoneNumber": "01012345678",
         "title": "프랑스어",
@@ -117,7 +117,7 @@ export default function MyPageBanner() {
         "transactionStep": -1
       },
       {
-        "sellItemId": "5e302c68cf6c2a2fab5324fe",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "북을",
         "traderPhoneNumber": "01012345678",
         "title": "대학수학",
@@ -131,7 +131,7 @@ export default function MyPageBanner() {
         "transactionStep": 4
       },
       {
-        "sellItemId": "5e302c68cf6c2a2fab5324fe",
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "새내기",
         "traderPhoneNumber": "01012345678",
         "title": "읽기와 쓰기",
@@ -211,7 +211,7 @@ export default function MyPageBanner() {
 
   return (
     <div style={{
-      background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
+      background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/banner_background.png)",
       height: "100vh", backgroundSize: "cover"
       , paddingTop: "1vh"
     }} className="mypage">

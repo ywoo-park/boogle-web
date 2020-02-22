@@ -6,7 +6,6 @@ import { withRouter, Link } from "react-router-dom";
 import Camera from 'react-html5-camera-photo';
 import Multiselect from 'react-bootstrap-multiselect';
 import axios from 'axios';
-import Fullscreen from "react-full-screen";
 import { Collapse } from 'react-collapse';
 import { BeatLoader } from "react-spinners";
 
