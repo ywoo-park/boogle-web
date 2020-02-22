@@ -20,11 +20,13 @@ export default function DetailAccount() {
       depositorName: data.depositorName
     };
 
-    // sendNewAcc(newAcc);
+    sendNewAcc(newAcc);
   };
 
   const sendNewAcc = async data => {
-    // axios.post(regNewAcc_url, new);
+    axios.post(regNewAcc_url, data, {
+      headers: { Authorization: authToken }
+    });
   };
 
   return (
