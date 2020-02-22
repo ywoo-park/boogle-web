@@ -9,6 +9,8 @@ import MyPage from "./pages/MyPage";
 import CustomerInquiry from "./pages/CustomerInquiry";
 import CustomerCenterPage from "./pages/CustomerCenterPage";
 import ModifyInfo from "./pages/ModifyInfo";
+import BoxCheckPage from "./pages/BoxCheckPage";
+import BoxInputPage from "./pages/BoxInputPage";
 import Setting from "./pages/Setting";
 import AccountSetting from "./pages/AccountSetting";
 import Admin from "./pages/Admin";
