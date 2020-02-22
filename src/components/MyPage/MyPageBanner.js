@@ -57,6 +57,7 @@ export default function MyPageBanner() {
         "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
         "title": "맨큐의 경제학",
         "regiPrice": "10000"
+
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
@@ -444,7 +445,6 @@ export default function MyPageBanner() {
           </Row>
         </Col>
       </Row>
-
       <Row id="user-product"
         style={{ marginTop: "5%", height: "45%" }}>
         {likeProduct == true ?
