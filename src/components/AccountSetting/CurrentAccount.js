@@ -17,6 +17,7 @@ export default function CurrentAccount() {
   };
 
   const bankNameList = accId => {
+    console.log(manageSet);
     return manageSet.bankList.filter(b => b._id === accId)[0] !== undefined
       ? manageSet.bankList.filter(b => b._id === accId)[0].name
       : null;

@@ -82,9 +82,9 @@ export default function DetailAccount() {
           <Col>
             <input
               type="submit"
-              // onClick={() => {
-              //   dispatch({ type: "CURRENT_ACCOUNTS" });
-              // }}
+              onClick={() => {
+                window.location.reload();
+              }}
               value="입력완료"
             />
           </Col>
