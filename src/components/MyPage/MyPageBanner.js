@@ -3,7 +3,7 @@ import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
 import axios from 'axios';
-import './MyPageBanner.css?ver=1';
+import './MyPageBanner.css';
 import Banner from '../Home/Banner.js';
 
 export default function MyPageBanner() {
