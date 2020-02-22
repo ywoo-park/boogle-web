@@ -5,7 +5,3 @@
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
 }
-
-.ant-card-body{
-    padding: 2vh;
-}

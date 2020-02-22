@@ -3,7 +3,7 @@ import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
 import axios from 'axios';
-import './MyPageBanner.css';
+import './MyPageBanner.css?ver=1';
 import Banner from '../Home/Banner.js';
 
 export default function MyPageBanner() {
@@ -512,39 +512,41 @@ export default function MyPageBanner() {
           : null} {/* likeProduct != true 일 때는 null */}
 
         {buyProduct == true ?
-          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
+          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0}}>
             {buyList.length != 0 && buyList != null ?
               buyList.map((value, index) => (
-                <div style={{ width: "95%", margin: "auto auto" }}>
+                <div style={{ width: "95%", margin: "auto auto", padding: "0px" }}>
                   {value.transactionType == 0 ?
-                    <Card style={{
+                    <Card class = "product-card"
+                    style={{
                       width: "100%", height: "40%", backgroundColor: "#e5fdfc",
-                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
-                      padding: "2vh",
+                      border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      margin: "auto auto", marginBottom: "2vh", padding: "0px",
                     }}>
-                      <Row>
-                        <Col span={6} offset={6}> </Col>
-                        <Col span={6} offset={6} style={{ color: "#339eac", fontSize: "12pt" }}>직거래</Col>
+                      <div style={{margin: "-24px"}}>
+                      <Row style={{padding: "0"}}>
+                        <Col span={4} offset={20} style={{ color: "#339eac", fontSize: "10pt" }}>직거래</Col>
                       </Row>
 
                       {value.transactionStep == 0 ?
                         <div>
                           <Row>
-                            <Col span={5} offset={1}>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
                               }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
-                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                            <Col span={17} offset={1}>
+                              <Row style={{ fontStyle: "bold", fontSize: "15px", textAlign: "left",
+                            color: "#656565" }}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row style={{ fontSize: "8pt", color: "gray", }}>
+                              <Row style={{ fontSize: "12px", color: "#656565", }}>
                                 <Col span={12}>
                                   주문일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -557,7 +559,7 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
+                              <Row style={{ fontSize: "15px", color: "#959595", marginTop: "2vh" }}>
                                 <Col offset={3}>
                                   판매자 수락 대기 중
                               </Col>
@@ -568,34 +570,35 @@ export default function MyPageBanner() {
                         : 
                         <div>
                         <Row>
-                          <Col span={5} offset={1}>
-                          <Link to = {'/buy/detail/'+value.sellItemId}>
-                            <img style={{
-                              width: "8vh", height: "12vh", backgroundSize: "contain",
-                              borderRadius: "7px", overflow: "hidden"
-                            }} src={value.itemImageUrl}></img>
-                          </Link>
-                          </Col>
-                          <Col span={17} offset={0}>
-                            <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                              <Col offset={1}>
-                                {value.title}
-                              </Col>
-                            </Row>
-                            <Row style={{ fontSize: "8pt", color: "gray", }}>
-                              <Col span={12}>
-                                주문일자 : {/*나중에 수정하기*/}
-                                {value.transactionCreatedTime[2]}
-                                {value.transactionCreatedTime[3]}.
-                                {value.transactionCreatedTime[5]}
-                                {value.transactionCreatedTime[6]}.
-                                {value.transactionCreatedTime[8]}
-                                {value.transactionCreatedTime[9]}
-                              </Col>
-                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                            <Col span={6} offset={0}>
+                            <Link to = {'/buy/detail/'+value.sellItemId}>
+                              <img style={{
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl}></img>
+                            </Link>
                             </Col>
-                            </Row>
-                            <Row style={{ fontSize: "8pt", color: "gray", marginTop: "2vh" }}>
+                            <Col span={17} offset={1}>
+                            <Row style={{ fontStyle: "bold", fontSize: "15px", textAlign: "left",
+                            color: "#656565" }}>
+                                <Col offset={0}>
+                                  {value.title}
+                                </Col>
+                              </Row>
+                              <Row style={{ fontSize: "12px", color: "#656565", }}>
+                                <Col span={12}>
+                                  주문일자 : {/*나중에 수정하기*/}
+                                  {value.transactionCreatedTime[2]}
+                                  {value.transactionCreatedTime[3]}.
+                                  {value.transactionCreatedTime[5]}
+                                  {value.transactionCreatedTime[6]}.
+                                  {value.transactionCreatedTime[8]}
+                                  {value.transactionCreatedTime[9]}
+                                </Col>
+                                <Col span={12}> | 판매가격 : {value.transPrice}원
+                              </Col>
+                              </Row>
+                            <Row style={{ fontSize: "12px", color: "#656565", marginTop: "2vh" }}>
                                 <Col offset={0} style={{ fontStyle: "bold" }}>
                                   판매자 : {value.traderName} |
                                   연락처 : {value.traderPhoneNumber}
@@ -603,21 +606,25 @@ export default function MyPageBanner() {
                               </Row>
                             </Col>
                           </Row>
-                          <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
-                            {dirDetailCard == true && dirActiveIndex == index ?
-                              <button onClick={() => { setDirDetailCard(false) }}>접기</button>
-                              :
-                              <button onClick={() => { setDirDetailCard(true); 
-                                setDirActiveIndex(index) }}>거래상세보기</button>
-                            }
+                          <Row style={{ fontSize: "12px", color: "#656565", marginTop: "4vh" }}>
+                              {dirDetailCard == true && dirActiveIndex == index ?
+                                <Col offset={20}>
+                                <label onClick={() => { setDirDetailCard(false) }}>접기</label>
+                                </Col>
+                                :
+                                <Col offset={16}>
+                                <label onClick={() => { setDirDetailCard(true); 
+                                  setDirActiveIndex(index) }}>거래상세보기</label>
+                                </Col>
+                              }
                           </Row>
                         {dirDetailCard == true && dirActiveIndex == index ?
-                          <div>
+                          <div style={{fontSize: "15px"}}>
                             <Row style={{ margin: "2vh", color: "#44a0ac" }}>
                               판매자 수락
                             </Row>
-                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "#038155" }}>
-                              <Icon type="line" rotate="90" />
+                            <Row style={{ fontSize: "10vh", margin: "2vh", color: "#0396cf" }}>
+                                <Icon type="line" rotate="90" />
                             </Row>
                             {value.transactionStep == 2 || value.transactionStep > 2 ?
                             <Row style={{ marginTop: "2vh", color: "#038196" }}>
@@ -652,6 +659,7 @@ export default function MyPageBanner() {
                           : null } {/*직거래 step들*/}
                       </div>
                     }
+                    </div>
                     </Card>
                     :
                     <Card style={{
@@ -666,17 +674,17 @@ export default function MyPageBanner() {
                       {value.transactionStep == 0 ?
                         <div>
                           <Row>
-                            <Col span={5} offset={1}>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
-                              }} src={value.itemImageUrl} ></img>
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
+                            <Col span={17} offset={1}>
                               <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
@@ -706,17 +714,17 @@ export default function MyPageBanner() {
 
                         <div style={{ fontSize: "12pt", fontStyle: "bold" }}>
                           <Row>
-                            <Col span={5} offset={1}>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
-                              }} src={value.itemImageUrl} ></img>
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
+                            <Col span={17} offset={1}>
                               <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
@@ -892,17 +900,17 @@ export default function MyPageBanner() {
                       </Row>
 
                       <Row>
-                            <Col span={5} offset={1}>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
                               }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
+                            <Col span={17} offset={1}>
                               <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
@@ -943,17 +951,17 @@ export default function MyPageBanner() {
                       {value.transactionStep == 0 ?
                         <div>
                           <Row>
-                            <Col span={5} offset={1}>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
-                              }} src={value.itemImageUrl} ></img>
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
+                            <Col span={17} offset={1}>
                               <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
@@ -1009,21 +1017,21 @@ export default function MyPageBanner() {
                         : 
                         <div>
                         <Row>
-                          <Col span={5} offset={1}>
-                          <Link to = {'/buy/detail/'+value.sellItemId}>
-                            <img style={{
-                              width: "8vh", height: "12vh", backgroundSize: "contain",
-                              borderRadius: "7px", overflow: "hidden"
-                            }}src={value.itemImageUrl} ></img>
-                          </Link>
-                          </Col>
-                          <Col span={17} offset={0}>
-                            <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                              <Col offset={1}>
-                                {value.title}
-                              </Col>
-                            </Row>
-                            <Row style={{ fontSize: "8pt", color: "gray", }}>
+                            <Col span={6} offset={0}>
+                            <Link to = {'/buy/detail/'+value.sellItemId}>
+                              <img style={{
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl}></img>
+                            </Link>
+                            </Col>
+                            <Col span={17} offset={1}>
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
+                                <Col offset={0}>
+                                  {value.title}
+                                </Col>
+                              </Row>
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                               <Col span={12}>
                                 주문일자 : {/*나중에 수정하기*/}
                                 {value.transactionCreatedTime[2]}
@@ -1111,18 +1119,18 @@ export default function MyPageBanner() {
                         <Col span={7} offset={5} style={{ color: "#0b308e", fontSize: "12pt" }}>북을박스</Col>
                         </Row>
 
-                      <Row>
-                            <Col span={5} offset={1}>
+                        <Row>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
                               }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
+                            <Col span={17} offset={1}>
                               <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
@@ -1161,17 +1169,17 @@ export default function MyPageBanner() {
                       {value.transactionStep == 0 ?
                         <div>
                           <Row>
-                            <Col span={5} offset={1}>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
-                              }} src={value.itemImageUrl} ></img>
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
+                            <Col span={17} offset={1}>
                               <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
@@ -1229,17 +1237,17 @@ export default function MyPageBanner() {
 
                         <div style={{ fontSize: "12pt", fontStyle: "bold" }}>
                           <Row>
-                            <Col span={5} offset={1}>
+                            <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
-                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                width: "10vh", height: "15vh", backgroundSize: "contain",
                                 borderRadius: "7px", overflow: "hidden"
                               }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
-                            <Col span={17} offset={0}>
+                            <Col span={17} offset={1}>
                               <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={1}>
+                                <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
