@@ -25,6 +25,8 @@ export default function MyPageBanner() {
   const [boogleBank, setBoogleBank] = useState(false);
   const [sellerBank, setSellerBank] = useState(false);
 
+  const [needRender, setNeedRender] = useState(false);
+
   // const[directStep, setDirectStep] = useState("");
   // const[boxStep, setBoxStep] = useState("");
 
@@ -33,18 +35,45 @@ export default function MyPageBanner() {
     getMyPage();
   }, []);
 
+  useEffect(() => {
+    if(needRender) {
+      getMyPage();
+      setNeedRender(false)
+    }
+  }, [needRender]);
+
   const getMyPage = () => {
     axios.get('http://13.124.113.72:8080/myPage', {
       headers: { Authorization: localStorage.getItem('token') }
     })
       .then((response) => {
         console.log(response);
-        // setName(response.data.data.userName)
-        // setLikeList(response.data.data.bookmarkedItemList)
-        // setBuyList(response.data.data.buyTransList)
-        // setSellList(response.data.data.sellTransList)
+        setName(response.data.data.userName)
+        setLikeList(response.data.data.bookmarkedItemList)
+        setBuyList(response.data.data.buyTransList)
+        setSellList(response.data.data.sellTransList)
       });
-    setName("김유진");
+  }
+
+    const acceptBuyRequest = (sellItemId) => {
+      axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+      })
+        .then((response) => {
+            setNeedRender(true);
+        });
+    }
+
+    const rejectBuyRequest = (sellItemId) => {
+      axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
+      })
+        .then((response) => {
+            setNeedRender(true);
+        });
+    }
+
+
+    //setName("김유진");
+    /*
     setLikeList([
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
@@ -147,7 +176,8 @@ export default function MyPageBanner() {
       }
     ]
     );
-   }
+       */
+
 
   const changeTransactionStep = (sellItemId) => {
 
@@ -908,13 +938,14 @@ export default function MyPageBanner() {
                               </Row>
                               <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
+                                  
                                   등록일자 : {/*나중에 수정하기*/}
-                                  {value.transactionCreatedTime[2]}
-                                  {value.transactionCreatedTime[3]}.
-                                  {value.transactionCreatedTime[5]}
-                                  {value.transactionCreatedTime[6]}.
-                                  {value.transactionCreatedTime[8]}
-                                  {value.transactionCreatedTime[9]}
+                                  {value.transactionCreatedTime != null && value.transactionCreatedTime.chartAt(2)}
+                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(3)}.
+                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(5)}
+                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(6)}.
+                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(8)}
+                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(9)}
                                 </Col>
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
@@ -978,7 +1009,7 @@ export default function MyPageBanner() {
                                     background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                     border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
                                   }}
-                                    onClick={() => { }}
+                                    onClick={() => {rejectBuyRequest(value.sellItemId)}}
                                   >거절</button>
                                 </Col>
                                 <Col span={4} offset={1}>
@@ -988,7 +1019,7 @@ export default function MyPageBanner() {
                                     background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                     border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
                                   }}
-                                    onClick={() => { }}
+                                    onClick={() => {acceptBuyRequest(value.sellItemId)}}
                                   >수락</button>
                                 </Col>
                                 <Col span={4} offset={1}>
@@ -1196,7 +1227,7 @@ export default function MyPageBanner() {
                                     background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                     border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
                                   }}
-                                    onClick={() => { }}
+                                    onClick={() => rejectBuyRequest(value.sellItemId)}
                                   >거절</button>
                                 </Col>
                                 <Col span={4} offset={1}>
@@ -1206,7 +1237,7 @@ export default function MyPageBanner() {
                                     background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                     border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
                                   }}
-                                    onClick={() => { }}
+                                    onClick={() => acceptBuyRequest(value.sellItemId)}
                                   >수락</button>
                                 </Col>
                                 <Col span={4} offset={1}>
