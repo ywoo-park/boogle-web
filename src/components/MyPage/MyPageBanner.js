@@ -51,12 +51,13 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        /*setName(response.data.data.userName)
+        setName(response.data.data.userName)
         setLikeList(response.data.data.bookmarkedItemList)
         setBuyList(response.data.data.buyTransList)
         setSellList(response.data.data.sellTransList)
-      */});
+      });
 
+      /*
     setName("김유진");
     setLikeList([
       {
@@ -167,9 +168,10 @@ export default function MyPageBanner() {
                 ],
         "transactionStep": 4
       }
+      
     ]
     );
-
+      */
   }
 
 
