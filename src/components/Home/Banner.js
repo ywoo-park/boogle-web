@@ -4,6 +4,7 @@ import '../Navbar/Search.css';
 import { Row, Col, Icon, List, Divider, Rate, message } from 'antd';
 import Navbar from '../Navbar/Navbar';
 import Search from '../Navbar/Search';
+import Footer from '../Footer/Footer';
 import { withRouter, Link } from "react-router-dom";
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
@@ -211,7 +212,7 @@ class Banner extends Component {
               
               : this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
                 !this.state.inSubDetail ?
-                <div style={{ marginBottom: "12vh" }}>
+                <div>
                   <Row className="search-result-row" style={{ paddingTop: "5vh", paddingBottom: "-5vh", marginBottom: "-5vh" }}>
                     <Col xs={{ span: 5, offset: 1 }}>
                       <img style={{
@@ -363,7 +364,7 @@ class Banner extends Component {
                 </ul>            
               </Col>
             </Row> 
-            <Row style={{ marginBottom: "100px" }}>
+            <Row>
               <Col xs={{offset : 2, span : 20}}>
                 <button
                   style={{
@@ -578,7 +579,7 @@ class Banner extends Component {
             </div>
             : null
         }
-
+        <Footer></Footer>
       </section>
     );
   };

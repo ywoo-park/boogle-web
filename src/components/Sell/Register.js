@@ -76,8 +76,6 @@ export default function Register() {
     }
 
     React.useEffect(() => {
-        console.log("changed");
-
         setImageDiv(imageUrls.map((i, index) => (
             <Col xs={{ span: 4, offset: 1 }}>
                 <div
