@@ -96,7 +96,8 @@ function Subject({ match }) {
       sellerStep: 0,
       buyerStep: 0,
       boxId: "",
-      boxPassword: ""
+      boxPassword: "",
+      isPaymentDone : false
     };
     axios.post(transaction_url, buyReq, {
       headers: { Authorization: authToken }
