@@ -33,7 +33,7 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case CURRENT_ACCOUNTS:
-      return { step: 0, accounts: action.accounts, bankList: state.bankList };
+      return { step: 0, accounts: state.accounts, bankList: state.bankList };
     case ADD_ACCOUNT:
       return { step: 1, accounts: state.accounts, bankList: state.bankList };
     case DETAIL_ACCOUNT:
@@ -48,6 +48,8 @@ function reducer(state, action) {
       return initialState;
     default:
       return initialState;
+    case FETCH_ACCOUNTS:
+      return { step: 0, accounts: action.accounts, bankList: state.bankList };
   }
 }
 
@@ -76,7 +78,7 @@ export default function ManageAccount() {
           headers: { Authorization: authToken }
         })
         .then(res => {
-          dispatch({ type: "CURRENT_ACCOUNTS", accounts: res.data.data });
+          dispatch({ type: FETCH_ACCOUNTS, accounts: res.data.data });
           // console.log(res.data);
         })
         .catch(error => {
