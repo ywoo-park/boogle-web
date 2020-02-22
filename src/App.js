@@ -14,6 +14,7 @@ import BoxInputPage from "./pages/BoxInputPage";
 import Setting from "./pages/Setting";
 import AccountSetting from "./pages/AccountSetting";
 import Admin from "./pages/Admin";
+import SignInSetting from "./pages/SignInSetting";
 
 import {
   BrowserView,
@@ -23,11 +24,11 @@ import {
 } from "react-device-detect";
 
 class App extends Component {
-
   render() {
+    const warning = () => {
+      return <h1>모바일로 접속하세요.</h1>;
+    };
 
-    const warning = () =>{return(<h1>모바일로 접속하세요.</h1>)}
-    
     if (isMobile) {
       return (
         <Router>
@@ -44,18 +45,19 @@ class App extends Component {
             <Route path="/modifyInfo" component={ModifyInfo} />
             <Route path="/setting" component={Setting} />
             <Route path="/accountSetting" component={AccountSetting} />
-            <Route path="/admin" component={Admin}/>
+            <Route path="/admin" component={Admin} />
+            <Route path="/signinSetting" component={SignInSetting} />
           </Switch>
         </Router>
       );
     } else {
-      return(
-      <Router>
-        <Switch>
-          <Route exact path="/" component={warning}></Route>
-          <Route path="/admin" component={Admin}></Route>
-        </Switch>
-      </Router>
+      return (
+        <Router>
+          <Switch>
+            <Route exact path="/" component={warning}></Route>
+            <Route path="/admin" component={Admin}></Route>
+          </Switch>
+        </Router>
       );
     }
   }

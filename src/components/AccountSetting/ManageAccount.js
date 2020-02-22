@@ -65,7 +65,6 @@ export default function ManageAccount() {
     const getBankData = async () => {
       const result = await axios.get(bankData_url).then(res => {
         dispatch({ type: "BANK_LIST", bankList: res.data.data });
-        // console.log(res.data.data);
       });
     };
     getBankData();
@@ -79,7 +78,6 @@ export default function ManageAccount() {
         })
         .then(res => {
           dispatch({ type: FETCH_ACCOUNTS, accounts: res.data.data });
-          // console.log(res.data);
         })
         .catch(error => {
           dispatch({ type: "FAILURE" });

@@ -46,7 +46,7 @@ export default function SettingMenu() {
         </Link>
       </Row>
       <Row>
-        <Link>
+        <Link to="/signinSetting">
           <Col xs={{ offset: 1, span: 1 }}>
             <Icon type="lock" />
           </Col>
