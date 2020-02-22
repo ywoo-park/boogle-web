@@ -9,21 +9,30 @@ export default function Footer() {
           <section  style={{fontSize : "11px", fontWeight : "200", color : "#666666"}}>
               <div style={{background : "#F5F5F5", height : "10px", width : "100%", marginBottom : "20px"}}></div>
               <Row style={{marginBottom : "10px"}}>
+                  <Col xs={{span : 2, offset : 1}}>                   
+                   <img
+                      style={{ width: "80%", height: "auto"}}
+                      src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/logo_gray.png"
+                    ></img></Col>
                   <Col xs={{span : 10, offset : 1}}><small>캠퍼스 거래의 모든 것, 북을</small></Col>
               </Row>
               <Row style={{marginBottom : "10px"}}>
-                    <Col xs={{span : 3, offset : 1}}>
-                        <small>회사소개 
+                    <Col xs={{span : 1, offset : 1}}>|</Col>
+                    <Col xs={{span : 3, offset : 0}}>
+                        <small>
+                            <a style={{color : "#666666"}} href="https://www.notion.so/boogle/14eb1e564fd74f19b5e746c58772a010">회사소개</a>
                         </small>
                     </Col>
                     <Col xs={{span : 1, offset : 0}}>|</Col>
                     <Col xs={{span : 3, offset :0}}>
-                        <small>이용약관
+                        <small>
+                            <a style={{color : "#666666"}} href="https://www.notion.so/boogle/0ce5e44583404178a6a0f54b6ddc2001">이용약관</a>
                         </small>
                     </Col>
                     <Col xs={{span : 1, offset : 0}}>|</Col>
                     <Col xs={{span : 5, offset :0}}>
-                        <small>개인정보취급방침
+                        <small>
+                            <a style={{color : "#666666"}} href="https://www.notion.so/boogle/35d3418ec17548b4ae8328c30b5e5bed">개인정보취급방침</a>
                         </small>
                     </Col>
                     <Col xs={{span : 1, offset : 0}}>|</Col>
