@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import MyPageBanner from '../components/MyPage/MyPageBanner?ver=2';
+import MyPageBanner from '../components/MyPage/MyPageBanner';
 
 class MyPage extends Component {
 
