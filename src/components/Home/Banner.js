@@ -351,15 +351,15 @@ class Banner extends Component {
             </Row>
             <Row>
               <Col xs={{offset : 2, span : 20}}>
-                <h5 style={{color : "#707070"}}>찾고있는 서적이 없다면…</h5>     
+                <h5 style={{color : "#707070"}}>찾으시는 서적이 없나요?</h5>     
               </Col>
             </Row> 
             <Row>
               <Col xs={{offset : 1, span : 22}}>
                 <ul style={{color : "#707070"}}>
-                  <li>핵심 단어를 띄어쓰기 하여 입력해주세요.</li>
+                  <li>핵심 단어를 띄어쓰기 하여 입력해주세요. 예시) 맨큐의 경제학 → 맨큐 경제</li>
                   <li>오타가 있는지 다시 확인해보세요.</li>
-                  <li style={{color : "#e95513"}}>‘입고 알림 신청하기’를 눌러 입고 알림을 신청해보세요.</li>
+                  <li style={{color : "#e95513"}}>‘더보기’ 버튼을 누른 후 입고 알림을 신청해보세요.</li>
                 </ul>            
               </Col>
             </Row> 
@@ -375,7 +375,7 @@ class Banner extends Component {
                   }}
                   onClick={()=>{this.setState({isAlarmNeedSectionAppened : true})}}
                 >
-                  입고 알림 신청하기
+                  더보기
                 </button>
               </Col>
             </Row>
