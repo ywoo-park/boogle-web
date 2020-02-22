@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { withRouter, Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
 import axios from 'axios';
-import './MyPageBanner.css?ver=2';
-
+import './MyPageBanner.css';
+import Banner from '../Home/Banner.js';
 
 export default function MyPageBanner() {
   const [name, setName] = useState("");
@@ -39,12 +39,12 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        setName(response.data.data.userName)
-        //setLikeList(response.data.data.bookmarkedItemList)
-        //setBuyList(response.data.data.buyTransList)
-        //setSellList(response.data.data.sellTransList)
+        // setName(response.data.data.userName)
+        // setLikeList(response.data.data.bookmarkedItemList)
+        // setBuyList(response.data.data.buyTransList)
+        // setSellList(response.data.data.sellTransList)
       });
-    //setName("김유진");
+    setName("김유진");
     setLikeList([
       {
         "sellItemId": "5e302b91cf6c2a2fab5324fb",
@@ -52,7 +52,25 @@ export default function MyPageBanner() {
         "title": "맨큐의 경제학",
         "regiPrice": "8000"
       },
-    ])
+      {
+        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+        "title": "맨큐의 경제학",
+        "regiPrice": "10000"
+      },
+      {
+        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+        "title": "맨큐의 경제학",
+        "regiPrice": "15000"
+      },
+      {
+        "sellItemId": "5e302b91cf6c2a2fab5324fb",
+        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+        "title": "맨큐의 경제학",
+        "regiPrice": "20000"
+      }
+    ]);
     setBuyList([
       {
         "sellItemId": "5e302b91cf6c2a2fab5324fb",
@@ -192,18 +210,27 @@ export default function MyPageBanner() {
 
 
   return (
-    <div className="mypage" style={{background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)"}}>
-      <Row className="header">
+    <div style={{
+      background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
+      height: "100vh", backgroundSize: "cover"
+      , paddingTop: "1vh"
+    }} className="mypage">
+      <Row style={{ top: 10, marginBottom: "1vh" }}>
         <Col xs={{ span: 3 }}>
           <Link to="/">
-            <img id="goBackButton"
+            <img style={{
+              width: "32px",
+              height: "auto",
+              marginLeft: "40%",
+              filter: "brightness(0) invert(1)"
+            }}
               src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
           </Link>
         </Col>
         <Col xs={{ span: 8, offset: 5 }}>
-          <h5>
+          <h5 style={{ color: "white" }}>
             마이페이지
-          </h5>
+                        </h5>
         </Col>
         <Link to='/'>
           <Col xs={{ span: 3, offset: 5 }}>
@@ -212,7 +239,19 @@ export default function MyPageBanner() {
       </Row>
       <Row style={{ marginTop: "7vh" }}>
         <Col>
-          <Icon type="question-circle"
+          {/* <Icon style={{
+                color: "#ffffff",
+                fontSize: "10vh",
+                marginLeft: "42%",
+                marginTop: "10%",
+              }} type="question-circle"
+              id="profile-circle"
+              onClick = {() => {}}
+              /> 지금은 텍스트, 나중엔 이미지*/}
+          <Icon style={{
+            color: "#ffffff",
+            fontSize: "10vh",
+          }} type="question-circle"
             id="profile-circle"
             onClick={() => { showModal(); showLevel(); }}
           />
@@ -228,7 +267,7 @@ export default function MyPageBanner() {
           </Modal>
           : null}
       </Row>
-      <Row id="profile-announce">
+      <Row style={{ marginTop: "5vh" }}>
         <label style={{ color: "#ffffff" }}>{name}님, 안녕하세요!</label>
       </Row>
 
@@ -236,15 +275,20 @@ export default function MyPageBanner() {
         <Col xs={{ span: 4, offset: 6 }}>
           <Row>
             <Col xs={{ span: 24 }}>
-              <Icon className="profile-icon"
-                type="bell"
+              <Icon style={{
+                color: "#ffffff",
+                fontSize: "3vh",
+              }} type="bell"
                 onClick={() => { }}
               />
             </Col>
           </Row>
           <Row>
             <Col xs={{ span: 24 }}>
-              <label className="profile-label">
+              <label style={{
+                color: "#ffffff",
+                fontSize: "2vh"
+              }}>
                 공지사항
                   </label>
             </Col>
@@ -254,15 +298,20 @@ export default function MyPageBanner() {
           <Col xs={{ span: 4 }}>
             <Row>
               <Col xs={{ span: 24 }}>
-                <Icon className="profile-icon"
-                  type="phone"
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "3vh",
+                }} type="phone"
                   onClick={() => { }}
                 />
               </Col>
             </Row>
             <Row>
               <Col xs={{ span: 24 }}>
-                <label className="profile-label">
+                <label style={{
+                  color: "#ffffff",
+                  fontSize: "2vh"
+                }}>
                   고객센터
                   </label >
               </Col>
@@ -272,15 +321,20 @@ export default function MyPageBanner() {
         <Col xs={{ span: 4 }}>
           <Row>
             <Col xs={{ span: 24 }}>
-              <Icon className="profile-icon" 
-                type="setting"
+              <Icon style={{
+                color: "#ffffff",
+                fontSize: "3vh",
+              }} type="setting"
                 onClick={() => { }}
               />
             </Col>
           </Row>
           <Row>
             <Col xs={{ span: 24 }}>
-              <label className="profile-label">
+              <label style={{
+                color: "#ffffff",
+                fontSize: "2vh"
+              }}>
                 설정
                   </label>
             </Col>
@@ -293,14 +347,18 @@ export default function MyPageBanner() {
           <Row>
             <Col span={24}>
               {likeProduct == true ?
-                <Icon className="menu-icon"
-                  type="heart"
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }} type="heart"
                   theme="filled"
                   onClick={() => { viewLikeProduct(); }}
                 />
                 :
-                <Icon className="menu-icon"
-                  type="heart"
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }} type="heart"
                   onClick={() => { viewLikeProduct(); }}
                 />
               }
@@ -308,9 +366,12 @@ export default function MyPageBanner() {
           </Row>
           <Row>
             <Col span={24}>
-              <small className="menu-label">
+              <small style={{
+                color: "#ffffff",
+                fontSize: "2vh"
+              }}>
                 관심상품
-              </small>
+                    </small>
             </Col>
           </Row>
         </Col>
@@ -318,15 +379,19 @@ export default function MyPageBanner() {
           <Row>
             <Col span={24}>
               {buyProduct == true ?
-                <Icon className="menu-icon" 
-                  type="heart"
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }} type="heart"
                   theme="filled"
                   onClick={() => { viewBuyProduct();
                   setDirDetailCard(false); setBoxDetailCard(false); }}
                 />
                 :
-                <Icon className="menu-icon"
-                  type="heart"
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }} type="heart"
                   onClick={() => { viewBuyProduct(); 
                   setDirDetailCard(false); setBoxDetailCard(false);}}
                 />
@@ -335,9 +400,12 @@ export default function MyPageBanner() {
           </Row>
           <Row>
             <Col span={24}>
-              <small className="menu-label">
+              <small style={{
+                color: "#ffffff",
+                fontSize: "2vh"
+              }}>
                 구매현황
-              </small>
+                    </small>
             </Col>
           </Row>
         </Col>
@@ -345,15 +413,19 @@ export default function MyPageBanner() {
           <Row>
             <Col span={24}>
               {sellProduct == true ?
-                <Icon className="menu-icon" 
-                  type="heart"
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }} type="heart"
                   theme="filled"
                   onClick={() => { viewSellProduct(); 
                     setDirDetailCard(false); setBoxDetailCard(false);}}
                 />
                 :
-                <Icon className="menu-icon"
-                  type="heart"
+                <Icon style={{
+                  color: "#ffffff",
+                  fontSize: "5vh",
+                }} type="heart"
                   onClick={() => { viewSellProduct(); 
                     setDirDetailCard(false); setBoxDetailCard(false);}}
                 />
@@ -362,39 +434,44 @@ export default function MyPageBanner() {
           </Row>
           <Row>
             <Col span={24}>
-              <small className="menu-label">
+              <small style={{
+                color: "#ffffff",
+                fontSize: "2vh"
+              }}>
                 판매현황
-              </small>
+                    </small>
             </Col>
           </Row>
         </Col>
       </Row>
 
-      <Row id="user-product">
+      <Row id="user-product"
+        style={{ marginTop: "5%", height: "45%" }}>
         {likeProduct == true ?
-          <Card className="product-card">
+          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, paddingBottom: "15vh" }}>
             {likeList.length != 0 ?
               <div>
                 <Row>
                   {likeList.map((value, index) => (
+
                     <Col span={7} offset={1}>
                       <Row>
                         <Col span={24}>
                           <Link to = {'/buy/detail/'+value.sellItemId}>
-                          <img className="likeList-image"
+                          <img style={{ width: "10vh", height: "15vh", backgroundSize: "contain", borderRadius: "7px" }}
                             src={value.imageUrl}></img>
                           </Link>
                         </Col>
                       </Row>
                       <Row>
                         <Col span={24}>
-                          <label className="likeList-title">
+                          <label style={{ marginTop: "1vh", marginBottom: "-1vh", fontSize: "2vh" }}>
                             {value.title}</label>
                         </Col>
                       </Row>
                       <Row>
-                        <Col span={24}>
-                          <label className="likeList-price">{value.regiPrice}원</label>
+                        <Col span={24} style={{ marginBottom: "2vh" }}>
+                          <label style={{ fontSize: "2vh", color: "rgba(51, 158, 172, 0.9)" }}>{value.regiPrice}원</label>
                         </Col>
                       </Row>
                     </Col>
@@ -403,19 +480,29 @@ export default function MyPageBanner() {
                 </Row>
                 <Row>
                   <Link to="/">
-                    <button className="normal-button"
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                    }}
                     >더 담으러 가기</button>
                   </Link>
                 </Row>
               </div>
               :
               <div>
-                <Row>
-                  <p className="normal-font">관심상품이 없습니다.</p>
+                <Row style={{ padding: "2vh", margin: "2vh", marginBottom: "50%" }}>
+                  <p style={{ color: "#000000", fontSize: "2vh" }}>관심상품이 없습니다.</p>
                 </Row>
                 <Row>
                   <Link to="/">
-                    <button className="normal-button"
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                    }}
                     >더 담으러 가기</button>
                   </Link>
                 </Row>
@@ -425,15 +512,19 @@ export default function MyPageBanner() {
           : null} {/* likeProduct != true 일 때는 null */}
 
         {buyProduct == true ?
-          <Card className="product-card">
+          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
             {buyList.length != 0 && buyList != null ?
               buyList.map((value, index) => (
-                <div>
+                <div style={{ width: "95%", margin: "auto auto" }}>
                   {value.transactionType == 0 ?
-                    <Card className="transaction-card-dir">
+                    <Card style={{
+                      width: "100%", height: "40%", backgroundColor: "#e5fdfc",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",
+                    }}>
                       <Row>
                         <Col span={6} offset={6}> </Col>
-                        <Col span={6} offset={6} className="transaction-type-dir">직거래</Col>
+                        <Col span={6} offset={6} style={{ color: "#339eac", fontSize: "12pt" }}>직거래</Col>
                       </Row>
 
                       {value.transactionStep == 0 ?
@@ -441,17 +532,19 @@ export default function MyPageBanner() {
                           <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl}></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   주문일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -464,7 +557,7 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row className="before-transactions">
+                              <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                                 <Col offset={3}>
                                   판매자 수락 대기 중
                               </Col>
@@ -477,17 +570,19 @@ export default function MyPageBanner() {
                         <Row>
                           <Col span={5} offset={1}>
                           <Link to = {'/buy/detail/'+value.sellItemId}>
-                            <img className="transaction-image" 
-                            src={value.itemImageUrl}></img>
+                            <img style={{
+                              width: "8vh", height: "12vh", backgroundSize: "contain",
+                              borderRadius: "7px", overflow: "hidden"
+                            }} src={value.itemImageUrl}></img>
                           </Link>
                           </Col>
                           <Col span={17} offset={0}>
-                            <Row className="transaction-title">
+                            <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                               <Col offset={1}>
                                 {value.title}
                               </Col>
                             </Row>
-                            <Row className="transaction-info">
+                            <Row style={{ fontSize: "8pt", color: "gray", }}>
                               <Col span={12}>
                                 주문일자 : {/*나중에 수정하기*/}
                                 {value.transactionCreatedTime[2]}
@@ -500,56 +595,54 @@ export default function MyPageBanner() {
                               <Col span={12}> | 판매가격 : {value.transPrice}원
                             </Col>
                             </Row>
-                            <Row className="transaction-info">
-                                <Col offset={0}>
+                            <Row style={{ fontSize: "8pt", color: "gray", marginTop: "2vh" }}>
+                                <Col offset={0} style={{ fontStyle: "bold" }}>
                                   판매자 : {value.traderName} |
                                   연락처 : {value.traderPhoneNumber}
                                 </Col>
                               </Row>
                             </Col>
                           </Row>
-                          <Row>
+                          <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                             {dirDetailCard == true && dirActiveIndex == index ?
-                              <button className="normal-button"
-                              onClick={() => { setDirDetailCard(false) }}>접기</button>
+                              <button onClick={() => { setDirDetailCard(false) }}>접기</button>
                               :
-                              <button className="normal-button"
-                              onClick={() => { setDirDetailCard(true); 
+                              <button onClick={() => { setDirDetailCard(true); 
                                 setDirActiveIndex(index) }}>거래상세보기</button>
                             }
                           </Row>
                         {dirDetailCard == true && dirActiveIndex == index ?
                           <div>
-                            <Row className="process-1">
+                            <Row style={{ margin: "2vh", color: "#44a0ac" }}>
                               판매자 수락
                             </Row>
-                            <Row className="process-2">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "#038155" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
                             {value.transactionStep == 2 || value.transactionStep > 2 ?
-                            <Row className="process-3-on">
+                            <Row style={{ marginTop: "2vh", color: "#038196" }}>
                               거래중
                             </Row>
                             :
-                            <Row className="process-3-off">
+                            <Row style={{ marginTop: "2vh", color: "gray" }}>
                               거래중
                             </Row>
                             }
                             {value.transactionStep == 3 ?
                             <div>
-                              <Row className="process-4-on">
+                              <Row style={{ fontSize: "5vh", margin: "2vh", color: "#0396cf" }}>
                                 <Icon type="line" rotate="90" />
                               </Row>
-                              <Row className="process-5-on">
+                              <Row style={{ marginTop: "2vh", color: "#0396cf" }}>
                                 거래 완료
                               </Row>
                             </div>
                             :
                             <div>
-                            <Row className="process-4-off">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
-                            <Row className="process5-off">
+                            <Row style={{ marginTop: "2vh", color: "gray" }}>
                               거래 완료
                             </Row>
                             </div>
@@ -561,27 +654,33 @@ export default function MyPageBanner() {
                     }
                     </Card>
                     :
-                    <Card className="transaction-card-box">
+                    <Card style={{
+                      width: "100%", height: "40%", backgroundColor: "#e8f5ff",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",
+                    }}>
                       <Row>
                         <Col span={7} offset={5}> </Col>
-                        <Col span={7} offset={5} className="transaction-type-box">북을박스</Col>
+                        <Col span={7} offset={5} style={{ color: "#0b308e", fontSize: "12pt" }}>북을박스</Col>
                       </Row>
                       {value.transactionStep == 0 ?
                         <div>
                           <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl} ></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl} ></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   주문일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -594,7 +693,7 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row className="before-transaction">
+                              <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                                 <Col offset={3}>
                                   판매자 수락 대기 중
                               </Col>
@@ -605,21 +704,23 @@ export default function MyPageBanner() {
 
                         : /*구매상품의 step이 0일 때와 아닐 때(판매자 수락 전, 후)*/
 
-                        <div>
+                        <div style={{ fontSize: "12pt", fontStyle: "bold" }}>
                           <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl} ></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl} ></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   주문일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -632,40 +733,43 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row className="transaction-info">
-                                <Col offset={0}>
+                              <Row style={{ fontSize: "8pt", color: "gray", marginTop: "2vh" }}>
+                                <Col offset={0} style={{ fontStyle: "bold" }}>
                                   판매자 : {value.traderName} |
                                   연락처 : {value.traderPhoneNumber}
                                 </Col>
                               </Row>
                           </Col>
                           </Row>
-                          <Row>
+                          <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                             {boxDetailCard == true && boxActiveIndex == index ?
-                              <button className="normal-button"
-                              onClick={() => { setBoxDetailCard(false) }}>접기</button>
+                              <button onClick={() => { setBoxDetailCard(false) }}>접기</button>
                               : /* 토글 버튼 역할 */
-                              <button className="normal-button"
-                              onClick={() => { setBoxDetailCard(true); 
+                              <button onClick={() => { setBoxDetailCard(true); 
                                 setBoxActiveIndex(index) }}>거래상세보기</button>
                             }
                           </Row>
                         {boxDetailCard == true && boxActiveIndex == index ?
                           <div>
-                          <Row className="process-1">
+                          <Row style={{ margin: "2vh", color: "#44a0ac" }}>
                             판매자 수락
                           </Row>
-                          <Row className="process-2">
+                          <Row style={{ fontSize: "5vh", margin: "2vh", color: "#038155" }}>
                             <Icon type="line" rotate="90" />
                           </Row>
-                          <Row className="process-3-on">
+                          <Row style={{ marginTop: "2vh", color: "#038196" }}>
                             결제 요청중
                           </Row>
 
                           {value.transactionStep == 1 ?
                             <div>
-                              <Row>
-                                <button className="card-button"
+                              <Row style={{ marginBottom: "2vh" }}>
+                                <button style={{
+                                  padding: "0",
+                                  width: "30%",
+                                  background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                  border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
                                   onClick={() => { showModal(); showBoogleBank(); }}
                                 >결제 하기</button>
                               </Row>
@@ -675,56 +779,61 @@ export default function MyPageBanner() {
                                   onOk={() => { payConfirmOnClickHandler(value.sellItemId) }}
                                   onCancel={() => { closeModal(); }}>
                                   {boogleBank == true ?
-                                    <p className="normal-font">
+                                    <p style={{ color: "#000000", fontSize: "3vh" }}>
                                       북을 계좌번호로 입금해주세요</p>
                                     : null} {/*북을 계좌 끝*/}
                                 </Modal>
                                 : null} {/*모달 끝*/}
-                              <Row className="process-4-off">
+                              <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
                                 <Icon type="line" rotate="90" />
                               </Row>
                             </div>
                             : /*1단계 아니면*/
-                              <Row className="process-4-on">
+                              <Row style={{ fontSize: "5vh", margin: "2vh", color: "#065d33" }}>
                                 <Icon type="line" rotate="90" />
                               </Row>
                           } {/*1단계 끝*/}
 
                           {value.transactionStep == 4 || value.transactionStep > 4 ?
-                            <Row className="process-5-on">
+                            <Row style={{ margin: "2vh", color: "#065d92" }}>
                               물건 비치 완료
                           </Row>
                             :
-                            <Row className="process-5-off">
+                            <Row style={{ margin: "2vh", color: "gray" }}>
                               물건 비치 완료
                           </Row>
                           } {/*4단계 끝*/}
 
                           {value.transactionStep == 4 ?
-                            <Row>
+                            <Row style={{ marginBottom: "2vh" }}>
                               <Link to = '/boxcheck'>
-                              <button className="card-button">수령 하기</button>
+                              <button style={{
+                                padding: "0",
+                                width: "30%",
+                                background: "#075e92", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                              }}>수령 하기</button>
                               </Link>
                             </Row>
                             :
                             null } {/*4단계 끝*/}
 
                           {value.transactionStep > 4 ?
-                            <Row className="process-6-on">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "#0b308e" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
                             :
-                            <Row className="process-6-off">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
                           } {/*4단계 끝*/}
 
                           {value.transactionStep == 5 || value.transactionStep > 5 ?
-                            <Row className="process-7-on">
+                            <Row style={{ marginBottom: "2vh", color: "#0b308e" }}>
                               거래 완료
                             </Row>
                             :
-                            <Row className="process-7-off">
+                            <Row style={{ marginBottom: "2vh", color: "gray" }}>
                               거래 완료
                             </Row>
                         
@@ -732,9 +841,7 @@ export default function MyPageBanner() {
                         
                           </div>
                          : null}  {/*거래상세보기 끝*/}
-                         
-                         </div>
-                        
+                        </div>
                         
                         }
                       
@@ -744,14 +851,19 @@ export default function MyPageBanner() {
               ))
               :  /*구매현황 없을 때*/
               <div>
-                <Row>
-                  <p className="normal-font">
+                <Row style={{ padding: "2vh", margin: "2vh", marginBottom: "50%" }}>
+                  <p style={{ color: "#000000", fontSize: "2vh" }}>
                     구매 중인 상품이 없습니다.
                   </p>
                 </Row>
                 <Row>
                   <Link to="/">
-                    <button className="normal-button"
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                    }}
                     >구매하러 가기</button>
                   </Link>
                 </Row>
@@ -761,34 +873,40 @@ export default function MyPageBanner() {
           : null} {/* buyProduct != true 일 때 null */}
 
         {sellProduct == true ?
-          <Card className="product-card">
+          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
             {sellList.length != 0 && sellList != null ?
               sellList.map((value, index) => (
-                <div>
+                <div style={{ width: "95%", margin: "auto auto" }}>
                   {value.transactionType == 0 ?
                   <div>
                   <div>
                     {value.transactionStep == -1 ?
-                    <Card className="transaction-card-dir">
+                    <Card style={{
+                      width: "100%", height: "40%", backgroundColor: "#c4c4c4",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",
+                    }}>
                       <Row>
                         <Col span={6} offset={6}> </Col>
-                        <Col span={6} offset={6} className="transaction-type-dir">직거래</Col>
+                        <Col span={6} offset={6} style={{ color: "#339eac", fontSize: "12pt" }}>직거래</Col>
                       </Row>
 
                       <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl}></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   등록일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -801,7 +919,7 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row className="before-transaction">
+                              <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                                 <Col offset={3}>
                                   판매 등록 완료
                               </Col>
@@ -812,10 +930,14 @@ export default function MyPageBanner() {
                     </Card>
                     : /*판매등록된 상품인지 거래 중인지*/
 
-                    <Card className="transaction-card-dir">
+                    <Card style={{
+                      width: "100%", height: "40%", backgroundColor: "#e5fdfc",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",
+                    }}>
                       <Row>
                         <Col span={6} offset={6}> </Col>
-                        <Col span={6} offset={6} className="transaction-type-dir">직거래</Col>
+                        <Col span={6} offset={6} style={{ color: "#339eac", fontSize: "12pt" }}>직거래</Col>
                       </Row>
 
                       {value.transactionStep == 0 ?
@@ -823,17 +945,19 @@ export default function MyPageBanner() {
                           <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl} ></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl} ></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   주문일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -846,19 +970,34 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row>
+                              <Row style={{ fontSize: "10pt", color: "gray", marginTop: "2vh" }}>
                                 <Col span={4} offset={1}>
-                                  <button className="card-button"
+                                  <button style={{
+                                    padding: "0",
+                                    width: "100%",
+                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                    border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                  }}
                                     onClick={() => { }}
                                   >거절</button>
                                 </Col>
                                 <Col span={4} offset={1}>
-                                  <button className="card-button"
+                                  <button style={{
+                                    padding: "0",
+                                    width: "100%",
+                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                    border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                  }}
                                     onClick={() => { }}
                                   >수락</button>
                                 </Col>
                                 <Col span={4} offset={1}>
-                                  <button className="card-button"
+                                  <button style={{
+                                    padding: "0",
+                                    width: "100%",
+                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                    border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                  }}
                                     onClick={() => { }}
                                   >조회</button>
                                 </Col>
@@ -872,17 +1011,19 @@ export default function MyPageBanner() {
                         <Row>
                           <Col span={5} offset={1}>
                           <Link to = {'/buy/detail/'+value.sellItemId}>
-                            <img className="transaction-image"
-                            src={value.itemImageUrl} ></img>
+                            <img style={{
+                              width: "8vh", height: "12vh", backgroundSize: "contain",
+                              borderRadius: "7px", overflow: "hidden"
+                            }}src={value.itemImageUrl} ></img>
                           </Link>
                           </Col>
                           <Col span={17} offset={0}>
-                            <Row className="transaction-title">
+                            <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                               <Col offset={1}>
                                 {value.title}
                               </Col>
                             </Row>
-                            <Row className="transaction-info">
+                            <Row style={{ fontSize: "8pt", color: "gray", }}>
                               <Col span={12}>
                                 주문일자 : {/*나중에 수정하기*/}
                                 {value.transactionCreatedTime[2]}
@@ -895,56 +1036,54 @@ export default function MyPageBanner() {
                               <Col span={12}> | 판매가격 : {value.transPrice}원
                             </Col>
                             </Row>
-                            <Row className="transaction-info">
-                                <Col offset={0}>
+                            <Row style={{ fontSize: "8pt", color: "gray", marginTop: "2vh" }}>
+                                <Col offset={0} style={{ fontStyle: "bold" }}>
                                   구매자 : {value.traderName} |
                                   연락처 : {value.traderPhoneNumber}
                                 </Col>
                               </Row>
                             </Col>
                           </Row>
-                          <Row>
+                          <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                             {dirDetailCard == true && dirActiveIndex == index ?
-                              <button className="normal-button"
-                              onClick={() => { setDirDetailCard(false) }}>접기</button>
+                              <button onClick={() => { setDirDetailCard(false) }}>접기</button>
                               :
-                              <button className="normal-button"
-                              onClick={() => { setDirDetailCard(true); 
+                              <button onClick={() => { setDirDetailCard(true); 
                                 setDirActiveIndex(index) }}>거래상세보기</button>
                             }
                           </Row>
                         {dirDetailCard == true && dirActiveIndex == index ?
                           <div>
-                            <Row className="process-1">
+                            <Row style={{ margin: "2vh", color: "#44a0ac" }}>
                               판매자 수락
                             </Row>
-                            <Row className="process-2">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "#038155" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
                             {value.transactionStep == 2 || value.transactionStep > 2 ?
-                            <Row className="process-3-on">
+                            <Row style={{ marginTop: "2vh", color: "#038196" }}>
                               거래중
                             </Row>
                             :
-                            <Row className="process-3-off">
+                            <Row style={{ marginTop: "2vh", color: "gray" }}>
                               거래중
                             </Row>
                             }
                             {value.transactionStep == 3 ?
                             <div>
-                              <Row className="process-4-on">
+                              <Row style={{ fontSize: "5vh", margin: "2vh", color: "#0396cf" }}>
                                 <Icon type="line" rotate="90" />
                               </Row>
-                              <Row className="process-5-on">
+                              <Row style={{ marginTop: "2vh", color: "#0396cf" }}>
                                 거래 완료
                               </Row>
                             </div>
                             :
                             <div>
-                            <Row className="process-4-off">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
-                            <Row className="process-5-off">
+                            <Row style={{ marginTop: "2vh", color: "gray" }}>
                               거래 완료
                             </Row>
                             </div>
@@ -962,26 +1101,32 @@ export default function MyPageBanner() {
                     <div>
                     <div>
                     {value.transactionStep == -1 ?
-                    <Card className="transaction-card-box">
+                    <Card style={{
+                      width: "100%", height: "40%", backgroundColor: "#c4c4c4",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",
+                    }}>
                       <Row>
                         <Col span={6} offset={6}> </Col>
-                        <Col span={7} offset={5} className="transaction-type-box">북을박스</Col>
+                        <Col span={7} offset={5} style={{ color: "#0b308e", fontSize: "12pt" }}>북을박스</Col>
                         </Row>
 
                       <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl}></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   등록일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -994,7 +1139,7 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row className="normal-font">
+                              <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                                 <Col offset={3}>
                                   판매 등록 완료
                               </Col>
@@ -1004,27 +1149,33 @@ export default function MyPageBanner() {
                     
                     </Card>
                     : /*판매등록된 상품인지 거래 중인지*/
-                    <Card className="transaction-card-box">
+                    <Card style={{
+                      width: "100%", height: "40%", backgroundColor: "#e8f5ff",
+                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                      padding: "2vh",
+                    }}>
                       <Row>
                         <Col span={7} offset={5}> </Col>
-                        <Col span={7} offset={5} className="transaction-type-box">북을박스</Col>
+                        <Col span={7} offset={5} style={{ color: "#0b308e", fontSize: "12pt" }}>북을박스</Col>
                       </Row>
                       {value.transactionStep == 0 ?
                         <div>
                           <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl} ></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl} ></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   주문일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -1037,19 +1188,34 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row>
+                              <Row style={{ fontSize: "10pt", color: "gray", marginTop: "2vh" }}>
                                 <Col span={4} offset={1}>
-                                  <button className="card-button"
+                                  <button style={{
+                                    padding: "0",
+                                    width: "100%",
+                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                    border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                  }}
                                     onClick={() => { }}
                                   >거절</button>
                                 </Col>
                                 <Col span={4} offset={1}>
-                                  <button className="card-button"
+                                  <button style={{
+                                    padding: "0",
+                                    width: "100%",
+                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                    border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                  }}
                                     onClick={() => { }}
                                   >수락</button>
                                 </Col>
                                 <Col span={4} offset={1}>
-                                  <button className="card-button"
+                                  <button style={{
+                                    padding: "0",
+                                    width: "100%",
+                                    background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                    border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                  }}
                                     onClick={() => { }}
                                   >조회</button>
                                 </Col>
@@ -1061,21 +1227,23 @@ export default function MyPageBanner() {
 
                         : /*판매상품의 step이 0일 때와 아닐 때(판매자 수락 전, 후)*/
 
-                        <div>
+                        <div style={{ fontSize: "12pt", fontStyle: "bold" }}>
                           <Row>
                             <Col span={5} offset={1}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img className="transaction-image" 
-                              src={value.itemImageUrl}></img>
+                              <img style={{
+                                width: "8vh", height: "12vh", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.itemImageUrl}></img>
                             </Link>
                             </Col>
                             <Col span={17} offset={0}>
-                              <Row className="transaction-title">
+                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
                                 <Col offset={1}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row className="transaction-info">
+                              <Row style={{ fontSize: "8pt", color: "gray", }}>
                                 <Col span={12}>
                                   주문일자 : {/*나중에 수정하기*/}
                                   {value.transactionCreatedTime[2]}
@@ -1088,40 +1256,43 @@ export default function MyPageBanner() {
                                 <Col span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row className="transaction-info">
-                                <Col offset={0}>
+                              <Row style={{ fontSize: "8pt", color: "gray", marginTop: "2vh" }}>
+                                <Col offset={0} style={{ fontStyle: "bold" }}>
                                   구매자 : {value.traderName} |
                                   연락처 : {value.traderPhoneNumber}
                                 </Col>
                               </Row>
                           </Col>
                           </Row>
-                          <Row>
+                          <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
                             {boxDetailCard == true && boxActiveIndex == index ?
-                              <button className="normal-button"
-                              onClick={() => { setBoxDetailCard(false) }}>접기</button>
+                              <button onClick={() => { setBoxDetailCard(false) }}>접기</button>
                               : /* 토글 버튼 역할 */
-                              <button className="normal-button"
-                              onClick={() => { setBoxDetailCard(true); 
+                              <button onClick={() => { setBoxDetailCard(true); 
                                 setBoxActiveIndex(index) }}>거래상세보기</button>
                             }
                           </Row>
                         {boxDetailCard == true && boxActiveIndex == index ?
                           <div>
-                          <Row className="process-1">
+                          <Row style={{ margin: "2vh", color: "#44a0ac" }}>
                             판매자 수락
                           </Row>
-                          <Row className="process-2">
+                          <Row style={{ fontSize: "5vh", margin: "2vh", color: "#038155" }}>
                             <Icon type="line" rotate="90" />
                           </Row>
-                          <Row className="process-3">
+                          <Row style={{ marginTop: "2vh", color: "#038196" }}>
                             결제 요청중
                           </Row>
 
                           {value.transactionStep == 1 ?
                             <div>
-                              <Row>
-                                <button className="card-button"
+                              <Row style={{ marginBottom: "2vh" }}>
+                                <button style={{
+                                  padding: "0",
+                                  width: "30%",
+                                  background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                  border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                }}
                                   onClick={() => { showModal(); showSellerBank(); }}
                                 >결제 정보</button>
                               </Row>
@@ -1131,62 +1302,72 @@ export default function MyPageBanner() {
                                   onOk={() => { payConfirmOnClickHandler(value.sellItemId) }}
                                   onCancel={() => { closeModal(); }}>
                                   {sellerBank == true ?
-                                    <p className="normal-font">
+                                    <p style={{ color: "#000000", fontSize: "3vh" }}>
                                       판매자의 계좌 정보</p>
                                     : null} {/*판매자 계좌 끝*/}
                                 </Modal>
                                 : null} {/*모달 끝*/}
-                              <Row className="process-4-off">
+                              <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
                                 <Icon type="line" rotate="90" />
                               </Row>
                             </div>
                             : /*1단계 아니면*/
-                              <Row className="process-4-on">
+                              <Row style={{ fontSize: "5vh", margin: "2vh", color: "#065d33" }}>
                                 <Icon type="line" rotate="90" />
                               </Row>
                           } {/*1단계 끝*/}
 
                           {value.transactionStep == 4 || value.transactionStep > 4 ?
-                            <Row className="process-5-on">
+                            <Row style={{ margin: "2vh", color: "#065d92" }}>
                               물건 비치 중
                             </Row>
                             : /*4단계 이상인지 아닌지*/
-                            <Row className="process-5-off">
+                            <Row style={{ margin: "2vh", color: "gray" }}>
                               물건 비치 중
                             </Row>
                           } {/*4단계 이상인지 끝*/}
 
                           {value.transactionStep == 4 ?
-                            <Row>
+                            <Row style={{ marginBottom: "2vh" }}>
                             <Link to = '/boxinput'>
-                              <button className="card-button">비치 하기</button>
+                              <button style={{
+                                padding: "0",
+                                width: "30%",
+                                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                              }}>비치 하기</button>
                             </Link>
                             </Row>
                             :
                             null } {/*4단계 버튼 끝*/}
 
                           {value.transactionStep > 4 ?
-                            <Row className="process-6-on">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "#0b308e" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
                             :
-                            <Row className="process-6-off">
+                            <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
                           } {/*4단계 끝*/}
 
                           {value.transactionStep == 5 || value.transactionStep > 5 ?
                           <div>
-                            <Row className="process-7-on">
+                            <Row style={{ marginBottom: "2vh", color: "#0b308e" }}>
                               거래 완료
                             </Row>
-                            <Row>
-                            <button className="card-button">송금 문의</button>
+                            <Row style={{ marginBottom: "2vh" }}>
+                            <button style={{
+                              padding: "0",
+                              width: "30%",
+                              background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                              border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                            }}>송금 문의</button>
                             {/*링크 걸어야함*/}
                             </Row>
                           </div>
                             : /*5단계 이상인지 아닌지*/
-                            <Row className="process-7-off">
+                            <Row style={{ marginBottom: "2vh", color: "gray" }}>
                               거래 완료
                             </Row>
                         
@@ -1208,14 +1389,20 @@ export default function MyPageBanner() {
               ))
               :  /*판매현황 없을 때*/
               <div>
-                <Row>
-                  <p className="normal-font">
+                <Row style={{ padding: "2vh", margin: "2vh", marginBottom: "50%" }}>
+                  <p style={{ color: "#000000", fontSize: "2vh" }}>
                     판매 중인 상품이 없습니다.
                   </p>
                 </Row>
                 <Row>
                   <Link to="/sell">
-                    <button className="normal-button">판매하러 가기</button>
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                    }}
+                    >판매하러 가기</button>
                   </Link>
                 </Row>
               </div>
