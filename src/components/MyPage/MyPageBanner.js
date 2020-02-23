@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useForm, ErrorMessage } from "react-hook-form";
-import { withRouter, Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Row, Col, Icon, Card, Modal, Divider } from "antd";
 import axios from 'axios';
-import './MyPageBanner.css?ver=1';
-import Banner from '../Home/Banner.js';
+import './MyPageBanner.css';
+import { useForm } from 'react-hook-form';
 
 export default function MyPageBanner() {
   const [name, setName] = useState("");
@@ -30,8 +29,11 @@ export default function MyPageBanner() {
 
   const [needRender, setNeedRender] = useState(false);
 
-  // const[directStep, setDirectStep] = useState("");
-  // const[boxStep, setBoxStep] = useState("");
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = data => {
+    console.log(data);
+  };
 
 
   useEffect(() => {
@@ -366,15 +368,14 @@ export default function MyPageBanner() {
       </Row>
 
       <Row>
-        <Col xs={{ span: 4, offset: 6 }}>
+        <Col xs={{ span: 4, offset: 6 }}
+        onClick={() => {window.location.href='http://www.notion.so/boogle/3bbbb6ce5b554209ac14c900dba8ea88';}}>
           <Row>
             <Col xs={{ span: 24 }}>
               <Icon style={{
                 color: "#ffffff",
                 fontSize: "3vh",
-              }} type="bell"
-                onClick={() => { }}
-              />
+              }} type="bell"/>
             </Col>
           </Row>
           <Row>
@@ -412,6 +413,7 @@ export default function MyPageBanner() {
             </Row>
           </Col>
         </Link>
+        <Link to='/setting'>
         <Col xs={{ span: 4 }}>
           <Row>
             <Col xs={{ span: 24 }}>
@@ -434,6 +436,7 @@ export default function MyPageBanner() {
             </Col>
           </Row>
         </Col>
+        </Link>
       </Row>
 
       <Row style={{ marginTop: "5vh" }}>
@@ -1460,34 +1463,62 @@ export default function MyPageBanner() {
                                 border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
                               }} onClick={() => {showModal(); showBoxNum();}}
                               >비치 하기</button>
-
-                              {modal === true ?
+                              {modal === true && boxNum === true ?
                                 <Modal
                                   visible={modal}
-                                  onOk={() => { showBoxPassword(); }}
+                                  onOk={() => { closeModal(); showModal(); showBoxPassword(); }}
                                   onCancel={() => { closeModal(); }}>
-                                  { modal === true && boxNum === true ?
-                                    <div>
-                                      <p style={{ color: "#000000", fontSize: "3vh", fontStyle: "bold"}}>
-                                      북을박스 번호 입력하기</p>
+                                    <div style={{textAlign: "center"}}>
+                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                    <Row style={{color:"#000000", fontSize:"2vh", margin: "1vh"}}>
+                                      책이 비치된 북을박스 번호를 입력해주세요.
+                                    </Row>
+                                    <Row style={{ margin: "1vh"}}>
+                                      <input type="text" name="id" ref={register} />
+                                    </Row>
+                                    <Row style={{ margin: "1vh"}}>
+                                      <button style={{
+                                        padding: "0",
+                                        width: "50%",
+                                        background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                        border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                      }} onClick={() => { }} 
+                                      >입력 하기</button> {/* value.sellItemId 인수로 넣기 */}
+                                    </Row>
+                                    </form>{/*북을박스 번호 입력 끝*/}
                                     </div>
-                                    : null} {/*북을박스 번호 입력 끝*/}
                                 </Modal>
-                                : null} {/*모달 끝*/}
-
-                                {modal === true ?
-                                <Modal
-                                  visible={modal}
-                                  onOk={() => {  }}
-                                  onCancel={() => { closeModal(); }}>
+                                : 
+                                <div>
                                   { modal === true && boxPassword === true ?
-                                    <div>
-                                      <p style={{ color: "#000000", fontSize: "3vh", fontStyle: "bold"}}>
-                                      북을박스 비밀번호 입력하기</p>
+                                    <Modal
+                                    visible={modal}
+                                    onOk={() => {  }}
+                                    onCancel={() => { closeModal(); }}>
+                                    <div style={{textAlign: "center"}}>
+                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                      <Row style={{color:"#000000", fontSize:"2vh", margin: "1vh"}}>
+                                        설정하신 북을박스의 비밀번호를 입력해주세요.
+                                      </Row>
+                                      <Row style={{ margin: "1vh"}}>
+                                      <input type="text" name="password" ref={register} />
+                                      </Row>
+                                      <Row style={{ margin: "1vh"}}>
+                                      <button style={{
+                                        padding: "0",
+                                        width: "50%",
+                                        background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                        border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
+                                      }} onClick={() => { }}
+                                      >입력 하기</button>  {/* value.sellItemId  */}
+                                      </Row>
+                                    </form>{/*북을박스 비밀번호 입력 끝*/}
                                     </div>
-                                    : null} {/*북을박스 비밀번호 입력 끝*/}
-                                </Modal>
-                                : null} {/*모달 끝*/}
+                                    </Modal>
+                                  : null}
+                                </div>
+                                } {/*모달 끝*/}
+                              
                             </Row>
                             :
                             null } {/*4단계 버튼 끝*/}
