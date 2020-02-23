@@ -85,7 +85,7 @@ export default function DetailAccount() {
                     height: "40px",
                     border: "none",
                     borderBottom: "#44a0ac solid 1.0px",
-                    backgroundColor: "transparent"
+                    backgroundColor: "transparent",
                   }}
                   xs={{ span: 20, offset: 2 }}
                   name="accountNumber"
@@ -117,7 +117,7 @@ export default function DetailAccount() {
                     height: "40px",
                     border: "none",
                     borderBottom: "#44a0ac solid 1.0px",
-                    backgroundColor: "transparent"
+                    backgroundColor: "transparent",
                   }}
                   xs={{ span: 20, offset: 2 }}
                   name="depositorName"
@@ -137,7 +137,7 @@ export default function DetailAccount() {
                 color: "#ffffff",
                 border: "none",
                 fontSize: "15px", height: "35px", width: "100%",
-                padding: "10px 0 10px 0", borderRadius : "16px"
+                padding: "0", borderRadius : "16px"
               }}
               type="submit"
               onClick={() => {

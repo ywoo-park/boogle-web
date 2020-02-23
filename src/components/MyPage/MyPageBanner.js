@@ -422,6 +422,7 @@ export default function MyPageBanner() {
             </Row>
           </Col>
         </Link>
+        <Link to='/setting'>
         <Col xs={{ span: 4 }}>
           <Row>
             <Col xs={{ span: 24 }}>
@@ -441,9 +442,10 @@ export default function MyPageBanner() {
               }}>
                 설정
                   </label>
-            </Col>
+            </Col>            
           </Row>
         </Col>
+        </Link>
       </Row>
 
       <Row style={{ marginTop: "5vh" }}>
