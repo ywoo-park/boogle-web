@@ -5,6 +5,7 @@ import Search from '../Navbar/Search';
 import { withRouter, Redirect, Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
 import CurrencyInput from 'react-currency-input';
+import { BeatLoader } from "react-spinners";
 import axios from 'axios';
 import './Register.css';
 
@@ -140,7 +141,7 @@ export default function Register() {
                 publisher: data.publisher,
                 pubdate: data.pubdate.substring(0, 4) + data.pubdate.substring(6, 8),
                 price: (data.price.replace(",", "")).replace(" 원", ""),
-                regiPrice: data.regiPrice,
+                originalPrice : data.regiPrice,
                 regiImageUrlList: [],
                 dealType: data.dealType,
                 qualityIn: data.qualityIn,
@@ -156,6 +157,12 @@ export default function Register() {
     };
 
     const saveSellItem = (sellItem, imageFileList) => {
+
+        setStep(3);
+
+        setTimeout(() => {
+            setStep(4);
+        }, 3000);
 
         let form = new FormData();
         form.append('sellItemString', JSON.stringify(sellItem));
@@ -173,11 +180,8 @@ export default function Register() {
             }
         })
             .then((response) => {
-                console.log(response);
-                setStep(3);
             })
             .catch((error) => {
-                console.log(error);
             })
     }
 
@@ -653,8 +657,17 @@ export default function Register() {
                                     </Row>
                                 </form>
                             </div>
-                            :
-                            step == 3 ?
+                            : step == 3 ? 
+                                <Row style={{ marginTop: "50%" }}>
+                                    <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
+                                        <BeatLoader
+                                            size={"15px"}
+                                            color={"#339eac"}
+                                            loading={true}
+                                        />
+                                    </Col>
+                                </Row>
+                            : step == 4 ?
                                 <div>
                                     <Row style={{ marginTop: "30px" }}>
                                         <Col xs={{ span: 8 }}>
