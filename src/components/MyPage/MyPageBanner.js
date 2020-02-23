@@ -140,28 +140,28 @@ export default function MyPageBanner() {
         "traderName": "박영우",
                 "traderPhoneNumber": "01040525345",
                 "title": "미시경제학",
-                "transactionType": 0,
+                "transactionType": 1,
                 "transPrice": "3000",
                 "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
                 "boxId": "",
                 "boxPassword": "",
-                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+                "transactionCreatedTime": "",
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 4
+        "transactionStep": 1
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
                 "traderPhoneNumber": "01040525345",
                 "title": "미시경제학",
-                "transactionType": 0,
+                "transactionType": 1,
                 "transPrice": "3000",
                 "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
                 "boxId": "",
                 "boxPassword": "",
-                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+                "transactionCreatedTime": "",
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
@@ -931,45 +931,53 @@ export default function MyPageBanner() {
                               }} onClick={() => {showModal(); showOpenBoxNum();}}
                               >수령 하기</button>
 
-                              {modal === true ?
+                              {modal === true && openBoxNum === true ?
                                 <Modal
                                   visible={modal}
-                                  onOk={() => { showOpenBoxPassword(); }}
+                                  onOk={() => { closeModal(); showModal(); showOpenBoxPassword(); }}
                                   onCancel={() => { closeModal(); }}>
-                                  { openBoxNum === true && value.boxId !== "" ?
+                                  { value.boxId !== "" ?
                                     <div style={{textAlign: "center"}}>
-                                      <p style={{ color: "#000000", fontSize: "3vh", fontStyle: "bold"}}>
+                                      <p style={{ color: "#000000", fontSize: "2vh", fontStyle: "bold"}}>
                                       북을박스 번호</p>
-                                      <p style={{ color: "#000000", fontSize: "7vh" }}>
+                                      <p style={{ color: "#000000", fontSize: "5vh" }}>
                                       {value.boxId}</p>
                                     </div>
                                     : 
                                     <div>
                                       { openBoxNum === true && value.boxId === "" ?
-                                        <p style={{textAlign: "center", margin: "2vh"}}>
-                                        북을박스에 비치되지 않았습니다.</p>
+                                        <p style={{color: "#000000", fontSize: "2vh", textAlign: "center", margin: "2vh"}}>
+                                        북을박스에 비치되지 않아서 박스 번호가 없습니다.</p>
                                     : null}
                                     </div>
                                     } {/*북을박스 번호 조회 끝*/}
                                 </Modal>
-                                : null} {/*모달 끝*/}
-
-                                {modal === true ?
-                                <Modal
-                                  visible={modal}
-                                  onOk={() => {  }}
-                                  onCancel={() => { closeModal(); }}>
-                                  { modal === true && openBoxPassword === true && value.boxPassword !== "" ?
-                                    <div>
-                                      <p style={{ color: "#000000", fontSize: "3vh", fontStyle: "bold"}}>
-                                      북을박스 비밀번호</p>
-                                      <p style={{ color: "#000000", fontSize: "7vh" }}>
-                                      {value.boxPassword}</p>
+                                : 
+                                <div>
+                                  { modal === true && openBoxPassword === true ?
+                                    <Modal
+                                    visible={modal}
+                                    onOk={() => {  }}
+                                    onCancel={() => { closeModal(); }}>
+                                    { value.boxPassword !== "" ?
+                                      <div>
+                                        <p style={{ color: "#000000", fontSize: "2vh", fontStyle: "bold"}}>
+                                        북을박스 비밀번호</p>
+                                        <p style={{ color: "#000000", fontSize: "5vh" }}>
+                                        {value.boxPassword}</p>
+                                      </div>
+                                      : 
+                                      <div>
+                                      { openBoxPassword === true && value.boxPassword === "" ?
+                                        <p style={{color: "#000000", fontSize: "2vh", textAlign: "center", margin: "2vh"}}>
+                                        북을박스에 비치되지 않아서 비밀번호가 없습니다.</p>
+                                    : null}
                                     </div>
-                                    : null} {/*북을박스 비밀번호 조회 끝*/}
-                                </Modal>
-                                : null} {/*모달 끝*/}
-
+                                    } {/*북을박스 비밀번호 조회 끝*/}
+                                    </Modal>
+                                  : null}
+                                </div>
+                                } {/*모달 끝*/}
                             </Row>
                             :
                             null } {/*4단계 끝*/}
@@ -1035,19 +1043,20 @@ export default function MyPageBanner() {
                 <div style={{ width: "95%", margin: "auto auto" }}>
                   {value.transactionType === 0 ?
                   <div>
-                  <div>
+                  <div style={{ width: "95%", margin: "auto auto", padding: "0px" }}>
                     {value.transactionStep === -1 ?
-                    <Card style={{
-                      width: "100%", height: "40%", backgroundColor: "#c4c4c4",
-                      marginBottom: "2vh", border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
-                      padding: "2vh",
-                    }}>
-                      <Row>
-                        <Col span={6} offset={6}> </Col>
-                        <Col span={6} offset={6} style={{ color: "#339eac", fontSize: "12pt" }}>직거래</Col>
-                      </Row>
+                      <Card class = "product-card"
+                      style={{
+                        width: "100%", height: "40%", backgroundColor: "#e0e0e0",
+                        border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                        margin: "auto auto", marginBottom: "2vh", padding: "0px",
+                      }}>
+                        <div style={{margin: "-15px"}}>
+                        <Row style={{padding: "0"}}>
+                          <Col span={4} offset={20} style={{ color: "#339eac", fontSize: "10pt" }}>직거래</Col>
+                        </Row>
 
-                      <Row>
+                        <Row>
                             <Col span={6} offset={0}>
                             <Link to = {'/buy/detail/'+value.sellItemId}>
                               <img style={{
@@ -1057,33 +1066,24 @@ export default function MyPageBanner() {
                             </Link>
                             </Col>
                             <Col span={17} offset={1}>
-                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
+                              <Row style={{ fontStyle: "bold", fontSize: "15px", textAlign: "left",
+                            color: "#656565" }}>
                                 <Col offset={0}>
                                   {value.title}
                                 </Col>
                               </Row>
-                              <Row style={{ fontSize: "8pt", color: "gray", }}>
-                                <Col span={12}>
-                                  
-                                  등록일자 : {/*나중에 수정하기*/}
-                                  {value.transactionCreatedTime != null && value.transactionCreatedTime.chartAt(2)}
-                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(3)}.
-                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(5)}
-                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(6)}.
-                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(8)}
-                                  {value.transactionCreatedTime != null &&value.transactionCreatedTime.chartAt(9)}
-                                </Col>
-                                <Col span={12}> | 판매가격 : {value.transPrice}원
+                              <Row style={{ fontSize: "12px", color: "#656565", }}>
+                                <Col offset={6} span={12}> | 판매가격 : {value.transPrice}원
                               </Col>
                               </Row>
-                              <Row style={{ fontSize: "12pt", color: "gray", marginTop: "2vh" }}>
-                                <Col offset={3}>
+                              <Row style={{ fontSize: "15px", color: "#959595", marginTop: "4vh" }}>
+                                <Col offset={2}>
                                   판매 등록 완료
                               </Col>
                               </Row>
                             </Col>
                           </Row>
-                    
+                        </div>
                     </Card>
                     : /*판매등록된 상품인지 거래 중인지*/
 
@@ -1098,35 +1098,44 @@ export default function MyPageBanner() {
                       </Row>
 
                       {value.transactionStep == 0 ?
-                        <div>
-                          <Row>
-                            <Col span={6} offset={0}>
-                            <Link to = {'/buy/detail/'+value.sellItemId}>
-                              <img style={{
-                                width: "10vh", height: "15vh", backgroundSize: "contain",
-                                borderRadius: "7px", overflow: "hidden"
-                              }} src={value.itemImageUrl}></img>
-                            </Link>
-                            </Col>
-                            <Col span={17} offset={1}>
-                              <Row style={{ fontStyle: "bold", fontSize: "12pt", textAlign: "left" }}>
-                                <Col offset={0}>
-                                  {value.title}
-                                </Col>
-                              </Row>
-                              <Row style={{ fontSize: "8pt", color: "gray", }}>
-                                <Col span={12}>
-                                  주문일자 : {/*나중에 수정하기*/}
-                                  {value.transactionCreatedTime[2]}
-                                  {value.transactionCreatedTime[3]}.
-                                  {value.transactionCreatedTime[5]}
-                                  {value.transactionCreatedTime[6]}.
-                                  {value.transactionCreatedTime[8]}
-                                  {value.transactionCreatedTime[9]}
-                                </Col>
-                                <Col span={12}> | 판매가격 : {value.transPrice}원
+                        <div style={{ fontSize: "15px" }}>
+                        <Row>
+                          <Col span={6} offset={0}>
+                          <Link to = {'/buy/detail/'+value.sellItemId}>
+                            <img style={{
+                              width: "10vh", height: "15vh", backgroundSize: "contain",
+                              borderRadius: "7px", overflow: "hidden"
+                            }} src={value.itemImageUrl}></img>
+                          </Link>
+                          </Col>
+                          <Col span={17} offset={1}>
+                          <Row style={{ fontStyle: "bold", fontSize: "15px", textAlign: "left",
+                          color: "#656565" }}>
+                              <Col offset={0}>
+                                {value.title}
                               </Col>
-                              </Row>
+                            </Row>
+                            <Row style={{ fontSize: "12px", color: "#656565", }}>
+                              <Col span={12}>
+                                주문일자 : {/*나중에 수정하기*/}
+                                {value.transactionCreatedTime[2]}
+                                {value.transactionCreatedTime[3]}.
+                                {value.transactionCreatedTime[5]}
+                                {value.transactionCreatedTime[6]}.
+                                {value.transactionCreatedTime[8]}
+                                {value.transactionCreatedTime[9]}
+                              </Col>
+                              <Col span={12}> | 판매가격 : {value.transPrice}원
+                            </Col>
+                            </Row>
+                          <Row style={{ fontSize: "12px", color: "#656565", marginTop: "2vh" }}>
+                              <Col offset={0} style={{ fontStyle: "bold" }}>
+                                구매자 : {value.traderName} |
+                                연락처 : {value.traderPhoneNumber}
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
                               <Row style={{ fontSize: "10pt", color: "gray", marginTop: "2vh" }}>
                                 <Col span={4} offset={1}>
                                   <button style={{
@@ -1149,10 +1158,7 @@ export default function MyPageBanner() {
                                   >수락</button>
                                 </Col>
                               </Row>
-
-                            </Col>
-                          </Row>
-                        </div>
+                              </div>
                         : 
                         <div>
                         <Row>
