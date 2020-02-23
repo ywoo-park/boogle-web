@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Row, Col, Icon, Card, Modal, Divider } from "antd";
+import { Row, Col, Icon, Card, Modal, Divider, Popconfirm } from "antd";
 import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
@@ -24,6 +24,9 @@ export default function MyPageBanner() {
   const [boogleBank, setBoogleBank] = useState(false);
   const [boxNum, setBoxNum] = useState(false);
   const [boxPassword, setBoxPassword] = useState(false);
+  const [inputBoxId, setInputBoxId] = useState("");
+  const [inputBoxPassword, setInputBoxPassword] = useState("");
+  const [inputBoogleBoxComplete, setInputBoolgeBoxComplete] = useState(false);
   const [openBoxNum, setOpenBoxNum] = useState(false);
   const [openBoxPassword, setOpenBoxPassword] = useState(false);
 
@@ -41,11 +44,19 @@ export default function MyPageBanner() {
   }, []);
 
   useEffect(() => {
-    if(needRender) {
+    if (needRender) {
       getMyPage();
       setNeedRender(false)
     }
   }, [needRender]);
+
+  /*
+  useEffect(() => {
+    if (inputBoogleBoxComplete) {
+      console.log("id : " + inputBoxId);
+    }
+  }, [inputBoogleBoxComplete]);
+*/
 
   const getMyPage = () => {
     axios.get('http://13.124.113.72:8080/myPage', {
@@ -53,13 +64,13 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        /*setName(response.data.data.userName)
+        setName(response.data.data.userName)
         setLikeList(response.data.data.bookmarkedItemList)
         setBuyList(response.data.data.buyTransList)
         setSellList(response.data.data.sellTransList)
-        */
       });
-    
+
+      /*
     setName("김유진");
     setLikeList([
       {
@@ -73,110 +84,126 @@ export default function MyPageBanner() {
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-                "traderPhoneNumber": "01040525345",
-                "title": "미시경제학",
-                "transactionType": 0,
-                "transPrice": "3000",
-                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-                "boxId": "",
-                "boxPassword": "",
-                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
-                "transactionProcessedTimeList": [
-                    "2020-02-14T13:30:04.231+0000"
-                ],
-        "transactionStep": 3
+        "traderPhoneNumber": "01040525345",
+        "title": "미시경제학",
+        "transactionType": 1,
+        "transPrice": "3000",
+        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+        "boxId": "1234",
+        "boxPassword": "1234",
+        "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+        "transactionProcessedTimeList": [
+          "2020-02-14T13:30:04.231+0000"
+        ],
+        "transactionStep": 1
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-                "traderPhoneNumber": "01040525345",
-                "title": "미시경제학",
-                "transactionType": 1,
-                "transPrice": "3000",
-                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-                "boxId": "",
-                "boxPassword": "",
-                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
-                "transactionProcessedTimeList": [
-                    "2020-02-14T13:30:04.231+0000"
-                ],
-        "transactionStep": 5
+        "traderPhoneNumber": "01040525345",
+        "title": "미시경제학",
+        "transactionType": 1,
+        "transPrice": "3000",
+        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+        "boxId": "1234",
+        "boxPassword": "1234",
+        "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+        "transactionProcessedTimeList": [
+          "2020-02-14T13:30:04.231+0000"
+        ],
+        "transactionStep": 4
       }
     ]);
     setSellList([
      {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-                "traderPhoneNumber": "01040525345",
-                "title": "미시경제학",
-                "transactionType": 0,
-                "transPrice": "3000",
-                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-                "boxId": "",
-                "boxPassword": "",
-                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
-                "transactionProcessedTimeList": [
-                    "2020-02-14T13:30:04.231+0000"
-                ],
-        "transactionStep": 3
+        "traderPhoneNumber": "01040525345",
+        "title": "미시경제학",
+        "transactionType": 0,
+        "transPrice": "3000",
+        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+        "boxId": "",
+        "boxPassword": "",
+        "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+        "transactionProcessedTimeList": [
+          "2020-02-14T13:30:04.231+0000"
+        ],
+        "transactionStep": -1
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-                "traderPhoneNumber": "01040525345",
-                "title": "미시경제학",
-                "transactionType": 1,
-                "transPrice": "3000",
-                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-                "boxId": "",
-                "boxPassword": "",
-                "transactionCreatedTime": "",
-                "transactionProcessedTimeList": [
-                    "2020-02-14T13:30:04.231+0000"
-                ],
-        "transactionStep": 5
+        "traderPhoneNumber": "01040525345",
+        "title": "미시경제학",
+        "transactionType": 1,
+        "transPrice": "3000",
+        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+        "boxId": "",
+        "boxPassword": "",
+        "transactionCreatedTime": "",
+        "transactionProcessedTimeList": [
+          "2020-02-14T13:30:04.231+0000"
+        ],
+        "transactionStep": 1
+      },
+      {
+        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
+        "traderName": "박영우",
+        "traderPhoneNumber": "01040525345",
+        "title": "미시경제학",
+        "transactionType": 1,
+        "transPrice": "3000",
+        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+        "boxId": "",
+        "boxPassword": "",
+        "transactionCreatedTime": "",
+        "transactionProcessedTimeList": [
+          "2020-02-14T13:30:04.231+0000"
+        ],
+        "transactionStep": 4
       }
-      
+
     ]
     );
-    
+    */
   }
 
 
-    const acceptBuyRequest = (sellItemId) => {
-      axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
-      })
-        .then((response) => {
-            setNeedRender(true);
-        });
-    }
+  const acceptBuyRequest = (sellItemId) => {
+    axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+    })
+      .then((response) => {
+        setNeedRender(true);
+      });
+  }
 
-    const rejectBuyRequest = (sellItemId) => {
-      axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
-      })
-        .then((response) => {
-            setNeedRender(true);
-        });
-    }
+  const rejectBuyRequest = (sellItemId) => {
+    axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
+    })
+      .then((response) => {
+        setNeedRender(true);
+      });
+  }
 
   const completePayment = (sellItemId) => {
     axios.get('http://13.124.113.72:8080/transaction/payment?sellItemId=' + sellItemId, {
     })
       .then((response) => {
-          setNeedRender(true);
-      });    
+        setNeedRender(true);
+      });
   }
 
   const setBoogleBoxInfo = (boxId, boxPassword, sellItemId) => {
 
     axios.post('http://13.124.113.72:8080/transaction/booglebox', {
-      "sellItemId" : sellItemId,
-      "id" : boxId,
-      "password" : boxPassword
+      "sellItemId": sellItemId,
+      "id": boxId,
+      "password": boxPassword
     })
       .then((response) => {
-          setNeedRender(true);
-      });    
+        setNeedRender(true);
+      });
 
   }
 
@@ -198,6 +225,10 @@ export default function MyPageBanner() {
 
   const payConfirmOnClickHandler = (sellItemId) => {
     completePayment(sellItemId)
+  }
+
+  const boogleBoxInfoReceiveConfirmOnClickHandler = (sellItemId) => {
+    changeTransactionStep(sellItemId);
   }
 
   const viewLikeProduct = e => {
@@ -335,7 +366,7 @@ export default function MyPageBanner() {
 
       <Row style={{ marginTop: "16px" }}>
         <Col xs={{ span: 4, offset: 6 }}
-        onClick={() => {window.location.href='http://www.notion.so/boogle/3bbbb6ce5b554209ac14c900dba8ea88';}}>
+          onClick={() => { window.location.href = 'http://www.notion.so/boogle/3bbbb6ce5b554209ac14c900dba8ea88'; }}>
           <Row>
             <Col xs={{ span: 24 }}>
               <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell.png"
@@ -389,9 +420,9 @@ export default function MyPageBanner() {
               }}>
                 설정
                   </label>
-            </Col>            
-          </Row>
-        </Col>
+              </Col>
+            </Row>
+          </Col>
         </Link>
       </Row>
 
@@ -551,7 +582,7 @@ export default function MyPageBanner() {
           : null} {/* likeProduct != true 일 때는 null */}
 
         {buyProduct === true ?
-          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0}}>
+          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0 }}>
             {buyList.length !== 0 && buyList != null ?
               buyList.map((value, index) => (
                 <div style={{ width: "95%", margin: "auto auto", padding: "0px" }}>
@@ -648,12 +679,14 @@ export default function MyPageBanner() {
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
                               {dirDetailCard === true && dirActiveIndex === index ?
                                 <Col offset={20}>
-                                <label onClick={() => { setDirDetailCard(false) }}>접기</label>
+                                  <label onClick={() => { setDirDetailCard(false) }}>접기</label>
                                 </Col>
                                 :
                                 <Col offset={16}>
-                                <label onClick={() => { setDirDetailCard(true); 
-                                  setDirActiveIndex(index) }}>거래상세보기</label>
+                                  <label onClick={() => {
+                                    setDirDetailCard(true);
+                                    setDirActiveIndex(index)
+                                  }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
@@ -705,14 +738,14 @@ export default function MyPageBanner() {
                             <Row style={{ marginTop: "13.5px", color: "#959595", marginBottom: "20px" }}>
                               거래 완료
                             </Row>
-                            </div>
-                            } {/*직거래 3단계*/}
-                            
+                                  </div>
+                                } {/*직거래 3단계*/}
+
+                              </div>
+                              : null} {/*직거래 step들*/}
                           </div>
-                          : null } {/*직거래 step들*/}
+                        }
                       </div>
-                    }
-                    </div>
                     </Card>
                     :
                     <Card class = "product-card"
@@ -807,14 +840,21 @@ export default function MyPageBanner() {
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecorationLine: "underline" }}>
                               {boxDetailCard === true && boxActiveIndex === index ?
                                 <Col offset={20}>
-                                <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
+                                  <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
                                 </Col>
-                                : 
+                                :
                                 <Col offset={16}>
-                                <label onClick={() => { setBoxDetailCard(true); 
-                                  setBoxActiveIndex(index) }}>거래상세보기</label>
+                                  <label onClick={() => {
+                                    setBoxDetailCard(true);
+                                    setBoxActiveIndex(index)
+                                  }}>거래상세보기</label>
                                 </Col>
                               }
+                            </Row>
+                            {boxDetailCard === true && boxActiveIndex === index ?
+                              <div>
+                                <Row style={{ margin: "2vh", color: "#44a0ac" }}>
+                                  판매자 수락
                           </Row>
                         {boxDetailCard === true && boxActiveIndex === index ?
                           <div>
@@ -842,25 +882,64 @@ export default function MyPageBanner() {
                                   onClick={() => { showModal(); showBoogleBank(); }}
                                 >결제 하기</button>
                               </Row>
-                              {modal === true ?
-                                <Modal
-                                  visible={modal}
-                                  onOk={() => { payConfirmOnClickHandler(value.sellItemId) }}
-                                  onCancel={() => { closeModal(); }}>
-                                  { modal === true && boogleBank === true ?
-                                    <div style={{textAlign: "center"}}>
-                                      <p style={{ color: "#000000", fontSize: "3vh"}}>
-                                      북을 계좌번호로 입금해주세요</p>
-                                      <p style={{ color: "#000000", fontSize: "3vh", fontStyle: "bold" }}>
-                                      [국민은행]예금주:김수빈(북을)</p>
-                                      <p style={{ color: "#000000", fontSize: "3vh", fontStyle: "bold" }}>
-                                      030301-04-179401</p>
-                                      <p style={{ color: "#000000", fontSize: "3vh", fontStyle: "bold" }}>
-                                      판매가격 : {value.transPrice}  원 </p>
-                                    </div>
-                                    : null} {/*북을 계좌 끝*/}
-                                  </Modal>
-                                : null} {/*모달 끝*/}
+                               {modal === true ?
+                                      <Modal
+                                        footer={null}
+                                        visible={modal}
+                                        onCancel={() => { closeModal(); }}>
+                                        {modal === true && boogleBank === true ?
+                                        <div>
+                                          <div style={{ textAlign: "left", border: "1px solid #a7a7a7", padding: "20px", marginTop: "40px", borderRadius: "18px" }}>
+                                            <Row>
+                                              <Col>
+                                                <p style={{ color: "#535353", fontSize: "18px", fontWeight: 700 }}>
+                                                  [국민은행] 030301-04-179401
+                                                </p>
+                                              </Col>
+                                            </Row>
+                                            <Row>
+                                              <Col>
+                                                <p style={{ color: "#535353", fontSize: "18px", fontStyle: "bold" }}>
+                                                  예금주 : 김수빈(북을)
+                                                </p>
+                                              </Col>
+                                            </Row>
+                                            <Row>
+                                              <Col>
+                                                <p style={{ color: "#535353", fontSize: "18px", fontStyle: "bold" }}>
+                                                  결제금액 : {value.transPrice}  원 </p>
+                                              </Col>
+                                            </Row>
+                                          </div>
+                                          <div style={{textAlign : "center", color : "707070", fontSize : "12px"}}>
+                                            <Row style={{marginTop : "30px", marginBottom : "10px"}}>
+                                              <Col><span>송금완료 확인 후 결제가 정상적으로 처리됩니다.</span></Col>
+                                            </Row>
+                                            <Row>
+                                              <Col><span>북을 > 마이페이지에서 결제 상황을 반드시 확인해주세요.</span></Col>
+                                            </Row>
+                                          </div>
+                                          <Row style={{marginTop : "30px"}}>
+                                            <Col>
+                                              <button style={{
+                                                borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                padding: "auto"
+                                              }}
+                                                onClick={() => {
+                                                  
+                                                  payConfirmOnClickHandler(value.sellItemId);
+                                                  setNeedRender(true);
+                                                  closeModal();
+                                                  
+                                                }}
+                                              ><span>결제 완료</span></button>
+                                            </Col>
+                                          </Row>
+                                          </div>                                          
+                                          : null} {/*북을 계좌 끝*/}
+                                      </Modal>
+                                      : null} {/*모달 끝*/}
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
                                 <Icon type="line" rotate="90" />
                               </Row>
@@ -914,55 +993,96 @@ export default function MyPageBanner() {
                               >수령 하기</button>
 
                               {modal === true && openBoxNum === true ?
-                                <Modal
-                                  visible={modal}
-                                  onOk={() => { closeModal(); showModal(); showOpenBoxPassword(); }}
-                                  onCancel={() => { closeModal(); }}>
-                                  { value.boxId !== "" ?
-                                    <div style={{textAlign: "center"}}>
-                                      <p style={{ color: "#000000", fontSize: "2vh", fontStyle: "bold"}}>
-                                      북을박스 번호</p>
-                                      <p style={{ color: "#000000", fontSize: "5vh" }}>
-                                      {value.boxId}</p>
-                                    </div>
-                                    : 
-                                    <div>
-                                      { openBoxNum === true && value.boxId === "" ?
-                                        <p style={{color: "#000000", fontSize: "2vh", textAlign: "center", margin: "2vh"}}>
-                                        북을박스에 비치되지 않아서 박스 번호가 없습니다.</p>
-                                    : null}
-                                    </div>
-                                    } {/*북을박스 번호 조회 끝*/}
-                                </Modal>
-                                : 
-                                <div>
-                                  { modal === true && openBoxPassword === true ?
-                                    <Modal
-                                    visible={modal}
-                                    onOk={() => {  }}
-                                    onCancel={() => { closeModal(); }}>
-                                    { value.boxPassword !== "" ?
+                                      <Modal
+                                        visible={modal}
+                                        footer={null}
+                                        onCancel={() => { closeModal(); }}>
+                                        {value.boxId !== "" ?
+                                          <div style={{ textAlign: "center" }}>
+                                            <Row>
+                                              <p style={{ color: "#000000", fontSize: "5vh", position: "relative", top : 135 }}>
+                                                {value.boxId}
+                                              </p>
+                                              <img style={{width : "50%"}} src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/boogle_box.png"></img>
+                                            </Row>
+                                            <Row style={{margin : "20px 0 20px 0"}}>
+                                                  <Col><span>위에 표시된 번호의<br/>북을 박스를 찾아주세요</span></Col>
+                                              </Row>  
+                                            <Row style={{marginTop : "30px"}}>
+                                              <Col>
+                                                <button style={{
+                                                  borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                  color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                  padding: "auto"
+                                                }}
+                                                  onClick={() => {
+                                                    closeModal(); showModal(); showOpenBoxPassword(); 
+                                                  }}
+                                                ><span>비밀번호 보기</span></button>
+                                              </Col>
+                                            </Row>
+                                          </div>
+                                          :
+                                          <div>
+                                            {openBoxNum === true && value.boxId === "" ?
+                                              <p style={{ color: "#000000", fontSize: "2vh", textAlign: "center", margin: "2vh" }}>
+                                                북을박스에 비치되지 않아서 박스 번호가 없습니다.</p>
+                                              : null}
+                                          </div>
+                                        } {/*북을박스 번호 조회 끝*/}
+                                      </Modal>
+                                      :
                                       <div>
-                                        <p style={{ color: "#000000", fontSize: "2vh", fontStyle: "bold"}}>
-                                        북을박스 비밀번호</p>
-                                        <p style={{ color: "#000000", fontSize: "5vh" }}>
-                                        {value.boxPassword}</p>
+                                        {modal === true && openBoxPassword === true ?
+                                          <Modal
+                                            visible={modal}
+                                            footer={null}
+                                            onCancel={() => { closeModal(); }}>
+                                            {value.boxPassword !== "" ?
+                                            <div style={{ textAlign: "center" }}>
+                                            <Row>
+                                              <p style={{ color: "#000000", fontSize: "5vh", position: "relative", top : 135 }}>
+                                                {value.boxPassword}
+                                              </p>
+                                              <img style={{width : "50%"}} src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/boogle_box.png"></img>
+                                            </Row>
+                                            <Row style={{margin : "20px 0 20px 0"}}>
+                                                  <Col><span>위에 표시된 비밀번호를<br/>눌러주세요</span></Col>
+                                              </Row>  
+                                            <Row style={{marginTop : "30px"}}>
+                                              <Col>
+                                              <Popconfirm
+                                                    placement="bottom"
+                                                    title="책을 북을 박스로 부터 수령하셨나요?"
+                                                    onConfirm={()=>{boogleBoxInfoReceiveConfirmOnClickHandler(value.sellItemId)}}
+                                                    okText="예"
+                                                    cancelText="아니오"
+                                              >
+                                                <button style={{
+                                                  borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                  color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                  padding: "auto"
+                                                }}
+                                                ><span>수령 완료</span></button>
+                                                </Popconfirm>
+                                              </Col>
+                                            </Row>
+                                          </div>
+                                              :
+                                              <div>
+                                                {openBoxPassword === true && value.boxPassword === "" ?
+                                                  <p style={{ color: "#000000", fontSize: "2vh", textAlign: "center", margin: "2vh" }}>
+                                                    북을박스에 비치되지 않아서 비밀번호가 없습니다.</p>
+                                                  : null}
+                                              </div>
+                                            } {/*북을박스 비밀번호 조회 끝*/}
+                                          </Modal>
+                                          : null}
                                       </div>
-                                      : 
-                                      <div>
-                                      { openBoxPassword === true && value.boxPassword === "" ?
-                                        <p style={{color: "#000000", fontSize: "2vh", textAlign: "center", margin: "2vh"}}>
-                                        북을박스에 비치되지 않아서 비밀번호가 없습니다.</p>
-                                    : null}
-                                    </div>
-                                    } {/*북을박스 비밀번호 조회 끝*/}
-                                    </Modal>
-                                  : null}
-                                </div>
-                                } {/*모달 끝*/}
-                            </Row>
-                            :
-                            null } {/*4단계 끝*/}
+                                       } {/*모달 끝*/}
+                                  </Row>
+                                  :
+                                  null} {/*4단계 끝*/}
 
                           {value.transactionStep > 4 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
@@ -972,7 +1092,6 @@ export default function MyPageBanner() {
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
-                          } {/*4단계 끝*/}
 
                           {value.transactionStep === 5 || value.transactionStep > 5 ?
                             <Row style={{ marginTop: "13.5px", marginBottom: "20px", color: "#0b308e" }}>
@@ -984,14 +1103,11 @@ export default function MyPageBanner() {
                             </Row>
                         
                           } {/*5단계 끝*/}
-                        
                           </div>
-                         : null}  {/*거래상세보기 끝*/}
-                        </div>
-                        
+
                         }
-                        </div>
-                      </Card>
+                      </div>
+                    </Card>
                   }
                 </div>
               ))
@@ -1061,6 +1177,8 @@ export default function MyPageBanner() {
                                 <Col offset={2}>
                                   등록 완료
                               </Col>
+                                  </Row>
+                                </Col>
                               </Row>
                             </Col>
                           </Row>
@@ -1228,18 +1346,21 @@ export default function MyPageBanner() {
                             <Row style={{ marginTop: "13.5px", color: "#656565", marginBottom: "20px" }}>
                               거래 완료
                             </Row>
-                            </div>
-                            } {/*직거래 3단계*/}
-                            
-                          </div>
-                          : null } {/*직거래 step들*/}
+                                      </div>
+                                    } {/*직거래 3단계*/}
+
+                                  </div>
+                                  : null} {/*직거래 step들*/}
+                              </div>
+                            }
+                          </Card>
+                        } {/*판매등록된 상품 끝*/}
                       </div>
                     }
                     </div>
                     </Card>
                     } {/*판매등록된 상품 끝*/}
                     </div>
-                  </div>
                     :  /*직거래인지 북을박스인지 구분*/
                     <div>
                     <div>
@@ -1468,66 +1589,88 @@ export default function MyPageBanner() {
                                 marginTop: "4px"
                               }} onClick={() => {showModal(); showBoxNum();}}
                               >비치 하기</button>
-                              {modal === true && boxNum === true ?
-                                <Modal
-                                  visible={modal}
-                                  onOk={() => { closeModal(); showModal(); showBoxPassword(); }}
-                                  onCancel={() => { closeModal(); }}>
-                                    <div style={{textAlign: "center"}}>
-                                    <form onSubmit={handleSubmit(onSubmit)}>
-                                    <Row style={{color:"#000000", fontSize:"2vh", margin: "1vh"}}>
-                                      책이 비치된 북을박스 번호를 입력해주세요.
-                                    </Row>
-                                    <Row style={{ margin: "1vh"}}>
-                                      <input type="text" name="id" ref={register} />
-                                    </Row>
-                                    <Row style={{ margin: "1vh"}}>
-                                      <button style={{
-                                        padding: "0",
-                                        width: "50%",
-                                        background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                        border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
-                                      }} onClick={() => { }} 
-                                      >입력 하기</button> {/* value.sellItemId 인수로 넣기 */}
-                                    </Row>
-                                    </form>{/*북을박스 번호 입력 끝*/}
-                                    </div>
-                                </Modal>
-                                : 
-                                <div>
-                                  { modal === true && boxPassword === true ?
-                                    <Modal
-                                    visible={modal}
-                                    onOk={() => {  }}
-                                    onCancel={() => { closeModal(); }}>
-                                    <div style={{textAlign: "center"}}>
-                                    <form onSubmit={handleSubmit(onSubmit)}>
-                                      <Row style={{color:"#000000", fontSize:"2vh", margin: "1vh"}}>
-                                        설정하신 북을박스의 비밀번호를 입력해주세요.
+                                {modal === true && boxNum === true ?
+                                          <Modal
+                                            footer={null}
+                                            visible={modal}
+                                            onCancel={() => { closeModal(); }}>
+                                            <div style={{ textAlign: "center" }}>
+                                              <form onSubmit={handleSubmit(onSubmit)}>
+                                                <Row>
+                                                  <img style={{width : "50%"}} src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/boogle_box.png"></img>
+                                                </Row>
+                                                <Row style={{margin : "20px 0 0 0"}}>
+                                                  <input
+                                                  style={{border : "1px solid #707070", borderRadius : "16px", 
+                                                width : "50%", textAlign : "center"}}
+                                                  type="text" name="id" ref={register}
+                                                  onChange={(e) => {setInputBoxId(e.target.value)}} />
+                                                </Row>
+                                                <Row style={{margin : "20px 0 20px 0"}}>
+                                                  <Col><span>도서를 비치하신 북을박스 번호를 입력해주세요</span></Col>
+                                                </Row>  
+                                                <Row>
+                                                  <button style={{
+                                                    borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                    color: "white", border: "none", fontSize: "12px", height: "25px", width: "75%",
+                                                    padding: "auto"
+                                                  }}
+                                                    onClick={() => {closeModal(); showModal(); showBoxPassword(); }}
+                                                  >입력하기</button>                                                  
+                                                </Row>
+                                              </form>{/*북을박스 번호 입력 끝*/}
+                                            </div>
+                                          </Modal>
+                                          :
+                                          <div>
+                                            {modal === true && boxPassword === true ?
+                                              <Modal
+                                                visible={modal}
+                                                footer={null}
+                                                onCancel={() => { closeModal(); }}>
+                                                <div style={{ textAlign: "center" }}>
+                                                <Row>
+                                                  <img style={{width : "50%"}} src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/boogle_box.png"></img>
+                                                </Row>
+                                                <Row style={{margin : "20px 0 0 0"}}>
+                                                  <input
+                                                  style={{border : "1px solid #707070", borderRadius : "16px", 
+                                                width : "50%", textAlign : "center"}}
+                                                  type="text" name="password" ref={register}
+                                                  onChange={(e) => {setInputBoxPassword(e.target.value)}} />
+                                                </Row>
+                                                <Row style={{margin : "20px 0 20px 0"}}>
+                                                  <Col><span>도서를 비치하신 북을박스 비밀번호를 <br/>입력해주세요</span></Col>
+                                                </Row>  
+                                                <Row>
+                                                  <button style={{
+                                                    borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                    color: "white", border: "none", fontSize: "12px", height: "25px", width: "75%",
+                                                    padding: "auto"
+                                                  }}
+                                                  onClick={() => {
+                                                    setBoogleBoxInfoOnClickHandler(inputBoxId, inputBoxPassword, value.sellItemId); 
+                                                    closeModal();}}
+                                                  >입력하기</button>                                                  
+                                                </Row>
+                                                </div>
+                                              </Modal>
+                                              : null}
+                                          </div>
+                                        } {/*모달 끝*/}
                                       </Row>
-                                      <Row style={{ margin: "1vh"}}>
-                                      <input type="text" name="password" ref={register} />
-                                      </Row>
-                                      <Row style={{ margin: "1vh"}}>
-                                      <button style={{
-                                        padding: "0",
-                                        width: "50%",
-                                        background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                        border: "none", borderRadius: "2.25vh", fontSize: "2vh", height: "3vh"
-                                      }} onClick={() => { }}
-                                      >입력 하기</button>  {/* value.sellItemId  */}
-                                      </Row>
-                                    </form>{/*북을박스 비밀번호 입력 끝*/}
-                                    </div>
-                                    </Modal>
-                                  : null}
-                                </div>
-                                } {/*모달 끝*/}
-                              
-                            </Row>
-                            :
-                            null } {/*4단계 버튼 끝*/}
+                                      :
+                                      null} {/*4단계 버튼 끝*/}
 
+                                    {value.transactionStep > 4 ?
+                                      <Row style={{ fontSize: "5vh", margin: "2vh", color: "#0b308e" }}>
+                                        <Icon type="line" rotate="90" />
+                                      </Row>
+                                      :
+                                      <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
+                                        <Icon type="line" rotate="90" />
+                                      </Row>
+                                    } {/*4단계 끝*/}
                           {value.transactionStep > 4 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
                               <Icon type="line" rotate="90" />
@@ -1536,8 +1679,6 @@ export default function MyPageBanner() {
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
-                          } {/*4단계 끝*/}
-
                           {value.transactionStep === 5 || value.transactionStep > 5 ?
                           <div>
                             <Row style={{ marginTop: "13.5px", marginBottom: "20px", color: "#0b308e" }}>
@@ -1562,7 +1703,7 @@ export default function MyPageBanner() {
                       </div>
 
                     </div>}
-                
+
                 </div>
               ))
               :  /*판매현황 없을 때*/
