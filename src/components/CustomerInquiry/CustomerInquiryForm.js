@@ -13,10 +13,10 @@ export default function CustomerInquiryForm(){
         </Menu>
       );
     
-    const { TextArea } = Input;
     const [userImages, setUserImages] = useState([]);
     const [userImagesDiv, setUserImagesDiv] = useState();
     const [imageUrls, setImageUrls] = useState([])
+    const [imageFileList, setImageFileList] = useState();
     const [customerInquiry, setCustomerInquiry] = useState();
     const [customerInquiryType, setCustomerInquiryType] = useState(0);
 
@@ -31,7 +31,7 @@ export default function CustomerInquiryForm(){
 
     const addImage = () => {
         const imageList = imageUrls.map((i) => (
-            <Col xs={{ span: 5, offset: 1 }}>
+            <Col xs={{ span: 4, offset: 1 }}>
                 <div
                     style={{
                         border: "#44a0ac 1px solid", height: "10vh",
@@ -56,13 +56,20 @@ export default function CustomerInquiryForm(){
             type: customerInquiryType,
             msg: data.msg
         }, token : ""})
-        console.log("OnSubmit");
+
+        setImageFileList(userImages);
     };
 
-    const saveCustomerInquiry = (customerInquiry) => {
-
-        axios.post('http://localhost:8080/customerInquiry', customerInquiry)
-            .then((response) => {
+    const saveCustomerInquiry = (customerInquiry, imageFileList) => {
+        let form = new FormData();
+        form.append("")
+        axios.post('http://localhost:8080/customerInquiry', customerInquiry, {
+        
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+        .then((response) => {
                 console.log(response);
             })
             .catch((error) => {

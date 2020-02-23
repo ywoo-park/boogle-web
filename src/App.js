@@ -7,6 +7,7 @@ import SignIn from "./pages/SignIn";
 import DetailSubject from "./pages/DetailSubject.js";
 import MyPage from "./pages/MyPage";
 import CustomerInquiry from "./pages/CustomerInquiry";
+<<<<<<< Updated upstream
 import CustomerCenterPage from "./pages/CustomerCenterPage";
 import ModifyInfo from "./pages/ModifyInfo";
 import BoxCheckPage from "./pages/BoxCheckPage";
@@ -60,6 +61,26 @@ class App extends Component {
         </Router>
       );
     }
+=======
+// import firebase from 'firebase';
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/sell" component={Sell} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/signin" component={SignIn} />
+        <Route path="mypage" component={MyPage} />
+        <Route path="/buy/detail/:id" component={DetailSubject} />
+        <Route path="/mypage" component={MyPage}/>
+        <Route path="/customerinquiry" component={CustomerInquiry}/>
+        </Switch>
+      </Router>
+    );
+>>>>>>> Stashed changes
   }
 }
 export default App;
