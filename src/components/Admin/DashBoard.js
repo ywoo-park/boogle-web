@@ -22,6 +22,7 @@ export default function DashBoard() {
   const [isAuthImageModalOpened, setIsAuthImageModalOpened] = useState(false);
   const [userCampusAuthImage, setUserCampusAuthImage] = useState(null);
   const [stepTWOList, setStepTWOList] = useState([]);
+  const [stepFOURList, setStepFOURList] = useState([]);
   const [transData, setTransData] = useState([]);
   //   const [infoTable, setInfoTable] = useState()
 
@@ -45,6 +46,14 @@ export default function DashBoard() {
     });
   };
 
+  const getStepFOUR = () => {
+    axios
+      .get("http://13.124.113.72:8080/admin/transactions/stepFour")
+      .then(res => {
+        setStepFOURList(res.data.data);
+      });
+  };
+
   const getUserCampusAuthImage = userId => {
     axios
       .get("http://13.124.113.72:8080/authImage?userId=" + userId)
@@ -61,9 +70,20 @@ export default function DashBoard() {
       });
   };
 
+  const changeStep = sellItemId => {
+    axios
+      .get(
+        `http://13.124.113.72:8080/admin/change_step?sellItemId=${sellItemId}`
+      )
+      .then(res => {
+        window.location.reload();
+      });
+  };
+
   React.useEffect(() => {
     getAllUsers();
     getStepTWO();
+    getStepFOUR();
     getAllTrans();
   }, []);
 
@@ -316,22 +336,26 @@ export default function DashBoard() {
           </Row>
           <Row>
             <Col span={22} offset={1}>
-              {/* {stepTWOList.length != 0 ? ( */}
               <Table
                 columns={columnsTransaction}
                 dataSource={transData}
               ></Table>
-              {/* ) : null} */}
             </Col>
           </Row>
           <Row>
             <Col span={22} offset={1}>
-              {/* {stepTWOList.length != 0 ? ( */}
               <Table
                 columns={columnsTransaction}
                 dataSource={stepTWOList}
               ></Table>
-              {/* ) : null} */}
+            </Col>
+          </Row>
+          <Row>
+            <Col span={22} offset={1}>
+              <Table
+                columns={columnsTransaction}
+                dataSource={stepFOURList}
+              ></Table>
             </Col>
           </Row>
         </div>
