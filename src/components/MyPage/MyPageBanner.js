@@ -926,7 +926,6 @@ export default function MyPageBanner() {
                                       <Modal
                                         footer={null}
                                         visible={modal}
-                                        onOk={() => { payConfirmOnClickHandler(value.sellItemId) }}
                                         onCancel={() => { closeModal(); }}>
                                         {modal === true && boogleBank === true ?
                                         <div>
@@ -968,6 +967,11 @@ export default function MyPageBanner() {
                                                 padding: "auto"
                                               }}
                                                 onClick={() => {
+                                                  
+                                                  payConfirmOnClickHandler(value.sellItemId);
+                                                  setNeedRender(true);
+                                                  closeModal();
+                                                  
                                                 }}
                                               ><span>결제 완료</span></button>
                                             </Col>
