@@ -91,8 +91,10 @@ export default function ManageAccount() {
       <ManageContext.Provider value={{ manageSet, dispatch }}>
         <Row
           style={{
+            height : "70px",
+            padding : "20px 0px 10px 0px",
             background:
-              "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)"
+              "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
           }}
         >
           <Col xs={{ span: 3 }}>

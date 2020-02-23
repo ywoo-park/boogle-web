@@ -53,10 +53,11 @@ export default function MyPageBanner() {
         console.log(response);
         setName(response.data.data.userName)
         setLikeList(response.data.data.bookmarkedItemList)
-        //setBuyList(response.data.data.buyTransList)
+        setBuyList(response.data.data.buyTransList)
         setSellList(response.data.data.sellTransList)
       });
 
+      /*
     setName("김유진");
     setLikeList([
       {
@@ -170,7 +171,7 @@ export default function MyPageBanner() {
       
     ]
     );
-    
+   */ 
   }
 
 

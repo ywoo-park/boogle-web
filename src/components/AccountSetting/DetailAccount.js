@@ -39,8 +39,8 @@ export default function DetailAccount() {
     <Row style={{ marginTop: "30px", marginBottom: "40px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Row id="bankName">
-          <Row>
-            <Col xs={{ span: 8, offset: 2 }}>
+          <Row >
+            <Col xs={{ span: 21, offset: 1 }}>
               <label
                 style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}
               >
@@ -48,14 +48,13 @@ export default function DetailAccount() {
               </label>
             </Col>
           </Row>
-          <Row>
-            <Col>
+          <Row style={{marginTop : "-10px", marginBottom : "20px"}}>
+            <Col xs={{ span: 21, offset: 1 }}>
               <span
                 style={{
                   width: "100%",
                   height: "40px",
                   border: "none",
-                  borderBottom: "#44a0ac solid 1.0px",
                   backgroundColor: "transparent"
                 }}
               >
@@ -67,7 +66,7 @@ export default function DetailAccount() {
         <Row id="newAccountNum">
           <Col>
             <Row>
-              <Col xs={{ span: 8, offset: 2 }}>
+              <Col xs={{ span: 21, offset: 1 }}>
                 <label
                   style={{
                     color: "rgba(51, 158, 172, 0.9)",
@@ -78,8 +77,8 @@ export default function DetailAccount() {
                 </label>
               </Col>
             </Row>
-            <Row>
-              <Col>
+            <Row style={{marginTop : "-10px", marginBottom : "20px"}}>
+              <Col xs={{ span: 21, offset: 1 }}>
                 <input
                   style={{
                     width: "100%",
@@ -99,7 +98,7 @@ export default function DetailAccount() {
         <Row id="ownerName">
           <Col>
             <Row>
-              <Col xs={{ span: 8, offset: 2 }}>
+              <Col xs={{ span: 21, offset: 1 }}>  
                 <label
                   style={{
                     color: "rgba(51, 158, 172, 0.9)",
@@ -111,7 +110,7 @@ export default function DetailAccount() {
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col style={{marginTop : "-10px", marginBottom : "20px"}} xs={{ span: 21, offset: 1 }}>
                 <input
                   style={{
                     width: "100%",
@@ -137,9 +136,8 @@ export default function DetailAccount() {
                 background: "rgba(51, 158, 172, 0.9)",
                 color: "#ffffff",
                 border: "none",
-                borderRadius: "2.25vh",
-                fontSize: "2.5vh",
-                height: "5vh"
+                fontSize: "15px", height: "35px", width: "100%",
+                padding: "10px 0 10px 0", borderRadius : "16px"
               }}
               type="submit"
               onClick={() => {

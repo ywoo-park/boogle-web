@@ -30,9 +30,10 @@ export default function CurrentAccount() {
       <Col>
         <Row id="account-list">
           <Col>
-            <Row>
-              <Col>
+            <Row style={{ marginTop: "30px" }}>
+              <Col xs={{ span: 22, offset: 1 }}>
                 {manageSet.accounts.map(account => {
+                  console.log(account);
                   return (
                     <Card
                       hoverable
@@ -40,13 +41,14 @@ export default function CurrentAccount() {
                         width: "100%",
                         borderRadius: "18px",
                         border: "solid 1px #a7a7a7",
-                        paddingBottom: "15vh"
+                        marginBottom: "10px",
+                        padding: "10px 0px 10px 0px"
                       }}
                     >
-                      <Row>
+                      <Row style={{ marginBottom: "5px" }}>
                         <Col>
-                          <span>
-                            {bankNameList(account.bankId)}
+                          <span style={{ fontSize: "20px", color: "#535353" }}>
+                            {bankNameList(account.bankId) + "    "}
                             {account.accountNumber}
                           </span>
                         </Col>
@@ -56,8 +58,8 @@ export default function CurrentAccount() {
                           <span>예금주 : {account.depositorName}</span>
                         </Col>
                       </Row>
-                      <Row>
-                        <Col>
+                      <Row style={{ marginTop: "20px" }}>
+                        <Col xs={{ span: 12, offset: 12 }}>
                           <button
                             style={{
                               padding: "0",
@@ -65,9 +67,9 @@ export default function CurrentAccount() {
                               background: "rgba(51, 158, 172, 0.9)",
                               color: "#ffffff",
                               border: "none",
-                              borderRadius: "2.25vh",
-                              fontSize: "2.5vh",
-                              height: "5vh"
+                              borderRadius: "20px",
+                              fontSize: "15px",
+                              height: "35px"
                             }}
                             onClick={async () => {
                               return await delAcc(account._id);
@@ -85,14 +87,35 @@ export default function CurrentAccount() {
           </Col>
         </Row>
         <Row>
-          <Col>
-            <button
-              onClick={() => {
-                dispatch({ type: "ADD_ACCOUNT" });
+          <Col xs={{ span: 22, offset: 1 }}>
+            <div
+              style={{
+                width: "100%",
+                borderRadius: "15px",
+                border: "solid 1px #a7a7a7",
+                marginBottom: "10px",
+                height: "50px"
               }}
             >
-              계좌 추가하기
-            </button>
+              <Row style={{ padding: "10px 0px 10px 0px" }}
+                onClick={() => {
+                  dispatch({ type: "ADD_ACCOUNT" });
+                }}>
+                <Col xs={{ offset: 1, span: 9 }}><span style={{ fontSize: "20px" }}>계좌 추가하기</span></Col>
+                <Col xs={{ offset: 9, span: 2 }}>
+                  <img
+                    style={{
+                      width: "32px",
+                      height: "auto",
+                      marginLeft: "40%",
+                      transform: "scaleX(-1)"
+                    }}
+                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png"
+                    onClick={<div></div>}
+                  />
+                </Col>
+              </Row>
+            </div>
           </Col>
         </Row>
       </Col>
