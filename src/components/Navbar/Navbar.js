@@ -37,10 +37,6 @@ class Navbar extends Component {
     mode: "buy"
   };
 
-  componentDidMount() {
-
-  }
-
   focusOnSearch = isFocused => {
     this.setState({ isFocused: isFocused });
     this.setState({ isFocusedClass: "isFocused" });
@@ -198,7 +194,6 @@ class Navbar extends Component {
                   </Row>
                   : null
                 }
-
               </header>
               <header id="navbar-unfixed">
                 <Row>
