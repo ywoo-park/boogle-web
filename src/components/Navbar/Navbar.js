@@ -24,7 +24,6 @@ class Navbar extends Component {
     userNav: null,
     tokenValue: "",
     nameValue: "",
-
     isLogIn: false,
 
     afterLogin: null,
