@@ -380,6 +380,9 @@ class Banner extends Component {
                 </button>
               </Col>
             </Row>
+            <Row>
+              <Col offset={1} span={22}><Divider /></Col>
+            </Row>
           </div>
           
           : null}
