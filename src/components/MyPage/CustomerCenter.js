@@ -15,7 +15,7 @@ export default function CustomerCenter() {
           }} className="customercenter"> 
           <Row>
               <Col offset={1}>
-              <Link to="/">
+              <Link to="/mypage">
                 <img style={{
                   width: "32px",
                   height: "auto",
@@ -27,7 +27,8 @@ export default function CustomerCenter() {
               </Col>
           </Row>
           <Card style={{marginTop:"3%", width:"100%", height:"100%", backgroundColor: "#ffffff"}}>
-            <Row style={{marginTop:"1.5vh", marginBottom:"1.5vh"}}>
+            <Row style={{marginTop:"1.5vh", marginBottom:"1.5vh"}}
+            onClick={() => {window.location.href='http://www.notion.so/boogle/FAQ-ea1868c0de31445e86249adec57fa7db';}}>
                 <Col span={4}>
                     <Icon type="question" style={{
                         color:"#000000", marginRight: "1vh", fontSize: "3vh",
