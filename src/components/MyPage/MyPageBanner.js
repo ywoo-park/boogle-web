@@ -44,19 +44,11 @@ export default function MyPageBanner() {
   }, []);
 
   useEffect(() => {
-    if (needRender) {
+    if(needRender) {
       getMyPage();
       setNeedRender(false)
     }
   }, [needRender]);
-
-  /*
-  useEffect(() => {
-    if (inputBoogleBoxComplete) {
-      console.log("id : " + inputBoxId);
-    }
-  }, [inputBoogleBoxComplete]);
-*/
 
   const getMyPage = () => {
     axios.get('http://13.124.113.72:8080/myPage', {
@@ -64,13 +56,13 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        setName(response.data.data.userName)
+        /*setName(response.data.data.userName)
         setLikeList(response.data.data.bookmarkedItemList)
         setBuyList(response.data.data.buyTransList)
         setSellList(response.data.data.sellTransList)
+        */
       });
-
-      /*
+    
     setName("김유진");
     setLikeList([
       {
@@ -84,126 +76,110 @@ export default function MyPageBanner() {
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-        "traderPhoneNumber": "01040525345",
-        "title": "미시경제학",
-        "transactionType": 1,
-        "transPrice": "3000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-        "boxId": "1234",
-        "boxPassword": "1234",
-        "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-14T13:30:04.231+0000"
-        ],
-        "transactionStep": 1
+                "traderPhoneNumber": "01040525345",
+                "title": "미시경제학",
+                "transactionType": 0,
+                "transPrice": "3000",
+                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+                "boxId": "",
+                "boxPassword": "",
+                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+                "transactionProcessedTimeList": [
+                    "2020-02-14T13:30:04.231+0000"
+                ],
+        "transactionStep": 3
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-        "traderPhoneNumber": "01040525345",
-        "title": "미시경제학",
-        "transactionType": 1,
-        "transPrice": "3000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-        "boxId": "1234",
-        "boxPassword": "1234",
-        "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-14T13:30:04.231+0000"
-        ],
-        "transactionStep": 4
+                "traderPhoneNumber": "01040525345",
+                "title": "미시경제학",
+                "transactionType": 1,
+                "transPrice": "3000",
+                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+                "boxId": "",
+                "boxPassword": "",
+                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+                "transactionProcessedTimeList": [
+                    "2020-02-14T13:30:04.231+0000"
+                ],
+        "transactionStep": 1
       }
     ]);
     setSellList([
      {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-        "traderPhoneNumber": "01040525345",
-        "title": "미시경제학",
-        "transactionType": 0,
-        "transPrice": "3000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-        "boxId": "",
-        "boxPassword": "",
-        "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
-        "transactionProcessedTimeList": [
-          "2020-02-14T13:30:04.231+0000"
-        ],
-        "transactionStep": -1
+                "traderPhoneNumber": "01040525345",
+                "title": "미시경제학",
+                "transactionType": 0,
+                "transPrice": "3000",
+                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+                "boxId": "",
+                "boxPassword": "",
+                "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
+                "transactionProcessedTimeList": [
+                    "2020-02-14T13:30:04.231+0000"
+                ],
+        "transactionStep": 3
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
         "traderName": "박영우",
-        "traderPhoneNumber": "01040525345",
-        "title": "미시경제학",
-        "transactionType": 1,
-        "transPrice": "3000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-        "boxId": "",
-        "boxPassword": "",
-        "transactionCreatedTime": "",
-        "transactionProcessedTimeList": [
-          "2020-02-14T13:30:04.231+0000"
-        ],
-        "transactionStep": 1
-      },
-      {
-        "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
-        "traderName": "박영우",
-        "traderPhoneNumber": "01040525345",
-        "title": "미시경제학",
-        "transactionType": 1,
-        "transPrice": "3000",
-        "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-        "boxId": "",
-        "boxPassword": "",
-        "transactionCreatedTime": "",
-        "transactionProcessedTimeList": [
-          "2020-02-14T13:30:04.231+0000"
-        ],
-        "transactionStep": 4
+                "traderPhoneNumber": "01040525345",
+                "title": "미시경제학",
+                "transactionType": 1,
+                "transPrice": "3000",
+                "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
+                "boxId": "",
+                "boxPassword": "",
+                "transactionCreatedTime": "",
+                "transactionProcessedTimeList": [
+                    "2020-02-14T13:30:04.231+0000"
+                ],
+        "transactionStep": 2
       }
-
+      
     ]
     );
-    */
+    
   }
 
 
-  const acceptBuyRequest = (sellItemId) => {
-    axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
-    })
-      .then((response) => {
-        setNeedRender(true);
-      });
-  }
+    const acceptBuyRequest = (sellItemId) => {
+      axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+      })
+        .then((response) => {
+            setNeedRender(true);
+        });
+    }
 
-  const rejectBuyRequest = (sellItemId) => {
-    axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
-    })
-      .then((response) => {
-        setNeedRender(true);
-      });
-  }
+    const rejectBuyRequest = (sellItemId) => {
+      axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
+      })
+        .then((response) => {
+            setNeedRender(true);
+        });
+    }
 
   const completePayment = (sellItemId) => {
     axios.get('http://13.124.113.72:8080/transaction/payment?sellItemId=' + sellItemId, {
     })
       .then((response) => {
-        setNeedRender(true);
-      });
+          setNeedRender(true);
+      });    
   }
 
   const setBoogleBoxInfo = (boxId, boxPassword, sellItemId) => {
 
     axios.post('http://13.124.113.72:8080/transaction/booglebox', {
-      "sellItemId": sellItemId,
-      "id": boxId,
-      "password": boxPassword
+      "sellItemId" : sellItemId,
+      "id" : boxId,
+      "password" : boxPassword
     })
       .then((response) => {
-        setNeedRender(true);
-      });
+          setNeedRender(true);
+      });    
 
   }
 
@@ -366,7 +342,7 @@ export default function MyPageBanner() {
 
       <Row style={{ marginTop: "16px" }}>
         <Col xs={{ span: 4, offset: 6 }}
-          onClick={() => { window.location.href = 'http://www.notion.so/boogle/3bbbb6ce5b554209ac14c900dba8ea88'; }}>
+        onClick={() => {window.location.href='http://www.notion.so/boogle/3bbbb6ce5b554209ac14c900dba8ea88';}}>
           <Row>
             <Col xs={{ span: 24 }}>
               <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell.png"
@@ -420,9 +396,9 @@ export default function MyPageBanner() {
               }}>
                 설정
                   </label>
-              </Col>
-            </Row>
-          </Col>
+            </Col>            
+          </Row>
+        </Col>
         </Link>
       </Row>
 
@@ -582,7 +558,7 @@ export default function MyPageBanner() {
           : null} {/* likeProduct != true 일 때는 null */}
 
         {buyProduct === true ?
-          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0 }}>
+          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0}}>
             {buyList.length !== 0 && buyList != null ?
               buyList.map((value, index) => (
                 <div style={{ width: "95%", margin: "auto auto", padding: "0px" }}>
@@ -679,14 +655,12 @@ export default function MyPageBanner() {
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
                               {dirDetailCard === true && dirActiveIndex === index ?
                                 <Col offset={20}>
-                                  <label onClick={() => { setDirDetailCard(false) }}>접기</label>
+                                <label onClick={() => { setDirDetailCard(false) }}>접기</label>
                                 </Col>
                                 :
                                 <Col offset={16}>
-                                  <label onClick={() => {
-                                    setDirDetailCard(true);
-                                    setDirActiveIndex(index)
-                                  }}>거래상세보기</label>
+                                <label onClick={() => { setDirDetailCard(true); 
+                                  setDirActiveIndex(index) }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
@@ -738,14 +712,14 @@ export default function MyPageBanner() {
                             <Row style={{ marginTop: "13.5px", color: "#959595", marginBottom: "20px" }}>
                               거래 완료
                             </Row>
-                                  </div>
-                                } {/*직거래 3단계*/}
-
-                              </div>
-                              : null} {/*직거래 step들*/}
+                            </div>
+                            } {/*직거래 3단계*/}
+                            
                           </div>
-                        }
+                          : null } {/*직거래 step들*/}
                       </div>
+                    }
+                    </div>
                     </Card>
                     :
                     <Card class = "product-card"
@@ -840,21 +814,14 @@ export default function MyPageBanner() {
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecorationLine: "underline" }}>
                               {boxDetailCard === true && boxActiveIndex === index ?
                                 <Col offset={20}>
-                                  <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
+                                <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
                                 </Col>
-                                :
+                                : 
                                 <Col offset={16}>
-                                  <label onClick={() => {
-                                    setBoxDetailCard(true);
-                                    setBoxActiveIndex(index)
-                                  }}>거래상세보기</label>
+                                <label onClick={() => { setBoxDetailCard(true); 
+                                  setBoxActiveIndex(index) }}>거래상세보기</label>
                                 </Col>
                               }
-                            </Row>
-                            {boxDetailCard === true && boxActiveIndex === index ?
-                              <div>
-                                <Row style={{ margin: "2vh", color: "#44a0ac" }}>
-                                  판매자 수락
                           </Row>
                         {boxDetailCard === true && boxActiveIndex === index ?
                           <div>
@@ -882,7 +849,7 @@ export default function MyPageBanner() {
                                   onClick={() => { showModal(); showBoogleBank(); }}
                                 >결제 하기</button>
                               </Row>
-                               {modal === true ?
+                              {modal === true ?
                                       <Modal
                                         footer={null}
                                         visible={modal}
@@ -992,7 +959,7 @@ export default function MyPageBanner() {
                               }} onClick={() => {showModal(); showOpenBoxNum();}}
                               >수령 하기</button>
 
-                              {modal === true && openBoxNum === true ?
+                                {modal === true && openBoxNum === true ?
                                       <Modal
                                         visible={modal}
                                         footer={null}
@@ -1080,9 +1047,9 @@ export default function MyPageBanner() {
                                           : null}
                                       </div>
                                        } {/*모달 끝*/}
-                                  </Row>
-                                  :
-                                  null} {/*4단계 끝*/}
+                            </Row>
+                            :
+                            null } {/*4단계 끝*/}
 
                           {value.transactionStep > 4 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
@@ -1092,6 +1059,7 @@ export default function MyPageBanner() {
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
+                          } {/*4단계 끝*/}
 
                           {value.transactionStep === 5 || value.transactionStep > 5 ?
                             <Row style={{ marginTop: "13.5px", marginBottom: "20px", color: "#0b308e" }}>
@@ -1103,11 +1071,14 @@ export default function MyPageBanner() {
                             </Row>
                         
                           } {/*5단계 끝*/}
+                        
                           </div>
-
+                         : null}  {/*거래상세보기 끝*/}
+                        </div>
+                        
                         }
-                      </div>
-                    </Card>
+                        </div>
+                      </Card>
                   }
                 </div>
               ))
@@ -1177,8 +1148,6 @@ export default function MyPageBanner() {
                                 <Col offset={2}>
                                   등록 완료
                               </Col>
-                                  </Row>
-                                </Col>
                               </Row>
                             </Col>
                           </Row>
@@ -1346,21 +1315,18 @@ export default function MyPageBanner() {
                             <Row style={{ marginTop: "13.5px", color: "#656565", marginBottom: "20px" }}>
                               거래 완료
                             </Row>
-                                      </div>
-                                    } {/*직거래 3단계*/}
-
-                                  </div>
-                                  : null} {/*직거래 step들*/}
-                              </div>
-                            }
-                          </Card>
-                        } {/*판매등록된 상품 끝*/}
+                            </div>
+                            } {/*직거래 3단계*/}
+                            
+                          </div>
+                          : null } {/*직거래 step들*/}
                       </div>
                     }
                     </div>
                     </Card>
                     } {/*판매등록된 상품 끝*/}
                     </div>
+                  </div>
                     :  /*직거래인지 북을박스인지 구분*/
                     <div>
                     <div>
@@ -1589,7 +1555,7 @@ export default function MyPageBanner() {
                                 marginTop: "4px"
                               }} onClick={() => {showModal(); showBoxNum();}}
                               >비치 하기</button>
-                                {modal === true && boxNum === true ?
+                               {modal === true && boxNum === true ?
                                           <Modal
                                             footer={null}
                                             visible={modal}
@@ -1658,19 +1624,11 @@ export default function MyPageBanner() {
                                               : null}
                                           </div>
                                         } {/*모달 끝*/}
-                                      </Row>
-                                      :
-                                      null} {/*4단계 버튼 끝*/}
+                              
+                            </Row>
+                            :
+                            null } {/*4단계 버튼 끝*/}
 
-                                    {value.transactionStep > 4 ?
-                                      <Row style={{ fontSize: "5vh", margin: "2vh", color: "#0b308e" }}>
-                                        <Icon type="line" rotate="90" />
-                                      </Row>
-                                      :
-                                      <Row style={{ fontSize: "5vh", margin: "2vh", color: "gray" }}>
-                                        <Icon type="line" rotate="90" />
-                                      </Row>
-                                    } {/*4단계 끝*/}
                           {value.transactionStep > 4 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
                               <Icon type="line" rotate="90" />
@@ -1679,6 +1637,8 @@ export default function MyPageBanner() {
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
+                          } {/*4단계 끝*/}
+
                           {value.transactionStep === 5 || value.transactionStep > 5 ?
                           <div>
                             <Row style={{ marginTop: "13.5px", marginBottom: "20px", color: "#0b308e" }}>
@@ -1703,7 +1663,7 @@ export default function MyPageBanner() {
                       </div>
 
                     </div>}
-
+                
                 </div>
               ))
               :  /*판매현황 없을 때*/
