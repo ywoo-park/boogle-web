@@ -33,7 +33,6 @@ export default function CurrentAccount() {
             <Row style={{ marginTop: "30px" }}>
               <Col xs={{ span: 22, offset: 1 }}>
                 {manageSet.accounts.map(account => {
-                  console.log(account);
                   return (
                     <Card
                       hoverable

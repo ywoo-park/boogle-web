@@ -5,6 +5,7 @@ import axios from "axios";
 import AddAccount from "./AddAccount";
 import CurrentAccount from "./CurrentAccount";
 import DetailAccount from "./DetailAccount";
+import './ManageAccount.css';
 
 export const ManageContext = createContext(null);
 
@@ -87,7 +88,7 @@ export default function ManageAccount() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div id="account-setting-container">
       <ManageContext.Provider value={{ manageSet, dispatch }}>
         <Row
           style={{
