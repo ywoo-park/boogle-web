@@ -172,7 +172,6 @@ export default function MyPageBanner() {
       
     ]
     );
-    
   }
 
 
@@ -433,7 +432,7 @@ export default function MyPageBanner() {
               }}>
                 설정
                   </label>
-            </Col>
+            </Col>            
           </Row>
         </Col>
         </Link>

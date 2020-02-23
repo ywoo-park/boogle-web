@@ -57,7 +57,7 @@ class Navbar extends Component {
   render() {
 
     return (
-      <div id ={this.state.mode == "buy" ? "navbar" : "navbar-sell"}>
+      <div id={this.state.mode == "buy" ? "navbar" : "navbar-sell"}>
         {this.state.isFocused == true ? (
           <header>
             <Row id="navbar-search-row-after-focused">
@@ -97,7 +97,7 @@ class Navbar extends Component {
                     <img
                       style={{ width: "6.0vh", height: "auto" }}
                       src="https://s3.ap-northeast-2.amazonaws.com/boogle.shop/logo.png"
-                      onClick={()=>{window.location.reload()}}
+                      onClick={() => { window.location.reload() }}
                     ></img>
                   </Col>
                   <Col xs={{ span: 4, offset: 0 }}>
@@ -145,38 +145,18 @@ class Navbar extends Component {
                         }
                       }}>구매하기</button>
                   </Col>
-                  <Col xs={{ span: 1, offset: 3 }}>
-                    <Icon
-                      className="navbar-top-icon"
-                      type="mail"
-                      theme="outlined"
-                      style={{
-                        color: "lightgrey",
-                        margin: "auto",
-                        marginTop: "1vh"
+                  <Col xs={{ span: 1, offset: 6 }}>
+                    <Link to="/signin">
+                      <img style={{
+                        width: "22px",
+                        height: "auto",
+                        marginTop: "9px",
+                        marginLeft: "2px"
                       }}
-                      onClick={() => {
-                        localStorage.removeItem('token');
-                        setTimeout(() => {
-                          window.location.reload();
-                        }, 1000);
-                      }}
-                    ></Icon>
-                  </Col>
-                  <Col xs={{ span: 1, offset: 2 }}>
-                    <Icon
-                      className="navbar-top-icon"
-                      type="user"
-                      theme="outlined"
-                      style={{
-                        color: "lightgrey",
-                        margin: "auto",
-                        marginTop: "1vh"
-                      }}
-                      onClick={() => {
-                        this.props.history.push('/signin');
-                      }}
-                    ></Icon>
+                        onClick={() => {
+                        }}
+                        src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/user_icon.png" />
+                    </Link>
                   </Col>
                 </Row>
                 {this.state.mode == "buy" ?
@@ -185,8 +165,8 @@ class Navbar extends Component {
                       <Search
                         focusOnSearch={this.focusOnSearch}
                         placeHolder={this.state.mode == "buy" ?
-                        "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
-                        : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
+                          "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
+                          : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
                         mode={this.state.mode}
                       ></Search>
                     </Col>
@@ -195,41 +175,41 @@ class Navbar extends Component {
                 }
               </header>
               {
-                this.state.mode == "buy" ? 
-                <header id="navbar-unfixed">
-                <Row>
-                  <Col xs={{ span: 20, offset: 2 }}>
-                    <Carousel className="navbar-carousel" autoplay>
-                      <div className="navbar-carousel-div">
-                        <h3 className="navbar-carousel-title">판매 등록 시, </h3>
-                        <h3 className="navbar-carousel-title">
-                          50% 선 지급 이벤트
+                this.state.mode == "buy" ?
+                  <header id="navbar-unfixed">
+                    <Row>
+                      <Col xs={{ span: 20, offset: 2 }}>
+                        <Carousel className="navbar-carousel" autoplay>
+                          <div className="navbar-carousel-div">
+                            <h3 className="navbar-carousel-title">판매 등록 시, </h3>
+                            <h3 className="navbar-carousel-title">
+                              50% 선 지급 이벤트
                       </h3>
-                        <h3 className="navbar-carousel-title">진행 중!</h3>
-                      </div>
-                      <div className="navbar-carousel-div">
-                        <h3 className="navbar-carousel-title">오프라인 </h3>
-                        <h3 className="navbar-carousel-title">북을 박스</h3>
-                        <h3 className="navbar-carousel-title">COMING SOON</h3>
-                      </div>
-                      <div className="navbar-carousel-div">
-                        <h3 className="navbar-carousel-title">판매 등록 시, </h3>
-                        <h3 className="navbar-carousel-title">
-                          50% 선 지급 이벤트
+                            <h3 className="navbar-carousel-title">진행 중!</h3>
+                          </div>
+                          <div className="navbar-carousel-div">
+                            <h3 className="navbar-carousel-title">오프라인 </h3>
+                            <h3 className="navbar-carousel-title">북을 박스</h3>
+                            <h3 className="navbar-carousel-title">COMING SOON</h3>
+                          </div>
+                          <div className="navbar-carousel-div">
+                            <h3 className="navbar-carousel-title">판매 등록 시, </h3>
+                            <h3 className="navbar-carousel-title">
+                              50% 선 지급 이벤트
                       </h3>
-                        <h3 className="navbar-carousel-title">진행 중!</h3>
-                      </div>
-                      <div className="navbar-carousel-div">
-                        <h3 className="navbar-carousel-title">오프라인 </h3>
-                        <h3 className="navbar-carousel-title">북을 박스</h3>
-                        <h3 className="navbar-carousel-title">COMING SOON</h3>
-                      </div>
-                    </Carousel>
-                  </Col>
-                </Row>
-              </header> : null
+                            <h3 className="navbar-carousel-title">진행 중!</h3>
+                          </div>
+                          <div className="navbar-carousel-div">
+                            <h3 className="navbar-carousel-title">오프라인 </h3>
+                            <h3 className="navbar-carousel-title">북을 박스</h3>
+                            <h3 className="navbar-carousel-title">COMING SOON</h3>
+                          </div>
+                        </Carousel>
+                      </Col>
+                    </Row>
+                  </header> : null
               }
-              
+
             </div>
           )}
       </div>
