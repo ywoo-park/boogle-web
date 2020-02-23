@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Row, Col, Icon, Card, Modal, Divider } from "antd";
+import { Row, Col, Icon, Card, Modal, Divider, Popconfirm } from "antd";
 import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
@@ -64,12 +64,13 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        //setName(response.data.data.userName)
-        //setLikeList(response.data.data.bookmarkedItemList)
-        //setBuyList(response.data.data.buyTransList)
-        //setSellList(response.data.data.sellTransList)
+        setName(response.data.data.userName)
+        setLikeList(response.data.data.bookmarkedItemList)
+        setBuyList(response.data.data.buyTransList)
+        setSellList(response.data.data.sellTransList)
       });
 
+      /*
     setName("김유진");
     setLikeList([
       {
@@ -106,8 +107,8 @@ export default function MyPageBanner() {
         "transactionType": 1,
         "transPrice": "3000",
         "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-        "boxId": "",
-        "boxPassword": "",
+        "boxId": "1234",
+        "boxPassword": "1234",
         "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
         "transactionProcessedTimeList": [
           "2020-02-14T13:30:04.231+0000"
@@ -122,8 +123,8 @@ export default function MyPageBanner() {
         "transactionType": 1,
         "transPrice": "3000",
         "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
-        "boxId": "",
-        "boxPassword": "",
+        "boxId": "1234",
+        "boxPassword": "1234",
         "transactionCreatedTime": "2020-02-14T13:30:04.231+0000",
         "transactionProcessedTimeList": [
           "2020-02-14T13:30:04.231+0000"
@@ -183,6 +184,7 @@ export default function MyPageBanner() {
 
     ]
     );
+    */
   }
 
 
@@ -241,6 +243,10 @@ export default function MyPageBanner() {
 
   const payConfirmOnClickHandler = (sellItemId) => {
     completePayment(sellItemId)
+  }
+
+  const boogleBoxInfoReceiveConfirmOnClickHandler = (sellItemId) => {
+    changeTransactionStep(sellItemId);
   }
 
   const viewLikeProduct = e => {
@@ -1003,14 +1009,32 @@ export default function MyPageBanner() {
                                     {modal === true && openBoxNum === true ?
                                       <Modal
                                         visible={modal}
-                                        onOk={() => { closeModal(); showModal(); showOpenBoxPassword(); }}
+                                        footer={null}
                                         onCancel={() => { closeModal(); }}>
                                         {value.boxId !== "" ?
                                           <div style={{ textAlign: "center" }}>
-                                            <p style={{ color: "#000000", fontSize: "2vh", fontStyle: "bold" }}>
-                                              북을박스 번호</p>
-                                            <p style={{ color: "#000000", fontSize: "5vh" }}>
-                                              {value.boxId}</p>
+                                            <Row>
+                                              <p style={{ color: "#000000", fontSize: "5vh", position: "relative", top : 135 }}>
+                                                {value.boxId}
+                                              </p>
+                                              <img style={{width : "50%"}} src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/boogle_box.png"></img>
+                                            </Row>
+                                            <Row style={{margin : "20px 0 20px 0"}}>
+                                                  <Col><span>위에 표시된 번호의<br/>북을 박스를 찾아주세요</span></Col>
+                                              </Row>  
+                                            <Row style={{marginTop : "30px"}}>
+                                              <Col>
+                                                <button style={{
+                                                  borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                  color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                  padding: "auto"
+                                                }}
+                                                  onClick={() => {
+                                                    closeModal(); showModal(); showOpenBoxPassword(); 
+                                                  }}
+                                                ><span>비밀번호 보기</span></button>
+                                              </Col>
+                                            </Row>
                                           </div>
                                           :
                                           <div>
@@ -1026,15 +1050,38 @@ export default function MyPageBanner() {
                                         {modal === true && openBoxPassword === true ?
                                           <Modal
                                             visible={modal}
-                                            onOk={() => { }}
+                                            footer={null}
                                             onCancel={() => { closeModal(); }}>
                                             {value.boxPassword !== "" ?
-                                              <div>
-                                                <p style={{ color: "#000000", fontSize: "2vh", fontStyle: "bold" }}>
-                                                  북을박스 비밀번호</p>
-                                                <p style={{ color: "#000000", fontSize: "5vh" }}>
-                                                  {value.boxPassword}</p>
-                                              </div>
+                                            <div style={{ textAlign: "center" }}>
+                                            <Row>
+                                              <p style={{ color: "#000000", fontSize: "5vh", position: "relative", top : 135 }}>
+                                                {value.boxPassword}
+                                              </p>
+                                              <img style={{width : "50%"}} src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/boogle_box.png"></img>
+                                            </Row>
+                                            <Row style={{margin : "20px 0 20px 0"}}>
+                                                  <Col><span>위에 표시된 비밀번호를<br/>눌러주세요</span></Col>
+                                              </Row>  
+                                            <Row style={{marginTop : "30px"}}>
+                                              <Col>
+                                              <Popconfirm
+                                                    placement="bottom"
+                                                    title="책을 북을 박스로 부터 수령하셨나요?"
+                                                    onConfirm={()=>{boogleBoxInfoReceiveConfirmOnClickHandler(value.sellItemId)}}
+                                                    okText="예"
+                                                    cancelText="아니오"
+                                              >
+                                                <button style={{
+                                                  borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                  color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                  padding: "auto"
+                                                }}
+                                                ><span>수령 완료</span></button>
+                                                </Popconfirm>
+                                              </Col>
+                                            </Row>
+                                          </div>
                                               :
                                               <div>
                                                 {openBoxPassword === true && value.boxPassword === "" ?
