@@ -87,7 +87,7 @@ class Banner extends Component {
 
         {
           this.state.mode == "sell" ?
-            <Row>
+            <Row style={{padding : "30px 0 30px 0"}}>
               <Col xs={{ span: 24 }}>
                 <div onClick={() => { this.props.history.push('/sell'); }} style={{
                   width: "35vh", height: "35vh",

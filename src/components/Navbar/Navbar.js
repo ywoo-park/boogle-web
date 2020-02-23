@@ -57,7 +57,7 @@ class Navbar extends Component {
   render() {
 
     return (
-      <div id="navbar">
+      <div id ={this.state.mode == "buy" ? "navbar" : "navbar-sell"}>
         {this.state.isFocused == true ? (
           <header>
             <Row id="navbar-search-row-after-focused">
@@ -194,7 +194,9 @@ class Navbar extends Component {
                   : null
                 }
               </header>
-              <header id="navbar-unfixed">
+              {
+                this.state.mode == "buy" ? 
+                <header id="navbar-unfixed">
                 <Row>
                   <Col xs={{ span: 20, offset: 2 }}>
                     <Carousel className="navbar-carousel" autoplay>
@@ -225,7 +227,9 @@ class Navbar extends Component {
                     </Carousel>
                   </Col>
                 </Row>
-              </header>
+              </header> : null
+              }
+              
             </div>
           )}
       </div>
