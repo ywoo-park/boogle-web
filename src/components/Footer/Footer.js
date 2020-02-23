@@ -44,11 +44,11 @@ export default function Footer() {
               </Row>
               <Row style={{marginBottom : "10px"}}>
                   <Col xs={{span : 3, offset : 1}}><small>제휴문의</small></Col>
-                  <Col xs={{span : 6, offset : 0}}><small>boogleforus@gmail.com</small></Col>
+                  <Col xs={{span : 15, offset : 0}}><small>boogleforus@gmail.com</small></Col>
               </Row>
               <Row style={{marginBottom : "10px"}}>
                     <Col xs={{span : 3, offset : 1}}><small>CONTACT</small></Col>
-                    <Col xs={{span : 7, offset : 1}}>
+                    <Col xs={{span : 15, offset : 1}}>
                       <small>
                           <a style={{color : "orange", textDecoration : "underline"}} href="http://pf.kakao.com/_xnlmlxb/chat">카카오톡 플러스친구 '북을'</a>
                         </small>
