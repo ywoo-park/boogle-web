@@ -38,7 +38,7 @@ export default function CustomerCenter() {
             
             <Row style={{
                 color : "#656565", marginTop : "30px", marginBottom : "30px", fontSize : "17.5px"}}
-                onClick={() => {window.location.href='http://www.notion.so/boogle/FAQ-ea1868c0de31445e86249adec57fa7db';}}>>
+                onClick={() => {window.location.href='http://www.notion.so/boogle/FAQ-ea1868c0de31445e86249adec57fa7db';}}>
                 <Col xs={{ offset: 1, span: 1 }}>
                     <Icon type="question" />
                 </Col>
