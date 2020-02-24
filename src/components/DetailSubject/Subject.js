@@ -79,7 +79,7 @@ function Subject({ match }) {
           <Col xs={{ offset: 1, span: 22 }}>
             <Tag color="#656565">책 상태(기타)</Tag>
             {qualValueIn.map((val, i) => {
-              return qualLi[i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
+              return qualLi[4+i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
             })}
           </Col>
         </Row>
