@@ -40,6 +40,8 @@ export default function Register() {
     const [isQualityOutFilled, setIsQualityOutFilled] = useState(true);
     const [isRegiImagesFilled, setIsRegiImagesFilled] = useState(true);
 
+    const [userBankAccountList, setUserBankAccountList] = useState([]);
+
     const { register, handleSubmit } = useForm();
 
     const focusOnSearch = (isFocused) => {
@@ -75,6 +77,11 @@ export default function Register() {
             setIsQualityOutFilled(false);
         }
     }
+
+    React.useEffect(() => {
+        getUserBankAccount();
+    }, [])
+
 
     React.useEffect(() => {
         setImageDiv(imageUrls.map((i, index) => (
@@ -184,6 +191,18 @@ export default function Register() {
             .catch((error) => {
             })
     }
+
+    
+    const getUserBankAccount = (itemId) => {
+        axios.get('http://13.124.113.72:8080/userBankAccount/sell', {
+            headers: { Authorization: localStorage.getItem('token') }
+          })
+        .then((response) => {
+            console.log(response.data.data);
+            setUserBankAccountList(response.data.data);
+        });
+    }
+
 
     return (
         <section id="register-container">
@@ -458,6 +477,44 @@ export default function Register() {
                                                     height: "36px"
                                                 }}
                                                 onClick={() => { setDealType(1) }}>북을박스</button>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "10px" }}>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>계좌번호<span style={{color : "#e95513"}}>*</span></span>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }}>
+                                            {
+                                                userBankAccountList.length == 0?
+                                                <Link to="/accountSetting">
+                                                    <button style={{
+                                                        padding: "0",
+                                                        width: "100%",
+                                                        background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                                        border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                                    }}
+                                                        onClick={() => {}}>
+                                                            <span>계좌 등록하기</span></button>
+                                                </Link>
+                                                
+                                                :
+                                                <select onChange={(e) => {
+                                                }} name="semester"
+                                                    style={{
+                                                        width: "100%", height: "40px", border: "none",
+                                                        borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
+                                                        backgroundColor: "transparent"
+                                                    }}>
+                                                    {
+                                                        userBankAccountList.length > 0 && userBankAccountList.map((value, index) => {
+                                                            return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>
+                                                                {value.userBankAccount.accountNumber + " (" + value.bankName + ")"}</option>
+                                                        })}
+                                                </select>
+                                            }
+
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
