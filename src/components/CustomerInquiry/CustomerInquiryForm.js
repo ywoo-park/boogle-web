@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { Row, Col, Menu, Dropdown, Button, Icon, Input } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function CustomerInquiryForm() {
@@ -118,14 +119,46 @@ export default function CustomerInquiryForm() {
   };
 
   return (
-    <section id="customer-inquiry-form-container">
+    <section id="customer-inquiry-form-container"
+    style={{ width: "100%",
+      height: "auto",
+      marginLeft: "auto auto",
+      padding: "0",
+      textAlign: "left"}}>
+        <Row
+          style={{
+            height : "70px",
+            padding : "20px 0px 10px 0px",
+            background:
+              "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
+          }}
+        >
+          <Col xs={{ span: 3 }}>
+            <Link to="/customercenter">
+              <img
+                style={{
+                  width: "32px",
+                  height: "auto",
+                  marginLeft: "40%",
+                  filter: "brightness(0) invert(1)"
+                }}
+                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png"
+                onClick={<div></div>}
+              />
+            </Link>
+          </Col>
+          <Col xs={{ span: 8, offset: 5 }} align="center">
+            <h5 style={{ color: "white" }}>1:1 문의하기</h5>
+          </Col>
+        </Row>
+      <div style={{margin: "5vw", fontSize: "14px"}}>
       <form name="firstForm" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Row style={{ marginBottom: "1vh" }}>
+          <Row style={{ marginBottom: "24px" }}>
             <Col offset={0} span={4}>
               <small>이메일</small>
             </Col>
-            <Col offset={0} span={16}>
+            <Col offset={1} span={19}>
               {authToken === "" || authToken === null ? (
                 <input
                   style={{
@@ -149,14 +182,15 @@ export default function CustomerInquiryForm() {
               )}
             </Col>
           </Row>
-          <Row style={{ marginBottom: "1vh" }}>
+          <Row style={{ marginBottom: "24px" }}>
             <Col offset={0} span={4}>
               <small>거래방식</small>
             </Col>
-            <Col offset={0} span={16}>
+            <Col offset={1} span={19}>
               <Dropdown overlay={menu} trigger={["click"]}>
                 <Button
                   style={{
+                    width: "100%",
                     border: "#44a0ac 1px solid"
                   }}
                 >
@@ -166,11 +200,11 @@ export default function CustomerInquiryForm() {
               </Dropdown>
             </Col>
           </Row>
-          <Row style={{ marginBottom: "1vh" }}>
+          <Row style={{ marginBottom: "24px" }}>
             <Col offset={0} span={4}>
               <small>문의내용</small>
             </Col>
-            <Col offset={0} span={16}>
+            <Col offset={1} span={19}>
               <textarea
                 name="msg"
                 rows={4}
@@ -183,11 +217,11 @@ export default function CustomerInquiryForm() {
               ></textarea>
             </Col>
           </Row>
-          <Row style={{ marginBottom: "1vh" }}>
+          <Row style={{ marginBottom: "24px" }}>
             <Col offset={0} span={4}>
               <small>사진첨부</small>
             </Col>
-            <Col xs={{ span: 4, offset: 0 }}>
+            <Col xs={{ span: 15, offset: 1 }}>
               <input
                 id="selectedFile"
                 type="file"
@@ -212,10 +246,10 @@ export default function CustomerInquiryForm() {
                 }}
                 style={{
                   border: "#44a0ac 1px solid",
-                  height: "10vh",
-                  width: "10vh",
+                  height: "70px",
+                  width: "70px",
                   position: "relative",
-                  borderRadius: "1.5vh"
+                  borderRadius: "5px"
                 }}
               >
                 <Icon
@@ -236,20 +270,19 @@ export default function CustomerInquiryForm() {
             {userImagesDiv}
           </Row>
           <Row>
-            <Col offset={1} span={22}>
-              <button
-                block
-                style={{
-                  border: "#44a0ac 1px solid"
-                }}
-                type="submit"
-              >
-                제출
-              </button>
+            <Col offset={0} span={24}>
+              <button style={{
+                padding: "0",
+                width: "100%",
+                background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+              }} type="submit"
+              >제출</button>
             </Col>
           </Row>
         </div>
       </form>
+      </div>
     </section>
   );
 }

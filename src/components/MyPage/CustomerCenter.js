@@ -8,53 +8,60 @@ import './CustomerCenter.css';
 export default function CustomerCenter() {
 
     return(
-        <div style={{
-            background: "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
-            height: "100vh", backgroundSize: "cover"
-            ,paddingTop : "1vh"
-          }} className="customercenter"> 
-          <Row>
-              <Col offset={1}>
-              <Link to="/mypage">
-                <img style={{
+        <div>
+        <Row
+          style={{
+            height : "70px",
+            padding : "20px 0px 10px 0px",
+            background:
+              "url(https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/background.png)",
+          }}
+        >
+          <Col xs={{ span: 3 }}>
+            <Link to="/mypage">
+              <img
+                style={{
                   width: "32px",
                   height: "auto",
-                  marginLeft: "0",
+                  marginLeft: "40%",
                   filter: "brightness(0) invert(1)"
                 }}
-                  src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
-              </Link>
-              </Col>
-          </Row>
-          <Card style={{marginTop:"3%", width:"100%", height:"100%", backgroundColor: "#ffffff"}}>
-            <Row style={{marginTop:"1.5vh", marginBottom:"1.5vh"}}
-            onClick={() => {window.location.href='http://www.notion.so/boogle/FAQ-ea1868c0de31445e86249adec57fa7db';}}>
-                <Col span={4}>
-                    <Icon type="question" style={{
-                        color:"#000000", marginRight: "1vh", fontSize: "3vh",
-                        marginLeft: "2vh"
-                    }}></Icon>
+                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png"
+                onClick={<div></div>}
+              />
+            </Link>
+          </Col>
+          <Col xs={{ span: 8, offset: 5 }} align="center">
+            <h5 style={{ color: "white" }}>고객센터</h5>
+          </Col>
+        </Row>
+            
+            <Row style={{
+                color : "#656565", marginTop : "30px", marginBottom : "30px", fontSize : "17.5px"}}
+                onClick={() => {window.location.href='http://www.notion.so/boogle/FAQ-ea1868c0de31445e86249adec57fa7db';}}>>
+                <Col xs={{ offset: 1, span: 1 }}>
+                    <Icon type="question" />
                 </Col>
-                <Col span={10} style={{color:"#000000", textAlign: "center", 
-                    fontSize: "2.5vh"}}>
-                    FAQ 게시판
+                <Col xs={{ offset: 2, span: 15 }}>
+                    <span>FAQ 게시판</span>
+                </Col>
+                <Col xs={{ offset: 2, span: 2 }}>
+                    <Icon type="right" />
                 </Col>
             </Row>
-            <Row style={{marginTop:"1.5vh", marginBottom:"1.5vh"}}>
-                <Link to='/customerinquiry'>
-                <Col span={4}>
-                    <Icon type="phone" style={{
-                        color:"#000000", marginRight: "1vh", fontSize: "3vh",
-                        marginLeft: "2vh"
-                    }}></Icon>
+            <Row style={{color : "#656565", marginBottom : "30px", fontSize : "17.5px"}}>
+                <Link style={{color : "#656565"}} to="/customerinquiry">
+                <Col xs={{ offset: 1, span: 1 }}>
+                    <Icon type="phone" />
                 </Col>
-                <Col span={10} style={{color:"#000000", textAlign: "center", 
-                    fontSize: "2.5vh"}}>
-                    1:1 상담하기
+                <Col xs={{ offset: 2, span: 15 }}>
+                    <span>1:1 상담하기</span>
+                </Col>
+                <Col xs={{ offset: 2, span: 2 }}>
+                    <Icon type="right" />
                 </Col>
                 </Link>
             </Row>
-          </Card>
         </div>
     )
 }
