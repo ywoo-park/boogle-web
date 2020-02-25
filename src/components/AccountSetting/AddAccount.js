@@ -10,7 +10,7 @@ export default function AddAccount() {
       {manageSet.bankList.map(bank => {
         return (
           <Col
-          xs={{ span: 6, offset: 1 }}
+          xs={{ span: 8, offset: 0 }}
             onClick={() => {
               dispatch({ type: "DETAIL_ACCOUNT", newAccount: bank });
             }}
