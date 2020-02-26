@@ -47,6 +47,8 @@ export default function Register() {
     const [selectedBankName, setSelectedBankName] = useState("");
     const [bankAddStep, setBankAddStep] = useState(0);
 
+    const [clickedAddUserAccount, setClickedAddUserAccount] = useState(false);
+
     const [modal, setModal] = useState(false);
 
     const { register, handleSubmit } = useForm();
@@ -531,172 +533,119 @@ export default function Register() {
                                             {
                                                 userBankAccountList.length == 0?
                                                 <div>
-                                                    <button style={{
-                                                        padding: "0",
-                                                        width: "100%",
-                                                        background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                                        border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
-                                                    }}
-                                                        onClick={() => {showModal()}}>
+                                                    {clickedAddUserAccount? 
+                                                        <div>
+                                                            <select onChange={(e) => {
+                                                                setSelectedBankId(e.target.value)
+                                                            }} name="bankList"
+                                                                style={{
+                                                                    width: "100%", height: "40px", border: "none",
+                                                                    borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
+                                                                    backgroundColor: "transparent"
+                                                                }}>
+                                                                {
+                                                                    bankList.length > 0 && bankList.map((value, index) => {
+                                                                        return <option value={value._id} style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>
+                                                                            {value.name}</option>
+                                                                    })}
+                                                            </select>
+                                                <form onSubmit={handleSubmit(onUserBankAccountSubmit)}>
+                                                    <Row>
+                                                        <Col xs={{ span: 24 }}>
+                                                            <label
+                                                            style={{
+                                                                width : "100%",
+                                                                color: "rgba(51, 158, 172, 0.9)",
+                                                                fontWeight: "800"
+                                                            }}
+                                                            >
+                                                            계좌번호
+                                                            </label>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row style={{marginTop : "-10px", marginBottom : "20px"}}>
+                                                        <Col xs={{ span: 24 }}>
+                                                            <input
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "40px",
+                                                                border: "none",
+                                                                borderBottom: "#44a0ac solid 1.0px",
+                                                                backgroundColor: "transparent",
+                                                            }}
+                                                            name="accountNumber"
+                                                            ref={register({ required: true })}
+                                                            ></input>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row id="ownerName">
+                                                    <Col>
+                                                        <Row>
+                                                        <Col xs={{ span: 24 }}>  
+                                                            <label
+                                                            style={{
+                                                                color: "rgba(51, 158, 172, 0.9)",
+                                                                fontWeight: "800"
+                                                            }}
+                                                            >
+                                                            예금주
+                                                            </label>
+                                                        </Col>
+                                                        </Row>
+                                                        <Row>
+                                                        <Col style={{marginTop : "-10px", marginBottom : "20px"
+                                                        }} xs={{ span: 24 }}>
+                                                            <input
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "40px",
+                                                                border: "none",
+                                                                borderBottom: "#44a0ac solid 1.0px",
+                                                                backgroundColor: "transparent",
+                                                            }}
+                                                            xs={{ span: 20, offset: 2 }}
+                                                            name="depositorName"
+                                                            ref={register({ required: true })}
+                                                            ></input>
+                                                        </Col>
+                                                        </Row>
+                                                    </Col>
+                                                    </Row>
+                                                    <Row style={{ marginTop: "30px", marginBottom: "40px" }}>
+                                                    <Col xs={{ span : 24 }}>
+                                                        <input
+                                                        style={{
+                                                            padding: "0",
+                                                            width: "100%",
+                                                            background: "rgba(51, 158, 172, 0.9)",
+                                                            color: "#ffffff",
+                                                            border: "none",
+                                                            fontSize: "15px", height: "35px", width: "100%",
+                                                            padding: "0", borderRadius : "16px"
+                                                        }}
+                                                        type="submit"
+                                                        onClick={() => {
+                                                            // window.location.reload();
+                                                        }}
+                                                        value="계좌 등록하기"
+                                                        />
+                                                    </Col>
+                                                    </Row>
+                                                </form>                                                                      
+                                                    </div>
+                                                    :
+                                                    <div>
+                                                        <button style={{
+                                                            padding: "0",
+                                                            width: "100%",
+                                                            background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                                            border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                                        }}
+                                                        onClick={() => {setClickedAddUserAccount(true)}}>
                                                             <span>계좌 등록하기</span>
-                                                        </button>          
-                                                                <Modal
-                                                                    footer={null}
-                                                                    visible={modal}
-                                                                    onCancel={() => { closeModal(); }}>
-                                                                    {
-                                                                        bankAddStep == 0 ? 
-                                                                        <div style={{ textAlign: "center" }}>
-                                                                         <Row style={{marginTop : "30px"}}>
-                                                                            {bankList.length > 0 && bankList.map(bank => {
-                                                                                return (
-                                                                                <Col
-                                                                                xs={{ span: 8, offset: 0 }}
-                                                                                    onClick={() => {
-                                                                                        setSelectedBankId(bank._id);
-                                                                                        setSelectedBankName(bank.name);
-                                                                                        setBankAddStep(1);
-                                                                                    }}>
-                                                                             
-                                                                                    <div           
-                                                                                    style={{
-                                                                                    height : "80px",
-                                                                                    border : "#a7a7a7 1px solid",
-                                                                                    textAlign : "center",
-                                                                                    marginBottom : "10px",
-                                                                                    borderRadius : "10px",
-                                                                                    fontSize : "15px",
-                                                                                    padding : "30px 0 30px 0"
-                                                                                }}>
-                                                                                    <Row>
-                                                                                    <Col>{bank.name}</Col>
-                                                                                    </Row>
-                                                                                    </div>
-                                                                                </Col>
-                                                                                );
-                                                                            })}
-                                                                            </Row>
-                                                                    </div>
-                                                                        :
-                                                                    <div>
-                                                                        <Row style={{ marginTop: "30px", marginBottom: "40px" }}>
-                                                                            <form onSubmit={handleSubmit(onUserBankAccountSubmit)}>
-                                                                                <Row id="bankName">
-                                                                                <Row >
-                                                                                    <Col xs={{ span: 21, offset: 1 }}>
-                                                                                    <label
-                                                                                        style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}
-                                                                                    >
-                                                                                        은행
-                                                                                    </label>
-                                                                                    </Col>
-                                                                                </Row>
-                                                                                <Row style={{marginTop : "-10px", marginBottom : "20px"}}>
-                                                                                    <Col xs={{ span: 21, offset: 1 }}>
-                                                                                    <span
-                                                                                        style={{
-                                                                                        width: "100%",
-                                                                                        height: "40px",
-                                                                                        border: "none",
-                                                                                        backgroundColor: "transparent"
-                                                                                        }}
-                                                                                    >
-                                                                                        {selectedBankName}
-                                                                                    </span>
-                                                                                    </Col>
-                                                                                </Row>
-                                                                                </Row>
-                                                                                <Row id="newAccountNum">
-                                                                                <Col>
-                                                                                    <Row>
-                                                                                    <Col xs={{ span: 21, offset: 1 }}>
-                                                                                        <label
-                                                                                        style={{
-                                                                                            color: "rgba(51, 158, 172, 0.9)",
-                                                                                            fontWeight: "800"
-                                                                                        }}
-                                                                                        >
-                                                                                        계좌번호
-                                                                                        </label>
-                                                                                    </Col>
-                                                                                    </Row>
-                                                                                    <Row style={{marginTop : "-10px", marginBottom : "20px"}}>
-                                                                                    <Col xs={{ span: 21, offset: 1 }}>
-                                                                                        <input
-                                                                                        style={{
-                                                                                            width: "100%",
-                                                                                            height: "40px",
-                                                                                            border: "none",
-                                                                                            borderBottom: "#44a0ac solid 1.0px",
-                                                                                            backgroundColor: "transparent",
-                                                                                        }}
-                                                                                        xs={{ span: 20, offset: 2 }}
-                                                                                        name="accountNumber"
-                                                                                        ref={register({ required: true })}
-                                                                                        ></input>
-                                                                                    </Col>
-                                                                                    </Row>
-                                                                                </Col>
-                                                                                </Row>
-                                                                                <Row id="ownerName">
-                                                                                <Col>
-                                                                                    <Row>
-                                                                                    <Col xs={{ span: 21, offset: 1 }}>  
-                                                                                        <label
-                                                                                        style={{
-                                                                                            color: "rgba(51, 158, 172, 0.9)",
-                                                                                            fontWeight: "800"
-                                                                                        }}
-                                                                                        >
-                                                                                        예금주
-                                                                                        </label>
-                                                                                    </Col>
-                                                                                    </Row>
-                                                                                    <Row>
-                                                                                    <Col style={{marginTop : "-10px", marginBottom : "20px"}} xs={{ span: 21, offset: 1 }}>
-                                                                                        <input
-                                                                                        style={{
-                                                                                            width: "100%",
-                                                                                            height: "40px",
-                                                                                            border: "none",
-                                                                                            borderBottom: "#44a0ac solid 1.0px",
-                                                                                            backgroundColor: "transparent",
-                                                                                        }}
-                                                                                        xs={{ span: 20, offset: 2 }}
-                                                                                        name="depositorName"
-                                                                                        ref={register({ required: true })}
-                                                                                        ></input>
-                                                                                    </Col>
-                                                                                    </Row>
-                                                                                </Col>
-                                                                                </Row>
-                                                                                <Row style={{ marginTop: "30px", marginBottom: "40px" }}>
-                                                                                <Col xs={{ offset: 1, span: 22 }}>
-                                                                                    <input
-                                                                                    style={{
-                                                                                        padding: "0",
-                                                                                        width: "100%",
-                                                                                        background: "rgba(51, 158, 172, 0.9)",
-                                                                                        color: "#ffffff",
-                                                                                        border: "none",
-                                                                                        fontSize: "15px", height: "35px", width: "100%",
-                                                                                        padding: "0", borderRadius : "16px"
-                                                                                    }}
-                                                                                    type="submit"
-                                                                                    onClick={() => {
-                                                                                        // window.location.reload();
-                                                                                    }}
-                                                                                    value="입력완료"
-                                                                                    />
-                                                                                </Col>
-                                                                                </Row>
-                                                                            </form>
-                                                                            </Row>
-                                                                    </div>
-                                                                    }
-                                                                    
-                                                                </Modal>
-                                                            </div>
+                                                        </button>    
+                                                    </div>}
+                                                </div>
                                                 :
                                                 <select onChange={(e) => {
                                                 }} name="semester"
