@@ -50,7 +50,7 @@ export default function Footer() {
                     <Col xs={{span : 3, offset : 1}}><small>CONTACT</small></Col>
                     <Col xs={{span : 15, offset : 1}}>
                       <small>
-                          <a style={{color : "orange", textDecoration : "underline"}} href="http://pf.kakao.com/_xnlmlxb/chat">카카오톡 플러스친구 '북을'</a>
+                          <a style={{color : "orange", textDecoration : "underline"}} href="http://pf.kakao.com/_xnlmlxb">카카오톡 플러스친구 '북을'</a>
                         </small>
                     </Col>
               </Row>
