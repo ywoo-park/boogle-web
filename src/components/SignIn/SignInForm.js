@@ -9,6 +9,7 @@ export default function SignInForm(props) {
   const { register, handleSubmit, errors } = useForm();
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isLoginFailed, setIsLoginFailed] = useState(false);
+  const [isAuthComplete, setIsAuthComplete] = useState(true);
 
   React.useEffect(() => {
     if (
@@ -30,8 +31,14 @@ export default function SignInForm(props) {
   const loginSend = async data => {
     Axios.post(login_check_url, data).then(res => {
       if (res.data.status == 200) {
-        localStorage.setItem("token", res.data.data);
-        window.location.reload();
+        if(res.data.data.authComplete){
+          localStorage.setItem("token", res.data.data.token);
+          setIsLoginFailed(false);
+          window.location.reload();
+        }
+        else{
+          setIsAuthComplete(false);
+        }
       } else {
         setIsLoginFailed(true);
       }
@@ -129,7 +136,7 @@ export default function SignInForm(props) {
         </Row>
         <Row>
           <Col xs={{ span: 18, offset: 3 }}>
-            {isLoginFailed && (
+            {isLoginFailed || !isAuthComplete && (
               <p
                 style={{
                   marginBottom: "0px",
@@ -137,7 +144,8 @@ export default function SignInForm(props) {
                   color: "#ffffff"
                 }}
               >
-                가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
+                {isLoginFailed ? "가입하지 않은 아이디이거나, 잘못된 비밀번호입니다."
+                : "학생증 인증 중입니다. 가입 후 24시간 이내에 완료됩니다."}
               </p>
             )}
           </Col>

@@ -45,6 +45,7 @@ export default function Register() {
 
     const [selectedBankId, setSelectedBankId] = useState("")
     const [selectedBankName, setSelectedBankName] = useState("");
+    const [selectedUserBankAccount, setSelectedUserBankAccount] = useState(null);
     const [bankAddStep, setBankAddStep] = useState(0);
 
     const [clickedAddUserAccount, setClickedAddUserAccount] = useState(false);
@@ -523,13 +524,13 @@ export default function Register() {
                                                 onClick={() => { setDealType(1) }}>북을박스</button>
                                         </Col>
                                     </Row>
-                                    <Row style={{ marginBottom: "10px" }}>
+                                    <Row>
                                         <Col xs={{ span: 5, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>계좌번호<span style={{color : "#e95513"}}>*</span></span>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>계좌선택<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }}>
+                                    <Row style={{ marginBottom: "10px" }}>
+                                        <Col xs={{ span: 20, offset: 2 }}>
                                             {
                                                 userBankAccountList.length == 0?
                                                 <div>
@@ -550,7 +551,7 @@ export default function Register() {
                                                                     })}
                                                             </select>
                                                 <form onSubmit={handleSubmit(onUserBankAccountSubmit)}>
-                                                    <Row>
+                                                    <Row style={{marginTop : "10px"}}>
                                                         <Col xs={{ span: 24 }}>
                                                             <label
                                                             style={{
@@ -563,7 +564,7 @@ export default function Register() {
                                                             </label>
                                                         </Col>
                                                     </Row>
-                                                    <Row style={{marginTop : "-10px", marginBottom : "20px"}}>
+                                                    <Row style={{ marginTop : "-10px", marginBottom: "10px" }}>
                                                         <Col xs={{ span: 24 }}>
                                                             <input
                                                             style={{
@@ -593,8 +594,7 @@ export default function Register() {
                                                         </Col>
                                                         </Row>
                                                         <Row>
-                                                        <Col style={{marginTop : "-10px", marginBottom : "20px"
-                                                        }} xs={{ span: 24 }}>
+                                                        <Col style={{ marginTop : "-10px", marginBottom: "10px" }} xs={{ span: 24 }}>
                                                             <input
                                                             style={{
                                                                 width: "100%",
@@ -611,7 +611,7 @@ export default function Register() {
                                                         </Row>
                                                     </Col>
                                                     </Row>
-                                                    <Row style={{ marginTop: "30px", marginBottom: "40px" }}>
+                                                    <Row style={{ marginTop: "10px", marginBottom: "10px" }}>
                                                     <Col xs={{ span : 24 }}>
                                                         <input
                                                         style={{
@@ -648,7 +648,10 @@ export default function Register() {
                                                 </div>
                                                 :
                                                 <select onChange={(e) => {
-                                                }} name="semester"
+                                                    setSelectedUserBankAccount(e.target.value);
+                                                }} 
+                                                value = {selectedUserBankAccount}
+                                                name="semester"
                                                     style={{
                                                         width: "100%", height: "40px", border: "none",
                                                         borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
@@ -656,7 +659,7 @@ export default function Register() {
                                                     }}>
                                                     {
                                                         userBankAccountList.length > 0 && userBankAccountList.map((value, index) => {
-                                                            return <option style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>
+                                                            return <option value={value} style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>
                                                                 {value.userBankAccount.accountNumber + " (" + value.bankName + ")"}</option>
                                                         })}
                                                 </select>

@@ -87,7 +87,6 @@ export default function SignUpForm() {
     }, [])
 
     React.useEffect(() => {
-        console.log(step);
         if (step == 0) setFormStyle(["show", "hide", "hide"]);
         else if (step == 1) setFormStyle(["hide", "show", "hide"]);
         else if (step == 2) setFormStyle(["hide", "hide", "show"]);
@@ -97,6 +96,14 @@ export default function SignUpForm() {
         if (step == 1)
             saveUser();
     }, [signUpReq])
+
+    React.useEffect(() => {
+        console.log(majorList);
+    }, [majorList])
+
+        React.useEffect(() => {
+        console.log(majorCount);
+    }, [majorCount])
 
     React.useEffect(() => {
         if (searchedDepartmentMajorList.length != 0) {
@@ -131,8 +138,6 @@ export default function SignUpForm() {
                         onClick={() => {
                             let currImageUrls = imageUrls;
                             currImageUrls.splice(index, 1);
-                            console.log(index);
-                            console.log(currImageUrls);
                             setImageUrls(currImageUrls);
                         }}>
                     </Icon>
@@ -149,19 +154,16 @@ export default function SignUpForm() {
 
     }, [imageUrls]);
 
-    React.useEffect(() => {
-        if (userImages.length > 0)
-            console.log(userImages);
-    }, [userImages])
-
     const saveUser = () => {
 
         axios.post('http://13.124.113.72:8080/users/signup', signUpReq, {
         })
             .then((response) => {
-                console.log(response);
-                localStorage.setItem('token', response.data.data);
 
+                if(response.data.data != ""){
+                    localStorage.setItem('token', response.data.data);
+                }
+                
                 if (authType == 1) {
                     let form = new FormData();
                     form.append('userCampusAuthImage', {
@@ -676,7 +678,7 @@ export default function SignUpForm() {
                                                     setMajorList(currMajorList);
 
                                                     let currMajorCount = majorCount;
-                                                    currMajorCount = currMajorCount - 1;
+                                                    if(currMajorCount > 0) currMajorCount = currMajorCount - 1;
                                                     setMajorCount(currMajorCount);
 
                                                     setMajorSearchKeyword("");
@@ -724,7 +726,7 @@ export default function SignUpForm() {
                                                             setMajorList(currMajorList);
 
                                                             let currMajorCount = majorCount;
-                                                            currMajorCount = currMajorCount - 1;
+                                                            if(currMajorCount > 0) currMajorCount = currMajorCount - 1;
                                                             setMajorCount(currMajorCount);
 
                                                             setMajorSearchKeyword("");
@@ -780,7 +782,7 @@ export default function SignUpForm() {
                                                             setMajorList(currMajorList);
 
                                                             let currMajorCount = majorCount;
-                                                            currMajorCount = currMajorCount - 1;
+                                                            if(currMajorCount > 0) currMajorCount = currMajorCount - 1;
                                                             setMajorCount(currMajorCount);
 
                                                             setMajorSearchKeyword("");
@@ -829,7 +831,6 @@ export default function SignUpForm() {
                                         {
                                             searchedMajorList.length != 0 ?
                                                 searchedMajorList.map((major) => {
-                                                    console.log(major);
                                                     return (
                                                         <Row style={{ marginTop: "20px" }}>
                                                             <Col xs={{ span: 24, offset: 0 }}>
@@ -1189,12 +1190,14 @@ export default function SignUpForm() {
                             </Row>
                             <Row>
                                 <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "30px" }}>
-                                    <h5 style={{ textAlign: "center", color: "#44a0ac", fontWeight: "800" }}>회원 가입 완료!</h5>
+                                    <h5 style={{ textAlign: "center", color: "#44a0ac", fontWeight: "800" }}>
+                                        {authType == 0 ? "회원 가입 완료!" : "회원가입 신청이 완료되었습니다! 학생증 인증 확인까지 최대 24시간이 소요됩니다."}
+                                    </h5>
                                 </Col>
                             </Row>
                             <Row style={{ marginTop: "10vh" }}>
                                 <Col xs={{ span: 20, offset: 2 }}>
-                                    <Link to="/mypage">
+                                    <Link to={authType == 0 ? "/mypage" : "/"}>
                                         <button style={{
                                             padding: "0",
                                             width: "100%",
@@ -1203,7 +1206,7 @@ export default function SignUpForm() {
                                         }}
                                             onClick={() => {
                                             }}
-                                        >마이페이지로</button>
+                                        >{authType == 0 ? "마이페이지로" : "홈으로"}</button>
                                     </Link>
                                 </Col>
                             </Row>

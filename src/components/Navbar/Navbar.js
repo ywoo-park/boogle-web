@@ -180,30 +180,38 @@ class Navbar extends Component {
                     <Row>
                       <Col xs={{ span: 20, offset: 2 }}>
                         <Carousel className="navbar-carousel" autoplay>
-                          <div className="navbar-carousel-div">
-                            <h3 className="navbar-carousel-title">판매 등록 시, </h3>
-                            <h3 className="navbar-carousel-title">
-                              50% 선 지급 이벤트
-                      </h3>
-                            <h3 className="navbar-carousel-title">진행 중!</h3>
-                          </div>
-                          <div className="navbar-carousel-div">
-                            <h3 className="navbar-carousel-title">오프라인 </h3>
-                            <h3 className="navbar-carousel-title">북을 박스</h3>
-                            <h3 className="navbar-carousel-title">COMING SOON</h3>
-                          </div>
-                          <div className="navbar-carousel-div">
-                            <h3 className="navbar-carousel-title">판매 등록 시, </h3>
-                            <h3 className="navbar-carousel-title">
-                              50% 선 지급 이벤트
-                      </h3>
-                            <h3 className="navbar-carousel-title">진행 중!</h3>
-                          </div>
-                          <div className="navbar-carousel-div">
-                            <h3 className="navbar-carousel-title">오프라인 </h3>
-                            <h3 className="navbar-carousel-title">북을 박스</h3>
-                            <h3 className="navbar-carousel-title">COMING SOON</h3>
-                          </div>
+                          <a href="https://www.notion.so/boogle/EVENT-c4fda36c9ed24dd3b78cfce32f8e8a2c">
+                            <div className="navbar-carousel-div">
+                              <h3 className="navbar-carousel-title">판매 등록 시, </h3>
+                              <h3 className="navbar-carousel-title">
+                                50% 선 지급 이벤트
+                              </h3>
+                              <h3 className="navbar-carousel-title">진행 중!</h3>
+                            </div>
+                          </a>
+                          <a href="https://www.notion.so/boogle/EVENT-c4fda36c9ed24dd3b78cfce32f8e8a2c">
+                            <div className="navbar-carousel-div">
+                              <h3 className="navbar-carousel-title">오프라인 </h3>
+                              <h3 className="navbar-carousel-title">북을 박스</h3>
+                              <h3 className="navbar-carousel-title">COMING SOON</h3>
+                            </div>
+                          </a>
+                          <a href="https://www.notion.so/boogle/EVENT-c4fda36c9ed24dd3b78cfce32f8e8a2c">
+                            <div className="navbar-carousel-div">
+                              <h3 className="navbar-carousel-title">판매 등록 시, </h3>
+                              <h3 className="navbar-carousel-title">
+                                50% 선 지급 이벤트
+                              </h3>
+                              <h3 className="navbar-carousel-title">진행 중!</h3>
+                            </div>
+                          </a>
+                          <a>
+                            <div className="navbar-carousel-div">
+                              <h3 className="navbar-carousel-title">오프라인 </h3>
+                              <h3 className="navbar-carousel-title">북을 박스</h3>
+                              <h3 className="navbar-carousel-title">COMING SOON</h3>
+                            </div>
+                          </a>
                         </Carousel>
                       </Col>
                     </Row>
