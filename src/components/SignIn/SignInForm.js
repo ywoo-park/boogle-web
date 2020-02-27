@@ -30,16 +30,16 @@ export default function SignInForm(props) {
 
   const loginSend = async data => {
     Axios.post(login_check_url, data).then(res => {
-      if (res.data.status == 200) {
+      if (res.data.status === 200) {
         if(res.data.data.authComplete){
           localStorage.setItem("token", res.data.data.token);
-          setIsLoginFailed(false);
           window.location.reload();
         }
         else{
           setIsAuthComplete(false);
         }
       } else {
+        console.log("failed")
         setIsLoginFailed(true);
       }
     });
@@ -136,7 +136,7 @@ export default function SignInForm(props) {
         </Row>
         <Row>
           <Col xs={{ span: 18, offset: 3 }}>
-            {isLoginFailed || !isAuthComplete && (
+            {(isLoginFailed || !isAuthComplete) && (
               <p
                 style={{
                   marginBottom: "0px",

@@ -132,7 +132,7 @@ export default function DashBoard() {
 
   const columnsUser = [
     {
-      title: "회원 고유 번호",
+      title: "고유 번호",
       dataIndex: "id",
       key: "id",
       render: text => <a>{text}</a>
@@ -147,6 +147,12 @@ export default function DashBoard() {
       title: "이메일",
       dataIndex: "email",
       key: "email",
+      render: text => <a>{text}</a>
+    },
+    {
+      title: "연락처",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
       render: text => <a>{text}</a>
     },
     {
@@ -166,6 +172,12 @@ export default function DashBoard() {
       dataIndex: "semester",
       key: "semester",
       render: text => <a>{text}학기</a>
+    },
+    {
+      title: "마케팅 정보 동의 여부",
+      dataIndex: "checkList",
+      key: "marketing",
+      render: checkList =>  <a>{checkList[2] === "1" ? "O" : "X" }</a>
     },
     {
       title: "학생 인증 여부",
@@ -217,7 +229,7 @@ export default function DashBoard() {
       title: "거래 방식",
       dataIndex: "transactionType",
       key: "transactionType",
-      render: type => (type == 0 ? <a>직거래</a> : <a>북을박스 거래</a>)
+      render: type => (type === 0 ? <a>직거래</a> : <a>북을박스 거래</a>)
     },
     {
       title: "거래 시각 리스트",
@@ -329,11 +341,12 @@ export default function DashBoard() {
           </Row>
           <Row>
             <Col span={22} offset={1}>
-              {userList.length != 0 ? (
+              {userList.length !== 0 ? (
                 <Table columns={columnsUser} dataSource={userList}></Table>
               ) : null}
             </Col>
           </Row>
+          {/*
           <Row>
             <Col span={22} offset={1}>
               <Table
@@ -358,6 +371,7 @@ export default function DashBoard() {
               ></Table>
             </Col>
           </Row>
+          */}
         </div>
       ) : null}
     </section>

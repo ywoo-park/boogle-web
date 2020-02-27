@@ -15,18 +15,15 @@ export default function Register() {
     const [isFocused, setIsFocused] = useState();
     const [isFocusedClass, setIsFocusedClass] = useState();
     const [selectedItem, setSelectedItem] = useState();
-    const [dealType, setDealType] = useState(0);
+    const [dealType, setDealType] = useState(1);
     const [contactType, setContactType] = useState(0);
 
     const [userImages, setUserImages] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
     const [imageDiv, setImageDiv] = useState();
 
-    const initialQualityOut = [false, false, false, false, false];
-    const initialQualityIn = [false, false, false];
-
-    const [qualityOut, setQualityOut] = useState(initialQualityOut);
-    const [qualityIn, setQualityIn] = useState(initialQualityIn);
+    const [qualityGeneral, setQualityGeneral] = useState("CLEAN");
+    const [qualityExtra, setQualityExtra] = useState([false, false, false, false, false, false, false ,false]);
 
     const [regiPrice, setRegiPrice] = useState(0);
     const [isFinalSubmit, setIsFinalSubmit] = useState(false);
@@ -44,13 +41,13 @@ export default function Register() {
     const [bankList, setBankList] = useState([]);
 
     const [selectedBankId, setSelectedBankId] = useState("")
-    const [selectedBankName, setSelectedBankName] = useState("");
     const [selectedUserBankAccount, setSelectedUserBankAccount] = useState(null);
-    const [bankAddStep, setBankAddStep] = useState(0);
 
     const [clickedAddUserAccount, setClickedAddUserAccount] = useState(false);
 
     const [modal, setModal] = useState(false);
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const { register, handleSubmit } = useForm();
 
@@ -63,30 +60,6 @@ export default function Register() {
         setResdata(resdata);
     }
 
-    const validateForm = () => {
-                                                            
-        let isQualityOutFilled = false;
-
-        for(let i = 0; i<qualityOut.length; i++){
-            if(qualityOut[i] == true){
-                isQualityOutFilled = true;
-                break;
-            }
-        }
-        if(isQualityOutFilled && userImages.length != 0){
-            setIsFinalSubmit(true);
-        }
-        else if(isQualityOutFilled && userImages.length == 0){
-            setIsRegiImagesFilled(false);
-        }
-        else if(!isQualityOutFilled && userImages.length != 0){
-            setIsQualityOutFilled(false);
-        }
-        else{
-            setIsRegiImagesFilled(false);
-            setIsQualityOutFilled(false);
-        }
-    }
 
     const showModal = e => {
         setModal(true);
@@ -155,8 +128,8 @@ export default function Register() {
 
             data.dealType = dealType;
             data.contactType = contactType;
-            data.qualityIn = qualityIn
-            data.qualityOut = qualityOut
+            data.qualityGeneral = qualityGeneral;
+            data.qualityExtra = qualityExtra;
             data.regiPrice = regiPrice;
             data.regiImages = userImages;
 
@@ -170,15 +143,17 @@ export default function Register() {
                 originalPrice : data.regiPrice,
                 regiImageUrlList: [],
                 dealType: data.dealType,
-                qualityIn: data.qualityIn,
-                qualityOut: data.qualityOut,
+                qualityGeneral: data.qualityGeneral,
+                qualityExtraList: data.qualityExtra,
                 sellerId: 0,
                 comment: data.comment,
                 imageUrl: selectedItem.imageUrl,
-                regiTime: new Date()
+                regiTime : new Date(),
+                sellerBankAccountId : selectedUserBankAccount._id
             })
 
             setImageFileList(data.regiImages);
+
         }
     };
 
@@ -217,7 +192,10 @@ export default function Register() {
             headers: { Authorization: localStorage.getItem('token') }
           })
         .then((response) => {
-            setUserBankAccountList(response.data.data);
+            if(response.data.data.length > 0){
+                setUserBankAccountList(response.data.data);
+                setSelectedUserBankAccount(response.data.data[0].userBankAccount);
+            }
         });
     }
 
@@ -339,16 +317,28 @@ export default function Register() {
                                                             </small>
                                                         </Col>
                                                         <Col xs={{ span: 12 }}>
-                                                            <button style={{
-                                                                borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                                                                color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
-                                                                padding: "auto"
-                                                            }}
-                                                                onClick={() => {
-                                                                    setSelectedItem(value);
-                                                                    setStep(2);
+                                                            {
+                                                                localStorage.getItem('token') != null ? 
+                                                                <button style={{
+                                                                    borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                                    color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                                    padding: "auto"
                                                                 }}
-                                                            ><span>판매 등록하기</span></button>
+                                                                    onClick={() => {
+                                                                        setSelectedItem(value);
+                                                                        setStep(2);
+                                                                    }}
+                                                                ><span>판매 등록하기</span></button>
+                                                                :
+                                                                <Link to="/signin">
+                                                                    <button style={{
+                                                                        borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                                        color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                                        padding: "auto"
+                                                                    }}
+                                                                    ><span>판매 등록하기</span></button>
+                                                                </Link>
+                                                            }
                                                         </Col>
                                                     </Row>
                                                 </Col>
@@ -491,7 +481,7 @@ export default function Register() {
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 10, offset: 2 }}>
                                             <button
-                                                class={dealType == 0 ? "register-button-active" : "register-button"}
+                                                class={dealType == 1 ? "register-button-active" : "register-button"}
                                                 style={{
                                                     width: "100%",
                                                     color: "#666666",
@@ -504,11 +494,11 @@ export default function Register() {
                                                     fontSize: "12px",
                                                     height: "36px"
                                                 }}
-                                                onClick={() => setDealType(0)}>직거래</button>
+                                                onClick={() => setDealType(1)}>북을박스</button>
                                         </Col>
                                         <Col xs={{ span: 10, offset: 0 }}>
                                             <button
-                                                class={dealType == 1 ? "register-button-active" : "register-button"}
+                                                class={dealType == 0 ? "register-button-active" : "register-button"}
                                                 style={{
                                                     width: "100%",
                                                     color: "#666666",
@@ -521,10 +511,13 @@ export default function Register() {
                                                     fontSize: "12px",
                                                     height: "36px"
                                                 }}
-                                                onClick={() => { setDealType(1) }}>북을박스</button>
+                                                onClick={() => { setDealType(0)}}>직거래</button>
                                         </Col>
                                     </Row>
-                                    <Row>
+                                    {
+                                        dealType == 1 ?
+                                        <div>
+                                        <Row>
                                         <Col xs={{ span: 5, offset: 2 }}>
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>계좌선택<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
@@ -667,6 +660,11 @@ export default function Register() {
 
                                         </Col>
                                     </Row>
+                                    </div>
+                                    : null
+
+                                    }
+                                   
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 22, offset: 2 }}>
                                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>사진(최대 3장)<span style={{color : "#e95513"}}>*</span></span>
@@ -716,103 +714,92 @@ export default function Register() {
                                     </Row>
                                     <Row style={{marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(외관)<span style={{color : "#e95513"}}>*</span></span>
-                                            {!isQualityOutFilled && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>1개 이상의 항목을 선택해 주세요.</p>}
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(택 1)<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }} >
                                             <button
-                                                class={qualityOut[0] == true ? "register-button-active" : "register-button"}
+                                                class={qualityGeneral === "CLEAN" ? "register-button-active" : "register-button"}
                                                 onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[0] == false) old[0] = true
-                                                    else old[0] = false
-                                                    setQualityOut(old)
+                                                    setQualityGeneral("CLEAN");
                                                 }}
                                                 style={{fontSize : "12px"}}
                                             >깨끗</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
-                                                class={qualityOut[1] == true ? "register-button-active" : "register-button"}
+                                                class={qualityGeneral === "ALMOST_CLEAN" ? "register-button-active" : "register-button"}
                                                 onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[1] == false) old[1] = true
-                                                    else old[1] = false
-                                                    setQualityOut(old)
+                                                    setQualityGeneral("ALMOST_CLEAN");
                                                 }}
                                                 style={{fontSize : "12px"}}
-                                                >이름기입</button>
+                                                >대체로 깨끗</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
-                                                class={qualityOut[2] == true ? "register-button-active" : "register-button"}
+                                                class={qualityGeneral === "USED" ? "register-button-active" : "register-button"}
                                                 onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[2] == false) old[2] = true
-                                                    else old[2] = false
-                                                    setQualityOut(old)
-                                                }}>긁힘/접힘</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 2 }}>
-                                            <button
-                                                class={qualityOut[3] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[3] == false) old[3] = true
-                                                    else old[3] = false
-                                                    setQualityOut(old)
-                                                }}>찢어짐</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityOut[4] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[4] == false) old[4] = true
-                                                    else old[4] = false
-                                                    setQualityOut(old)
-                                                }}>물에젖음</button>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ marginBottom: "10px" }}>
-                                        <Col xs={{ span: 8, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>기타</span>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ marginBottom: "10px" }}>
-                                        <Col xs={{ span: 5, offset: 2 }} >
-                                            <button
-                                                class={qualityIn[0] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[0] == false) old[0] = true
-                                                    else old[0] = false
-                                                    setQualityIn(old)
+                                                    setQualityGeneral("USED");
                                                 }}
-                                            >밑줄</button>
+                                                style={{fontSize : "12px"}}
+                                                >사용감 많음</button>
                                         </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[1] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[1] == false) old[1] = true
-                                                    else old[1] = false
-                                                    setQualityIn(old)
-                                                }}>필기</button>
+                                    </Row>
+                                    <Row style={{ marginBottom: "10px" }}>
+                                        <Col xs={{ span: 16, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>기타(중복 선택 가능)</span>
                                         </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[2] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[2] == false) old[2] = true
-                                                    else old[2] = false
-                                                    setQualityIn(old)
-                                                }}>문제풀음</button>
-                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "10px" }}>
+                                        {
+                                            [["SCRATCHED_AND_FOLDED", "긁힘"], ["UNDERLINED", "밑줄"], ["SOLVED", "푼제 풂"], ["NAME_WRITTEN", "이름 기입"], 
+                                            ["WET", "젖음"], ["RIPPED", "찢어짐"], ["WRITTEN", "필기"], ["EXTRA", "기타 오염"]]
+                                                .map((qualityArr, index) => {
+                                                    if(index == 0 || index % 3 == 0){
+                                                        return (
+                                                            <Col xs={{ span: 5, offset: 2 }} style={{marginBottom : "5px"}}>
+                                                                <button
+                                                                    class={index < qualityExtra.length && 
+                                                                        qualityExtra[index] === true ? "register-button-active" : "register-button"}
+                                                                    onClick={() => {
+                                                                        if(qualityExtra[index] === true) {
+                                                                            let currQualityExtra= qualityExtra;
+                                                                            currQualityExtra[index] = false;
+                                                                            setQualityExtra(currQualityExtra);
+                                                                        }
+                                                                        else{
+                                                                            let currQualityExtra= qualityExtra;
+                                                                            currQualityExtra[index] = true;
+                                                                            setQualityExtra(currQualityExtra);
+                                                                        }
+                                                                    }}
+                                                                >{qualityArr[1]}</button>
+                                                        </Col>
+                                                        )
+                                                    }
+                                                    return (
+                                                        <Col xs={{ span: 5, offset: 1 }} style={{marginBottom : "5px"}}>
+                                                            <button
+                                                                class={index < qualityExtra.length && 
+                                                                    qualityExtra[index] === true ? "register-button-active" : "register-button"}
+                                                                onClick={() => {
+                                                                    if(qualityExtra[index] === true) {
+                                                                        let currQualityExtra= qualityExtra;
+                                                                        currQualityExtra[index] = false;
+                                                                        setQualityExtra(currQualityExtra);
+                                                                    }
+                                                                    else{
+                                                                        let currQualityExtra= qualityExtra;
+                                                                        currQualityExtra[index] = true;
+                                                                        setQualityExtra(currQualityExtra);
+                                                                    }
+                                                                }}
+                                                            >{qualityArr[1]}</button>
+                                                    </Col>
+                                                    );
+                                                })
+                                        }
                                     </Row>
                                     <Row>
                                         <Col xs={{ span: 8, offset: 2 }}>
@@ -858,8 +845,31 @@ export default function Register() {
                                                 border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                             }}
                                                 type="submit"
-                                                onClick={() => validateForm()}>
-                                                    <span>판매 등록하기</span></button>
+                                                onClick={()=>{
+                                                    if(selectedUserBankAccount == null){
+                                                        setModalVisible(true);
+                                                    }
+                                                    else{
+                                                        setIsFinalSubmit(true);
+                                                    }
+                                                }}
+                                                >
+                                                    <span>판매 등록하기</span>
+                                            </button>
+                                                        <Modal
+                                                            title={null}
+                                                            footer={null}
+                                                            visible={modalVisible}
+                                                            onOk={()=>{setModalVisible(true)}}
+                                                            onCancel={()=>{setModalVisible(false)}}>
+                                                                <div>
+                                                                    <span>판매 등록을 위해서 계좌 등록 및</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span>선택을 필수적으로 진행해주세요.</span>
+                                                                </div>
+                                                                
+                                                          </Modal>
                                         </Col>
                                     </Row>
                                 </form>
