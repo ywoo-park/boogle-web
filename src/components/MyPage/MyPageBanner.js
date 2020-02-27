@@ -179,7 +179,7 @@ export default function MyPageBanner() {
       "id" : boxId,
       "password" : boxPassword
     })
-      .then((response) => {
+      .then(() => {
           setNeedRender(true);
       });    
 
@@ -191,8 +191,8 @@ export default function MyPageBanner() {
       headers: { Authorization: localStorage.getItem('token') }
     })
 
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        setNeedRender(true);
       });
 
   }
@@ -648,7 +648,7 @@ export default function MyPageBanner() {
                               </Row>
                             <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textAlign: "left" }}>
                                 <Col offset={0} style={{ fontStyle: "bold" }}>
-                                  판매자 : {value.traderName}  |
+                                  판매자 : {value.traderNickname}  |
                                    연락처 : {value.traderPhoneNumber}
                                 </Col>
                               </Row>
@@ -808,7 +808,7 @@ export default function MyPageBanner() {
                               </Row>
                             <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textAlign: "left" }}>
                                 <Col offset={0} style={{ fontStyle: "bold" }}>
-                                  판매자 : {value.traderName} 
+                                  판매자 : {value.traderNickname} 
                                 </Col>
                               </Row>
                             </Col>
@@ -1023,7 +1023,10 @@ export default function MyPageBanner() {
                                               <Popconfirm
                                                     placement="bottom"
                                                     title="책을 북을 박스로 부터 수령하셨나요?"
-                                                    onConfirm={()=>{boogleBoxInfoReceiveConfirmOnClickHandler(value.sellItemId)}}
+                                                    onConfirm={()=>{
+                                                      boogleBoxInfoReceiveConfirmOnClickHandler(value.sellItemId);
+                                                      closeModal();
+                                                    }}
                                                     okText="예"
                                                     cancelText="아니오"
                                               >
@@ -1265,7 +1268,7 @@ export default function MyPageBanner() {
                             </Row>
                             <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textAlign: "left" }}>
                                 <Col offset={0} style={{ fontStyle: "bold" }}>
-                                  구매자 : {value.traderName}  |
+                                  구매자 : {value.traderNickname}  |
                                    연락처 : {value.traderPhoneNumber}
                                 </Col>
                               </Row>
@@ -1484,7 +1487,7 @@ export default function MyPageBanner() {
                               </Row>
                               <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px" }}>
                                 <Col offset={0} style={{ fontStyle: "bold", textAlign: "left" }}>
-                                  구매자 : {value.traderName}
+                                  구매자 : {value.traderNickname}
                                 </Col>
                               </Row>
                           </Col>

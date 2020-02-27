@@ -99,7 +99,7 @@ export default function ManageAccount() {
           }}
         >
           <Col xs={{ span: 3 }}>
-            <Link to={manageSet.step == 0 ? "/setting" : null}>
+            <Link to={manageSet.step === 0 ? "/setting" : null}>
               <img
                 style={{
                   width: "32px",
@@ -116,9 +116,9 @@ export default function ManageAccount() {
             <h5 style={{ color: "white" }}>계좌 관리</h5>
           </Col>
         </Row>
-        {manageSet.step == 0 && <CurrentAccount />}
-        {manageSet.step == 1 && <AddAccount />}
-        {manageSet.step == 2 && <DetailAccount />}
+        {manageSet.step === 0 && <CurrentAccount />}
+        {manageSet.step === 1 && <AddAccount />}
+        {manageSet.step === 2 && <DetailAccount />}
       </ManageContext.Provider>
     </div>
   );

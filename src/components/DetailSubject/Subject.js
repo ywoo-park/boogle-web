@@ -22,6 +22,9 @@ function Subject({ match }) {
   const detail_sub_url = `${server_url}/sell/detail?id=${id}`;
   const bookmark_url = `${server_url}/bookmark?sellItemId=${id}`;
   const transaction_url = `${server_url}/transaction`;
+
+  const qualityExtraNameList = ["긁힘/접힘", "밑줄", "문제 풂", "이름 기입", "젖음", "찢어짐", "필기", "기타 오염"];
+
   useEffect(() => {
     if (
       localStorage.getItem("token") != "" &&
@@ -60,26 +63,28 @@ function Subject({ match }) {
     const date = rawDate.slice(0, 10).split("-");
     return `${date[0]}.${date[1]}.${date[2]}`;
   };
-  const qualDisplay = (qualInList, qualOutList) => {
-    const qualLi = qualOutList.concat(qualInList);
-    const qualValueOut = ["깨끗", "이름기입", "긁힘/접힘", "찢어짐"];
-    const qualValueIn = ["밑줄", "필기", "문제풀음"];
+  const qualDisplay = (qualityGeneral, qualityExtraList) => {
 
     return (
       <Row>
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
-            <Tag color="#656565">책 상태(외부)</Tag>
-            {qualValueOut.map((val, i) => {
-              return qualLi[i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
-            })}
+            <Tag color="#656565">책 상태</Tag>
+            <Tag color="#44a0ac">
+              {
+              qualityGeneral == "CLEAN" ? "깨끗" 
+              : qualityGeneral == "ALMOST_CLEAN" ? "대체로 깨끗" 
+              : qualityGeneral == "USED" ? "사용감 많음" 
+              : null
+            }
+            </Tag>
           </Col>
         </Row>
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
-            <Tag color="#656565">책 상태(기타)</Tag>
-            {qualValueIn.map((val, i) => {
-              return qualLi[4+i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
+            <Tag color="#656565">기타</Tag>
+            {qualityExtraList.map((val, i) => {
+              return val === true? <Tag color="#44a0ac">{qualityExtraNameList[i]}</Tag> : null;
             })}
           </Col>
         </Row>
@@ -300,8 +305,8 @@ function Subject({ match }) {
               </span>
             </Col>
           </Row>
-          {item.qualityIn != undefined && item.qualityOut != undefined
-            ? qualDisplay(item.qualityIn, item.qualityOut)
+          {item.qualityGeneral != undefined && item.qualityExtraList != undefined
+            ? qualDisplay(item.qualityGeneral, item.qualityExtraList)
             : null}
         </Col>
       </Row>
