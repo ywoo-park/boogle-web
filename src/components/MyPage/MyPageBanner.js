@@ -56,14 +56,14 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        setName(response.data.data.userName)
-        setLikeList(response.data.data.bookmarkedItemList)
-        setBuyList(response.data.data.buyTransList)
-        setSellList(response.data.data.sellTransList)
+        //setName(response.data.data.userName)
+        //setLikeList(response.data.data.bookmarkedItemList)
+        //setBuyList(response.data.data.buyTransList)
+        //setSellList(response.data.data.sellTransList)
         
       });
     
-      /*
+      
     setName("김유진");
     setLikeList([
       {
@@ -143,7 +143,6 @@ export default function MyPageBanner() {
       
     ]
     );
-    */
     
   }
 
@@ -919,27 +918,7 @@ export default function MyPageBanner() {
                               </Row>
                           } {/*1단계 끝*/}
 
-                          {value.transactionStep >= 3 ?
-                          <div>
-                          <Row style={{ marginTop: "13.5px", color: "#065d92" }}>
-                              물건 비치 중
-                          </Row>
-                          <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#065d33" }}>
-                            <Icon type="line" rotate="90" />
-                          </Row>
-                          </div>
-                          :
-                          <div>
-                          <Row style={{ marginTop: "13.5px", color: "#959595" }}>
-                            물건 비치 중
-                          </Row>
-                          <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                            <Icon type="line" rotate="90" />
-                          </Row>
-                          </div>
-                          }
-
-                          {value.transactionStep === 4 || value.transactionStep > 4 ?
+                          {value.transactionStep === 3 || value.transactionStep > 3 ?
                             <Row style={{ marginTop: "13.5px", color: "#065d92" }}>
                               물건 비치 완료
                           </Row>
@@ -947,9 +926,9 @@ export default function MyPageBanner() {
                             <Row style={{ marginTop: "13.5px", color: "#959595" }}>
                               물건 비치 완료
                           </Row>
-                          } {/*4단계 끝*/}
+                          } {/*3단계 끝*/}
 
-                          {value.transactionStep === 4 ?
+                          {value.transactionStep === 3 ?
                             <Row >
                               <button style={{
                                 padding: "0",
@@ -1054,9 +1033,9 @@ export default function MyPageBanner() {
                                        } {/*모달 끝*/}
                             </Row>
                             :
-                            null } {/*4단계 끝*/}
+                            null } {/*3단계 끝*/}
 
-                          {value.transactionStep > 4 ?
+                          {value.transactionStep >= 4 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
@@ -1066,7 +1045,7 @@ export default function MyPageBanner() {
                             </Row>
                           } {/*4단계 끝*/}
 
-                          {value.transactionStep === 5 || value.transactionStep > 5 ?
+                          {value.transactionStep === 5 || value.transactionStep >= 5 ?
                             <Row style={{ marginTop: "13.5px", marginBottom: "20px", color: "#0b308e" }}>
                               거래 완료
                             </Row>
@@ -1517,39 +1496,6 @@ export default function MyPageBanner() {
                           </Row>
 
                           {value.transactionStep === 1 ?
-                            <div>
-                              <Row>
-                              <button style={{
-                                padding: "0",
-                                width: "52px",
-                                height: "21px",
-                                background: "#075e92", color: "#ffffff",
-                                border: "none", borderRadius: "5px", fontSize: "10px",
-                                marginTop: "4px"
-                              }} onClick={() => {}}
-                              >결제 정보</button> {/* 결제정보 설정페이지로 연결해야할 듯 */}
-                              </Row>
-                              <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
-                                <Icon type="line" rotate="90" />
-                              </Row>
-                            </div>
-                            : /*1단계 아니면*/
-                              <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#065d33" }}>
-                                <Icon type="line" rotate="90" />
-                              </Row>
-                          } {/*1단계 끝*/}
-
-                          {value.transactionStep === 2 || value.transactionStep > 2 ?
-                            <Row style={{ marginTop: "13.5px", color: "#065d92" }}>
-                              물품 비치 중
-                            </Row>
-                            : /*4단계 이상인지 아닌지*/
-                            <Row style={{ marginTop: "13.5px", color: "#656565" }}>
-                              물품 비치 중
-                            </Row>
-                          } {/*4단계 이상인지 끝*/}
-
-                          {value.transactionStep === 2 ?
                             <Row>
                               <button style={{
                                 padding: "0",
@@ -1559,7 +1505,7 @@ export default function MyPageBanner() {
                                 border: "none", borderRadius: "5px", fontSize: "10px",
                                 marginTop: "4px"
                               }} onClick={() => {showModal(); showBoxNum();}}
-                              >비치 하기</button>
+                              >물품 비치</button>
                                {modal === true && boxNum === true ?
                                           <Modal
                                             footer={null}
@@ -1632,9 +1578,9 @@ export default function MyPageBanner() {
                               
                             </Row>
                             :
-                            null } {/*4단계 버튼 끝*/}
+                            null } {/*1단계 버튼 끝*/}
 
-                          {value.transactionStep > 4 ?
+                          {value.transactionStep >= 2 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
@@ -1642,7 +1588,7 @@ export default function MyPageBanner() {
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
                               <Icon type="line" rotate="90" />
                             </Row>
-                          } {/*4단계 끝*/}
+                          } {/*2단계 끝*/}
 
                           {value.transactionStep === 5 || value.transactionStep > 5 ?
                           <div>
