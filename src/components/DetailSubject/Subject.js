@@ -72,11 +72,11 @@ function Subject({ match }) {
             <Tag color="#656565">책 상태</Tag>
             <Tag color="#44a0ac">
               {
-              qualityGeneral == "CLEAN" ? "깨끗" 
-              : qualityGeneral == "ALMOST_CLEAN" ? "대체로 깨끗" 
-              : qualityGeneral == "USED" ? "사용감 많음" 
-              : null
-            }
+                qualityGeneral == "CLEAN" ? "깨끗"
+                  : qualityGeneral == "ALMOST_CLEAN" ? "대체로 깨끗"
+                    : qualityGeneral == "USED" ? "사용감 많음"
+                      : null
+              }
             </Tag>
           </Col>
         </Row>
@@ -84,7 +84,7 @@ function Subject({ match }) {
           <Col xs={{ offset: 1, span: 22 }}>
             <Tag color="#656565">기타</Tag>
             {qualityExtraList.map((val, i) => {
-              return val === true? <Tag color="#44a0ac">{qualityExtraNameList[i]}</Tag> : null;
+              return val === true ? <Tag color="#44a0ac">{qualityExtraNameList[i]}</Tag> : null;
             })}
           </Col>
         </Row>
@@ -102,7 +102,7 @@ function Subject({ match }) {
       buyerStep: 0,
       boxId: "",
       boxPassword: "",
-      isPaymentDone : false
+      isPaymentDone: false
     };
     axios.post(transaction_url, buyReq, {
       headers: { Authorization: authToken }
@@ -164,20 +164,20 @@ function Subject({ match }) {
           <Carousel showThumbs={false}>
             {item.regiImageUrlList != undefined
               ? item.regiImageUrlList.map((imgUrl, i) => {
-                  return (
-                    <div style={{ margin: "auto" }}>
-                      <img
-                        style={{
-                          width: "100%",
-                          height: "30vh",
-                          objectFit: "contain",
-                          margin: "auto"
-                        }}
-                        src={imgUrl}
-                      ></img>
-                    </div>
-                  );
-                })
+                return (
+                  <div style={{ margin: "auto" }}>
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "30vh",
+                        objectFit: "contain",
+                        margin: "auto"
+                      }}
+                      src={imgUrl}
+                    ></img>
+                  </div>
+                );
+              })
               : null}
           </Carousel>
         </Col>
@@ -328,29 +328,48 @@ function Subject({ match }) {
       </Row>
       <Row style={{ marginBottom: "15vh" }}>
         <Col xs={{ offset: 1, span: 22 }}>
-          <Popconfirm
-            placement="bottom"
-            title="판매자에게 구매 신청을 보내겠습니까?"
-            onConfirm={confirm}
-            okText="네"
-            cancelText="아니오"
-          >
-            <button
-              style={{
-                padding: "0",
-                width: "100%",
-                background: "rgba(51, 158, 172, 0.9)",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "2.25vh",
-                fontSize: "2.5vh",
-                height: "5vh"
-              }}
-              onClick={goToSignIn()}
+          {localStorage.getItem('token') != null ?
+            <Popconfirm
+              placement="bottom"
+              title="판매자에게 구매 신청을 보내겠습니까?"
+              onConfirm={confirm}
+              okText="네"
+              cancelText="아니오"
             >
-              구매하기
-            </button>
-          </Popconfirm>
+              <button
+                style={{
+                  padding: "0",
+                  width: "100%",
+                  background: "rgba(51, 158, 172, 0.9)",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "2.25vh",
+                  fontSize: "2.5vh",
+                  height: "5vh"
+                }}
+                onClick={goToSignIn()}
+              >
+                구매하기
+              </button>
+            </Popconfirm>
+            :
+            <Link to="/signin">
+              <button
+                style={{
+                  padding: "0",
+                  width: "100%",
+                  background: "rgba(51, 158, 172, 0.9)",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "2.25vh",
+                  fontSize: "2.5vh",
+                  height: "5vh"
+                }}>
+                구매하기
+              </button>
+            </Link>
+          }
+
         </Col>
       </Row>
     </div>
