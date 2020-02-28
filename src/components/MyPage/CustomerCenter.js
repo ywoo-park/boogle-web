@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useForm, ErrorMessage } from "react-hook-form";
-import { withRouter, Link, Redirect } from "react-router-dom";
-import { Row, Col, Icon, Card, Modal, Divider } from "antd";
-import axios from 'axios';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Row, Col, Icon } from "antd";
 import './CustomerCenter.css';
 
 export default function CustomerCenter() {

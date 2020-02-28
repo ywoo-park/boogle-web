@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { Row, Col, Icon, Card, Modal, Divider, Popconfirm } from "antd";
+import { Link } from "react-router-dom";
+import { Row, Col, Icon, Card, Modal, Popconfirm } from "antd";
 import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
@@ -564,7 +564,7 @@ export default function MyPageBanner() {
               buyList.map((value, index) => (
                 <div style={{ width: "95%", margin: "auto auto", padding: "0px" }}>
                   {value.transactionType === 0 ?
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                     style={{
                       width: "100%", height: "40%", backgroundColor: "#e5fdfc",
                       border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -723,7 +723,7 @@ export default function MyPageBanner() {
                     </div>
                     </Card>
                     :
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                     style={{
                       width: "100%", height: "40%", backgroundColor: "#e8f5ff",
                       border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1097,7 +1097,7 @@ export default function MyPageBanner() {
                   <div>
                   <div style={{ width: "100%", margin: "auto auto", padding: "0px" }}>
                     {value.transactionStep === -1 ?
-                      <Card class = "product-card"
+                      <Card className = "product-card"
                       style={{
                         width: "100%", height: "40%", backgroundColor: "#e0e0e0",
                         border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1139,7 +1139,7 @@ export default function MyPageBanner() {
                     </Card>
                     : /*판매등록된 상품인지 거래 중인지*/
 
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                       style={{
                         width: "100%", height: "40%", backgroundColor: "#e5fdfc",
                         border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1315,7 +1315,7 @@ export default function MyPageBanner() {
                     <div>
                     <div>
                     {value.transactionStep === -1 ?
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                     style={{
                       width: "100%", height: "40%", backgroundColor: "#e0e0e0",
                       border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1356,7 +1356,7 @@ export default function MyPageBanner() {
                       </div>
                   </Card>
                     : /*판매등록된 상품인지 거래 중인지*/
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                       style={{
                         width: "100%", height: "40%", backgroundColor: "#e8f5ff",
                         border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
-import { Row, Col, Icon, Divider } from "antd";
+import { Row, Col, Icon } from "antd";
 import axios from "axios";
 
 export default function ModifyInfoForm() {
@@ -43,18 +42,18 @@ export default function ModifyInfoForm() {
   }, [isSignedIn]);
 
   const validateNickname = async nickname => {
-    if (nickname != undefined) {
+    if (nickname !== undefined) {
       axios
         .get(
           "http://13.124.113.72:8080/users/signup/validateNickname?nickname=" +
             nickname
         )
         .then(response => {
-          if (response.data.status == 200 && validatedNickname == true) {
+          if (response.data.status === 200 && validatedNickname === true) {
             setValidatedNickname(false);
           } else if (
-            response.data.status == 404 &&
-            validatedNickname == false
+            response.data.status === 404 &&
+            validatedNickname === false
           ) {
             setValidatedNickname(true);
           }
@@ -69,7 +68,7 @@ export default function ModifyInfoForm() {
 
   return (
     <div>
-      {userData != undefined ? (
+      {userData !== undefined ? (
         <form onSubmit={handleSubmit(modifyFin)}>
           {console.log(userData)}
           <Row>

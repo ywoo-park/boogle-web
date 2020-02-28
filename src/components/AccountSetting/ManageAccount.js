@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useReducer } from "react";
-import { Row, Col, Card } from "antd";
-import { Link, Redirect } from "react-router-dom";
+import { Row, Col } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import AddAccount from "./AddAccount";
 import CurrentAccount from "./CurrentAccount";

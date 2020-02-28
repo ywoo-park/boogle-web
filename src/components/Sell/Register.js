@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Row, Col, Icon, Divider, Modal } from 'antd';
 import Search from '../Navbar/Search';
-import { withRouter, Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
 import CurrencyInput from 'react-currency-input';
 import { BeatLoader } from "react-spinners";
@@ -230,7 +230,7 @@ export default function Register() {
     return (
         <section id="register-container">
             {
-                    step == 1 ?
+                    step === 1 ?
                         <div>
                             <div id="navbar">
                                 <header>
@@ -360,7 +360,7 @@ export default function Register() {
                         </div>
 
                         :
-                        step == 2 ?
+                        step === 2 ?
                             <div>
                                 <Row style={{ marginTop: "30px", marginBottom: "30px"}}>
                                     <Col xs={{ span: 2, offset: 1 }}>
@@ -481,7 +481,7 @@ export default function Register() {
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 10, offset: 2 }}>
                                             <button
-                                                class={dealType == 1 ? "register-button-active" : "register-button"}
+                                                class={dealType === 1 ? "register-button-active" : "register-button"}
                                                 style={{
                                                     width: "100%",
                                                     color: "#666666",
@@ -498,7 +498,7 @@ export default function Register() {
                                         </Col>
                                         <Col xs={{ span: 10, offset: 0 }}>
                                             <button
-                                                class={dealType == 0 ? "register-button-active" : "register-button"}
+                                                class={dealType === 0 ? "register-button-active" : "register-button"}
                                                 style={{
                                                     width: "100%",
                                                     color: "#666666",
@@ -515,7 +515,7 @@ export default function Register() {
                                         </Col>
                                     </Row>
                                     {
-                                        dealType == 1 ?
+                                        dealType === 1 ?
                                         <div>
                                         <Row>
                                         <Col xs={{ span: 5, offset: 2 }}>
@@ -525,7 +525,7 @@ export default function Register() {
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
                                             {
-                                                userBankAccountList.length == 0?
+                                                userBankAccountList.length === 0?
                                                 <div>
                                                     {clickedAddUserAccount? 
                                                         <div>
@@ -710,7 +710,7 @@ export default function Register() {
                                                     }} />
                                             </div>
                                         </Col>
-                                        {imageDiv != undefined ? imageDiv : null}
+                                        {imageDiv !== undefined ? imageDiv : null}
                                     </Row>
                                     <Row style={{marginBottom: "10px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
@@ -756,7 +756,7 @@ export default function Register() {
                                             [["SCRATCHED_AND_FOLDED", "긁힘"], ["UNDERLINED", "밑줄"], ["SOLVED", "푼제 풂"], ["NAME_WRITTEN", "이름 기입"], 
                                             ["WET", "젖음"], ["RIPPED", "찢어짐"], ["WRITTEN", "필기"], ["EXTRA", "기타 오염"]]
                                                 .map((qualityArr, index) => {
-                                                    if(index == 0 || index % 3 == 0){
+                                                    if(index === 0 || index % 3 === 0){
                                                         return (
                                                             <Col xs={{ span: 5, offset: 2 }} style={{marginBottom : "5px"}}>
                                                                 <button
@@ -874,7 +874,7 @@ export default function Register() {
                                     </Row>
                                 </form>
                             </div>
-                            : step == 3 ? 
+                            : step === 3 ? 
                                 <Row style={{ marginTop: "50%" }}>
                                     <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
                                         <BeatLoader
@@ -884,7 +884,7 @@ export default function Register() {
                                         />
                                     </Col>
                                 </Row>
-                            : step == 4 ?
+                            : step === 4 ?
                                 <div>
                                     <Row style={{ marginTop: "30px" }}>
                                         <Col xs={{ span: 8 }}>
