@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
 import { Col, Row, Icon, Divider, Popconfirm, message, Tag } from "antd";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps, Redirect } from "react-router-dom";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import { Carousel } from "react-responsive-carousel";
@@ -14,12 +14,27 @@ function Subject({ match }) {
   const [item, setItem] = useState({});
   const [seller, setSeller] = useState({});
   const [isBookmarked, setIsBookmarked] = useState(0);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
   const server_url = `http://13.124.113.72:8080`;
   const detail_sub_url = `${server_url}/sell/detail?id=${id}`;
   const bookmark_url = `${server_url}/bookmark?sellItemId=${id}`;
   const transaction_url = `${server_url}/transaction`;
+
+  const qualityExtraNameList = ["긁힘/접힘", "밑줄", "문제 풂", "이름 기입", "젖음", "찢어짐", "필기", "기타 오염"];
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("token") != "" &&
+      localStorage.getItem("token") != null
+    ) {
+      setIsSignedIn(true);
+    } else {
+      setIsSignedIn(false);
+    }
+  }, []);
 
   useEffect(() => {
     const id = window.location.pathname.substring(12);
@@ -28,13 +43,9 @@ function Subject({ match }) {
 
   useEffect(() => {
     if (id != "") {
-
       const getItemData = async () => {
-
         const result = await axios.get(detail_sub_url, {
-
           headers: { Authorization: authToken }
-          
         });
 
         // console.log(result.data.data);
@@ -43,7 +54,6 @@ function Subject({ match }) {
         setItem(result.data.data.sellItem);
         setSeller(result.data.data.sellerUser);
         setIsBookmarked(result.data.data.bookmarked);
-
       };
       getItemData();
     }
@@ -53,26 +63,28 @@ function Subject({ match }) {
     const date = rawDate.slice(0, 10).split("-");
     return `${date[0]}.${date[1]}.${date[2]}`;
   };
-  const qualDisplay = (qualInList, qualOutList) => {
-    const qualLi = qualOutList.concat(qualInList);
-    const qualValueOut = ["깨끗", "이름기입", "긁힘/접힘", "찢어짐"];
-    const qualValueIn = ["밑줄", "연필", "볼펜/형광펜", "문제풀음", "물에젖음"];
+  const qualDisplay = (qualityGeneral, qualityExtraList) => {
 
     return (
       <Row>
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
-            <Tag color="#656565">책 상태(외부)</Tag>
-            {qualValueOut.map((val, i) => {
-              return qualLi[i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
-            })}
+            <Tag color="#656565">책 상태</Tag>
+            <Tag color="#44a0ac">
+              {
+                qualityGeneral == "CLEAN" ? "깨끗"
+                  : qualityGeneral == "ALMOST_CLEAN" ? "대체로 깨끗"
+                    : qualityGeneral == "USED" ? "사용감 많음"
+                      : null
+              }
+            </Tag>
           </Col>
         </Row>
         <Row>
           <Col xs={{ offset: 1, span: 22 }}>
-            <Tag color="#656565">책 상태(내부)</Tag>
-            {qualValueIn.map((val, i) => {
-              return qualLi[i] == 1 ? <Tag color="#44a0ac">{val}</Tag> : null;
+            <Tag color="#656565">기타</Tag>
+            {qualityExtraList.map((val, i) => {
+              return val === true ? <Tag color="#44a0ac">{qualityExtraNameList[i]}</Tag> : null;
             })}
           </Col>
         </Row>
@@ -89,7 +101,8 @@ function Subject({ match }) {
       sellerStep: 0,
       buyerStep: 0,
       boxId: "",
-      boxPassword: ""
+      boxPassword: "",
+      isPaymentDone: false
     };
     axios.post(transaction_url, buyReq, {
       headers: { Authorization: authToken }
@@ -103,6 +116,13 @@ function Subject({ match }) {
         headers: { Authorization: authToken }
       })
       .then(res => console.log(res));
+  };
+
+  const goToSignIn = () => {
+    // if (authToken != "" && authToken != null) {
+    if (!isSignedIn) {
+      return <Redirect to="/signin" />;
+    }
   };
 
   return (
@@ -144,20 +164,20 @@ function Subject({ match }) {
           <Carousel showThumbs={false}>
             {item.regiImageUrlList != undefined
               ? item.regiImageUrlList.map((imgUrl, i) => {
-                  return (
-                    <div style={{ margin: "auto" }}>
-                      <img
-                        style={{
-                          width: "100%",
-                          height: "30vh",
-                          objectFit: "contain",
-                          margin: "auto"
-                        }}
-                        src={imgUrl}
-                      ></img>
-                    </div>
-                  );
-                })
+                return (
+                  <div style={{ margin: "auto" }}>
+                    <img
+                      style={{
+                        width: "100%",
+                        height: "30vh",
+                        objectFit: "contain",
+                        margin: "auto"
+                      }}
+                      src={imgUrl}
+                    ></img>
+                  </div>
+                );
+              })
               : null}
           </Carousel>
         </Col>
@@ -213,7 +233,7 @@ function Subject({ match }) {
             <Col xs={{ span: 22, offset: 1 }}>
               <span
                 style={{
-                  fontSize: "2.25vh",
+                  fontSize: "2.75vh",
                   color: "#44a0ac",
                   fontWeight: "600"
                 }}
@@ -285,14 +305,15 @@ function Subject({ match }) {
               </span>
             </Col>
           </Row>
-          {item.qualityIn != undefined && item.qualityOut != undefined
-            ? qualDisplay(item.qualityIn, item.qualityOut)
+          {item.qualityGeneral != undefined && item.qualityExtraList != undefined
+            ? qualDisplay(item.qualityGeneral, item.qualityExtraList)
             : null}
         </Col>
       </Row>
       <Row style={{ marginTop: "4vh", marginBottom: "3vh" }}>
         <Col xs={{ span: 22, offset: 1 }}>
           <textarea
+            readOnly
             style={{
               width: "100%",
               height: "80px",
@@ -307,28 +328,48 @@ function Subject({ match }) {
       </Row>
       <Row style={{ marginBottom: "15vh" }}>
         <Col xs={{ offset: 1, span: 22 }}>
-          <Popconfirm
-            placement="bottom"
-            title="판매자에게 구매 신청을 보내겠습니까?"
-            onConfirm={confirm}
-            okText="네"
-            cancelText="아니오"
-          >
-            <button
-              style={{
-                padding: "0",
-                width: "100%",
-                background: "rgba(51, 158, 172, 0.9)",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "2.25vh",
-                fontSize: "2.5vh",
-                height: "5vh"
-              }}
+          {localStorage.getItem('token') != null ?
+            <Popconfirm
+              placement="bottom"
+              title="판매자에게 구매 신청을 보내겠습니까?"
+              onConfirm={confirm}
+              okText="네"
+              cancelText="아니오"
             >
-              구매하기
-            </button>
-          </Popconfirm>
+              <button
+                style={{
+                  padding: "0",
+                  width: "100%",
+                  background: "rgba(51, 158, 172, 0.9)",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "2.25vh",
+                  fontSize: "2.5vh",
+                  height: "5vh"
+                }}
+                onClick={goToSignIn()}
+              >
+                구매하기
+              </button>
+            </Popconfirm>
+            :
+            <Link to="/signin">
+              <button
+                style={{
+                  padding: "0",
+                  width: "100%",
+                  background: "rgba(51, 158, 172, 0.9)",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "2.25vh",
+                  fontSize: "2.5vh",
+                  height: "5vh"
+                }}>
+                구매하기
+              </button>
+            </Link>
+          }
+
         </Col>
       </Row>
     </div>

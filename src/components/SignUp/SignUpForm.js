@@ -27,6 +27,7 @@ export default function SignUpForm() {
     const [confirmPassword, setConfirmPassword] = useState(0);
     const [formStyle, setFormStyle] = useState(["show", "hide", "hide"]);
     const [checkList, setCheckList] = useState(["0", "0", "0"]);
+    const [isCheckComplete, setIsCheckComplete] = useState(true);
     const [isCollapseOpenList, setIsCollapseOpenList] = useState([false, false, false]);
     const [campus, setCampus] = useState("서강대학교");
     const [semester, setSemester] = useState("1");
@@ -41,13 +42,18 @@ export default function SignUpForm() {
     const [campusWebMail, setCampusWebMail] = useState("");
     const [emailAuthStep, setEmailAuthStep] = useState(0);
     const [authCode, setAuthCode] = useState("0000");
+    const [authType, setAuthType] = useState(0);
+
+    const [userImages, setUserImages] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
+    const [imageDiv, setImageDiv] = useState();
 
     const onSubmitFirstForm = (data) => {
 
         let majorListAsString = ""
 
-        if(majorList.length == 1) majorListAsString = majorList[0];
-        else if(majorList.length == 2) majorListAsString = majorList[0] + "," + majorList[1];
+        if (majorList.length == 1) majorListAsString = majorList[0];
+        else if (majorList.length == 2) majorListAsString = majorList[0] + "," + majorList[1];
         else majorListAsString = majorList[0] + "," + majorList[1] + "," + majorList[2];
 
         if (validatedEmail && validatedNickname) {
@@ -60,7 +66,8 @@ export default function SignUpForm() {
                 campus: campus,
                 semester: semester,
                 majorList: majorListAsString,
-                phoneNumber: "010" + data.phone_2 + data.phone_3
+                phoneNumber: "010" + data.phone_2 + data.phone_3,
+                isAuthComplete : authType == 0 ? true : false
             })
         }
     };
@@ -75,11 +82,11 @@ export default function SignUpForm() {
 
     React.useEffect(() => {
         fetch('../../texts/Term1.txt').then(r => r.text())
-            .then(t => console.log(t))
+            .then(t => console.log(t));
+        window.scrollTo(0, 1);
     }, [])
 
     React.useEffect(() => {
-        console.log(step);
         if (step == 0) setFormStyle(["show", "hide", "hide"]);
         else if (step == 1) setFormStyle(["hide", "show", "hide"]);
         else if (step == 2) setFormStyle(["hide", "hide", "show"]);
@@ -91,7 +98,16 @@ export default function SignUpForm() {
     }, [signUpReq])
 
     React.useEffect(() => {
+        console.log(majorList);
+    }, [majorList])
+
+        React.useEffect(() => {
+        console.log(majorCount);
+    }, [majorCount])
+
+    React.useEffect(() => {
         if (searchedDepartmentMajorList.length != 0) {
+            /*
             const arr = [];
             searchedDepartmentMajorList.map((departmentMajor, index) => {
                 departmentMajor.majorList.map((m, i) => {
@@ -99,19 +115,80 @@ export default function SignUpForm() {
                 })
             })
             setSearchedMajorList(arr);
+            */
+            setSearchedMajorList(searchedDepartmentMajorList);
         }
     }, [searchedDepartmentMajorList])
 
+    React.useEffect(() => {
+        setImageDiv(imageUrls.map((i, index) => (
+            <Col xs={{ span: 4, offset: 1 }}>
+                <div
+                    style={{
+                        border: "#44a0ac 1px solid",
+                        height: "65px", width: "65px",
+                        position: "relative", borderRadius: "10px",
+                        top: "50%", left: "50%"
+                    }}>
+                    <Icon type="close-circle"
+                        style={{
+                            color: "rgba(51, 158, 172, 0.9)", margin: "auto", position: "relative",
+                            left: 45, top: -5, zIndex: 100
+                        }}
+                        onClick={() => {
+                            let currImageUrls = imageUrls;
+                            currImageUrls.splice(index, 1);
+                            setImageUrls(currImageUrls);
+                        }}>
+                    </Icon>
+                    <img style={{
+                        width: "100%", height: "100%",
+                        position: "absolute",
+                        top: "0", left: "0",
+                        objectFit: "contain"
+                    }} src={i}
+                    />
+                </div>
+            </Col>
+        )));
+
+    }, [imageUrls]);
+
     const saveUser = () => {
+
         axios.post('http://13.124.113.72:8080/users/signup', signUpReq, {
         })
             .then((response) => {
-                console.log(response);
-                localStorage.setItem('token', response.data.data);
-                setStep(2);
-                setTimeout(() => {
-                    setStep(3);
-                }, 3000);
+
+                if(response.data.data != ""){
+                    localStorage.setItem('token', response.data.data);
+                }
+                
+                if (authType == 1) {
+                    let form = new FormData();
+                    form.append('userCampusAuthImage', {
+
+                    })
+                    form.append('userCampusAuthImageFile', userImages[0])
+                    axios.post('http://13.124.113.72:8080/authImage', form, {
+                        headers: { Authorization: response.data.data }
+                    })
+                        .then((response) => {
+                            setStep(2);
+                            setTimeout(() => {
+                                setStep(3);
+                            }, 3000);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                }
+                else {
+                    setStep(2);
+                    setTimeout(() => {
+                        setStep(3);
+                    }, 3000);
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -152,7 +229,7 @@ export default function SignUpForm() {
         axios.get('http://13.124.113.72:8080/majors?campus=서강대학교&keyword=' + keyword, {
         })
             .then((response) => {
-                console.log(response);
+                console.log(response.data.data);
                 setSearchedDepartmentMajorList(response.data.data);
             })
             .catch((error) => {
@@ -227,7 +304,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -245,9 +322,9 @@ export default function SignUpForm() {
                                         validateEmail(e.target.value)
                                     }
                                 }} />
-                            {!validatedEmail && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>중복된 이메일입니다.</p>}
-                            {validatedEmail && email.length > 0 && !email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>이메일 형식으로 입력해주세요.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="email" as="p" />
+                            {!validatedEmail && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>중복된 이메일입니다.</p>}
+                            {validatedEmail && email.length > 0 && !email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>이메일 형식으로 입력해주세요.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="email" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -259,7 +336,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -268,8 +345,8 @@ export default function SignUpForm() {
                                 })}
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 type="password" />
-                            {password.length < 8 && password.length > 0 && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="password" as="p" />
+                            {password.length < 8 && password.length > 0 && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>8~16자 영문 대 소문자, 숫자, 특수문자를 사용해주세요.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="password" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -281,7 +358,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "#44a0ac solid 1.0px",
                                     backgroundColor: "transparent"
                                 }}
@@ -290,8 +367,8 @@ export default function SignUpForm() {
                                 })}
                                 onChange={(e) => { setConfirmPassword(e.target.value) }}
                                 type="password" />
-                            {confirmPassword != password && confirmPassword.length > 0 && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>비밀번호가 일치하지 않습니다.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="password" as="p" />
+                            {confirmPassword != password && confirmPassword.length > 0 && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>비밀번호가 일치하지 않습니다.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="password" as="p" />
                         </Col>
                     </Row>
                     <Row style={{ marginTop: "15px", marginBottom: "15px" }}>
@@ -301,6 +378,18 @@ export default function SignUpForm() {
                     </Row>
                     <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
+                            <img style={{ width: "100%", height: "auto" }}
+                                onClick={() => { handleOpenCollapse(0) }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                        <Col offset={1} span={15}>
+                            <small>
+                                북을 이용약관 동의
+                                <span style={{ color: "#e95513" }}>(필수)</span>
+                            </small>
+                            {!isCheckComplete && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>필수 항목에 체크해주세요.</p>}
+                        </Col>
+                        <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[0] == "0") {
                                     const temp = checkList;
@@ -316,17 +405,7 @@ export default function SignUpForm() {
                                 }
                             }} className="sign-up-check"
                                 type="check" />
-                        </Col>
-                        <Col offset={0} span={16}>
-                            <small>
-                                북을 이용약관 동의
-                                <span style={{ color: "#e95513" }}>(필수)</span>
-                            </small>
-                        </Col>
-                        <Col offset={0} span={2}>
-                            <img style={{ width: "100%", height: "auto" }}
-                                onClick={() => { handleOpenCollapse(0) }}
-                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                            {/*<input type="checkbox"></input>*/}
                         </Col>
                     </Row>
                     <Row>
@@ -345,6 +424,18 @@ export default function SignUpForm() {
                     </Row>
                     <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
+                            <img style={{ width: "100%", height: "auto" }}
+                                onClick={() => { handleOpenCollapse(1) }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                        <Col offset={1} span={15}>
+                            <small>
+                                개인정보 수집 및 이용에 대한 안내
+                                        <span style={{ color: "#e95513" }}>(필수)</span>
+                            </small>
+                            {!isCheckComplete && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>필수 항목에 체크해주세요.</p>}
+                        </Col>
+                        <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[1] == "0") {
                                     const temp = checkList;
@@ -362,23 +453,12 @@ export default function SignUpForm() {
                                 className="sign-up-check"
                                 type="check" />
                         </Col>
-                        <Col offset={0} span={16}>
-                            <small>
-                                개인정보 수집 및 이용에 대한 안내
-                                        <span style={{ color: "#e95513" }}>(필수)</span>
-                            </small>
-                        </Col>
-                        <Col offset={0} span={2}>
-                            <img style={{ width: "100%", height: "auto" }}
-                                onClick={() => { handleOpenCollapse(1) }}
-                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
-                        </Col>
                     </Row>
                     <Row>
                         <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[1]}>
                                 <textarea
-                                readOnly
+                                    readOnly
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
@@ -390,6 +470,17 @@ export default function SignUpForm() {
                     </Row>
                     <Row style={{ marginBottom: "10px" }}>
                         <Col offset={2} span={2}>
+                            <img style={{ width: "100%", height: "auto" }}
+                                onClick={() => { handleOpenCollapse(2) }}
+                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
+                        </Col>
+                        <Col offset={1} span={15}>
+                            <small>
+                                이메일, SMS 광고 수신 동의
+                                        <span style={{ color: "#e95513" }}>(선택)</span>
+                            </small>
+                        </Col>
+                        <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
                                 if (checkList[2] == "0") {
                                     const temp = checkList;
@@ -405,23 +496,12 @@ export default function SignUpForm() {
                                 }
                             }} className="sign-up-check" type="check" />
                         </Col>
-                        <Col offset={0} span={16}>
-                            <small>
-                                이메일, SMS 광고 수신 동의
-                                        <span style={{ color: "#e95513" }}>(선택)</span>
-                            </small>
-                        </Col>
-                        <Col offset={0} span={2}>
-                            <img style={{ width: "100%", height: "auto" }}
-                                onClick={() => { handleOpenCollapse(2) }}
-                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/icon_down.png"></img>
-                        </Col>
                     </Row>
                     <Row>
                         <Col style={{ marginTop: "0px", marginBottom: "30px" }} xs={{ span: 20, offset: 2 }} >
                             <Collapse isOpened={isCollapseOpenList[2]}>
                                 <textarea
-                                readOnly
+                                    readOnly
                                     style={{
                                         width: "100%", border: "#656565 solid 0.3px", borderRadius: "5px",
                                         color: "transparent", textShadow: "0 0 0 black",
@@ -431,13 +511,23 @@ export default function SignUpForm() {
                             </Collapse>
                         </Col>
                     </Row>
+                    <Row>
+                    </Row>
                     <Row style={{ marginBottom: "100px" }}>
                         <Col xs={{ span: 20, offset: 2 }}>
                             <button
                                 type="button"
                                 onClick={() => {
                                     const formValues = getValues();
-                                    if (formValues.email != "" && formValues.password != ""
+
+                                    if(checkList.length > 0 && checkList[0] == "0" || checkList[1] == "0"){
+                                        setIsCheckComplete(false);
+                                    }
+                                    else{
+                                        setIsCheckComplete(true);
+                                    }
+
+                                    if(formValues.email != "" && formValues.password != ""
                                         && formValues.confirmPassword != "" && checkList[0] == "1"
                                         && checkList[1] == "1" && validatedEmail) {
                                         setStep(1);
@@ -490,12 +580,12 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
                                 name="name" ref={register({ required: "이름을 입력해주세요" })} />
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="name" as="p" />
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="name" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -507,7 +597,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -520,8 +610,8 @@ export default function SignUpForm() {
                                         validateNickname(e.target.value)
                                     }
                                 }} />
-                            {!validatedNickname && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>중복된 닉네임입니다.</p>}
-                            <ErrorMessage style={{ marginBottom: "-10px", fontSize : "12px" }} errors={errors} name="nickname" as="p" />
+                            {!validatedNickname && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>중복된 닉네임입니다.</p>}
+                            <ErrorMessage style={{ marginBottom: "-10px", fontSize: "12px" }} errors={errors} name="nickname" as="p" />
                         </Col>
                     </Row>
                     <Row>
@@ -533,7 +623,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
                             <select onChange={(e) => { setValue('semester', e.target.value) }} name="campus"
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent",
                                 }}>
@@ -558,91 +648,92 @@ export default function SignUpForm() {
                                         readOnly
                                         className="major-input"
                                         style={{
-                                            width: "100%", height : "40px", border: "none",
+                                            width: "100%", height: "40px", border: "none",
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                             backgroundColor: "transparent"
                                         }}
                                         value={majorList.length != 0 ? majorList[0] : ""}
+                                        onClick={() => { setIsSearchMajorModalOpended(true) }}
                                     />
 
                                     {
                                         majorList.length == 0 ?
 
-                                        <Icon className="major-search-button" type="search" theme="outlined"
+                                            <Icon className="major-search-button" type="search" theme="outlined"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                                onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
 
-                                        :
+                                            :
 
-                                        <Icon className="major-search-button" type="close-circle"
+                                            <Icon className="major-search-button" type="close-circle"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { 
+                                                onClick={() => {
 
-                                            let currMajorList = majorList;
-                                            currMajorList.splice(0, 1)
-                                            setMajorList(currMajorList);
+                                                    let currMajorList = majorList;
+                                                    currMajorList.splice(0, 1)
+                                                    setMajorList(currMajorList);
 
-                                            let currMajorCount = majorCount;
-                                            currMajorCount = currMajorCount - 1;
-                                            setMajorCount(currMajorCount);
+                                                    let currMajorCount = majorCount;
+                                                    if(currMajorCount > 0) currMajorCount = currMajorCount - 1;
+                                                    setMajorCount(currMajorCount);
 
-                                            setMajorSearchKeyword("");
-                                            setSearchedMajorList([]);;
+                                                    setMajorSearchKeyword("");
+                                                    setSearchedMajorList([]);;
 
-                                        }}></Icon>
+                                                }}></Icon>
                                     }
-                                   
+
 
                                     {(majorList.length == 1 && majorCount == 1 && majorList.length == majorCount)
                                         || (majorList.length > 1) ?
 
                                         <div>
                                             <input
-                                            readOnly
+                                                readOnly
                                                 style={{
-                                                    marginTop : "22px",
-                                                    width: "100%", height : "40px", border: "none",
+                                                    marginTop: "22px",
+                                                    width: "100%", height: "40px", border: "none",
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
                                                 value={majorList.length != 0 ? majorList[1] : null}
                                             />
 
-                                        {
+                                            {
 
-                                        majorList.length == 1 ?
+                                                majorList.length == 1 ?
 
-                                        <Icon className="major-search-button_2" type="search" theme="outlined"
+                                                    <Icon className="major-search-button_2" type="search" theme="outlined"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
 
-                                        :
+                                                    :
 
-                                        <Icon className="major-search-button_2" type="close-circle"
+                                                    <Icon className="major-search-button_2" type="close-circle"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { 
+                                                        onClick={() => {
 
-                                            let currMajorList = majorList;
-                                            currMajorList.splice(1, 1)
-                                            setMajorList(currMajorList);
+                                                            let currMajorList = majorList;
+                                                            currMajorList.splice(1, 1)
+                                                            setMajorList(currMajorList);
 
-                                            let currMajorCount = majorCount;
-                                            currMajorCount = currMajorCount - 1;
-                                            setMajorCount(currMajorCount);
+                                                            let currMajorCount = majorCount;
+                                                            if(currMajorCount > 0) currMajorCount = currMajorCount - 1;
+                                                            setMajorCount(currMajorCount);
 
-                                            setMajorSearchKeyword("");
-                                            setSearchedMajorList([]);;
+                                                            setMajorSearchKeyword("");
+                                                            setSearchedMajorList([]);;
 
-                                        }}></Icon>
-                                    }
+                                                        }}></Icon>
+                                            }
                                         </div>
 
                                         : majorList.length == 1 && majorCount == 0 ?
@@ -660,45 +751,45 @@ export default function SignUpForm() {
                                         || (majorList.length > 2) ?
                                         <div>
                                             <input
-                                            readOnly
+                                                readOnly
                                                 style={{
-                                                    marginTop : "22px",
-                                                    width: "100%", height : "40px", border: "none",
+                                                    marginTop: "22px",
+                                                    width: "100%", height: "40px", border: "none",
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
                                                 value={majorList.length != 0 ? majorList[2] : null}
                                             />
-                                        {
-                                        majorList.length == 2 ?
+                                            {
+                                                majorList.length == 2 ?
 
-                                        <Icon className="major-search-button_3" type="search" theme="outlined"
+                                                    <Icon className="major-search-button_3" type="search" theme="outlined"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
+                                                        onClick={() => { setIsSearchMajorModalOpended(true) }}></Icon>
 
-                                        :
+                                                    :
 
-                                        <Icon className="major-search-button_3" type="close-circle"
+                                                    <Icon className="major-search-button_3" type="close-circle"
 
-                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+                                                        style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
-                                        onClick={() => { 
+                                                        onClick={() => {
 
-                                            let currMajorList = majorList;
-                                            currMajorList.splice(2, 1)
-                                            setMajorList(currMajorList);
+                                                            let currMajorList = majorList;
+                                                            currMajorList.splice(2, 1)
+                                                            setMajorList(currMajorList);
 
-                                            let currMajorCount = majorCount;
-                                            currMajorCount = currMajorCount - 1;
-                                            setMajorCount(currMajorCount);
+                                                            let currMajorCount = majorCount;
+                                                            if(currMajorCount > 0) currMajorCount = currMajorCount - 1;
+                                                            setMajorCount(currMajorCount);
 
-                                            setMajorSearchKeyword("");
-                                            setSearchedMajorList([]);;
+                                                            setMajorSearchKeyword("");
+                                                            setSearchedMajorList([]);;
 
-                                        }}></Icon>
-                                    }
+                                                        }}></Icon>
+                                            }
                                         </div>
 
                                         : majorList.length == 2 && majorCount == 1 ?
@@ -740,12 +831,11 @@ export default function SignUpForm() {
                                         {
                                             searchedMajorList.length != 0 ?
                                                 searchedMajorList.map((major) => {
-                                                    console.log(major);
                                                     return (
                                                         <Row style={{ marginTop: "20px" }}>
                                                             <Col xs={{ span: 24, offset: 0 }}>
                                                                 <input
-                                                                readOnly
+                                                                    readOnly
                                                                     value={major}
                                                                     className="major-search-result"
                                                                     onClick={() => {
@@ -777,12 +867,12 @@ export default function SignUpForm() {
                             </Row>
                             <Row>
                                 <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 24, offset: 0 }} >
-                                    <select onChange={(e) => { 
-                                        if(e.target.value == "졸업생") setSemester("10");
+                                    <select onChange={(e) => {
+                                        if (e.target.value == "졸업생") setSemester("10");
                                         else setSemester(e.target.value[0].toString());
                                     }} name="semester"
                                         style={{
-                                            width: "100%", height : "40px", border: "none",
+                                            width: "100%", height: "40px", border: "none",
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                             backgroundColor: "transparent"
                                         }}>
@@ -802,7 +892,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 2 }}>
                             <select name="semester"
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}>
@@ -815,7 +905,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -824,7 +914,7 @@ export default function SignUpForm() {
                         <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 6, offset: 1 }}>
                             <input
                                 style={{
-                                    width: "100%", height : "40px", border: "none",
+                                    width: "100%", height: "40px", border: "none",
                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                     backgroundColor: "transparent"
                                 }}
@@ -832,115 +922,123 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={{ span: 4, offset: 2 }}>
+                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 5, offset: 2 }}>
                             <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 인증</span>
                         </Col>
-                        <Col style={{position : "relative", top : -3.5, marginLeft : "5px"}} xs={{ span: 5, offset: 0 }}>
-                            <Popover 
-                            trigger="click"
-                            content={
-                                <div>
-                                    <span>학교 이메일 인증</span>
-                                    <ul>
-                                        <li>________@sogang.ac.kr 형식의 이메일로 학교 인증을 해주세요.</li>
-                                        <li>https://mail.sogang.ac.kr 혹은 SAINT 로그인 후 메일함을 확인해주세요.</li>
-                                        <li>북을에서 전송한 인증번호 4자리를 입력해주세요.</li>
-                                    </ul>
-                                    <span>학생증 인증</span>
-                                    <ul>
-                                        <li>실물(모바일) 학생증 혹은 SAINT 첫 화면을 촬영(캡쳐)하여 업로드해주세요.</li>
-                                        <li>학생증 인증 시 회원가입 승인까지 최대 2일이 소요될 수 있습니다</li>
-                                    </ul>
-                                </div>
-                            } title="학교 인증 도움말">
-                                <Icon type="question-circle"/>
+                        <Col style={{ position: "relative", top: -3.5, marginLeft: "5px" }} xs={{ span: 5, offset: 0 }}>
+                            <Popover
+                                trigger="click"
+                                content={
+                                    <div>
+                                        <span>학교 이메일 인증</span>
+                                        <ul>
+                                            <li>________@sogang.ac.kr 형식의 이메일로 학교 인증을 해주세요.</li>
+                                            <li>https://mail.sogang.ac.kr 혹은 SAINT 로그인 후 메일함을 확인해주세요.</li>
+                                            <li>북을에서 전송한 인증번호 4자리를 입력해주세요.</li>
+                                        </ul>
+                                        <span>학생증 인증</span>
+                                        <ul>
+                                            <li>실물(모바일) 학생증 혹은 SAINT 첫 화면을 촬영(캡쳐)하여 업로드해주세요.</li>
+                                            <li>학생증 인증 시 회원가입 승인까지 최대 2일이 소요될 수 있습니다</li>
+                                        </ul>
+                                    </div>
+                                } title="학교 인증 도움말">
+                                <Icon type="question-circle" />
                             </Popover>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col style={{ marginTop: "20px", marginBottom: "20px" }} xs={{ span: 10, offset: 2 }}>
+                    <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
+                        <Col xs={{ span: 10, offset: 2 }}>
                             <button
                                 type="button"
+                                class={authType == 0 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
                                 style={{
                                     width: "100%",
                                     color: "#666666",
-                                    backgroundColor: "#b0dae2",
                                     border: "#666666 0.3px solid",
+                                    borderRight: "none",
                                     borderTopLeftRadius: "8px",
                                     borderBottomLeftRadius: "8px",
+                                    borderTopRightRadius: "0px",
+                                    borderBottomRightRadius: "0px",
                                     fontSize: "12px",
                                     height: "36px"
                                 }}
-                            >학교 이메일 인증</button>
+                                onClick={() => setAuthType(0)}>학교 이메일 인증</button>
                         </Col>
-                        <Col style={{ marginTop: "20px", marginBottom: "20px" }} xs={{ span: 10, offset: 0 }}>
+                        <Col xs={{ span: 10, offset: 0 }}>
                             <button
                                 type="button"
+                                class={authType == 1 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
                                 style={{
                                     width: "100%",
                                     color: "#666666",
                                     border: "#666666 0.3px solid",
+                                    borderLeft: "none",
                                     borderTopRightRadius: "8px",
                                     borderBottomRightRadius: "8px",
+                                    borderTopLeftRadius: "0px",
+                                    borderBottomLeftRadius: "0px",
                                     fontSize: "12px",
                                     height: "36px"
                                 }}
-                            >학생증 인증</button>
+                                onClick={() => { setAuthType(1) }}>학생증 인증</button>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col xs={{ span: 8, offset: 2 }}>
-                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 웹메일</span>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
-                            <input
-                                style={{
-                                    width: "100%", height : "40px", border: "none",
-                                    borderBottom: "#44a0ac solid 1.0px",
-                                    backgroundColor: "transparent"
-                                }}
-                                onChange={(e) => {
-                                    setCampusWebMail(e.target.value);
-                                }} />
-                                {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
-                        </Col>
-                    </Row>
+                    {authType == 0 ?
+                        <div>
 
-                    {
-                        emailAuthStep == 0 ?
+                            <Row>
+                                <Col xs={{ span: 8, offset: 2 }}>
+                                    <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학교 웹메일</span>
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 20, offset: 2 }} >
+                                    <input
+                                        style={{
+                                            width: "100%", height: "40px", border: "none",
+                                            borderBottom: "#44a0ac solid 1.0px",
+                                            backgroundColor: "transparent"
+                                        }}
+                                        onChange={(e) => {
+                                            setCampusWebMail(e.target.value);
+                                        }} />
+                                    {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
+                                </Col>
+                            </Row>
                             <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
                                 <Col xs={{ span: 20, offset: 2 }}>
                                     <button
                                         type="button"
                                         style={{
                                             padding: "0",
-                                            width: "100%", 
+                                            width: "100%",
                                             background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                             border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                         }}
                                         onClick={() => {
 
-                                            if(campusWebMail.length > 0 && 
-                                            campusWebMail.indexOf("sogang.ac.kr") != -1){
-                                                
+                                            if (campusWebMail.length > 0 &&
+                                                campusWebMail.indexOf("sogang.ac.kr") != -1) {
+
                                                 const userName = getValues().name;
                                                 const email = getValues().email;
                                                 const campusEmail = campusWebMail;
-    
+
                                                 sendAuthCode(userName, email, campusEmail);
                                             }
                                         }}
                                     >인증번호 보내기</button>
                                 </Col>
                             </Row>
-                            : emailAuthStep == 1 ?
+                            {authType == 0 && emailAuthStep == 1 ?
                                 <Row style={{ marginTop: "-70px", marginBottom: "70px" }}>
                                     <Col xs={{ span: 14, offset: 2 }}>
                                         <input
                                             style={{
-                                                width: "100%", height : "40px", border: "none",
+                                                width: "100%", height: "40px", border: "none",
                                                 borderBottom: "#44a0ac solid 1.0px",
                                                 backgroundColor: "transparent"
                                             }}
@@ -968,8 +1066,8 @@ export default function SignUpForm() {
                                             }}
                                         >인증</button>
                                     </Col>
-                                </Row>
-                                :
+                                </Row> : null}
+                            {authType == 0 && emailAuthStep == 2 ?
                                 <div>
                                     <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
@@ -996,15 +1094,76 @@ export default function SignUpForm() {
                                             />
                                         </Col>
                                     </Row>
-                                </div>
-                    }
+                                </div> : null}</div>
+                        : authType == 1 ?
+                            <div>
+                                <Row>
+                                    <Col xs={{ span: 8, offset: 2 }}>
+                                        <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>학생증 등록</span>
+                                    </Col>
+                                </Row>
+                                <Row style={{ marginTop: "20px", marginBottom: "20px" }}>
+                                    <Col xs={{ span: 2, offset: 2 }}>
+                                        <input id="selectedFile" type="file" accept="image/*;capture=camera"
+                                            onChange={(e) => {
+
+                                                if (userImages.length < 3) {
+
+                                                    const file = e.target.files[0];
+                                                    setUserImages(userImages => [...userImages, file]);
+
+                                                    let reader = new FileReader();
+
+                                                    reader.onloadend = () => {
+                                                        setImageUrls(imageUrls => [...imageUrls, reader.result])
+                                                    }
+
+                                                    reader.readAsDataURL(file)
+
+                                                }
+                                            }}
+                                            style={{ display: "none" }}
+                                        />
+                                        <div onClick={() => {
+                                            if (userImages.length < 3)
+                                                document.getElementById('selectedFile').click()
+                                        }}
+                                            style={{
+                                                border: "#44a0ac 1px solid",
+                                                height: "65px", width: "65px",
+                                                position: "relative", borderRadius: "10px"
+                                            }}>
+                                            <Icon type="camera"
+                                                style={{
+                                                    fontSize: "5vh", position: "absolute",
+                                                    textAlign: "center", width: "100%", transform: "translate(-50%, -50%)",
+                                                    top: "50%", left: "50%", color: "#44a0ac"
+                                                }} />
+                                        </div>
+                                    </Col>
+                                    {imageDiv != undefined ? imageDiv : null}
+                                </Row>
+                                <Row style={{ marginBottom: "100px" }}>
+                                    <Col xs={{ span: 20, offset: 2 }}>
+                                        <input style={{
+                                            padding: "0",
+                                            width: "100%",
+                                            background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                            border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                        }}
+                                            type="submit" value="가입완료"
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
+                            : null}
                 </div>
             </form>
             <div class={formStyle[2]}>
 
                 {step == 2 ?
 
-                    <Row style={{ marginTop: "50%"}}>
+                    <Row style={{ marginTop: "50%" }}>
                         <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
                             <BeatLoader
                                 size={"15px"}
@@ -1031,21 +1190,23 @@ export default function SignUpForm() {
                             </Row>
                             <Row>
                                 <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "30px" }}>
-                                    <h5 style={{ textAlign: "center", color: "#44a0ac", fontWeight: "800" }}>회원 가입 완료!</h5>
+                                    <h5 style={{ textAlign: "center", color: "#44a0ac", fontWeight: "800" }}>
+                                        {authType == 0 ? "회원 가입 완료!" : "회원가입 신청이 완료되었습니다! 학생증 인증 확인까지 최대 24시간이 소요됩니다."}
+                                    </h5>
                                 </Col>
                             </Row>
                             <Row style={{ marginTop: "10vh" }}>
                                 <Col xs={{ span: 20, offset: 2 }}>
-                                    <Link to="/mypage">
+                                    <Link to={authType == 0 ? "/mypage" : "/"}>
                                         <button style={{
                                             padding: "0",
                                             width: "100%",
                                             background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
                                             border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
                                         }}
-                                        onClick={()=>{
-                                        }}
-                                        >마이페이지로</button>
+                                            onClick={() => {
+                                            }}
+                                        >{authType == 0 ? "마이페이지로" : "홈으로"}</button>
                                     </Link>
                                 </Col>
                             </Row>

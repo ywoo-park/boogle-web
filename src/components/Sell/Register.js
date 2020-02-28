@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Row, Col, Icon, Divider } from 'antd';
+import { Row, Col, Icon, Divider, Modal } from 'antd';
 import Search from '../Navbar/Search';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Redirect, Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
 import CurrencyInput from 'react-currency-input';
+import { BeatLoader } from "react-spinners";
 import axios from 'axios';
 import './Register.css';
 
@@ -14,19 +15,15 @@ export default function Register() {
     const [isFocused, setIsFocused] = useState();
     const [isFocusedClass, setIsFocusedClass] = useState();
     const [selectedItem, setSelectedItem] = useState();
-    const [dealType, setDealType] = useState(0);
+    const [dealType, setDealType] = useState(1);
     const [contactType, setContactType] = useState(0);
 
     const [userImages, setUserImages] = useState([]);
-    const [userImagesDiv, setUserImagesDiv] = useState();
     const [imageUrls, setImageUrls] = useState([]);
     const [imageDiv, setImageDiv] = useState();
 
-    const initialQualityOut = [false, false, false, false, false];
-    const initialQualityIn = [false, false, false, false, false, false];
-
-    const [qualityOut, setQualityOut] = useState(initialQualityOut);
-    const [qualityIn, setQualityIn] = useState(initialQualityIn);
+    const [qualityGeneral, setQualityGeneral] = useState("CLEAN");
+    const [qualityExtra, setQualityExtra] = useState([false, false, false, false, false, false, false ,false]);
 
     const [regiPrice, setRegiPrice] = useState(0);
     const [isFinalSubmit, setIsFinalSubmit] = useState(false);
@@ -36,6 +33,21 @@ export default function Register() {
     const [sellItemReq, setSellItemReq] = useState();
 
     const [didMount, setDidMount] = useState(false);
+
+    const [isQualityOutFilled, setIsQualityOutFilled] = useState(true);
+    const [isRegiImagesFilled, setIsRegiImagesFilled] = useState(true);
+
+    const [userBankAccountList, setUserBankAccountList] = useState([]);
+    const [bankList, setBankList] = useState([]);
+
+    const [selectedBankId, setSelectedBankId] = useState("")
+    const [selectedUserBankAccount, setSelectedUserBankAccount] = useState(null);
+
+    const [clickedAddUserAccount, setClickedAddUserAccount] = useState(false);
+
+    const [modal, setModal] = useState(false);
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const { register, handleSubmit } = useForm();
 
@@ -48,9 +60,22 @@ export default function Register() {
         setResdata(resdata);
     }
 
-    React.useEffect(() => {
-        console.log("changed");
 
+    const showModal = e => {
+        setModal(true);
+      }
+    
+      const closeModal = e => {
+        setModal(false);
+      }
+
+    React.useEffect(() => {
+        getUserBankAccount();
+        getBankInfo();
+    }, [])
+
+
+    React.useEffect(() => {
         setImageDiv(imageUrls.map((i, index) => (
             <Col xs={{ span: 4, offset: 1 }}>
                 <div
@@ -103,8 +128,8 @@ export default function Register() {
 
             data.dealType = dealType;
             data.contactType = contactType;
-            data.qualityIn = qualityIn
-            data.qualityOut = qualityOut
+            data.qualityGeneral = qualityGeneral;
+            data.qualityExtra = qualityExtra;
             data.regiPrice = regiPrice;
             data.regiImages = userImages;
 
@@ -115,22 +140,30 @@ export default function Register() {
                 publisher: data.publisher,
                 pubdate: data.pubdate.substring(0, 4) + data.pubdate.substring(6, 8),
                 price: (data.price.replace(",", "")).replace(" 원", ""),
-                regiPrice: data.regiPrice,
+                originalPrice : data.regiPrice,
                 regiImageUrlList: [],
                 dealType: data.dealType,
-                qualityIn: data.qualityIn,
-                qualityOut: data.qualityOut,
+                qualityGeneral: data.qualityGeneral,
+                qualityExtraList: data.qualityExtra,
                 sellerId: 0,
                 comment: data.comment,
                 imageUrl: selectedItem.imageUrl,
-                regiTime: new Date()
+                regiTime : new Date(),
+                sellerBankAccountId : selectedUserBankAccount._id
             })
 
             setImageFileList(data.regiImages);
+
         }
     };
 
     const saveSellItem = (sellItem, imageFileList) => {
+
+        setStep(3);
+
+        setTimeout(() => {
+            setStep(4);
+        }, 3000);
 
         let form = new FormData();
         form.append('sellItemString', JSON.stringify(sellItem));
@@ -148,106 +181,71 @@ export default function Register() {
             }
         })
             .then((response) => {
-                console.log(response);
-                setStep(3);
             })
             .catch((error) => {
-                console.log(error);
             })
     }
+
+    
+    const getUserBankAccount = (itemId) => {
+        axios.get('http://13.124.113.72:8080/userBankAccount/sell', {
+            headers: { Authorization: localStorage.getItem('token') }
+          })
+        .then((response) => {
+            if(response.data.data.length > 0){
+                setUserBankAccountList(response.data.data);
+                setSelectedUserBankAccount(response.data.data[0].userBankAccount);
+            }
+        });
+    }
+
+    const getBankInfo = () => {
+        axios.get('http://13.124.113.72:8080/bank')
+          .then((response) => {
+              setBankList(response.data.data);
+          });
+      }
+
+      const onUserBankAccountSubmit = data => {
+        const newAcc = {
+          bankId: selectedBankId,
+          accountNumber: data.accountNumber,
+          depositorName: data.depositorName
+        };
+        sendNewAcc(newAcc);
+      };
+    
+      const sendNewAcc = async data => {
+        axios
+          .post("http://13.124.113.72:8080/userBankAccount", data, {
+            headers: { Authorization: localStorage.getItem('token') }
+          })
+          .then(res => {
+              getUserBankAccount();
+              closeModal();
+          });
+      };
+
 
     return (
         <section id="register-container">
             {
-                step == 0 ?
-                    <div stlye={{ overflow: "scroll" }}>
-                        <Row style={{ marginTop: "30px" }}>
-                            <Col xs={{ span: 8 }}>
-                                <Link to="/">
-                                    <img style={{
-                                        width: "32px",
-                                        height: "auto",
-                                        marginLeft: "25%",
-                                    }}
-                                        src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
-                                </Link>
-                            </Col>
-                            <Col style={{ textAlign: "center", padding: "auto" }} xs={{ span: 8 }}>
-                                <h5 style={{ color: "#707070" }}>판매하기</h5>
-                            </Col>
-                            <Col xs={{ span: 8 }}>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ span: 24 }}>
-                                <div onClick={() => { setStep(1) }} style={{
-                                    width: "35vh", height: "35vh",
-                                    backgroundSize: "cover",
-                                    backgroundImage: "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
-                                    margin: "auto", marginTop: "4vh", marginBottom: "2vh", borderRadius: "50%",
-                                    filter: "grayscale(100%)",
-                                    opacity: "0.4"
-                                }}>
-                                    <Row>
-                                        <Col style={{ marginTop: "10vh" }} xs={{ span: 6, offset: 9 }}>
-                                            <Icon style={{
-                                                fontSize: "9vh", color: "white"
-                                            }} type="camera" />
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col style={{ padding: "auto", marginTop: "1.0vh" }} xs={{ span: 24 }}>
-                                            <h6 style={{ fontSize: "2.0vh", color: "white", textAlign: "center" }}>바코드 스캔</h6>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ offset: 2, span: 20 }}>
-                                <Divider />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={{ span: 24 }}>
-                                <div onClick={() => { setStep(1) }} style={{
-                                    width: "35vh", height: "35vh",
-                                    backgroundSize: "cover",
-                                    backgroundImage: "url('https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/sell_button_2.png')",
-                                    margin: "auto", marginTop: "4vh", marginBottom: "2vh", borderRadius: "50%"
-                                }}>
-                                    <Row>
-                                        <Col style={{ marginTop: "10vh" }} xs={{ span: 6, offset: 9 }}>
-                                            <Icon style={{
-                                                fontSize: "8vh", color: "white"
-                                            }} type="search" />
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col style={{ padding: "auto", marginTop: "1.0vh" }} xs={{ span: 24 }}>
-                                            <h6 style={{ fontSize: "2.0vh", color: "white", textAlign: "center" }}>검색 또는 직접 입력</h6>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div> :
                     step == 1 ?
                         <div>
                             <div id="navbar">
                                 <header>
                                     <Row id="navbar-search-row-after-focused">
                                         <Col xs={{ span: 4 }}>
-                                            <img style={{
-                                                width: "22px",
-                                                height: "auto",
-                                                marginLeft: "40%",
-                                                filter: "brightness(0) invert(1)"
-                                            }}
-                                                onClick={() => {
-                                                    { setStep(0) }
+                                            <Link to="/">
+                                                <img style={{
+                                                    width: "22px",
+                                                    height: "auto",
+                                                    marginLeft: "40%",
+                                                    filter: "brightness(0) invert(1)"
                                                 }}
-                                                src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                                                    src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
+                                            </Link>
+
                                         </Col>
                                         <Col xs={{ span: 18, offset: 0 }} >
                                             <Search focusOnSearch={focusOnSearch}
@@ -319,16 +317,28 @@ export default function Register() {
                                                             </small>
                                                         </Col>
                                                         <Col xs={{ span: 12 }}>
-                                                            <button style={{
-                                                                borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                                                                color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
-                                                                padding: "auto"
-                                                            }}
-                                                                onClick={() => {
-                                                                    setSelectedItem(value);
-                                                                    setStep(2);
+                                                            {
+                                                                localStorage.getItem('token') != null ? 
+                                                                <button style={{
+                                                                    borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                                    color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                                    padding: "auto"
                                                                 }}
-                                                            ><span>판매 등록하기</span></button>
+                                                                    onClick={() => {
+                                                                        setSelectedItem(value);
+                                                                        setStep(2);
+                                                                    }}
+                                                                ><span>판매 등록하기</span></button>
+                                                                :
+                                                                <Link to="/signin">
+                                                                    <button style={{
+                                                                        borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                                        color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                                        padding: "auto"
+                                                                    }}
+                                                                    ><span>판매 등록하기</span></button>
+                                                                </Link>
+                                                            }
                                                         </Col>
                                                     </Row>
                                                 </Col>
@@ -338,7 +348,7 @@ export default function Register() {
                                 })
                                 :
                                 <div style={{ height: "100%" }}>
-                                    <div style={{ marginTop: "50%" }}>
+                                    <div style={{ marginTop: "25%" }}>
                                         <h5 style={{
                                             textAlign: "center",
                                             color: "gray", fontWeight: "600"
@@ -465,13 +475,13 @@ export default function Register() {
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>거래방식</span>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>거래방식<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 10, offset: 2 }}>
                                             <button
-                                                class={dealType == 0 ? "register-button-active" : "register-button"}
+                                                class={dealType == 1 ? "register-button-active" : "register-button"}
                                                 style={{
                                                     width: "100%",
                                                     color: "#666666",
@@ -484,11 +494,11 @@ export default function Register() {
                                                     fontSize: "12px",
                                                     height: "36px"
                                                 }}
-                                                onClick={() => setDealType(0)}>직거래</button>
+                                                onClick={() => setDealType(1)}>북을박스</button>
                                         </Col>
                                         <Col xs={{ span: 10, offset: 0 }}>
                                             <button
-                                                class={dealType == 1 ? "register-button-active" : "register-button"}
+                                                class={dealType == 0 ? "register-button-active" : "register-button"}
                                                 style={{
                                                     width: "100%",
                                                     color: "#666666",
@@ -501,12 +511,164 @@ export default function Register() {
                                                     fontSize: "12px",
                                                     height: "36px"
                                                 }}
-                                                onClick={() => { setDealType(1) }}>북을박스</button>
+                                                onClick={() => { setDealType(0)}}>직거래</button>
+                                        </Col>
+                                    </Row>
+                                    {
+                                        dealType == 1 ?
+                                        <div>
+                                        <Row>
+                                        <Col xs={{ span: 5, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>계좌선택<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
-                                        <Col xs={{ span: 10, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>사진(최대 3장)</span>
+                                        <Col xs={{ span: 20, offset: 2 }}>
+                                            {
+                                                userBankAccountList.length == 0?
+                                                <div>
+                                                    {clickedAddUserAccount? 
+                                                        <div>
+                                                            <select onChange={(e) => {
+                                                                setSelectedBankId(e.target.value)
+                                                            }} name="bankList"
+                                                                style={{
+                                                                    width: "100%", height: "40px", border: "none",
+                                                                    borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
+                                                                    backgroundColor: "transparent"
+                                                                }}>
+                                                                {
+                                                                    bankList.length > 0 && bankList.map((value, index) => {
+                                                                        return <option value={value._id} style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>
+                                                                            {value.name}</option>
+                                                                    })}
+                                                            </select>
+                                                <form onSubmit={handleSubmit(onUserBankAccountSubmit)}>
+                                                    <Row style={{marginTop : "10px"}}>
+                                                        <Col xs={{ span: 24 }}>
+                                                            <label
+                                                            style={{
+                                                                width : "100%",
+                                                                color: "rgba(51, 158, 172, 0.9)",
+                                                                fontWeight: "800"
+                                                            }}
+                                                            >
+                                                            계좌번호
+                                                            </label>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row style={{ marginTop : "-10px", marginBottom: "10px" }}>
+                                                        <Col xs={{ span: 24 }}>
+                                                            <input
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "40px",
+                                                                border: "none",
+                                                                borderBottom: "#44a0ac solid 1.0px",
+                                                                backgroundColor: "transparent",
+                                                            }}
+                                                            name="accountNumber"
+                                                            ref={register({ required: true })}
+                                                            ></input>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row id="ownerName">
+                                                    <Col>
+                                                        <Row>
+                                                        <Col xs={{ span: 24 }}>  
+                                                            <label
+                                                            style={{
+                                                                color: "rgba(51, 158, 172, 0.9)",
+                                                                fontWeight: "800"
+                                                            }}
+                                                            >
+                                                            예금주
+                                                            </label>
+                                                        </Col>
+                                                        </Row>
+                                                        <Row>
+                                                        <Col style={{ marginTop : "-10px", marginBottom: "10px" }} xs={{ span: 24 }}>
+                                                            <input
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "40px",
+                                                                border: "none",
+                                                                borderBottom: "#44a0ac solid 1.0px",
+                                                                backgroundColor: "transparent",
+                                                            }}
+                                                            xs={{ span: 20, offset: 2 }}
+                                                            name="depositorName"
+                                                            ref={register({ required: true })}
+                                                            ></input>
+                                                        </Col>
+                                                        </Row>
+                                                    </Col>
+                                                    </Row>
+                                                    <Row style={{ marginTop: "10px", marginBottom: "10px" }}>
+                                                    <Col xs={{ span : 24 }}>
+                                                        <input
+                                                        style={{
+                                                            padding: "0",
+                                                            width: "100%",
+                                                            background: "rgba(51, 158, 172, 0.9)",
+                                                            color: "#ffffff",
+                                                            border: "none",
+                                                            fontSize: "15px", height: "35px", width: "100%",
+                                                            padding: "0", borderRadius : "16px"
+                                                        }}
+                                                        type="submit"
+                                                        onClick={() => {
+                                                            // window.location.reload();
+                                                        }}
+                                                        value="계좌 등록하기"
+                                                        />
+                                                    </Col>
+                                                    </Row>
+                                                </form>                                                                      
+                                                    </div>
+                                                    :
+                                                    <div>
+                                                        <button style={{
+                                                            padding: "0",
+                                                            width: "100%",
+                                                            background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                                                            border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
+                                                        }}
+                                                        onClick={() => {setClickedAddUserAccount(true)}}>
+                                                            <span>계좌 등록하기</span>
+                                                        </button>    
+                                                    </div>}
+                                                </div>
+                                                :
+                                                <select onChange={(e) => {
+                                                    setSelectedUserBankAccount(e.target.value);
+                                                }} 
+                                                value = {selectedUserBankAccount}
+                                                name="semester"
+                                                    style={{
+                                                        width: "100%", height: "40px", border: "none",
+                                                        borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
+                                                        backgroundColor: "transparent"
+                                                    }}>
+                                                    {
+                                                        userBankAccountList.length > 0 && userBankAccountList.map((value, index) => {
+                                                            return <option value={value} style={{ width: "100%", border: "rgba(51, 158, 172, 0.9) solid 2px", fontSize: "10px" }} key={index}>
+                                                                {value.userBankAccount.accountNumber + " (" + value.bankName + ")"}</option>
+                                                        })}
+                                                </select>
+                                            }
+
+                                        </Col>
+                                    </Row>
+                                    </div>
+                                    : null
+
+                                    }
+                                   
+                                    <Row style={{ marginBottom: "10px" }}>
+                                        <Col xs={{ span: 22, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>사진(최대 3장)<span style={{color : "#e95513"}}>*</span></span>
+                                            {!isRegiImagesFilled && <p style={{ marginBottom: "-10px", fontSize : "12px" }}>1장 이상의 사진을 등록해 주세요.</p>}
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
@@ -551,137 +713,97 @@ export default function Register() {
                                         {imageDiv != undefined ? imageDiv : null}
                                     </Row>
                                     <Row style={{marginBottom: "10px" }}>
-                                        <Col xs={{ span: 8, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(외관)</span>
+                                        <Col xs={{ span: 20, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(택 1)<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
                                         <Col xs={{ span: 5, offset: 2 }} >
                                             <button
-                                                class={qualityOut[0] == true ? "register-button-active" : "register-button"}
+                                                class={qualityGeneral === "CLEAN" ? "register-button-active" : "register-button"}
                                                 onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[0] == false) old[0] = true
-                                                    else old[0] = false
-                                                    setQualityOut(old)
+                                                    setQualityGeneral("CLEAN");
                                                 }}
                                                 style={{fontSize : "12px"}}
                                             >깨끗</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
-                                                class={qualityOut[1] == true ? "register-button-active" : "register-button"}
+                                                class={qualityGeneral === "ALMOST_CLEAN" ? "register-button-active" : "register-button"}
                                                 onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[1] == false) old[1] = true
-                                                    else old[1] = false
-                                                    setQualityOut(old)
+                                                    setQualityGeneral("ALMOST_CLEAN");
                                                 }}
                                                 style={{fontSize : "12px"}}
-                                                >이름기입</button>
+                                                >대체로 깨끗</button>
                                         </Col>
                                         <Col xs={{ span: 5, offset: 1 }}>
                                             <button
-                                                class={qualityOut[2] == true ? "register-button-active" : "register-button"}
+                                                class={qualityGeneral === "USED" ? "register-button-active" : "register-button"}
                                                 onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[2] == false) old[2] = true
-                                                    else old[2] = false
-                                                    setQualityOut(old)
-                                                }}>긁힘/접힘</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 2 }}>
-                                            <button
-                                                class={qualityOut[3] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[3] == false) old[3] = true
-                                                    else old[3] = false
-                                                    setQualityOut(old)
-                                                }}>찢어짐</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityOut[4] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityOut];
-                                                    if (old[4] == false) old[4] = true
-                                                    else old[4] = false
-                                                    setQualityOut(old)
-                                                }}>물에젖음</button>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ marginBottom: "10px" }}>
-                                        <Col xs={{ span: 8, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(내부)</span>
-                                        </Col>
-                                    </Row>
-                                    <Row style={{ marginBottom: "10px" }}>
-                                        <Col xs={{ span: 5, offset: 2 }} >
-                                            <button
-                                                class={qualityIn[0] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[0] == false) old[0] = true
-                                                    else old[0] = false
-                                                    setQualityIn(old)
+                                                    setQualityGeneral("USED");
                                                 }}
-                                            >깨끗</button>
+                                                style={{fontSize : "12px"}}
+                                                >사용감 많음</button>
                                         </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[1] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[1] == false) old[1] = true
-                                                    else old[1] = false
-                                                    setQualityIn(old)
-                                                }}>밑줄</button>
+                                    </Row>
+                                    <Row style={{ marginBottom: "10px" }}>
+                                        <Col xs={{ span: 16, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>기타(중복 선택 가능)</span>
                                         </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[2] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[2] == false) old[2] = true
-                                                    else old[2] = false
-                                                    setQualityIn(old)
-                                                }}>연필</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 2 }}>
-                                            <button
-                                                class={qualityIn[3] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[3] == false) old[3] = true
-                                                    else old[3] = false
-                                                    setQualityIn(old)
-                                                }}>볼펜/형광펜</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[4] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[4] == false) old[4] = true
-                                                    else old[4] = false
-                                                    setQualityIn(old)
-                                                }}>문제풀음</button>
-                                        </Col>
-                                        <Col xs={{ span: 5, offset: 1 }}>
-                                            <button
-                                                class={qualityIn[5] == true ? "register-button-active" : "register-button"}
-                                                onClick={() => {
-                                                    let old = [...qualityIn];
-                                                    if (old[5] == false) old[5] = true
-                                                    else old[5] = false
-                                                    setQualityIn(old)
-                                                }}>물에젖음</button>
-                                        </Col>
+                                    </Row>
+                                    <Row style={{ marginBottom: "10px" }}>
+                                        {
+                                            [["SCRATCHED_AND_FOLDED", "긁힘"], ["UNDERLINED", "밑줄"], ["SOLVED", "푼제 풂"], ["NAME_WRITTEN", "이름 기입"], 
+                                            ["WET", "젖음"], ["RIPPED", "찢어짐"], ["WRITTEN", "필기"], ["EXTRA", "기타 오염"]]
+                                                .map((qualityArr, index) => {
+                                                    if(index == 0 || index % 3 == 0){
+                                                        return (
+                                                            <Col xs={{ span: 5, offset: 2 }} style={{marginBottom : "5px"}}>
+                                                                <button
+                                                                    class={index < qualityExtra.length && 
+                                                                        qualityExtra[index] === true ? "register-button-active" : "register-button"}
+                                                                    onClick={() => {
+                                                                        if(qualityExtra[index] === true) {
+                                                                            let currQualityExtra= qualityExtra;
+                                                                            currQualityExtra[index] = false;
+                                                                            setQualityExtra(currQualityExtra);
+                                                                        }
+                                                                        else{
+                                                                            let currQualityExtra= qualityExtra;
+                                                                            currQualityExtra[index] = true;
+                                                                            setQualityExtra(currQualityExtra);
+                                                                        }
+                                                                    }}
+                                                                >{qualityArr[1]}</button>
+                                                        </Col>
+                                                        )
+                                                    }
+                                                    return (
+                                                        <Col xs={{ span: 5, offset: 1 }} style={{marginBottom : "5px"}}>
+                                                            <button
+                                                                class={index < qualityExtra.length && 
+                                                                    qualityExtra[index] === true ? "register-button-active" : "register-button"}
+                                                                onClick={() => {
+                                                                    if(qualityExtra[index] === true) {
+                                                                        let currQualityExtra= qualityExtra;
+                                                                        currQualityExtra[index] = false;
+                                                                        setQualityExtra(currQualityExtra);
+                                                                    }
+                                                                    else{
+                                                                        let currQualityExtra= qualityExtra;
+                                                                        currQualityExtra[index] = true;
+                                                                        setQualityExtra(currQualityExtra);
+                                                                    }
+                                                                }}
+                                                            >{qualityArr[1]}</button>
+                                                    </Col>
+                                                    );
+                                                })
+                                        }
                                     </Row>
                                     <Row>
-                                        <Col xs={{ span: 5, offset: 2 }}>
-                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>희망가격</span>
+                                        <Col xs={{ span: 8, offset: 2 }}>
+                                            <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>판매 희망가격<span style={{color : "#e95513"}}>*</span></span>
                                         </Col>
                                     </Row>
                                     <Row style={{ marginBottom: "10px" }}>
@@ -692,7 +814,7 @@ export default function Register() {
                                                 value={regiPrice}
                                                 onChangeEvent={(e) => {
                                                     let value = e.target.value;
-                                                    value = value.replace(",", "");
+                                                    value = value.replace(/,/g, "")
                                                     value = value.replace(" 원", "");
                                                     setRegiPrice(value)
                                                 }
@@ -723,13 +845,46 @@ export default function Register() {
                                                 border: "none", borderRadius: "14px", fontSize: "18px", height: "32px"
                                             }}
                                                 type="submit"
-                                                onClick={() => setIsFinalSubmit(true)}><span>판매 등록하기</span></button>
+                                                onClick={()=>{
+                                                    if(selectedUserBankAccount == null){
+                                                        setModalVisible(true);
+                                                    }
+                                                    else{
+                                                        setIsFinalSubmit(true);
+                                                    }
+                                                }}
+                                                >
+                                                    <span>판매 등록하기</span>
+                                            </button>
+                                                        <Modal
+                                                            title={null}
+                                                            footer={null}
+                                                            visible={modalVisible}
+                                                            onOk={()=>{setModalVisible(true)}}
+                                                            onCancel={()=>{setModalVisible(false)}}>
+                                                                <div>
+                                                                    <span>판매 등록을 위해서 계좌 등록 및</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span>선택을 필수적으로 진행해주세요.</span>
+                                                                </div>
+                                                                
+                                                          </Modal>
                                         </Col>
                                     </Row>
                                 </form>
                             </div>
-                            :
-                            step == 3 ?
+                            : step == 3 ? 
+                                <Row style={{ marginTop: "50%" }}>
+                                    <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
+                                        <BeatLoader
+                                            size={"15px"}
+                                            color={"#339eac"}
+                                            loading={true}
+                                        />
+                                    </Col>
+                                </Row>
+                            : step == 4 ?
                                 <div>
                                     <Row style={{ marginTop: "30px" }}>
                                         <Col xs={{ span: 8 }}>
