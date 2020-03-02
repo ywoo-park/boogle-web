@@ -23,14 +23,18 @@ import {
 
 class App extends Component {
   render() {
-    const warning = () => {
-      return <h1>모바일로 접속하세요.</h1>;
-    };
+    // const warning = () => {
+    //   return <h1>모바일로 접속하세요.</h1>;
+    // };
+    var appWidth;
+    if (isMobile) appWidth = "100%";
+    else if (isBrowser) appWidth = "600px";
 
-    if (isMobile) {
+    //if (isMobile) {
       return (
         <Router>
           <Switch>
+            <div id="app" style={{width: appWidth, margin: "auto"}}>
             <Route exact path="/" component={Home} />
             <Route path="/sell" component={Sell} />
             <Route path="/signup" component={SignUp} />
@@ -44,19 +48,20 @@ class App extends Component {
             <Route path="/accountSetting" component={AccountSetting} />
             <Route path="/admin" component={Admin} />
             <Route path="/signinSetting" component={SignInSetting} />
+            </div>
           </Switch>
         </Router>
       );
-    } else {
-      return (
-        <Router>
-          <Switch>
-            <Route exact path="/" component={warning}></Route>
-            <Route path="/admin" component={Admin}></Route>
-          </Switch>
-        </Router>
-      );
-    }
+    // } else {
+    //   return (
+    //     <Router>
+    //       <Switch>
+    //         <Route exact path="/" component={warning}></Route>
+    //         <Route path="/admin" component={Admin}></Route>
+    //       </Switch>
+    //     </Router>
+    //   );
+    // }
   }
 }
 export default App;
