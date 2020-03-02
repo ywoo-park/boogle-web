@@ -52,7 +52,7 @@ export default function CustomerCenter() {
                     <Icon type="phone" />
                 </Col>
                 <Col xs={{ offset: 2, span: 15 }}>
-                    <span>카카오톡으로 1:1 상담하기</span>
+                    <span>카카오톡 1:1 상담</span>
                 </Col>
                 <Col xs={{ offset: 2, span: 2 }}>
                     <Icon type="right" />
