@@ -88,7 +88,7 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 3
+        "transactionStep": 2
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
@@ -122,7 +122,7 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 3
+        "transactionStep": 2
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
@@ -682,7 +682,7 @@ export default function MyPageBanner() {
                               거래중
                             </Row>
                             }
-                            {value.transactionStep ===2 ?
+                            {value.transactionStep === 2 ?
                             <Row>
                             <button style={{
                               padding: "0",
@@ -1282,6 +1282,20 @@ export default function MyPageBanner() {
                               거래중
                             </Row>
                             }
+                            {value.transactionStep === 2 ?
+                            <Row>
+                            <button style={{
+                              padding: "0",
+                              width: "52px",
+                              height: "21px",
+                              background: "#075e92", color: "#ffffff",
+                              border: "none", borderRadius: "5px", fontSize: "10px",
+                              marginTop: "4px"
+                            }}
+                              onClick={() => { }}
+                            >수령 완료</button> {/*버튼 통신 필요*/}
+                          </Row>
+                          : null}
                             {value.transactionStep === 3 ?
                             <div>
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
