@@ -85,7 +85,7 @@ class Banner extends Component {
 
 
         {
-          this.state.mode == "sell" ?
+          this.state.mode === "sell" ?
             <Row style={{padding : "30px 0 30px 0"}}>
               <Col xs={{ span: 24 }}>
                 <div onClick={() => { this.props.history.push('/sell'); }} style={{
@@ -111,10 +111,10 @@ class Banner extends Component {
             </Row> : null
         }
         {
-          this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null 
-          && this.state.inDetail == false && this.state.isAlarmNeedSectionAppened == false ?
+          this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null 
+          && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === false ?
             
-          this.state.resdata.filter(r => r.regiPrice != "").map((value, index) => {
+          this.state.resdata.filter(r => r.regiPrice !== "").map((value, index) => {
               return (
                 <div>
                   <Row>
@@ -122,7 +122,7 @@ class Banner extends Component {
                   </Row>
                   <Row key={index} className="search-result-row"
                     onClick={() => {
-                      if (value.regiPrice != "") {
+                      if (value.regiPrice !== "") {
                         this.setState({ value: value });
                         this.setState({ inDetail: true });
                         this.getSellItemList(value.itemId);
@@ -158,8 +158,8 @@ class Banner extends Component {
                       <Row>
                         <Col style={{}} xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "12px" }}>
-                            {this.state.resdata != null && value.regiCount != 0 ? "재고 : " + value.regiCount + "부"
-                              : this.state.resdata != null && value.regiCount == 0 ? "재고 : 재고 없음"
+                            {this.state.resdata != null && value.regiCount !== 0 ? "재고 : " + value.regiCount + "부"
+                              : this.state.resdata != null && value.regiCount === 0 ? "재고 : 재고 없음"
                                 : null}
                           </small>
                         </Col>
@@ -178,13 +178,13 @@ class Banner extends Component {
                       <Row>
                         <Col xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "15px", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.regiPrice != "" ? "북을 판매가  : " : null}
+                            {this.state.resdata != null && value.regiPrice !== "" ? "북을 판매가  : " : null}
                             {this.state.resdata != null ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "15px" }}>
                                 <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
                               </small>
                               : null}
-                            {this.state.resdata != null && value.regiPrice != "" ?
+                            {this.state.resdata != null && value.regiPrice !== "" ?
                               <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                               null}
                           </small>
@@ -247,7 +247,7 @@ class Banner extends Component {
                         <Col style={{}} xs={{ span: 24 }}>
                           <small style={{ color: "#656565", fontSize: "1.75vh" }}>
                             {this.state.resdata != null && this.state.value.regiCount > 0 ? "재고 : " + this.state.value.regiCount.toString()
-                              : this.state.resdata != null && this.state.value.regiCount == 0 ? "재고 : 재고 없음"
+                              : this.state.resdata != null && this.state.value.regiCount === 0 ? "재고 : 재고 없음"
                                 : null}
                           </small>
                         </Col>
@@ -265,17 +265,17 @@ class Banner extends Component {
                       </Row>
 
                       {this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
-                        this.state.sellItemList != null && this.state.sellItemList.length != 0 ?
+                        this.state.sellItemList != null && this.state.sellItemList.length !== 0 ?
                         <Row style={{}}>
                           <Col xs={{ span: 24 }}>
                             <small style={{ color: "#656565", fontSize: "2.3vh", fontWeight: "500" }}>
-                              {this.state.resdata != null && this.state.value.regiPrice != "" ? "북을 판매가 : " : ""}
+                              {this.state.resdata != null && this.state.value.regiPrice !== "" ? "북을 판매가 : " : ""}
                               {this.state.resdata != null ?
                                 <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>
                                   <NumberFormat value={this.state.value.regiPrice} displayType={'text'} thousandSeparator={true} />
                                 </small>
                                 : null}
-                              {this.state.resdata != null && this.state.value.regiPrice != "" ?
+                              {this.state.resdata != null && this.state.value.regiPrice !== "" ?
                                 <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
                                 null}
                             </small>
@@ -290,7 +290,7 @@ class Banner extends Component {
                     <Col offset={1} span={22}><Divider /></Col>
                   </Row>
                   {this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
-                    this.state.sellItemList != null && this.state.sellItemList.length != 0 ?
+                    this.state.sellItemList != null && this.state.sellItemList.length !== 0 ?
                     this.state.sellItemList.map((value, index) => {
                       return (
                         <Link to={"/buy/detail/" + value._id}>
@@ -331,7 +331,7 @@ class Banner extends Component {
                                       textAlign: "center", padding: "auto"
                                     }} />
                                     &nbsp;  | &nbsp; {moment(value.date).add(9, 'hours').format('YYYY.MM.DD')}
-                                    &nbsp;  | &nbsp; {value.dealType == 0 ? "직거래" : "북을박스 거래"}
+                                    &nbsp;  | &nbsp; {value.dealType === 0 ? "직거래" : "북을박스 거래"}
                                   </small>
                                 </Col>
                               </Row>
@@ -343,8 +343,8 @@ class Banner extends Component {
                 </div>
                 : null}
 
-        {this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null 
-          && this.state.inDetail == false && this.state.isAlarmNeedSectionAppened == false ? 
+        {this.state.mode === "buy" && this.state.isFocused && this.state.resdata !== null 
+          && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === false ? 
           <div>
             <Row>
               <Col offset={1} span={22}><Divider /></Col>
@@ -385,9 +385,9 @@ class Banner extends Component {
           </div>
           
           : null}
-        {this.state.mode == "buy" && this.state.isFocused && this.state.resdata != null 
-          && this.state.inDetail == false && this.state.isAlarmNeedSectionAppened == true ? 
-          this.state.resdata.filter(r => r.regiPrice == "").map((value, index) => {
+        {this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null 
+          && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === true ? 
+          this.state.resdata.filter(r => r.regiPrice === "").map((value, index) => {
             return (
               <div>
                 <Row>
@@ -395,7 +395,7 @@ class Banner extends Component {
                 </Row>
                 <Row key={index} className="search-result-row"
                   onClick={() => {
-                    if (value.regiPrice != "") {
+                    if (value.regiPrice !== "") {
                       this.setState({ value: value });
                       this.setState({ inDetail: true });
                       this.getSellItemList(value.itemId);
@@ -450,7 +450,7 @@ class Banner extends Component {
           )})
           : null}
         {
-          this.state.mode == "buy" && this.state.isFocused == false?
+          this.state.mode === "buy" && this.state.isFocused === false?
             <div id="banner-list">
               <Row clasnsName="banner-list-title" style={{ marginBottom: "3vh" }}>
                 <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>방금 올라온 책</h5></Col>

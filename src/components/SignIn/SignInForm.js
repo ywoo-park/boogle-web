@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
-import { Link, Redirect, withRouter } from "react-router-dom";
-import { Row, Col, Icon, Divider } from "antd";
+import { Link, Redirect } from "react-router-dom";
+import { Row, Col, Divider } from "antd";
 import Axios from "axios";
 import "./SignInForm.css";
 
@@ -13,7 +13,7 @@ export default function SignInForm(props) {
 
   React.useEffect(() => {
     if (
-      localStorage.getItem("token") != "" &&
+      localStorage.getItem("token") !== "" &&
       localStorage.getItem("token") != null
     ) {
       setIsSignedIn(true);
@@ -55,7 +55,7 @@ export default function SignInForm(props) {
         paddingTop: "30px"
       }}
     >
-      {isSignedIn == true ? <Redirect to="/mypage" /> : <div></div>}
+      {isSignedIn === true ? <Redirect to="/mypage" /> : <div></div>}
       <Link to="/">
         <Row style={{ marginBottom: "20px" }}>
           <Col xs={{ offset: 1, span: 2 }}>
