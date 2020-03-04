@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, ErrorMessage } from 'react-hook-form';
 import { Row, Col, Icon, List, Card, Divider, Rate, Radio, Modal, Popover } from 'antd';
-import Search from '../Navbar/Search';
-import { withRouter, Link } from "react-router-dom";
-import Camera from 'react-html5-camera-photo';
-import Multiselect from 'react-bootstrap-multiselect';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { Collapse } from 'react-collapse';
 import { BeatLoader } from "react-spinners";
+
+import host from '../../server-settings/ServerApiHost';
 
 import './SignUpForm.css';
 import '../Navbar/Search.css';
@@ -156,7 +155,7 @@ export default function SignUpForm() {
 
     const saveUser = () => {
 
-        axios.post('http://13.124.113.72:8080/users/signup', signUpReq, {
+        axios.post(host + '/users/signup', signUpReq, {
         })
             .then((response) => {
 
@@ -170,7 +169,7 @@ export default function SignUpForm() {
 
                     })
                     form.append('userCampusAuthImageFile', userImages[0])
-                    axios.post('http://13.124.113.72:8080/authImage', form, {
+                    axios.post(host + '/authImage', form, {
                         headers: { Authorization: response.data.data }
                     })
                         .then((response) => {
@@ -197,7 +196,7 @@ export default function SignUpForm() {
 
     const validateEmail = async (email) => {
         if (email != undefined) {
-            axios.get('http://13.124.113.72:8080/users/signup/validateEmail?email=' + email)
+            axios.get(host + '/users/signup/validateEmail?email=' + email)
                 .then((response) => {
 
                     if (response.data.status == 200 && validatedEmail == true) {
@@ -212,7 +211,7 @@ export default function SignUpForm() {
 
     const validateNickname = async (nickname) => {
         if (nickname != undefined) {
-            axios.get('http://13.124.113.72:8080/users/signup/validateNickname?nickname=' + nickname)
+            axios.get(host + '/users/signup/validateNickname?nickname=' + nickname)
                 .then((response) => {
 
                     if (response.data.status == 200 && validatedNickname == true) {
@@ -226,7 +225,7 @@ export default function SignUpForm() {
     }
 
     const searchMajor = (keyword) => {
-        axios.get('http://13.124.113.72:8080/majors?campus=서강대학교&keyword=' + keyword, {
+        axios.get(host + '/majors?campus=서강대학교&keyword=' + keyword, {
         })
             .then((response) => {
                 console.log(response.data.data);
@@ -241,7 +240,7 @@ export default function SignUpForm() {
 
         setEmailAuthStep(1);
 
-        axios.get('http://13.124.113.72:8080/users/signup/authNumber?userName=' + userName + "&email="
+        axios.get(host + '/users/signup/authNumber?userName=' + userName + "&email="
             + email + "&campusEmail=" + campusEmail, {
         })
             .then((response) => {
@@ -254,7 +253,7 @@ export default function SignUpForm() {
 
     const authEmail = (email, authCode) => {
 
-        axios.get('http://13.124.113.72:8080/users/signup/authEmail?email=' + email + "&authCode="
+        axios.get(host + '/users/signup/authEmail?email=' + email + "&authCode="
             + authCode, {
         })
             .then((response) => {
