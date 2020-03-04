@@ -17,7 +17,7 @@ export default function Search(props,{ location, match, history }) {
 
   const updateInputValue = (e) => {
 
-    if(searchType == "/sell"){
+    if(searchType === "/sell"){
       getAllSearchedSellItems(e.target.value);
     }
     else{
@@ -37,11 +37,11 @@ export default function Search(props,{ location, match, history }) {
 
           const items = response.data;
           
-          if(items!= undefined && items.length > 0 && keyword !=''){
+          if(items!== undefined && items.length > 0 && keyword !==''){
             setResdata(items);
           }
 
-          if(keyword == ''){
+          if(keyword === ''){
               setResdata(null);
           }
 
@@ -60,11 +60,11 @@ export default function Search(props,{ location, match, history }) {
 
           const items = response.data;
           
-          if(items!= undefined && items.length > 0 && keyword !=''){
+          if(items!== undefined && items.length > 0 && keyword !==''){
             setResdata(items);
           }
 
-          if(keyword == ''){
+          if(keyword === ''){
               setResdata(null);
           }
 
@@ -86,11 +86,11 @@ export default function Search(props,{ location, match, history }) {
 
           const items = response.data;
           
-          if(items!= undefined && items.length > 0 && keyword !=''){
+          if(items!== undefined && items.length > 0 && keyword !==''){
             setResdata(items);
           }
 
-          if(keyword == ''){
+          if(keyword === ''){
               setResdata(null);
           }
 
@@ -108,11 +108,11 @@ export default function Search(props,{ location, match, history }) {
 
           const items = response.data;
           
-          if(items!= undefined && items.length > 0 && keyword !=''){
+          if(items!== undefined && items.length > 0 && keyword !==''){
             setResdata(items);
           }
 
-          if(keyword == ''){
+          if(keyword === ''){
               setResdata(null);
           }
 
@@ -151,7 +151,7 @@ export default function Search(props,{ location, match, history }) {
             value={inputValue}
             onChange={evt => updateInputValue(evt)}
             onKeyPress = {(e) => {
-              if(e.key == 'Enter'){
+              if(e.key = 'Enter'){
                 e.preventDefault();
                 e.target.blur();
             }}}

@@ -4,12 +4,8 @@ import { withRouter, Link, Redirect } from "react-router-dom";
 import {
   Row,
   Col,
-  Icon,
-  Card,
   Modal,
-  Divider,
   Table,
-  Tag,
   Button,
   Input
 } from "antd";
