@@ -5,6 +5,8 @@ import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
 
+import host from '../../server-settings/ServerApiHost';
+
 export default function MyPageBanner() {
   const [name, setName] = useState("");
   const [likeList, setLikeList] = useState([]);
@@ -51,7 +53,7 @@ export default function MyPageBanner() {
   }, [needRender]);
 
   const getMyPage = () => {
-    axios.get('http://13.124.113.72:8080/myPage', {
+    axios.get(host + '/myPage', {
       headers: { Authorization: localStorage.getItem('token') }
     })
       .then((response) => {
@@ -150,7 +152,7 @@ export default function MyPageBanner() {
 
 
     const acceptBuyRequest = (sellItemId) => {
-      axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+      axios.get(host + '/transaction/step?sellItemId=' + sellItemId, {
       })
         .then((response) => {
             setNeedRender(true);
@@ -158,7 +160,7 @@ export default function MyPageBanner() {
     }
 
     const rejectBuyRequest = (sellItemId) => {
-      axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
+      axios.delete(host + '/transaction?sellItemId=' + sellItemId, {
       })
         .then((response) => {
             setNeedRender(true);
@@ -166,7 +168,7 @@ export default function MyPageBanner() {
     }
 
   const completePayment = (sellItemId) => {
-    axios.get('http://13.124.113.72:8080/transaction/payment?sellItemId=' + sellItemId, {
+    axios.get(host + '/transaction/payment?sellItemId=' + sellItemId, {
     })
       .then((response) => {
           setNeedRender(true);
@@ -175,7 +177,7 @@ export default function MyPageBanner() {
 
   const setBoogleBoxInfo = (boxId, boxPassword, sellItemId) => {
 
-    axios.post('http://13.124.113.72:8080/transaction/booglebox', {
+    axios.post(host + '/transaction/booglebox', {
       "sellItemId" : sellItemId,
       "id" : boxId,
       "password" : boxPassword
@@ -188,7 +190,7 @@ export default function MyPageBanner() {
 
   const changeTransactionStep = (sellItemId) => {
 
-    axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+    axios.get(host + '/transaction/step?sellItemId=' + sellItemId, {
       headers: { Authorization: localStorage.getItem('token') }
     })
 

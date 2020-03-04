@@ -15,6 +15,7 @@ import {
 } from "antd";
 import axios from "axios";
 import "./DashBoard.css";
+import host from '../../server-settings/ServerApiHost';
 
 export default function DashBoard() {
   const [isAuth, setIsAuth] = useState(false);
@@ -27,28 +28,28 @@ export default function DashBoard() {
   //   const [infoTable, setInfoTable] = useState()
 
   const getAllUsers = () => {
-    axios.get("http://13.124.113.72:8080/admin/users").then(response => {
+    axios.get(host + "/admin/users").then(response => {
       setUserList(response.data.data);
     });
   };
 
   const getStepTWO = () => {
     axios
-      .get("http://13.124.113.72:8080/admin/transactions/stepTwo")
+      .get(host + "/admin/transactions/stepTwo")
       .then(res => {
         setStepTWOList(res.data.data);
       });
   };
 
   const getAllTrans = () => {
-    axios.get("http://13.124.113.72:8080/admin/transactions").then(res => {
+    axios.get(host + "/admin/transactions").then(res => {
       setTransData(res.data.data);
     });
   };
 
   const getStepFOUR = () => {
     axios
-      .get("http://13.124.113.72:8080/admin/transactions/stepFour")
+      .get(host + "/admin/transactions/stepFour")
       .then(res => {
         setStepFOURList(res.data.data);
       });
@@ -56,7 +57,7 @@ export default function DashBoard() {
 
   const getUserCampusAuthImage = userId => {
     axios
-      .get("http://13.124.113.72:8080/authImage?userId=" + userId)
+      .get(host + "/authImage?userId=" + userId)
       .then(response => {
         setUserCampusAuthImage(response.data.data);
       });
@@ -64,7 +65,7 @@ export default function DashBoard() {
 
   const confirmAuthUser = userId => {
     axios
-      .get("http://13.124.113.72:8080/authImage/confirm?userId=" + userId)
+      .get(host + "/authImage/confirm?userId=" + userId)
       .then(response => {
         window.location.reload();
       });
@@ -73,7 +74,7 @@ export default function DashBoard() {
   const changeStep = sellItemId => {
     axios
       .get(
-        `http://13.124.113.72:8080/admin/change_step?sellItemId=${sellItemId}`
+        host + `/admin/change_step?sellItemId=${sellItemId}`
       )
       .then(res => {
         window.location.reload();

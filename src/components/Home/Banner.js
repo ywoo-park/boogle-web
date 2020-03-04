@@ -9,6 +9,7 @@ import { withRouter, Link } from "react-router-dom";
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import axios from 'axios';
+import host from '../../server-settings/ServerApiHost';
 
 class Banner extends Component {
   state = {
@@ -22,7 +23,7 @@ class Banner extends Component {
   }
 
   getHomeData = async () => {
-    axios.get('http://13.124.113.72:8080/home')
+    axios.get(host + '/home')
       .then((response) => {
         this.setState({
           bookResList1: response.data.data[0],
@@ -33,7 +34,7 @@ class Banner extends Component {
   }
 
   getSellItemList = async (itemId) => {
-    axios.get('http://13.124.113.72:8080/sell?itemId=' + itemId)
+    axios.get(host + '/sell?itemId=' + itemId)
       .then((response) => {
         console.log(response);
         this.setState({

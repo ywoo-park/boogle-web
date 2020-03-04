@@ -1,18 +1,13 @@
 import React, { Component } from "react";
-import Nav from "react-bootstrap/Nav";
-import NavBar from "react-bootstrap/Navbar";
+
 import "./Navbar.css";
 import "../Sell/Register.css";
 
-import { Navbar as Navigation } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 
 import { Modal, Button, Col, Row, Icon, Carousel } from "antd";
 import Search from "./Search";
 
-import { Typography } from "antd";
-
-const { Title } = Typography;
 
 class Navbar extends Component {
   state = {

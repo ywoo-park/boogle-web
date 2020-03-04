@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import useForm from 'react-hook-form';
 import { Modal, Button, Col, Row, Icon } from 'antd';
-import { useHistory, withRouter, Link } from "react-router-dom";
 import axios from 'axios';
+
+import host from '../../server-settings/ServerApiHost';
 
 import './Search.css';
 
@@ -27,7 +27,7 @@ export default function Search(props,{ location, match, history }) {
 
   const getAllSearchedBuyItems = async (keyword) => {
     if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
-      axios.get('http://13.124.113.72:8080/naver/bookApi/buy/title?keyword=' + keyword)
+      axios.get(host + '/naver/bookApi/buy/title?keyword=' + keyword)
       .then((response) => {
 
         console.log(response);
@@ -50,7 +50,7 @@ export default function Search(props,{ location, match, history }) {
       );
     }
     else{
-      axios.get('http://13.124.113.72:8080/naver/bookApi/buy/isbn?keyword=' + keyword)
+      axios.get(host + '/naver/bookApi/buy/isbn?keyword=' + keyword)
       .then((response) => {
 
         console.log(response);
@@ -79,7 +79,7 @@ export default function Search(props,{ location, match, history }) {
     
     if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
 
-      axios.get('http://13.124.113.72:8080/naver/bookApi/sell/title?keyword=' + keyword)
+      axios.get(host + '/naver/bookApi/sell/title?keyword=' + keyword)
       .then((response) => {
         console.log(response);
         if(response.data != null){
@@ -101,7 +101,7 @@ export default function Search(props,{ location, match, history }) {
       );
     }
     else{
-      axios.get('http://13.124.113.72:8080/naver/bookApi/sell/isbn?keyword=' + keyword)
+      axios.get(host + '/naver/bookApi/sell/isbn?keyword=' + keyword)
       .then((response) => {
         console.log(response);
         if(response.data != null){
