@@ -65,6 +65,7 @@ export default function MyPageBanner() {
         
       });
 
+    /*
     setName("김유진");
     setLikeList([
       {
@@ -144,6 +145,7 @@ export default function MyPageBanner() {
       
     ]
     );
+    */
   }
 
 
