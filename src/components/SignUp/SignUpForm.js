@@ -66,7 +66,7 @@ export default function SignUpForm() {
                 semester: semester,
                 majorList: majorListAsString,
                 phoneNumber: "010" + data.phone_2 + data.phone_3,
-                isAuthComplete : authType == 0 ? true : false
+                authComplete : authType == 0 ? true : false
             })
         }
     };
