@@ -62,8 +62,7 @@ export default function MyPageBanner() {
         setSellList(response.data.data.sellTransList)
         
       });
-    
-    /*  
+
     setName("김유진");
     setLikeList([
       {
@@ -143,9 +142,8 @@ export default function MyPageBanner() {
       
     ]
     );
-    */
-    
   }
+
 
 
     const acceptBuyRequest = (sellItemId) => {

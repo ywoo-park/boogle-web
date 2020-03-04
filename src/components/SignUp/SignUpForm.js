@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, ErrorMessage } from 'react-hook-form';
-import { Row, Col, Icon, Divider, Modal, Popover } from 'antd';
-import Search from '../Navbar/Search';
+import { Row, Col, Icon, List, Card, Divider, Rate, Radio, Modal, Popover } from 'antd';
 import { Link } from "react-router-dom";
-import Camera from 'react-html5-camera-photo';
-import Multiselect from 'react-bootstrap-multiselect';
 import axios from 'axios';
 import { Collapse } from 'react-collapse';
 import { BeatLoader } from "react-spinners";
+
+import host from '../../server-settings/ServerApiHost';
 
 import './SignUpForm.css';
 import '../Navbar/Search.css';
@@ -52,8 +51,8 @@ export default function SignUpForm() {
 
         let majorListAsString = ""
 
-        if (majorList.length === 1) majorListAsString = majorList[0];
-        else if (majorList.length === 2) majorListAsString = majorList[0] + "," + majorList[1];
+        if (majorList.length == 1) majorListAsString = majorList[0];
+        else if (majorList.length == 2) majorListAsString = majorList[0] + "," + majorList[1];
         else majorListAsString = majorList[0] + "," + majorList[1] + "," + majorList[2];
 
         if (validatedEmail && validatedNickname) {
@@ -67,7 +66,7 @@ export default function SignUpForm() {
                 semester: semester,
                 majorList: majorListAsString,
                 phoneNumber: "010" + data.phone_2 + data.phone_3,
-                isAuthComplete : authType = 0 ? true : false
+                isAuthComplete : authType == 0 ? true : false
             })
         }
     };
@@ -87,13 +86,13 @@ export default function SignUpForm() {
     }, [])
 
     React.useEffect(() => {
-        if (step === 0) setFormStyle(["show", "hide", "hide"]);
-        else if (step === 1) setFormStyle(["hide", "show", "hide"]);
-        else if (step === 2) setFormStyle(["hide", "hide", "show"]);
+        if (step == 0) setFormStyle(["show", "hide", "hide"]);
+        else if (step == 1) setFormStyle(["hide", "show", "hide"]);
+        else if (step == 2) setFormStyle(["hide", "hide", "show"]);
     }, [step])
 
     React.useEffect(() => {
-        if (step === 1)
+        if (step == 1)
             saveUser();
     }, [signUpReq])
 
@@ -156,21 +155,21 @@ export default function SignUpForm() {
 
     const saveUser = () => {
 
-        axios.post('http://13.124.113.72:8080/users/signup', signUpReq, {
+        axios.post(host + '/users/signup', signUpReq, {
         })
             .then((response) => {
 
-                if(response.data.data !== ""){
+                if(response.data.data != ""){
                     localStorage.setItem('token', response.data.data);
                 }
                 
-                if (authType === 1) {
+                if (authType == 1) {
                     let form = new FormData();
                     form.append('userCampusAuthImage', {
 
                     })
                     form.append('userCampusAuthImageFile', userImages[0])
-                    axios.post('http://13.124.113.72:8080/authImage', form, {
+                    axios.post(host + '/authImage', form, {
                         headers: { Authorization: response.data.data }
                     })
                         .then((response) => {
@@ -196,14 +195,14 @@ export default function SignUpForm() {
     }
 
     const validateEmail = async (email) => {
-        if (email !== undefined) {
-            axios.get('http://13.124.113.72:8080/users/signup/validateEmail?email=' + email)
+        if (email != undefined) {
+            axios.get(host + '/users/signup/validateEmail?email=' + email)
                 .then((response) => {
 
-                    if (response.data.status === 200 && validatedEmail === true) {
+                    if (response.data.status == 200 && validatedEmail == true) {
                         setValidatedEmail(false)
                     }
-                    else if (response.data.status === 404 && validatedEmail === false) {
+                    else if (response.data.status == 404 && validatedEmail == false) {
                         setValidatedEmail(true)
                     }
                 });
@@ -211,14 +210,14 @@ export default function SignUpForm() {
     }
 
     const validateNickname = async (nickname) => {
-        if (nickname !== undefined) {
-            axios.get('http://13.124.113.72:8080/users/signup/validateNickname?nickname=' + nickname)
+        if (nickname != undefined) {
+            axios.get(host + '/users/signup/validateNickname?nickname=' + nickname)
                 .then((response) => {
 
-                    if (response.data.status === 200 && validatedNickname === true) {
+                    if (response.data.status == 200 && validatedNickname == true) {
                         setValidatedNickname(false)
                     }
-                    else if (response.data.status === 404 && validatedNickname == false) {
+                    else if (response.data.status == 404 && validatedNickname == false) {
                         setValidatedNickname(true)
                     }
                 });
@@ -226,7 +225,7 @@ export default function SignUpForm() {
     }
 
     const searchMajor = (keyword) => {
-        axios.get('http://13.124.113.72:8080/majors?campus=서강대학교&keyword=' + keyword, {
+        axios.get(host + '/majors?campus=서강대학교&keyword=' + keyword, {
         })
             .then((response) => {
                 console.log(response.data.data);
@@ -241,7 +240,7 @@ export default function SignUpForm() {
 
         setEmailAuthStep(1);
 
-        axios.get('http://13.124.113.72:8080/users/signup/authNumber?userName=' + userName + "&email="
+        axios.get(host + '/users/signup/authNumber?userName=' + userName + "&email="
             + email + "&campusEmail=" + campusEmail, {
         })
             .then((response) => {
@@ -254,12 +253,12 @@ export default function SignUpForm() {
 
     const authEmail = (email, authCode) => {
 
-        axios.get('http://13.124.113.72:8080/users/signup/authEmail?email=' + email + "&authCode="
+        axios.get(host + '/users/signup/authEmail?email=' + email + "&authCode="
             + authCode, {
         })
             .then((response) => {
                 console.log(response);
-                if (response.data.data === true) { console.log(response.data.data); setEmailAuthStep(2); }
+                if (response.data.data == true) { console.log(response.data.data); setEmailAuthStep(2); }
             })
             .catch((error) => {
                 console.log(error);
@@ -391,7 +390,7 @@ export default function SignUpForm() {
                         </Col>
                         <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
-                                if (checkList[0] = "0") {
+                                if (checkList[0] == "0") {
                                     const temp = checkList;
                                     temp[0] = "1";
                                     setCheckList(temp);
@@ -437,7 +436,7 @@ export default function SignUpForm() {
                         </Col>
                         <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
-                                if (checkList[1] === "0") {
+                                if (checkList[1] == "0") {
                                     const temp = checkList;
                                     temp[1] = "1";
                                     setCheckList(temp);
@@ -482,7 +481,7 @@ export default function SignUpForm() {
                         </Col>
                         <Col offset={0} span={2}>
                             <Icon onClick={(e) => {
-                                if (checkList[2] === "0") {
+                                if (checkList[2] == "0") {
                                     const temp = checkList;
                                     temp[2] = "1";
                                     setCheckList(temp);
@@ -520,16 +519,16 @@ export default function SignUpForm() {
                                 onClick={() => {
                                     const formValues = getValues();
 
-                                    if(checkList.length > 0 && checkList[0] === "0" || checkList[1] === "0"){
+                                    if(checkList.length > 0 && checkList[0] == "0" || checkList[1] == "0"){
                                         setIsCheckComplete(false);
                                     }
                                     else{
                                         setIsCheckComplete(true);
                                     }
 
-                                    if(formValues.email !== "" && formValues.password !== ""
-                                        && formValues.confirmPassword !== "" && checkList[0] === "1"
-                                        && checkList[1] === "1" && validatedEmail) {
+                                    if(formValues.email != "" && formValues.password != ""
+                                        && formValues.confirmPassword != "" && checkList[0] == "1"
+                                        && checkList[1] == "1" && validatedEmail) {
                                         setStep(1);
                                     }
                                 }}
@@ -552,7 +551,7 @@ export default function SignUpForm() {
                                 marginLeft: "25%",
                             }}
                                 onClick={() => {
-                                    if (step === 1) setStep(0);
+                                    if (step == 1) setStep(0);
                                 }}
                                 src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
                         </Col>
@@ -566,7 +565,7 @@ export default function SignUpForm() {
                                 marginLeft: "25%",
                             }}
                                 onClick={() => {
-                                    if (step === 1) setStep(0);
+                                    if (step == 1) setStep(0);
                                 }}
                                 src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/x_mark.png" />
                         </Col>
@@ -652,12 +651,12 @@ export default function SignUpForm() {
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                             backgroundColor: "transparent"
                                         }}
-                                        value={majorList.length !== 0 ? majorList[0] : ""}
+                                        value={majorList.length != 0 ? majorList[0] : ""}
                                         onClick={() => { setIsSearchMajorModalOpended(true) }}
                                     />
 
                                     {
-                                        majorList.length === 0 ?
+                                        majorList.length == 0 ?
 
                                             <Icon className="major-search-button" type="search" theme="outlined"
 
@@ -688,7 +687,7 @@ export default function SignUpForm() {
                                     }
 
 
-                                    {(majorList.length === 1 && majorCount === 1 && majorList.length === majorCount)
+                                    {(majorList.length == 1 && majorCount == 1 && majorList.length == majorCount)
                                         || (majorList.length > 1) ?
 
                                         <div>
@@ -700,12 +699,12 @@ export default function SignUpForm() {
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
-                                                value={majorList.length !== 0 ? majorList[1] : null}
+                                                value={majorList.length != 0 ? majorList[1] : null}
                                             />
 
                                             {
 
-                                                majorList.length === 1 ?
+                                                majorList.length == 1 ?
 
                                                     <Icon className="major-search-button_2" type="search" theme="outlined"
 
@@ -736,7 +735,7 @@ export default function SignUpForm() {
                                             }
                                         </div>
 
-                                        : majorList.length === 1 && majorCount === 0 ?
+                                        : majorList.length == 1 && majorCount == 0 ?
                                             <div style={{ margin: "10px auto 20px auto", textAlign: "center" }}>
                                                 <Icon onClick={() => {
                                                     let currentMajorCount = majorCount + 1;
@@ -747,7 +746,7 @@ export default function SignUpForm() {
                                             : null
                                     }
 
-                                    {(majorList.length === 2 && majorCount === 2 && majorList.length === majorCount)
+                                    {(majorList.length == 2 && majorCount == 2 && majorList.length == majorCount)
                                         || (majorList.length > 2) ?
                                         <div>
                                             <input
@@ -758,10 +757,10 @@ export default function SignUpForm() {
                                                     borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
                                                     backgroundColor: "transparent"
                                                 }}
-                                                value={majorList.length !== 0 ? majorList[2] : null}
+                                                value={majorList.length != 0 ? majorList[2] : null}
                                             />
                                             {
-                                                majorList.length === 2 ?
+                                                majorList.length == 2 ?
 
                                                     <Icon className="major-search-button_3" type="search" theme="outlined"
 
@@ -792,7 +791,7 @@ export default function SignUpForm() {
                                             }
                                         </div>
 
-                                        : majorList.length === 2 && majorCount === 1 ?
+                                        : majorList.length == 2 && majorCount == 1 ?
                                             <div style={{ margin: "10px auto 20px auto", textAlign: "center" }}>
                                                 <Icon onClick={() => {
                                                     let currentMajorCount = majorCount + 1;
@@ -817,7 +816,7 @@ export default function SignUpForm() {
                                                     className="major-search-input" type="text"
                                                     onChange={(e) => { setMajorSearchKeyword(e.target.value) }}
                                                     onKeyPress={(e) => {
-                                                        if (e.key === 'Enter') {
+                                                        if (e.key == 'Enter') {
                                                             e.preventDefault();
                                                             e.target.blur();
                                                         }
@@ -829,7 +828,7 @@ export default function SignUpForm() {
                                             </Col>
                                         </Row>
                                         {
-                                            searchedMajorList.length !== 0 ?
+                                            searchedMajorList.length != 0 ?
                                                 searchedMajorList.map((major) => {
                                                     return (
                                                         <Row style={{ marginTop: "20px" }}>
@@ -868,7 +867,7 @@ export default function SignUpForm() {
                             <Row>
                                 <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 24, offset: 0 }} >
                                     <select onChange={(e) => {
-                                        if (e.target.value === "졸업생") setSemester("10");
+                                        if (e.target.value == "졸업생") setSemester("10");
                                         else setSemester(e.target.value[0].toString());
                                     }} name="semester"
                                         style={{
@@ -951,7 +950,7 @@ export default function SignUpForm() {
                         <Col xs={{ span: 10, offset: 2 }}>
                             <button
                                 type="button"
-                                class={authType === 0 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
+                                class={authType == 0 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
                                 style={{
                                     width: "100%",
                                     color: "#666666",
@@ -969,7 +968,7 @@ export default function SignUpForm() {
                         <Col xs={{ span: 10, offset: 0 }}>
                             <button
                                 type="button"
-                                class={authType === 1 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
+                                class={authType == 1 ? "sign-up-auth-button-active" : "sign-up-auth-button"}
                                 style={{
                                     width: "100%",
                                     color: "#666666",
@@ -985,7 +984,7 @@ export default function SignUpForm() {
                                 onClick={() => { setAuthType(1) }}>학생증 인증</button>
                         </Col>
                     </Row>
-                    {authType === 0 ?
+                    {authType == 0 ?
                         <div>
 
                             <Row>
@@ -1005,7 +1004,7 @@ export default function SignUpForm() {
                                         onChange={(e) => {
                                             setCampusWebMail(e.target.value);
                                         }} />
-                                    {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") === -1) && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
+                                    {(campusWebMail.length > 0) && (campusWebMail.indexOf("sogang.ac.kr") == -1) && <p style={{ marginBottom: "-10px", fontSize: "12px" }}>서강대학교 웹메일이 아닙니다.</p>}
                                 </Col>
                             </Row>
                             <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
@@ -1033,7 +1032,7 @@ export default function SignUpForm() {
                                     >인증번호 보내기</button>
                                 </Col>
                             </Row>
-                            {authType === 0 && emailAuthStep === 1 ?
+                            {authType == 0 && emailAuthStep == 1 ?
                                 <Row style={{ marginTop: "-70px", marginBottom: "70px" }}>
                                     <Col xs={{ span: 14, offset: 2 }}>
                                         <input
@@ -1067,7 +1066,7 @@ export default function SignUpForm() {
                                         >인증</button>
                                     </Col>
                                 </Row> : null}
-                            {authType === 0 && emailAuthStep === 2 ?
+                            {authType == 0 && emailAuthStep == 2 ?
                                 <div>
                                     <Row style={{ marginTop: "0px", marginBottom: "20px" }}>
                                         <Col xs={{ span: 20, offset: 2 }}>
@@ -1095,7 +1094,7 @@ export default function SignUpForm() {
                                         </Col>
                                     </Row>
                                 </div> : null}</div>
-                        : authType === 1 ?
+                        : authType == 1 ?
                             <div>
                                 <Row>
                                     <Col xs={{ span: 8, offset: 2 }}>
@@ -1161,7 +1160,7 @@ export default function SignUpForm() {
             </form>
             <div class={formStyle[2]}>
 
-                {step === 2 ?
+                {step == 2 ?
 
                     <Row style={{ marginTop: "50%" }}>
                         <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
@@ -1173,7 +1172,7 @@ export default function SignUpForm() {
                         </Col>
                     </Row>
 
-                    : step === 3 ?
+                    : step == 3 ?
                         <div>
                             <Row style={{ marginTop: "20px" }}>
                                 <Col xs={{ span: 8 }}>
@@ -1191,13 +1190,13 @@ export default function SignUpForm() {
                             <Row>
                                 <Col xs={{ offset: 3, span: 18 }} style={{ textAlign: "center", marginTop: "30px" }}>
                                     <h5 style={{ textAlign: "center", color: "#44a0ac", fontWeight: "800" }}>
-                                        {authType === 0 ? "회원 가입 완료!" : "회원가입 신청이 완료되었습니다! 학생증 인증 확인까지 최대 24시간이 소요됩니다."}
+                                        {authType == 0 ? "회원 가입 완료!" : "회원가입 신청이 완료되었습니다! 학생증 인증 확인까지 최대 24시간이 소요됩니다."}
                                     </h5>
                                 </Col>
                             </Row>
                             <Row style={{ marginTop: "10vh" }}>
                                 <Col xs={{ span: 20, offset: 2 }}>
-                                    <Link to={authType === 0 ? "/mypage" : "/"}>
+                                    <Link to={authType == 0 ? "/mypage" : "/"}>
                                         <button style={{
                                             padding: "0",
                                             width: "100%",
@@ -1206,7 +1205,7 @@ export default function SignUpForm() {
                                         }}
                                             onClick={() => {
                                             }}
-                                        >{authType === 0 ? "마이페이지로" : "홈으로"}</button>
+                                        >{authType == 0 ? "마이페이지로" : "홈으로"}</button>
                                     </Link>
                                 </Col>
                             </Row>

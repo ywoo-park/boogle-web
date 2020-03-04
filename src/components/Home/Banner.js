@@ -9,7 +9,6 @@ import { withRouter, Link } from "react-router-dom";
 import moment from 'moment';
 import NumberFormat from 'react-number-format';
 import axios from 'axios';
-import inobounce from '../../utils/inobounce';
 
 class Banner extends Component {
   state = {
