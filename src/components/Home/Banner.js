@@ -43,6 +43,24 @@ class Banner extends Component {
       });
   }
 
+  saveItemReceiving = (itemReceiving) => {
+    axios.post(host + '/itemReceiving', itemReceiving, {
+          headers: { Authorization: localStorage.getItem('token') }
+        })
+        .then((response) => {
+          console.log(response);
+        });
+  }
+
+  cancelItemReceiving = (itemId) => {
+    axios.get(host + '/itemReceiving/cancel?itemId=' + itemId, {
+      headers: { Authorization: localStorage.getItem('token') }
+    })
+        .then((response) => {
+          console.log(response);
+        });
+  }
+
   focusOnSearch = (isFocused) => {
     if (this.state.isFocused) {
       this.setState({ isDoubleFocused: true });
@@ -55,7 +73,7 @@ class Banner extends Component {
   }
 
   updateInputValue = (resdata) => {
-    this.setState({ resdata: resdata });
+    this.setState({ resdata : resdata });
   }
 
   changeMode = (mode) => {
@@ -440,9 +458,29 @@ class Banner extends Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={{ offset : 18, span: 4 }}>
-                        <Icon type="bell" style={{color : "#e95513", fontSize : "45px"}}
-                        onClick={()=>{message.success("입고 알림이 정상적으로 신청되었습니다!");}}></Icon>
+                      <Col xs={{ offset : 18, span: 5 }}>
+                        <img src = { value.itemReceivingRegistered ? "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_unfilled.png"
+                            : "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_filled.png"}
+
+                             style={{width : "100%", height : "auto"}}
+                        onClick={()=>{
+                          if(!value.itemReceivingRegistered){
+                            this.saveItemReceiving({
+                              "itemId" : value.itemId,
+                              "imageUrl" : value.imageUrl,
+                              "title" : value.title,
+                              "author" : value.author,
+                              "publisher" : value.publisher
+                            })
+                          }
+                          else{
+                            this.cancelItemReceiving(value.itemId)
+                          }
+                          let currResdata = this.state.resdata;
+                          let currState = !currResdata[index].itemReceivingRegistered;
+                          currResdata[index].itemReceivingRegistered = currState;
+                          this.setState({resdata : currResdata});
+                        }}></img>
                       </Col>
                     </Row>
                   </Col>
