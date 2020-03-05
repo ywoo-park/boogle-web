@@ -58,14 +58,13 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        setName(response.data.data.userName)
-        setLikeList(response.data.data.bookmarkedItemList)
-        setBuyList(response.data.data.buyTransList)
-        setSellList(response.data.data.sellTransList)
+        // setName(response.data.data.userName)
+        // setLikeList(response.data.data.bookmarkedItemList)
+        // setBuyList(response.data.data.buyTransList)
+        // setSellList(response.data.data.sellTransList)
         
       });
 
-    /*
     setName("김유진");
     setLikeList([
       {
@@ -90,7 +89,7 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 2
+        "transactionStep": 3
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
@@ -106,7 +105,7 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 1
+        "transactionStep": 5
       }
     ]);
     setSellList([
@@ -124,7 +123,7 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 0
+        "transactionStep": 3
       },
       {
         "sellItemId": "5e4a7e5fcf6c2a3185854ba3",
@@ -140,12 +139,11 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 2
+        "transactionStep": 5
       }
       
     ]
     );
-    */
   }
 
 
@@ -674,7 +672,10 @@ export default function MyPageBanner() {
                               판매자 수락
                             </Row>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#038155" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 280%)"}}>
+                                </Col>
                             </Row>
                             {value.transactionStep === 2 || value.transactionStep > 2 ?
                             <Row style={{ marginTop: "13.5px", color: "#038196" }}>
@@ -702,7 +703,10 @@ export default function MyPageBanner() {
                             {value.transactionStep === 3 ?
                             <div>
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -153%, #0b308e 100%)"}}>
+                                </Col>
                               </Row>
                               <Row style={{ marginTop: "13.5px", color: "#0b308e", marginBottom: "20px" }}>
                                 거래 완료
@@ -711,7 +715,10 @@ export default function MyPageBanner() {
                             :
                             <div>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                             <Row style={{ marginTop: "13.5px", color: "#959595", marginBottom: "20px" }}>
                               거래 완료
@@ -832,8 +839,11 @@ export default function MyPageBanner() {
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             판매자 수락
                           </Row>
-                          <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#038155" }}>
-                            <Icon type="line" rotate="90" />
+                          <Row style={{ fontSize: "5vh", marginTop: "13.5px" }}>
+                            <Col offset={12} span={1} class="line"
+                            style={{width: "2px", height: "33px", 
+                            backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 450%)"}}>
+                            </Col>
                           </Row>
                           <Row style={{ marginTop: "13.5px", color: "#038196" }}>
                             결제 요청중
@@ -912,12 +922,18 @@ export default function MyPageBanner() {
                                       </Modal>
                                       : null} {/*모달 끝*/}
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                  style={{width: "2px", height: "33px", 
+                                  backgroundColor: "#959595"}}>
+                                </Col>
                               </Row>
                             </div>
                             : /*1단계 아니면*/
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#065d33" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -231%, #0b308e 325%)"}}>
+                                </Col>
                               </Row>
                           } {/*1단계 끝*/}
 
@@ -1040,11 +1056,17 @@ export default function MyPageBanner() {
 
                           {value.transactionStep >= 4 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -357%, #0b308e 262%)"}}>
+                              </Col>
                             </Row>
                             :
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                           } {/*4단계 끝*/}
 
@@ -1274,7 +1296,10 @@ export default function MyPageBanner() {
                               구매 요청 수락
                             </Row>
                             <Row style={{ fontSize: "5vh", margin: "13.5px", color: "#038155" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 280%)"}}>
+                              </Col>
                             </Row>
                             {value.transactionStep === 2 || value.transactionStep > 2 ?
                             <Row style={{ marginTop: "13.5px", color: "#038196" }}>
@@ -1302,7 +1327,10 @@ export default function MyPageBanner() {
                             {value.transactionStep === 3 ?
                             <div>
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                                <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -153%, #0b308e 100%)"}}>
+                              </Col>
                               </Row>
                               <Row style={{ marginTop: "13.5px", color: "#0b308e", marginBottom: "20px" }}>
                                 거래 완료
@@ -1311,7 +1339,10 @@ export default function MyPageBanner() {
                             :
                             <div>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                             <Row style={{ marginTop: "13.5px", color: "#656565", marginBottom: "20px" }}>
                               거래 완료
@@ -1506,7 +1537,10 @@ export default function MyPageBanner() {
                             구매 요청 수락
                           </Row>
                           <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#038155" }}>
-                            <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 450%)"}}>
+                              </Col>
                           </Row>
                           <Row style={{ marginTop: "13.5px", color: "#038196" }}>
                             구매자 결제 완료
@@ -1599,11 +1633,17 @@ export default function MyPageBanner() {
 
                           {value.transactionStep >= 2 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -357%, #0b308e 262%)"}}>
+                              </Col>
                             </Row>
                             :
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                           } {/*2단계 끝*/}
 
