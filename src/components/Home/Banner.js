@@ -25,11 +25,13 @@ class Banner extends Component {
   getHomeData = async () => {
     axios.get('http://13.124.113.72:8080/home')
       .then((response) => {
-        this.setState({
-          bookResList1: response.data.data[0],
-          bookResList2: response.data.data[1],
-          bookResList3: response.data.data[2]
-        })
+        if(response.data.data !== undefined){
+          this.setState({
+            bookResList1: response.data.data[0],
+            bookResList2: response.data.data[1],
+            bookResList3: response.data.data[2]
+          })
+        }
       });
   }
 

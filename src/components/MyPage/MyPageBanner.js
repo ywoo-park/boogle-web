@@ -56,14 +56,14 @@ export default function MyPageBanner() {
     })
       .then((response) => {
         console.log(response);
-        setName(response.data.data.userName)
-        setLikeList(response.data.data.bookmarkedItemList)
-        setBuyList(response.data.data.buyTransList)
-        setSellList(response.data.data.sellTransList)
+        // setName(response.data.data.userName)
+        // setLikeList(response.data.data.bookmarkedItemList)
+        // setBuyList(response.data.data.buyTransList)
+        // setSellList(response.data.data.sellTransList)
         
       });
     
-    /*  
+     
     setName("김유진");
     setLikeList([
       {
@@ -143,7 +143,7 @@ export default function MyPageBanner() {
       
     ]
     );
-    */
+    
     
   }
 
@@ -830,7 +830,7 @@ export default function MyPageBanner() {
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             판매자 수락
                           </Row>
-                          <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#038155" }}>
+                          <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "-webkit-gradient(linear, top, bottom, from(#038155), color-stop(50%, #333333), color-stop(50%, #ffffff))" }}>
                             <Icon type="line" rotate="90" />
                           </Row>
                           <Row style={{ marginTop: "13.5px", color: "#038196" }}>
