@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Icon, Card, Modal, Popconfirm } from "antd";
+import { Row, Col, Icon, Card, Modal, Popconfirm, Collapse } from "antd";
 import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
@@ -16,10 +16,9 @@ export default function MyPageBanner() {
   const [likeProduct, setLikeProduct] = useState(true);
   const [buyProduct, setBuyProduct] = useState(false);
   const [sellProduct, setSellProduct] = useState(false);
-  const [dirDetailCard, setDirDetailCard] = useState(false);
-  const [boxDetailCard, setBoxDetailCard] = useState(false);
-  const [boxActiveIndex, setBoxActiveIndex] = useState(-1);
-  const [dirActiveIndex, setDirActiveIndex] = useState(-1);
+
+  var [buyDetailIndex, setBuyDetailIndex] = useState([]);
+  var [sellDetailIndex, setSellDetailIndex] = useState([]);
 
   const [modal, setModal] = useState(false);
   const [level, setLevel] = useState(false);
@@ -142,8 +141,35 @@ export default function MyPageBanner() {
         "transactionStep": 5
       }
       
-    ]
-    );
+    ]);
+
+    // 거래상세보기 기능을 위한 설정
+    for (var buy in buyList) {
+      setBuyDetailIndex(buyDetailIndex.concat(0))
+    }
+    for (var sell in sellList) {
+      console.log(sell)
+      setSellDetailIndex(sellDetailIndex.concat(0))
+    }
+    console.log(buyList.length)
+    console.log(sellList.length)
+    console.log(buyDetailIndex)
+    console.log(sellDetailIndex)
+
+  }
+
+  // 거래상세보기 기능을 위한 함수들
+  const buyDetail = (i) => {
+    buyDetailIndex[i] = 1
+  }
+  const noBuyDetail = (i) => {
+    buyDetailIndex[i] = 0
+  }
+  const sellDetail = (i) => {
+    sellDetailIndex[i] = 1
+  }
+  const noSellDetail = (i) => {
+    sellDetailIndex[i] = 0
   }
 
 
@@ -438,14 +464,12 @@ export default function MyPageBanner() {
               {buyProduct === true ?
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart_selected.png"
                 style={{width:"24px"}}
-                  onClick={() => { viewBuyProduct();
-                  setDirDetailCard(false); setBoxDetailCard(false); }}
+                  onClick={() => { viewBuyProduct();}}
                 />
                 :
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart.png"
                 style={{width:"24px"}}
-                  onClick={() => { viewBuyProduct(); 
-                  setDirDetailCard(false); setBoxDetailCard(false);}}
+                  onClick={() => { viewBuyProduct();}}
                 />
               }
             </Col>
@@ -467,14 +491,12 @@ export default function MyPageBanner() {
               {sellProduct == true ?
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart_selected.png"
                   style={{width:"24px"}}
-                  onClick={() => { viewSellProduct(); 
-                    setDirDetailCard(false); setBoxDetailCard(false);}}
+                  onClick={() => { viewSellProduct();}}
                 />
                 :
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart.png"
                   style={{width:"24px"}}
-                  onClick={() => { viewSellProduct(); 
-                    setDirDetailCard(false); setBoxDetailCard(false);}}
+                  onClick={() => { viewSellProduct();}}
                 />
               }
             </Col>
@@ -655,18 +677,17 @@ export default function MyPageBanner() {
                             </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
-                              {dirDetailCard === true && dirActiveIndex === index ?
-                                <Col offset={20}>
-                                <label onClick={() => { setDirDetailCard(false) }}>접기</label>
+                              {buyDetailIndex[index] === 1  ?
+                                <Col offset={20} onClick={() => { noBuyDetail(index) }}>
+                                <label>접기</label>
                                 </Col>
                                 :
-                                <Col offset={16}>
-                                <label onClick={() => { setDirDetailCard(true); 
-                                  setDirActiveIndex(index) }}>거래상세보기</label>
+                                <Col offset={16} onClick={() => { buyDetail(index) }}>
+                                  <label>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {dirDetailCard === true && dirActiveIndex === index ?
+                        {buyDetailIndex[index] === 1 ?
                           <div style={{fontSize: "15px"}}>
                             <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                               판매자 수락
@@ -823,18 +844,18 @@ export default function MyPageBanner() {
                             </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecorationLine: "underline" }}>
-                              {boxDetailCard === true && boxActiveIndex === index ?
+                          {buyDetailIndex[index] === 1  ?
                                 <Col offset={20}>
-                                <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
+                                <label onClick={() => { noBuyDetail(index) }}>접기</label>
                                 </Col>
-                                : 
+                                :
                                 <Col offset={16}>
-                                <label onClick={() => { setBoxDetailCard(true); 
-                                  setBoxActiveIndex(index) }}>거래상세보기</label>
+                                <label onClick={() => {
+                                  buyDetail(index) }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {boxDetailCard === true && boxActiveIndex === index ?
+                        {buyDetailIndex[index] === 1 ?
                           <div>
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             판매자 수락
@@ -1279,18 +1300,18 @@ export default function MyPageBanner() {
                             </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
-                              {dirDetailCard === true && dirActiveIndex === index ?
+                          {sellDetailIndex[index] === 1  ?
                                 <Col offset={20}>
-                                <label onClick={() => { setDirDetailCard(false) }}>접기</label>
+                                <label onClick={() => { noSellDetail(index) }}>접기</label>
                                 </Col>
                                 :
                                 <Col offset={16}>
-                                <label onClick={() => { setDirDetailCard(true); 
-                                  setDirActiveIndex(index) }}>거래상세보기</label>
+                                <label onClick={() => {
+                                  sellDetail(index) }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {dirDetailCard === true && dirActiveIndex === index ?
+                        {sellDetailIndex[index] === 1 ?
                           <div style={{fontSize: "15px"}}>
                             <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                               구매 요청 수락
@@ -1520,18 +1541,18 @@ export default function MyPageBanner() {
                           </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
-                              {boxDetailCard === true && boxActiveIndex === index ?
+                          {sellDetailIndex[index] === 1  ?
                                 <Col offset={20}>
-                                <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
+                                <label onClick={() => { noSellDetail(index) }}>접기</label>
                                 </Col>
                                 :
                                 <Col offset={16}>
-                                <label onClick={() => { setBoxDetailCard(true); 
-                                  setBoxActiveIndex(index) }}>거래상세보기</label>
+                                <label onClick={() => {
+                                  sellDetail(index) }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {boxDetailCard === true && boxActiveIndex === index ?
+                        {sellDetailIndex[index] === 1 ?
                           <div style={{fontSize: "15px"}}>
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             구매 요청 수락
