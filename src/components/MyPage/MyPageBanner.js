@@ -5,6 +5,8 @@ import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
 
+import host from '../../server-settings/ServerApiHost';
+
 export default function MyPageBanner() {
   const [name, setName] = useState("");
   const [likeList, setLikeList] = useState([]);
@@ -51,7 +53,7 @@ export default function MyPageBanner() {
   }, [needRender]);
 
   const getMyPage = () => {
-    axios.get('http://13.124.113.72:8080/myPage', {
+    axios.get(host + '/myPage', {
       headers: { Authorization: localStorage.getItem('token') }
     })
       .then((response) => {
@@ -62,8 +64,7 @@ export default function MyPageBanner() {
         // setSellList(response.data.data.sellTransList)
         
       });
-    
-     
+
     setName("김유진");
     setLikeList([
       {
@@ -143,13 +144,12 @@ export default function MyPageBanner() {
       
     ]
     );
-    
-    
   }
 
 
+
     const acceptBuyRequest = (sellItemId) => {
-      axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+      axios.get(host + '/transaction/step?sellItemId=' + sellItemId, {
       })
         .then((response) => {
             setNeedRender(true);
@@ -157,7 +157,7 @@ export default function MyPageBanner() {
     }
 
     const rejectBuyRequest = (sellItemId) => {
-      axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
+      axios.delete(host + '/transaction?sellItemId=' + sellItemId, {
       })
         .then((response) => {
             setNeedRender(true);
@@ -165,7 +165,7 @@ export default function MyPageBanner() {
     }
 
   const completePayment = (sellItemId) => {
-    axios.get('http://13.124.113.72:8080/transaction/payment?sellItemId=' + sellItemId, {
+    axios.get(host + '/transaction/payment?sellItemId=' + sellItemId, {
     })
       .then((response) => {
           setNeedRender(true);
@@ -174,7 +174,7 @@ export default function MyPageBanner() {
 
   const setBoogleBoxInfo = (boxId, boxPassword, sellItemId) => {
 
-    axios.post('http://13.124.113.72:8080/transaction/booglebox', {
+    axios.post(host + '/transaction/booglebox', {
       "sellItemId" : sellItemId,
       "id" : boxId,
       "password" : boxPassword
@@ -187,7 +187,7 @@ export default function MyPageBanner() {
 
   const changeTransactionStep = (sellItemId) => {
 
-    axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+    axios.get(host + '/transaction/step?sellItemId=' + sellItemId, {
       headers: { Authorization: localStorage.getItem('token') }
     })
 
@@ -709,7 +709,10 @@ export default function MyPageBanner() {
                             :
                             <div>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "40px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                             <Row style={{ marginTop: "13.5px", color: "#959595", marginBottom: "20px" }}>
                               거래 완료
@@ -830,8 +833,11 @@ export default function MyPageBanner() {
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             판매자 수락
                           </Row>
-                          <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "-webkit-gradient(linear, top, bottom, from(#038155), color-stop(50%, #333333), color-stop(50%, #ffffff))" }}>
-                            <Icon type="line" rotate="90" />
+                          <Row style={{ fontSize: "5vh", marginTop: "13.5px" }}>
+                            <Col offset={12} span={1} 
+                            style={{width: "2px", height: "40px", 
+                            backgroundImage: "-webkit-linear-gradient(#00a199, #0b308e)"}}>
+                            </Col>
                           </Row>
                           <Row style={{ marginTop: "13.5px", color: "#038196" }}>
                             결제 요청중
@@ -910,12 +916,18 @@ export default function MyPageBanner() {
                                       </Modal>
                                       : null} {/*모달 끝*/}
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                  style={{width: "2px", height: "40px", 
+                                  backgroundColor: "#959595"}}>
+                                </Col>
                               </Row>
                             </div>
                             : /*1단계 아니면*/
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#065d33" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "40px", 
+                                backgroundColor: "#065d33"}}>
+                                </Col>
                               </Row>
                           } {/*1단계 끝*/}
 
@@ -1042,7 +1054,10 @@ export default function MyPageBanner() {
                             </Row>
                             :
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "40px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                           } {/*4단계 끝*/}
 
@@ -1309,7 +1324,10 @@ export default function MyPageBanner() {
                             :
                             <div>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "40px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                             <Row style={{ marginTop: "13.5px", color: "#656565", marginBottom: "20px" }}>
                               거래 완료
@@ -1601,7 +1619,10 @@ export default function MyPageBanner() {
                             </Row>
                             :
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "40px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                           } {/*2단계 끝*/}
 

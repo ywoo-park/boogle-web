@@ -3,6 +3,9 @@ import { useForm, ErrorMessage } from "react-hook-form";
 import { Link, Redirect } from "react-router-dom";
 import { Row, Col, Divider } from "antd";
 import Axios from "axios";
+
+import host from '../../server-settings/ServerApiHost';
+
 import "./SignInForm.css";
 
 export default function SignInForm(props) {
@@ -26,7 +29,7 @@ export default function SignInForm(props) {
     console.log(data);
     loginSend(data);
   };
-  const login_check_url = "http://13.124.113.72:8080/users/signin";
+  const login_check_url = host + "/users/signin";
 
   const loginSend = async data => {
     Axios.post(login_check_url, data).then(res => {

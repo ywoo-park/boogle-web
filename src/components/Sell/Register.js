@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import NumberFormat from 'react-number-format';
 import CurrencyInput from 'react-currency-input';
 import { BeatLoader } from "react-spinners";
+
+import host from '../../server-settings/ServerApiHost';
+
 import axios from 'axios';
 import './Register.css';
 
@@ -172,7 +175,7 @@ export default function Register() {
             form.append("imageFileList", i);
         });
 
-        axios.post('http://13.124.113.72:8080/sell', form, {
+        axios.post(host + '/sell', form, {
 
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -188,7 +191,7 @@ export default function Register() {
 
     
     const getUserBankAccount = (itemId) => {
-        axios.get('http://13.124.113.72:8080/userBankAccount/sell', {
+        axios.get(host + '/userBankAccount/sell', {
             headers: { Authorization: localStorage.getItem('token') }
           })
         .then((response) => {
@@ -200,7 +203,7 @@ export default function Register() {
     }
 
     const getBankInfo = () => {
-        axios.get('http://13.124.113.72:8080/bank')
+        axios.get(host + '/bank')
           .then((response) => {
               setBankList(response.data.data);
           });
@@ -217,7 +220,7 @@ export default function Register() {
     
       const sendNewAcc = async data => {
         axios
-          .post("http://13.124.113.72:8080/userBankAccount", data, {
+          .post(host + "/userBankAccount", data, {
             headers: { Authorization: localStorage.getItem('token') }
           })
           .then(res => {
@@ -613,8 +616,8 @@ export default function Register() {
                                                             background: "rgba(51, 158, 172, 0.9)",
                                                             color: "#ffffff",
                                                             border: "none",
-                                                            fontSize: "15px", height: "35px", width: "100%",
-                                                            padding: "0", borderRadius : "16px"
+                                                            fontSize: "15px", height: "35px",
+                                                            borderRadius : "16px"
                                                         }}
                                                         type="submit"
                                                         onClick={() => {
@@ -919,7 +922,7 @@ export default function Register() {
                                                     padding: "0",
                                                     width: "100%",
                                                     background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
-                                                    border: "none", border: "none", borderRadius: "14px", 
+                                                    border: "none", borderRadius: "14px",
                                                     fontSize: "18px", height: "32px"
                                                 }}
                                                 >홈으로</button>

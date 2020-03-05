@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Col, Row, Card } from "antd";
 import { ManageContext } from "./ManageAccount";
 import Axios from "axios";
+import host from '../../server-settings/ServerApiHost';
 
 export default function CurrentAccount() {
   const { manageSet, dispatch } = useContext(ManageContext);
@@ -9,7 +10,7 @@ export default function CurrentAccount() {
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
   const delAcc = bankAccId => {
     // console.log(bankAccId);
-    const delAcc_url = `http://13.124.113.72:8080/userBankAccount?userBankAccountId=${bankAccId}`;
+    const delAcc_url = host + `/userBankAccount?userBankAccountId=${bankAccId}`;
     Axios.delete(delAcc_url, { headers: { Authorization: authToken } }).then(
       res => {
         if (res.data.status == 200) {
