@@ -482,6 +482,9 @@ class Banner extends Component {
                           let currState = !currResdata[index].itemReceivingRegistered;
                           currResdata[index].itemReceivingRegistered = currState;
                           this.setState({resdata : currResdata});
+
+                          message.success("입고 알림이 정상적으로 신청되었습니다!")
+
                         }}></img>
                       </Col>
                     </Row>

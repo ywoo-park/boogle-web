@@ -5,3 +5,10 @@
     overflow: scroll;
     overscroll-behavior : none;
 }
+
+a{
+    font-size: 12px;
+}
+span{
+    font-size: 10px;
+}
