@@ -26,6 +26,16 @@ export default function Search(props,{ location, match, history }) {
     }
   }
 
+    const updateInputValueByKeyword = (keyword) => {
+
+        if(searchType == "/sell"){
+            getAllSearchedSellItems(keyword);
+        }
+        else{
+            getAllSearchedBuyItems(keyword);
+        }
+    }
+
   const getAllSearchedBuyItems = async (keyword) => {
     if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
       axios.get(host + '/naver/bookApi/buy/title?keyword=' + keyword)
@@ -145,11 +155,18 @@ export default function Search(props,{ location, match, history }) {
       props.updateInputValue(resdata);
     }
   }, [resdata])
+
+    React.useEffect(() => {
+        if(props.passedKeyword){
+            updateInputValueByKeyword(props.passedKeyword)
+        }
+    }, [props.passedKeyword])
+
   return (
       <form className="search-form">
         <input onFocus={onFocusHandler} onBlur={onBlurHandler}
                className="search-input" type="text" name="name"
-               value={inputValue}
+               value={props.passedKeyword? props.passedKeyword : null}
                onChange={evt => updateInputValue(evt)}
                onKeyPress = {(e) => {
                  if(e.key == 'Enter'){
