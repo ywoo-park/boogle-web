@@ -58,14 +58,20 @@ export default function MyPageBanner() {
       headers: { Authorization: localStorage.getItem('token') }
     })
       .then((response) => {
-        console.log(response);
-        // setName(response.data.data.userName)
-        // setLikeList(response.data.data.bookmarkedItemList)
-        // setBuyList(response.data.data.buyTransList)
-        // setSellList(response.data.data.sellTransList)
+        setName(response.data.data.userName)
+        setLikeList(response.data.data.bookmarkedItemList)
+        setBuyList(response.data.data.buyTransList)
+        setSellList(response.data.data.sellTransList)
         
       });
 
+    axios.delete(host + '/itemReceiving' , {
+      headers: { Authorization: localStorage.getItem('token') }
+    })
+    .then((response) => {
+      setReserveList(response.data.data)
+    })
+/*
     setName("김유진");
     setLikeList([
       {
@@ -164,7 +170,7 @@ export default function MyPageBanner() {
         "publisher": "한티미디어"
     }
     ]);
-
+*/
   }
 
   // 거래상세보기 기능을 위한 함수들
