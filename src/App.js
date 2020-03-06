@@ -14,6 +14,8 @@ import AccountSetting from "./pages/AccountSetting";
 import Admin from "./pages/Admin";
 import SignInSetting from "./pages/SignInSetting";
 
+import './DesktopError.css';
+
 import {
   BrowserView,
   MobileView,
@@ -24,7 +26,24 @@ import {
 class App extends Component {
   render() {
     const warning = () => {
-      return <h1>모바일로 접속하세요.</h1>;
+      return(
+      <div id="error-page">
+        <main className="upper">
+          <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/not_found.png"/>
+            <h1>잘못된 경로로 접속하셨습니다.</h1>
+
+        </main>
+        <div className="down">
+          <p>
+            잘못된 경로로 접속하셨습니다.
+            모바일 환경에서 다시 시도해주세요.
+          </p>
+        </div>
+        <footer>
+          <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/error_boogle.png"/>
+            <p>캠퍼스 거래의 모든것, 북을</p>
+        </footer>
+      </div>);
     };
     
     // 웹 화면 뷰를 위해 시도해보았으나 정말 별로입니다.
