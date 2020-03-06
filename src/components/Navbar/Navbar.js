@@ -53,14 +53,13 @@ class Navbar extends Component {
 
     return (
       <div id={this.state.mode === "buy" ? "navbar" : "navbar-sell"}>
-        {this.state.isFocused === true ? (
+        {this.state.isFocused === true || this.props.renderFocus === true ? (
           <header>
             <Row id="navbar-search-row-after-focused">
-              <Col xs={{ span: 4 }}>
+              <Col style={{marginRight : "10px", paddingTop : "1px"}} xs={{ offset : 1, span: 2 }}>
                 <img style={{
-                  width: "22px",
+                  width: "100%",
                   height: "auto",
-                  marginLeft: "40%",
                   filter: "brightness(0) invert(1)"
                 }}
                   onClick={() => {
@@ -69,10 +68,11 @@ class Navbar extends Component {
                     this.props.unFocusOnSearch();
                     this.updateInputValue(null);
                     this.props.changeIsAlarmNeedSectionAppened(false);
+                    this.props.reRenderFocus();
                   }}
                   src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
               </Col>
-              <Col xs={{ span: 18, offset: 0 }}>
+              <Col xs={{ span: 17, offset: 0 }}>
                 <Search
                   focusOnSearch={this.focusOnSearch}
                   updateInputValue={this.updateInputValue}
@@ -81,6 +81,16 @@ class Navbar extends Component {
                     "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
                     : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
                 ></Search>
+              </Col>
+              <Col style={{marginLeft : "10px", paddingTop : "1px"}} xs={{ offset : 0, span: 2 }}>
+                <img style={{
+                  width: "100%",
+                  height: "auto",
+                  filter: "brightness(0) invert(1)"
+                }}
+                     onClick={() => {
+                     }}
+                     src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/filter.png" />
               </Col>
             </Row>
           </header>

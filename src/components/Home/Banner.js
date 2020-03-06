@@ -19,7 +19,9 @@ class Banner extends Component {
     inDetail: false,
     isDoubleFocused: false,
     mode: "buy",
-    isAlarmNeedSectionAppened : false
+    isAlarmNeedSectionAppened : false,
+    passedKeyword : "",
+    renderFocus : false
   }
 
   getHomeData = async () => {
@@ -86,6 +88,10 @@ class Banner extends Component {
     this.setState({ isAlarmNeedSectionAppened : isAlarmNeedSectionAppened });
   }
 
+  reRenderFocus = () => {
+    this.setState({renderFocus : false})
+  }
+
   componentWillMount() {
     this.getHomeData();
   }
@@ -101,7 +107,10 @@ class Banner extends Component {
           unFocusOnSearch={this.unFocusOnSearch}
           changeMode={this.changeMode}
           changeIsAlarmNeedSectionAppened = {this.changeIsAlarmNeedSectionAppened}
-          search={<Search searchType="buy" />}
+                renderFocus = {this.state.renderFocus}
+                reRenderFocus = {this.reRenderFocus}
+          search={<Search searchType="buy"
+           />}
           id="navbar"></Navbar>
 
 
@@ -599,18 +608,17 @@ class Banner extends Component {
                     dataSource={this.state.bookResList3}
                     renderItem={item => (
 
-                      <List.Item
-                        key={item.title}
-                      >
-                        <Row>
-                          <Link to={"/buy/detail/" + item._id}>
-                            <Col span={24}>
-                              <img
-                                style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
-                                src={item.imageUrl.replace("type=m1", "")}
-                              ></img>
+                      <List.Item key={item.title}>
+                        <Row onClick={()=>{
+                          this.setState({ value: item });
+                          this.setState({ inDetail: true, renderFocus : true});
+                          this.getSellItemList(item.itemId);
+                          this.setState({resdata : [], mode : "buy", isFocused : true})
+                        }}>
+                          <Col span={24}>
+                            <img style={{ width: "10vh", height: "15vh", backgroundSize: "contain" }}
+                                 src={item.imageUrl.replace("type=m1", "")}></img>
                             </Col>
-                          </Link>
                         </Row>
                         <Row>
                           <Col span={24}>

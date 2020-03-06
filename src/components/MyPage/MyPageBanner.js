@@ -64,14 +64,12 @@ export default function MyPageBanner() {
         setSellList(response.data.data.sellTransList)
         
       });
-
     axios.delete(host + '/itemReceiving' , {
       headers: { Authorization: localStorage.getItem('token') }
     })
     .then((response) => {
       setReserveList(response.data.data)
     })
-/*
     setName("김유진");
     setLikeList([
       {
@@ -198,7 +196,6 @@ export default function MyPageBanner() {
     sellDetailIndex[i] = 0
     setNeedRender(true)
   }
-
 
 
     const acceptBuyRequest = (sellItemId) => {
