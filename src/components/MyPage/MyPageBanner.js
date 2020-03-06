@@ -17,8 +17,8 @@ export default function MyPageBanner() {
   const [buyProduct, setBuyProduct] = useState(false);
   const [sellProduct, setSellProduct] = useState(false);
 
-  var [buyDetailIndex, setBuyDetailIndex] = useState([]);
-  var [sellDetailIndex, setSellDetailIndex] = useState([]);
+  const [buyDetailIndex, setBuyDetailIndex] = useState([]);
+  const [sellDetailIndex, setSellDetailIndex] = useState([]);
 
   const [modal, setModal] = useState(false);
   const [level, setLevel] = useState(false);
@@ -79,7 +79,7 @@ export default function MyPageBanner() {
         "traderName": "박영우",
                 "traderPhoneNumber": "01040525345",
                 "title": "미시경제학",
-                "transactionType": 0,
+                "transactionType": 1,
                 "transPrice": "3000",
                 "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
                 "boxId": "",
@@ -139,37 +139,35 @@ export default function MyPageBanner() {
                     "2020-02-14T13:30:04.231+0000"
                 ],
         "transactionStep": 5
-      }
-      
+      }  
     ]);
-
-    // 거래상세보기 기능을 위한 설정
-    for (var buy in buyList) {
-      setBuyDetailIndex(buyDetailIndex.concat(0))
-    }
-    for (var sell in sellList) {
-      console.log(sell)
-      setSellDetailIndex(sellDetailIndex.concat(0))
-    }
-    console.log(buyList.length)
-    console.log(sellList.length)
-    console.log(buyDetailIndex)
-    console.log(sellDetailIndex)
 
   }
 
   // 거래상세보기 기능을 위한 함수들
+  const setList = () => {
+    for (var buy in buyList) {
+      buyDetailIndex[buy] = 0
+    }
+    for (var sell in sellList) {
+      sellDetailIndex[sell] = 0
+    }
+  }
   const buyDetail = (i) => {
     buyDetailIndex[i] = 1
+    setNeedRender(true)
   }
   const noBuyDetail = (i) => {
     buyDetailIndex[i] = 0
+    setNeedRender(true)
   }
   const sellDetail = (i) => {
     sellDetailIndex[i] = 1
+    setNeedRender(true)
   }
   const noSellDetail = (i) => {
     sellDetailIndex[i] = 0
+    setNeedRender(true)
   }
 
 
@@ -464,12 +462,12 @@ export default function MyPageBanner() {
               {buyProduct === true ?
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart_selected.png"
                 style={{width:"24px"}}
-                  onClick={() => { viewBuyProduct();}}
+                  onClick={() => { viewBuyProduct(); setList();}}
                 />
                 :
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart.png"
                 style={{width:"24px"}}
-                  onClick={() => { viewBuyProduct();}}
+                  onClick={() => { viewBuyProduct(); setList();}}
                 />
               }
             </Col>
@@ -491,12 +489,12 @@ export default function MyPageBanner() {
               {sellProduct == true ?
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart_selected.png"
                   style={{width:"24px"}}
-                  onClick={() => { viewSellProduct();}}
+                  onClick={() => { viewSellProduct(); setList();}}
                 />
                 :
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart.png"
                   style={{width:"24px"}}
-                  onClick={() => { viewSellProduct();}}
+                  onClick={() => { viewSellProduct(); setList();}}
                 />
               }
             </Col>
@@ -855,7 +853,7 @@ export default function MyPageBanner() {
                                 </Col>
                               }
                           </Row>
-                        {buyDetailIndex[index] === 1 ?
+                        {buyDetailIndex[index] === 1  ?
                           <div>
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             판매자 수락
@@ -1311,7 +1309,7 @@ export default function MyPageBanner() {
                                 </Col>
                               }
                           </Row>
-                        {sellDetailIndex[index] === 1 ?
+                        {sellDetailIndex[index] === 1  ?
                           <div style={{fontSize: "15px"}}>
                             <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                               구매 요청 수락
@@ -1541,7 +1539,7 @@ export default function MyPageBanner() {
                           </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
-                          {sellDetailIndex[index] === 1  ?
+                          {sellDetailIndex[index] === 1   ?
                                 <Col offset={20}>
                                 <label onClick={() => { noSellDetail(index) }}>접기</label>
                                 </Col>
