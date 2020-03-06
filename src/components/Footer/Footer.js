@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import useForm from 'react-hook-form';
 import { Modal, Button, Col, Row, Icon } from 'antd';
-import { useHistory, withRouter, Link } from "react-router-dom";
-import axios from 'axios';
 
 export default function Footer() {
       return (

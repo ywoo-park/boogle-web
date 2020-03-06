@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
-import { Row, Col, Icon, Divider } from "antd";
+import { Row, Col, Icon } from "antd";
 import axios from "axios";
+import host from '../../server-settings/ServerApiHost';
 
 export default function ModifyInfoForm() {
   const { register, setValue, handleSubmit, errors } = useForm();
@@ -15,7 +15,7 @@ export default function ModifyInfoForm() {
   const [semester, setSemester] = useState("1");
   const [major, setMajor] = useState("경영학과");
 
-  const userData_url = "http://13.124.113.72:8080/users/modification";
+  const userData_url = host + "/users/modification";
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
 
@@ -43,18 +43,18 @@ export default function ModifyInfoForm() {
   }, [isSignedIn]);
 
   const validateNickname = async nickname => {
-    if (nickname != undefined) {
+    if (nickname !== undefined) {
       axios
         .get(
-          "http://13.124.113.72:8080/users/signup/validateNickname?nickname=" +
+          host + "/users/signup/validateNickname?nickname=" +
             nickname
         )
         .then(response => {
-          if (response.data.status == 200 && validatedNickname == true) {
+          if (response.data.status === 200 && validatedNickname === true) {
             setValidatedNickname(false);
           } else if (
-            response.data.status == 404 &&
-            validatedNickname == false
+            response.data.status === 404 &&
+            validatedNickname === false
           ) {
             setValidatedNickname(true);
           }
@@ -69,7 +69,7 @@ export default function ModifyInfoForm() {
 
   return (
     <div>
-      {userData != undefined ? (
+      {userData !== undefined ? (
         <form onSubmit={handleSubmit(modifyFin)}>
           {console.log(userData)}
           <Row>
