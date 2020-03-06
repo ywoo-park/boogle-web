@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Icon, Card, Modal, Popconfirm } from "antd";
+import { Row, Col, Icon, Card, Modal, Popconfirm, Collapse } from "antd";
 import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
@@ -12,14 +12,15 @@ export default function MyPageBanner() {
   const [likeList, setLikeList] = useState([]);
   const [buyList, setBuyList] = useState([]);
   const [sellList, setSellList] = useState([]);
+  const [reserveList, setReserveList] = useState([]);
 
   const [likeProduct, setLikeProduct] = useState(true);
   const [buyProduct, setBuyProduct] = useState(false);
   const [sellProduct, setSellProduct] = useState(false);
-  const [dirDetailCard, setDirDetailCard] = useState(false);
-  const [boxDetailCard, setBoxDetailCard] = useState(false);
-  const [boxActiveIndex, setBoxActiveIndex] = useState(-1);
-  const [dirActiveIndex, setDirActiveIndex] = useState(-1);
+  const [reserveProduct, setReserveProduct] = useState(false);
+
+  const [buyDetailIndex, setBuyDetailIndex] = useState([]);
+  const [sellDetailIndex, setSellDetailIndex] = useState([]);
 
   const [modal, setModal] = useState(false);
   const [level, setLevel] = useState(false);
@@ -57,15 +58,18 @@ export default function MyPageBanner() {
       headers: { Authorization: localStorage.getItem('token') }
     })
       .then((response) => {
-        console.log(response);
         setName(response.data.data.userName)
         setLikeList(response.data.data.bookmarkedItemList)
         setBuyList(response.data.data.buyTransList)
         setSellList(response.data.data.sellTransList)
         
       });
-
-    /*
+    axios.delete(host + '/itemReceiving' , {
+      headers: { Authorization: localStorage.getItem('token') }
+    })
+    .then((response) => {
+      setReserveList(response.data.data)
+    })
     setName("김유진");
     setLikeList([
       {
@@ -81,7 +85,7 @@ export default function MyPageBanner() {
         "traderName": "박영우",
                 "traderPhoneNumber": "01040525345",
                 "title": "미시경제학",
-                "transactionType": 0,
+                "transactionType": 1,
                 "transPrice": "3000",
                 "itemImageUrl": "https://bookthumb-phinf.pstatic.net/cover/144/297/14429703.jpg?type=m1&udate=20190207",
                 "boxId": "",
@@ -141,13 +145,57 @@ export default function MyPageBanner() {
                     "2020-02-14T13:30:04.231+0000"
                 ],
         "transactionStep": 5
-      }
-      
-    ]
-    );
-    */
+      }  
+    ]);
+
+    setReserveList([
+      {
+        "_id": "5e5f9268367e0826aa7fb4a3",
+        "itemId": "9788962184181",
+        "userId": 10,
+        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/139/212/13921278.jpg?type=m1&udate=20181224",
+        "title": "맨큐의 경제학",
+        "author": "그레고리 맨큐",
+        "publisher": "한티에듀"
+    },
+    {
+        "_id": "5e5f9908367e0826aa7fb4a5",
+        "itemId": "9788962184204",
+        "userId": 10,
+        "imageUrl": "https://bookthumb-phinf.pstatic.net/cover/140/134/14013423.jpg?type=m1&udate=20190204",
+        "title": "맨큐의 경제학 연습문제풀이",
+        "author": "그레고리 맨큐",
+        "publisher": "한티미디어"
+    }
+    ]);
+*/
   }
 
+  // 거래상세보기 기능을 위한 함수들
+  const setList = () => {
+    for (var buy in buyList) {
+      buyDetailIndex[buy] = 0
+    }
+    for (var sell in sellList) {
+      sellDetailIndex[sell] = 0
+    }
+  }
+  const buyDetail = (i) => {
+    buyDetailIndex[i] = 1
+    setNeedRender(true)
+  }
+  const noBuyDetail = (i) => {
+    buyDetailIndex[i] = 0
+    setNeedRender(true)
+  }
+  const sellDetail = (i) => {
+    sellDetailIndex[i] = 1
+    setNeedRender(true)
+  }
+  const noSellDetail = (i) => {
+    sellDetailIndex[i] = 0
+    setNeedRender(true)
+  }
 
 
     const acceptBuyRequest = (sellItemId) => {
@@ -215,18 +263,28 @@ export default function MyPageBanner() {
     setLikeProduct(true);
     setBuyProduct(false);
     setSellProduct(false);
+    setReserveProduct(false);
   }
 
   const viewBuyProduct = e => {
     setLikeProduct(false);
     setBuyProduct(true);
     setSellProduct(false);
+    setReserveProduct(false);
   }
 
   const viewSellProduct = e => {
     setLikeProduct(false);
     setBuyProduct(false);
     setSellProduct(true);
+    setReserveProduct(false);
+  }
+
+  const viewReserveProduct = e => {
+    setLikeProduct(false);
+    setBuyProduct(false);
+    setSellProduct(false);
+    setReserveProduct(true);
   }
 
   const showModal = e => {
@@ -407,7 +465,7 @@ export default function MyPageBanner() {
       </Row>
 
       <Row style={{ marginTop: "27px" }}>
-        <Col xs={{ span: 6, offset: 3 }}>
+        <Col xs={{ span: 5, offset: 2 }}>
           <Row>
             <Col span={24}>
               {likeProduct === true ?
@@ -434,20 +492,18 @@ export default function MyPageBanner() {
             </Col>
           </Row>
         </Col>
-        <Col xs={{ span: 6 }}>
+        <Col xs={{ span: 5 }}>
           <Row>
             <Col span={24}>
               {buyProduct === true ?
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart_selected.png"
                 style={{width:"24px"}}
-                  onClick={() => { viewBuyProduct();
-                  setDirDetailCard(false); setBoxDetailCard(false); }}
+                  onClick={() => { viewBuyProduct(); setList();}}
                 />
                 :
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart.png"
                 style={{width:"24px"}}
-                  onClick={() => { viewBuyProduct(); 
-                  setDirDetailCard(false); setBoxDetailCard(false);}}
+                  onClick={() => { viewBuyProduct(); setList();}}
                 />
               }
             </Col>
@@ -463,20 +519,18 @@ export default function MyPageBanner() {
             </Col>
           </Row>
         </Col>
-        <Col xs={{ span: 6 }}>
+        <Col xs={{ span: 5 }}>
           <Row>
             <Col span={24}>
               {sellProduct == true ?
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart_selected.png"
                   style={{width:"24px"}}
-                  onClick={() => { viewSellProduct(); 
-                    setDirDetailCard(false); setBoxDetailCard(false);}}
+                  onClick={() => { viewSellProduct(); setList();}}
                 />
                 :
                 <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart.png"
                   style={{width:"24px"}}
-                  onClick={() => { viewSellProduct(); 
-                    setDirDetailCard(false); setBoxDetailCard(false);}}
+                  onClick={() => { viewSellProduct(); setList();}}
                 />
               }
             </Col>
@@ -489,6 +543,33 @@ export default function MyPageBanner() {
               }}>
                 판매현황
                     </small>
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={{ span: 5 }}>
+          <Row>
+            <Col span={24}>
+              {reserveProduct === true ?
+                <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart_selected.png"
+                style={{width:"24px"}}
+                  onClick={() => { viewReserveProduct(); }}
+                />
+                :
+                <img src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/heart.png"
+                style={{width:"24px"}}
+                  onClick={() => { viewReserveProduct(); }}
+                />
+              }
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <small style={{
+                color: "#ffffff",
+                fontSize: "12px"
+              }}>
+                입고알림
+              </small>
             </Col>
           </Row>
         </Col>
@@ -657,18 +738,17 @@ export default function MyPageBanner() {
                             </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
-                              {dirDetailCard === true && dirActiveIndex === index ?
-                                <Col offset={20}>
-                                <label onClick={() => { setDirDetailCard(false) }}>접기</label>
+                              {buyDetailIndex[index] === 1  ?
+                                <Col offset={20} onClick={() => { noBuyDetail(index) }}>
+                                <label>접기</label>
                                 </Col>
                                 :
-                                <Col offset={16}>
-                                <label onClick={() => { setDirDetailCard(true); 
-                                  setDirActiveIndex(index) }}>거래상세보기</label>
+                                <Col offset={16} onClick={() => { buyDetail(index) }}>
+                                  <label>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {dirDetailCard === true && dirActiveIndex === index ?
+                        {buyDetailIndex[index] === 1 ?
                           <div style={{fontSize: "15px"}}>
                             <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                               판매자 수락
@@ -825,18 +905,18 @@ export default function MyPageBanner() {
                             </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecorationLine: "underline" }}>
-                              {boxDetailCard === true && boxActiveIndex === index ?
+                          {buyDetailIndex[index] === 1  ?
                                 <Col offset={20}>
-                                <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
+                                <label onClick={() => { noBuyDetail(index) }}>접기</label>
                                 </Col>
-                                : 
+                                :
                                 <Col offset={16}>
-                                <label onClick={() => { setBoxDetailCard(true); 
-                                  setBoxActiveIndex(index) }}>거래상세보기</label>
+                                <label onClick={() => {
+                                  buyDetail(index) }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {boxDetailCard === true && boxActiveIndex === index ?
+                        {buyDetailIndex[index] === 1  ?
                           <div>
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             판매자 수락
@@ -1281,18 +1361,18 @@ export default function MyPageBanner() {
                             </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
-                              {dirDetailCard === true && dirActiveIndex === index ?
+                          {sellDetailIndex[index] === 1  ?
                                 <Col offset={20}>
-                                <label onClick={() => { setDirDetailCard(false) }}>접기</label>
+                                <label onClick={() => { noSellDetail(index) }}>접기</label>
                                 </Col>
                                 :
                                 <Col offset={16}>
-                                <label onClick={() => { setDirDetailCard(true); 
-                                  setDirActiveIndex(index) }}>거래상세보기</label>
+                                <label onClick={() => {
+                                  sellDetail(index) }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {dirDetailCard === true && dirActiveIndex === index ?
+                        {sellDetailIndex[index] === 1  ?
                           <div style={{fontSize: "15px"}}>
                             <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                               구매 요청 수락
@@ -1522,18 +1602,18 @@ export default function MyPageBanner() {
                           </Col>
                           </Row>
                           <Row style={{ fontSize: "12px", color: "#656565", marginTop: "24px", textDecoration: "underline" }}>
-                              {boxDetailCard === true && boxActiveIndex === index ?
+                          {sellDetailIndex[index] === 1   ?
                                 <Col offset={20}>
-                                <label onClick={() => { setBoxDetailCard(false) }}>접기</label>
+                                <label onClick={() => { noSellDetail(index) }}>접기</label>
                                 </Col>
                                 :
                                 <Col offset={16}>
-                                <label onClick={() => { setBoxDetailCard(true); 
-                                  setBoxActiveIndex(index) }}>거래상세보기</label>
+                                <label onClick={() => {
+                                  sellDetail(index) }}>거래상세보기</label>
                                 </Col>
                               }
                           </Row>
-                        {boxDetailCard === true && boxActiveIndex === index ?
+                        {sellDetailIndex[index] === 1 ?
                           <div style={{fontSize: "15px"}}>
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             구매 요청 수락
@@ -1700,6 +1780,79 @@ export default function MyPageBanner() {
           </Card>
           : null} {/* sellProduct != true 일 때 null */}
       </Row>
+
+      {reserveProduct === true ?
+          <Card style={{ width: "100%", height: "auto", backgroundColor: "#ffffff", border: 0, }}>
+            {reserveList.length !== 0 && reserveList != null ?
+              reserveList.map((value, index) => (
+                <div style={{ width: "95%", margin: "auto auto" }}>
+                  <div style={{ width: "100%", margin: "auto auto", padding: "0px" }}>
+                      <Card className = "product-card"
+                      style={{
+                        width: "100%", height: "40%", backgroundColor: "#e0e0e0",
+                        border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
+                        margin: "auto auto", marginBottom: "2vh", padding: "0px",
+                      }}>
+                        <div style={{margin: "-15px"}}>
+                        <Row>
+                            <Col span={6} offset={0}>
+                            <Link to = {'/buy/detail/'+value.itemId}>
+                              <img style={{
+                                width: "64px", height: "97px", backgroundSize: "contain",
+                                borderRadius: "7px", overflow: "hidden"
+                              }} src={value.imageUrl}></img>
+                            </Link>
+                            </Col>
+                            <Col span={17} offset={0}>
+                              <Row style={{ fontStyle: "bold", fontSize: "15px", textAlign: "left",
+                            color: "#656565" }}>
+                                <Col offset={2}>
+                                  {value.title}
+                                </Col>
+                              </Row>
+                              <Row style={{ fontSize: "12px", textAlign: "left", marginTop: "8px", color: "#656565", }}>
+                                <Col span={12} offset={2}>작가 : {value.author}
+                                </Col>
+                              </Row>
+                              <Row style={{ fontSize: "12px", textAlign: "left", marginTop: "8px", color: "#656565", }}>
+                                <Col span={12} offset={2}>출판사 : {value.publisher}
+                                </Col>
+                              </Row>
+                              <Row style={{ fontSize: "15px", color: "#959595", marginTop: "17px" }}>
+                                <Col offset={2}>
+                                  신청 완료
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+              ))
+              :  /*입고알림 없을 때*/
+              <div>
+                <div>
+                <Row style={{ padding: "2vh", margin: "2vh", marginBottom: "45%" }}>
+                  <p style={{ color: "#000000", fontSize: "15px" }}>
+                    입고알림 신청한 책이 없습니다.</p>
+                </Row>
+                <Row>
+                  <Link to="/">
+                    <button style={{
+                      padding: "0",
+                      width: "100%",
+                      background: "rgba(51, 158, 172, 0.9)", color: "#ffffff",
+                      border: "none", borderRadius: "2.25vh", fontSize: "2.5vh", height: "5vh"
+                    }}
+                    >검색하러 가기</button>
+                  </Link>
+                </Row>
+              </div>
+              </div>
+            } {/* 입고신청 없을 때 뷰 끝 */}
+          </Card>
+        : null} {/* reserveProduct != true 일 때 null */}
       
 
       {/*Footer*/}
