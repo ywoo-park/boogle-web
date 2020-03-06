@@ -5,3 +5,10 @@
     overflow: scroll;
     overscroll-behavior : none;
 }
+
+#dashboard-container a{
+    font-size: 12px;
+}
+#dashboard-container span{
+    font-size: 10px;
+}

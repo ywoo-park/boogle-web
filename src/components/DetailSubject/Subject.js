@@ -7,6 +7,7 @@ import NumberFormat from "react-number-format";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Subject.css";
+import host from '../../server-settings/ServerApiHost';
 
 function Subject({ match }) {
   //const [id, setId] = useState("5e2d39aa3eb3ee04d828414d");
@@ -18,7 +19,7 @@ function Subject({ match }) {
 
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
-  const server_url = `http://13.124.113.72:8080`;
+  const server_url = host;
   const detail_sub_url = `${server_url}/sell/detail?id=${id}`;
   const bookmark_url = `${server_url}/bookmark?sellItemId=${id}`;
   const transaction_url = `${server_url}/transaction`;

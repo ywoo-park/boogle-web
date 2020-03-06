@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { Row, Col, Icon, Card, Modal, Divider, Popconfirm } from "antd";
+import { Link } from "react-router-dom";
+import { Row, Col, Icon, Card, Modal, Popconfirm } from "antd";
 import axios from 'axios';
 import './MyPageBanner.css';
 import { useForm } from 'react-hook-form';
+
+import host from '../../server-settings/ServerApiHost';
 
 export default function MyPageBanner() {
   const [name, setName] = useState("");
@@ -51,19 +53,19 @@ export default function MyPageBanner() {
   }, [needRender]);
 
   const getMyPage = () => {
-    axios.get('http://13.124.113.72:8080/myPage', {
+    axios.get(host + '/myPage', {
       headers: { Authorization: localStorage.getItem('token') }
     })
       .then((response) => {
         console.log(response);
-        //setName(response.data.data.userName)
-        //setLikeList(response.data.data.bookmarkedItemList)
-        //setBuyList(response.data.data.buyTransList)
-        //setSellList(response.data.data.sellTransList)
+        setName(response.data.data.userName)
+        setLikeList(response.data.data.bookmarkedItemList)
+        setBuyList(response.data.data.buyTransList)
+        setSellList(response.data.data.sellTransList)
         
       });
-    
-      
+
+    /*
     setName("김유진");
     setLikeList([
       {
@@ -104,7 +106,7 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 1
+        "transactionStep": 5
       }
     ]);
     setSellList([
@@ -138,17 +140,18 @@ export default function MyPageBanner() {
                 "transactionProcessedTimeList": [
                     "2020-02-14T13:30:04.231+0000"
                 ],
-        "transactionStep": 2
+        "transactionStep": 5
       }
       
     ]
     );
-    
+    */
   }
 
 
+
     const acceptBuyRequest = (sellItemId) => {
-      axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+      axios.get(host + '/transaction/step?sellItemId=' + sellItemId, {
       })
         .then((response) => {
             setNeedRender(true);
@@ -156,7 +159,7 @@ export default function MyPageBanner() {
     }
 
     const rejectBuyRequest = (sellItemId) => {
-      axios.delete('http://13.124.113.72:8080/transaction?sellItemId=' + sellItemId, {
+      axios.delete(host + '/transaction?sellItemId=' + sellItemId, {
       })
         .then((response) => {
             setNeedRender(true);
@@ -164,7 +167,7 @@ export default function MyPageBanner() {
     }
 
   const completePayment = (sellItemId) => {
-    axios.get('http://13.124.113.72:8080/transaction/payment?sellItemId=' + sellItemId, {
+    axios.get(host + '/transaction/payment?sellItemId=' + sellItemId, {
     })
       .then((response) => {
           setNeedRender(true);
@@ -173,7 +176,7 @@ export default function MyPageBanner() {
 
   const setBoogleBoxInfo = (boxId, boxPassword, sellItemId) => {
 
-    axios.post('http://13.124.113.72:8080/transaction/booglebox', {
+    axios.post(host + '/transaction/booglebox', {
       "sellItemId" : sellItemId,
       "id" : boxId,
       "password" : boxPassword
@@ -186,7 +189,7 @@ export default function MyPageBanner() {
 
   const changeTransactionStep = (sellItemId) => {
 
-    axios.get('http://13.124.113.72:8080/transaction/step?sellItemId=' + sellItemId, {
+    axios.get(host + '/transaction/step?sellItemId=' + sellItemId, {
       headers: { Authorization: localStorage.getItem('token') }
     })
 
@@ -427,7 +430,7 @@ export default function MyPageBanner() {
                 fontSize: "12px"
               }}>
                 관심상품
-                    </small>
+              </small>
             </Col>
           </Row>
         </Col>
@@ -491,9 +494,9 @@ export default function MyPageBanner() {
         </Col>
       </Row>
       <Row id="user-product"
-        style={{ marginTop: "24px", height: "45vh" }}>
+        style={{ marginTop: "24px", height: "auto" }}>
         {likeProduct === true ?
-          <Card style={{ width: "100%", height: "100%", backgroundColor: "#ffffff", border: 0, paddingBottom: "5vh" }}>
+          <Card style={{ width: "100%", height: "auto", backgroundColor: "#ffffff", border: 0, paddingBottom: "5vh" }}>
             {likeList.length !== 0 ?
               <div>
                 <Row style={{margin: "auto auto", marginTop: "-1px", marginBottom: "2vh"}}>
@@ -559,12 +562,12 @@ export default function MyPageBanner() {
           : null} {/* likeProduct != true 일 때는 null */}
 
         {buyProduct === true ?
-          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0}}>
+          <Card style={{ width: "100%", height: "auto", backgroundColor: "#ffffff", border: 0}}>
             {buyList.length !== 0 && buyList != null ?
               buyList.map((value, index) => (
                 <div style={{ width: "95%", margin: "auto auto", padding: "0px" }}>
                   {value.transactionType === 0 ?
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                     style={{
                       width: "100%", height: "40%", backgroundColor: "#e5fdfc",
                       border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -572,7 +575,7 @@ export default function MyPageBanner() {
                     }}>
                       <div style={{margin: "-15px"}}>
                       <Row style={{padding: "0"}}>
-                        <Col span={24} style={{ color: "#339eac", fontSize: "16px", textAlign: "right" }}>직거래</Col>
+                        <Col span={24} style={{ color: "#339eac", fontSize: "16px", textAlign: "right", fontWeight: "bold" }}>직거래</Col>
                       </Row>
 
                       {value.transactionStep === 0 ?
@@ -671,7 +674,10 @@ export default function MyPageBanner() {
                               판매자 수락
                             </Row>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#038155" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 280%)"}}>
+                                </Col>
                             </Row>
                             {value.transactionStep === 2 || value.transactionStep > 2 ?
                             <Row style={{ marginTop: "13.5px", color: "#038196" }}>
@@ -682,7 +688,7 @@ export default function MyPageBanner() {
                               거래중
                             </Row>
                             }
-                            {value.transactionStep ===2 ?
+                            {value.transactionStep === 2 ?
                             <Row>
                             <button style={{
                               padding: "0",
@@ -699,7 +705,10 @@ export default function MyPageBanner() {
                             {value.transactionStep === 3 ?
                             <div>
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -153%, #0b308e 100%)"}}>
+                                </Col>
                               </Row>
                               <Row style={{ marginTop: "13.5px", color: "#0b308e", marginBottom: "20px" }}>
                                 거래 완료
@@ -708,7 +717,10 @@ export default function MyPageBanner() {
                             :
                             <div>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                             <Row style={{ marginTop: "13.5px", color: "#959595", marginBottom: "20px" }}>
                               거래 완료
@@ -723,7 +735,7 @@ export default function MyPageBanner() {
                     </div>
                     </Card>
                     :
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                     style={{
                       width: "100%", height: "40%", backgroundColor: "#e8f5ff",
                       border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -731,7 +743,7 @@ export default function MyPageBanner() {
                     }}>
                       <div style={{margin: "-15px"}}>
                       <Row style={{padding: "0"}}>
-                        <Col span={24}style={{ color: "#0b308e", fontSize: "16px", textAlign: "right" }}>북을박스</Col>
+                        <Col span={24}style={{ color: "#0b308e", fontSize: "16px", textAlign: "right", fontWeight: "bold" }}>북을박스</Col>
                       </Row>
                       {value.transactionStep === 0 ?
                         <div>
@@ -829,8 +841,11 @@ export default function MyPageBanner() {
                           <Row style={{ marginTop: "10px", color: "#44a0ac" }}>
                             판매자 수락
                           </Row>
-                          <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#038155" }}>
-                            <Icon type="line" rotate="90" />
+                          <Row style={{ fontSize: "5vh", marginTop: "13.5px" }}>
+                            <Col offset={12} span={1} class="line"
+                            style={{width: "2px", height: "33px", 
+                            backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 450%)"}}>
+                            </Col>
                           </Row>
                           <Row style={{ marginTop: "13.5px", color: "#038196" }}>
                             결제 요청중
@@ -909,12 +924,18 @@ export default function MyPageBanner() {
                                       </Modal>
                                       : null} {/*모달 끝*/}
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                  style={{width: "2px", height: "33px", 
+                                  backgroundColor: "#959595"}}>
+                                </Col>
                               </Row>
                             </div>
                             : /*1단계 아니면*/
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#065d33" }}>
-                                <Icon type="line" rotate="90" />
+                                <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -231%, #0b308e 325%)"}}>
+                                </Col>
                               </Row>
                           } {/*1단계 끝*/}
 
@@ -1037,11 +1058,17 @@ export default function MyPageBanner() {
 
                           {value.transactionStep >= 4 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -357%, #0b308e 262%)"}}>
+                              </Col>
                             </Row>
                             :
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#959595" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                           } {/*4단계 끝*/}
 
@@ -1089,7 +1116,7 @@ export default function MyPageBanner() {
           : null} {/* buyProduct != true 일 때 null */}
 
         {sellProduct === true ?
-          <Card style={{ width: "100%", backgroundColor: "#ffffff", border: 0, }}>
+          <Card style={{ width: "100%", height: "auto", backgroundColor: "#ffffff", border: 0, }}>
             {sellList.length !== 0 && sellList != null ?
               sellList.map((value, index) => (
                 <div style={{ width: "95%", margin: "auto auto" }}>
@@ -1097,7 +1124,7 @@ export default function MyPageBanner() {
                   <div>
                   <div style={{ width: "100%", margin: "auto auto", padding: "0px" }}>
                     {value.transactionStep === -1 ?
-                      <Card class = "product-card"
+                      <Card className = "product-card"
                       style={{
                         width: "100%", height: "40%", backgroundColor: "#e0e0e0",
                         border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1105,7 +1132,7 @@ export default function MyPageBanner() {
                       }}>
                         <div style={{margin: "-15px"}}>
                         <Row style={{padding: "0"}}>
-                          <Col span={24} style={{ color: "#707070", fontSize: "16px", textAlign: "right" }}>직거래</Col>
+                          <Col span={24} style={{ color: "#707070", fontSize: "16px", textAlign: "right", fontWeight: "bold" }}>직거래</Col>
                         </Row>
 
                         <Row>
@@ -1139,7 +1166,7 @@ export default function MyPageBanner() {
                     </Card>
                     : /*판매등록된 상품인지 거래 중인지*/
 
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                       style={{
                         width: "100%", height: "40%", backgroundColor: "#e5fdfc",
                         border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1147,7 +1174,7 @@ export default function MyPageBanner() {
                       }}>
                       <div style={{margin: "-15px"}}>
                       <Row>
-                        <Col span={24} style={{ color: "#339eac", fontSize: "16px", textAlign: "right" }}>직거래</Col>
+                        <Col span={24} style={{ color: "#339eac", fontSize: "16px", textAlign: "right", fontWeight: "bold" }}>직거래</Col>
                       </Row>
 
                       {value.transactionStep === 0 ?
@@ -1188,18 +1215,6 @@ export default function MyPageBanner() {
                             <Row style={{ color: "#ffffff", marginTop: "0" }}>
                               <Col span={6} offset={5}>
                                 <button style={{
-                                  padding: "0",
-                                  width: "42px",
-                                  height: "21px",
-                                  background: "#656565", 
-                                  border: "none", borderRadius: "5px", fontSize: "10px",
-                                  marginLeft: "0"
-                                }}
-                                  onClick={() => {rejectBuyRequest(value.sellItemId)}}
-                                >거절</button>
-                              </Col>
-                              <Col span={5} offset={1}>
-                                <button style={{
                                    padding: "0",
                                    width: "42px",
                                    height: "21px",
@@ -1209,6 +1224,18 @@ export default function MyPageBanner() {
                                 }}
                                   onClick={() => {acceptBuyRequest(value.sellItemId)}}
                                 >수락</button>
+                              </Col>
+                              <Col span={5} offset={1}>
+                                <button style={{
+                                  padding: "0",
+                                  width: "42px",
+                                  height: "21px",
+                                  background: "#656565", 
+                                  border: "none", borderRadius: "5px", fontSize: "10px",
+                                  marginLeft: "0"
+                                }}
+                                  onClick={() => {rejectBuyRequest(value.sellItemId)}}
+                                >거절</button>
                               </Col>
                             </Row>
 
@@ -1271,7 +1298,10 @@ export default function MyPageBanner() {
                               구매 요청 수락
                             </Row>
                             <Row style={{ fontSize: "5vh", margin: "13.5px", color: "#038155" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 280%)"}}>
+                              </Col>
                             </Row>
                             {value.transactionStep === 2 || value.transactionStep > 2 ?
                             <Row style={{ marginTop: "13.5px", color: "#038196" }}>
@@ -1282,10 +1312,27 @@ export default function MyPageBanner() {
                               거래중
                             </Row>
                             }
+                            {value.transactionStep === 2 ?
+                            <Row>
+                            <button style={{
+                              padding: "0",
+                              width: "52px",
+                              height: "21px",
+                              background: "#075e92", color: "#ffffff",
+                              border: "none", borderRadius: "5px", fontSize: "10px",
+                              marginTop: "4px"
+                            }}
+                              onClick={() => { }}
+                            >수령 완료</button> {/*버튼 통신 필요*/}
+                          </Row>
+                          : null}
                             {value.transactionStep === 3 ?
                             <div>
                               <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                                <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -153%, #0b308e 100%)"}}>
+                              </Col>
                               </Row>
                               <Row style={{ marginTop: "13.5px", color: "#0b308e", marginBottom: "20px" }}>
                                 거래 완료
@@ -1294,7 +1341,10 @@ export default function MyPageBanner() {
                             :
                             <div>
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "45px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                             <Row style={{ marginTop: "13.5px", color: "#656565", marginBottom: "20px" }}>
                               거래 완료
@@ -1315,7 +1365,7 @@ export default function MyPageBanner() {
                     <div>
                     <div>
                     {value.transactionStep === -1 ?
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                     style={{
                       width: "100%", height: "40%", backgroundColor: "#e0e0e0",
                       border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1323,7 +1373,7 @@ export default function MyPageBanner() {
                     }}>
                       <div style={{margin: "-15px"}}>
                       <Row style={{padding: "0"}}>
-                        <Col span={24}style={{ color: "#707070", fontSize: "16px", textAlign: "right" }}>북을박스</Col>
+                        <Col span={24}style={{ color: "#707070", fontSize: "16px", textAlign: "right", fontWeight: "bold" }}>북을박스</Col>
                       </Row>
 
                       <Row>
@@ -1356,7 +1406,7 @@ export default function MyPageBanner() {
                       </div>
                   </Card>
                     : /*판매등록된 상품인지 거래 중인지*/
-                    <Card class = "product-card"
+                    <Card className = "product-card"
                       style={{
                         width: "100%", height: "40%", backgroundColor: "#e8f5ff",
                         border: "none", borderRadius: "2.25vh", boxShadow: "0px 5px 10px #d3d3d3",
@@ -1364,7 +1414,7 @@ export default function MyPageBanner() {
                       }}>
                       <div style={{margin: "-15px"}}>
                       <Row>
-                        <Col span={24} style={{ color: "#0b308e", fontSize: "16px", textAlign: "right" }}>북을박스</Col>
+                        <Col span={24} style={{ color: "#0b308e", fontSize: "16px", textAlign: "right", fontWeight: "bold" }}>북을박스</Col>
                       </Row>
 
                       {value.transactionStep === 0 ?
@@ -1489,7 +1539,10 @@ export default function MyPageBanner() {
                             구매 요청 수락
                           </Row>
                           <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#038155" }}>
-                            <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -62%, #0b308e 450%)"}}>
+                              </Col>
                           </Row>
                           <Row style={{ marginTop: "13.5px", color: "#038196" }}>
                             구매자 결제 완료
@@ -1582,11 +1635,17 @@ export default function MyPageBanner() {
 
                           {value.transactionStep >= 2 ?
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#0b308e" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundImage: "-webkit-linear-gradient(#00a199 -357%, #0b308e 262%)"}}>
+                              </Col>
                             </Row>
                             :
                             <Row style={{ fontSize: "5vh", marginTop: "13.5px", color: "#656565" }}>
-                              <Icon type="line" rotate="90" />
+                              <Col className="line" offset={12} span={1} 
+                                style={{width: "2px", height: "33px", 
+                                backgroundColor: "#959595"}}>
+                              </Col>
                             </Row>
                           } {/*2단계 끝*/}
 
@@ -1640,8 +1699,35 @@ export default function MyPageBanner() {
             } {/* 판매상품 없을 때 뷰 끝 */}
           </Card>
           : null} {/* sellProduct != true 일 때 null */}
-
       </Row>
+      
+
+      {/*Footer*/}
+      <div style={{backgroundColor : "#F5F5F5", height : "20px", width : "100%"}}></div>
+      <div style={{backgroundColor: "white", padding: "10px"}}>
+        <Row style={{marginBottom : "10px", color: "#666666", fontSize: "14px"}}>
+            <Col xs={{span : 24}}>
+              <Row>카카오톡 플러스 친구 '북을'을 검색한 후 문의하시면</Row>
+              <Row>더욱 신속한 답변을 받을 수 있습니다!</Row>
+            </Col>
+          </Row>
+          <Row style={{marginBottom : "10px"}}>
+            <Col xs={{span : 24}}>
+              <small>
+                <a style={{color : "orange", textDecoration : "underline"}} href="http://pf.kakao.com/_xnlmlxb">카카오톡 플러스친구 '북을'</a>
+              </small>
+            </Col>
+          </Row>
+          <Row style={{marginBottom : "10px"}}>
+            <Col xs={{span : 2, offset : 5}}>                   
+              <img
+              style={{ width: "80%", height: "auto"}}
+              src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/logo_gray.png"
+              ></img></Col>
+            <Col xs={{span : 10, offset : 1}} style={{color: "#666666"}}><small>캠퍼스 거래의 모든 것, 북을</small></Col>
+          </Row>
+        </div>  
+        <div style={{backgroundColor : "#F5F5F5", height : "20px", width : "100%"}}></div>
     </div>
   )
 }

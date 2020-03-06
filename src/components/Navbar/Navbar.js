@@ -1,18 +1,13 @@
 import React, { Component } from "react";
-import Nav from "react-bootstrap/Nav";
-import NavBar from "react-bootstrap/Navbar";
+
 import "./Navbar.css";
 import "../Sell/Register.css";
 
-import { Navbar as Navigation } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 
-import { Modal, Button, Col, Row, Icon, Carousel } from "antd";
+import { Col, Row, Carousel } from "antd";
 import Search from "./Search";
 
-import { Typography } from "antd";
-
-const { Title } = Typography;
 
 class Navbar extends Component {
   state = {
@@ -57,15 +52,14 @@ class Navbar extends Component {
   render() {
 
     return (
-      <div id={this.state.mode == "buy" ? "navbar" : "navbar-sell"}>
-        {this.state.isFocused == true ? (
+      <div id={this.state.mode === "buy" ? "navbar" : "navbar-sell"}>
+        {this.state.isFocused === true || this.props.renderFocus === true ? (
           <header>
             <Row id="navbar-search-row-after-focused">
-              <Col xs={{ span: 4 }}>
+              <Col style={{marginRight : "10px", paddingTop : "1px"}} xs={{ offset : 1, span: 2 }}>
                 <img style={{
-                  width: "22px",
+                  width: "100%",
                   height: "auto",
-                  marginLeft: "40%",
                   filter: "brightness(0) invert(1)"
                 }}
                   onClick={() => {
@@ -74,18 +68,29 @@ class Navbar extends Component {
                     this.props.unFocusOnSearch();
                     this.updateInputValue(null);
                     this.props.changeIsAlarmNeedSectionAppened(false);
+                    this.props.reRenderFocus();
                   }}
                   src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/left_arrow.png" />
               </Col>
-              <Col xs={{ span: 18, offset: 0 }}>
+              <Col xs={{ span: 17, offset: 0 }}>
                 <Search
                   focusOnSearch={this.focusOnSearch}
                   updateInputValue={this.updateInputValue}
                   mode={this.state.mode}
-                  placeHolder={this.state.mode == "buy" ?
+                  placeHolder={this.state.mode === "buy" ?
                     "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
                     : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
                 ></Search>
+              </Col>
+              <Col style={{marginLeft : "10px", paddingTop : "1px"}} xs={{ offset : 0, span: 2 }}>
+                <img style={{
+                  width: "100%",
+                  height: "auto",
+                  filter: "brightness(0) invert(1)"
+                }}
+                     onClick={() => {
+                     }}
+                     src="https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/filter.png" />
               </Col>
             </Row>
           </header>
@@ -102,7 +107,7 @@ class Navbar extends Component {
                   </Col>
                   <Col xs={{ span: 4, offset: 0 }}>
                     <button
-                      class={this.state.mode == "sell" ? "mode-button-active" : "mode-button"}
+                      class={this.state.mode === "sell" ? "mode-button-active" : "mode-button"}
                       style={{
                         width: "100%",
                         border: "#ffffff 1px solid",
@@ -125,7 +130,7 @@ class Navbar extends Component {
                   </Col>
                   <Col xs={{ span: 4, offset: 0 }}>
                     <button
-                      class={this.state.mode == "buy" ? "mode-button-active" : "mode-button"}
+                      class={this.state.mode === "buy" ? "mode-button-active" : "mode-button"}
                       style={{
                         width: "100%",
                         border: "#ffffff 1px solid",
@@ -139,7 +144,7 @@ class Navbar extends Component {
                         marginTop: "7.5%"
                       }}
                       onClick={() => {
-                        if (this.state.mode == "sell") {
+                        if (this.state.mode = "sell") {
                           this.changeMode("buy");
                           this.setState({ mode: "buy" });
                         }
@@ -159,12 +164,12 @@ class Navbar extends Component {
                     </Link>
                   </Col>
                 </Row>
-                {this.state.mode == "buy" ?
+                {this.state.mode === "buy" ?
                   <Row id="navbar-search-row">
                     <Col xs={{ span: 20, offset: 2 }}>
                       <Search
                         focusOnSearch={this.focusOnSearch}
-                        placeHolder={this.state.mode == "buy" ?
+                        placeHolder={this.state.mode === "buy" ?
                           "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
                           : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
                         mode={this.state.mode}
@@ -175,7 +180,7 @@ class Navbar extends Component {
                 }
               </header>
               {
-                this.state.mode == "buy" ?
+                this.state.mode === "buy" ?
                   <header id="navbar-unfixed">
                     <Row>
                       <Col xs={{ span: 20, offset: 2 }}>
