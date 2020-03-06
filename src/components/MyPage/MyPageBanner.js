@@ -64,16 +64,13 @@ export default function MyPageBanner() {
                 setSellList(response.data.data.sellTransList)
 
             });
-        axios.delete(host + '/itemReceiving' , {
+        axios.get(host + '/itemReceiving' , {
             headers: { Authorization: localStorage.getItem('token') }
         })
             .then((response) => {
                 setReserveList(response.data.data)
             })
         /*
-        =======
-            /*
-        >>>>>>> feature-yw
             setName("김유진");
             setLikeList([
               {

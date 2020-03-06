@@ -21,7 +21,7 @@ class Banner extends Component {
     mode: "buy",
     isAlarmNeedSectionAppened : false,
     passedKeyword : "",
-    renderFocus : false
+    renderFocus : false,
   }
 
   getHomeData = async () => {
@@ -415,9 +415,10 @@ class Banner extends Component {
           </div>
           
           : null}
-        {this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null 
-          && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === true ? 
+        {(this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null
+          && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === true) ?
           this.state.resdata.filter(r => r.regiPrice === "").map((value, index) => {
+            let clickCount = 0;
             return (
               <div>
                 <Row>
@@ -470,30 +471,48 @@ class Banner extends Component {
                     </Row>
                     <Row>
                       <Col xs={{ offset : 18, span: 5 }}>
-                        <img src = { value.itemReceivingRegistered ? "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_unfilled.png"
+                        <img id = "bell" src = { value.itemReceivingRegistered ? "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_unfilled.png"
                             : "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_filled.png"}
 
                              style={{width : "100%", height : "auto"}}
-                        onClick={()=>{
+                        onClick={(e)=>{
                           if(!value.itemReceivingRegistered){
-                            this.saveItemReceiving({
-                              "itemId" : value.itemId,
-                              "imageUrl" : value.imageUrl,
-                              "title" : value.title,
-                              "author" : value.author,
-                              "publisher" : value.publisher
-                            })
+                            if(clickCount % 2 === 0){
+                              this.saveItemReceiving({
+                                "itemId" : value.itemId,
+                                "imageUrl" : value.imageUrl,
+                                "title" : value.title,
+                                "author" : value.author,
+                                "publisher" : value.publisher
+                              })
+                              message.success("입고 알림이 정상적으로 신청되었습니다!")
+                              e.target.src = "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_unfilled.png";
+                            }
+                            else{
+                              this.cancelItemReceiving(value.itemId)
+                              message.success("입고 알림이 취소되었습니다!")
+                              e.target.src = "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_filled.png";
+                            }
                           }
                           else{
-                            this.cancelItemReceiving(value.itemId)
+                            if(clickCount % 2 === 1){
+                              this.saveItemReceiving({
+                                "itemId" : value.itemId,
+                                "imageUrl" : value.imageUrl,
+                                "title" : value.title,
+                                "author" : value.author,
+                                "publisher" : value.publisher
+                              })
+                              message.success("입고 알림이 정상적으로 신청되었습니다!")
+                              e.target.src = "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_unfilled.png";
+                            }
+                            else{
+                              this.cancelItemReceiving(value.itemId)
+                              message.success("입고 알림이 취소되었습니다!")
+                              e.target.src = "https://project-youngwoo.s3.ap-northeast-2.amazonaws.com/bell_filled.png";
+                            }
                           }
-                          let currResdata = this.state.resdata;
-                          let currState = !currResdata[index].itemReceivingRegistered;
-                          currResdata[index].itemReceivingRegistered = currState;
-                          this.setState({resdata : currResdata});
-
-                          message.success("입고 알림이 정상적으로 신청되었습니다!")
-
+                          clickCount++;
                         }}></img>
                       </Col>
                     </Row>
