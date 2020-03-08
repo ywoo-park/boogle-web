@@ -22,6 +22,7 @@ class Banner extends Component {
     isAlarmNeedSectionAppened : false,
     passedKeyword : "",
     renderFocus : false,
+    sortType : "accuracy"
   }
 
   getHomeData = async () => {
@@ -109,6 +110,7 @@ class Banner extends Component {
           changeIsAlarmNeedSectionAppened = {this.changeIsAlarmNeedSectionAppened}
                 renderFocus = {this.state.renderFocus}
                 reRenderFocus = {this.reRenderFocus}
+                sortType={this.state.sortType}
           search={<Search searchType="buy"
            />}
           id="navbar"></Navbar>
@@ -143,90 +145,118 @@ class Banner extends Component {
         {
           this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null 
           && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === false ?
-            
-          this.state.resdata.filter(r => r.regiPrice !== "").map((value, index) => {
-              return (
-                <div>
-                  <Row>
-                    <Col offset={1} span={22}><Divider /></Col>
-                  </Row>
-                  <Row key={index} className="search-result-row"
-                    onClick={() => {
-                      if (value.regiPrice !== "") {
-                        this.setState({ value: value });
-                        this.setState({ inDetail: true });
-                        this.getSellItemList(value.itemId);
-                      }
-                    }}>
-                    <Col xs={{ span: 5, offset: 1 }}>
-                      <img style={{
-                        width: "100px", height: "150px", backgroundSize: "contain",
-                        borderRadius: "7px"
-                      }}
-                        src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") : ""}></img>
-                    </Col>
-                    <Col xs={{ span: 14, offset: 3 }}>
-                      <Row>
-                        <Col xs={{ span: 24 }}>
-                          <span style={{ color: "#656565", fontSize: "17px" }}>{this.state.resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col style={{ marginTop: "10px", marginBottom: "-9px" }} xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "12px", fontWeight: "400" }}>
-                            저자 : {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
-                          </small>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "12px", fontWeight: "400" }}>
-                            출판사 : {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
-                          </small>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col style={{}} xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "12px" }}>
-                            {this.state.resdata != null && value.regiCount !== 0 ? "재고 : " + value.regiCount + "부"
-                              : this.state.resdata != null && value.regiCount === 0 ? "재고 : 재고 없음"
-                                : null}
-                          </small>
-                        </Col>
-                      </Row>
-                      <Row style={{ marginTop: "3.5vh" }}>
-                        <Col style={{ marginBottom: "-0.2vh" }} xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "13px", textDecoration: "line-through" }}>
-                            {this.state.resdata != null ? "정가 : " : null}
-                            {this.state.resdata != null ?
-                              <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
-                              : null}
-                            {this.state.resdata != null ? "원" : null}
-                          </small>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs={{ span: 24 }}>
-                          <small style={{ color: "#656565", fontSize: "15px", fontWeight: "500" }}>
-                            {this.state.resdata != null && value.regiPrice !== "" ? "북을 판매가  : " : null}
-                            {this.state.resdata != null ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "15px" }}>
-                                <NumberFormat value={value.regiPrice} displayType={'text'} thousandSeparator={true} />
-                              </small>
-                              : null}
-                            {this.state.resdata != null && value.regiPrice !== "" ?
-                              <small style={{ color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh" }}>원~</small> :
-                              null}
-                          </small>
-                        </Col>
-                      </Row>
+              <div>
+                <Row style={{marginTop : "15px", marginBottom : "25px"}}>
+                  <Col offset={1} span={22} style={{height : "40px", borderTop : "1px solid #8d8d8d", borderBottom : "1px solid #8d8d8d"}}>
+                    <Row style={{fontSize : "14px", textAlign : "center", padding : "10px 0 10px 0", color : "#707070"}}>
+                      <Col  onClick={()=>{this.setState({sortType : "accuracy"})}} offset={1} span={4}>
+                        <span style={this.state.sortType === "accuracy" ? {color : "black"} : null}>정확도순</span>
+                      </Col>
+                      <Col onClick={()=>{this.setState({sortType : "regiCount"})}} offset={2} span={4}>
+                        <span style={this.state.sortType === "regiCount" ? {color : "black"} : null}>판매량순</span>
+                      </Col>
+                      <Col onClick={()=>{this.setState({sortType : "pubdate"})}}offset={2} span={4}>
+                        <span style={this.state.sortType === "pubdate" ? {color : "black"} : null}>출시일순</span>
+                      </Col>
+                      <Col onClick={()=>{this.setState({sortType : "regiPrice"})}} offset={2} span={4}>
+                        <span style={this.state.sortType === "regiPrice" ? {color : "black"} : null}>저가격순</span>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+                {
+                  this.state.resdata.filter(r => r.regiPrice !== "").map((value, index) => {
+                        return (
+                            <div>
+                              <Row key={index}
+                                   onClick={() => {
+                                     if (value.regiPrice !== "") {
+                                       this.setState({value: value});
+                                       this.setState({inDetail: true});
+                                       this.getSellItemList(value.itemId);
+                                     }
+                                   }}>
+                                <Col xs={{span: 5, offset: 1}}>
+                                  <img style={{
+                                    width: "100px", height: "150px", backgroundSize: "contain",
+                                    borderRadius: "7px"
+                                  }}
+                                       src={this.state.resdata != null ? value.imageUrl.replace("type=m1", "") : ""}></img>
+                                </Col>
+                                <Col xs={{span: 14, offset: 3}}>
+                                  <Row>
+                                    <Col xs={{span: 24}}>
+                                      <span style={{
+                                        color: "#656565",
+                                        fontSize: "17px"
+                                      }}>{this.state.resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col style={{marginTop: "10px", marginBottom: "-9px"}} xs={{span: 24}}>
+                                      <small style={{color: "#656565", fontSize: "12px", fontWeight: "400"}}>
+                                        저자 : {this.state.resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
+                                      </small>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col xs={{span: 24}}>
+                                      <small style={{color: "#656565", fontSize: "12px", fontWeight: "400"}}>
+                                        출판사
+                                        : {this.state.resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
+                                      </small>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col style={{}} xs={{span: 24}}>
+                                      <small style={{color: "#656565", fontSize: "12px"}}>
+                                        {this.state.resdata != null && value.regiCount !== 0 ? "재고 : " + value.regiCount + "부"
+                                            : this.state.resdata != null && value.regiCount === 0 ? "재고 : 재고 없음"
+                                                : null}
+                                      </small>
+                                    </Col>
+                                  </Row>
+                                  <Row style={{marginTop: "3.5vh"}}>
+                                    <Col style={{marginBottom: "-0.2vh"}} xs={{span: 24}}>
+                                      <small style={{color: "#656565", fontSize: "13px", textDecoration: "line-through"}}>
+                                        {this.state.resdata != null ? "정가 : " : null}
+                                        {this.state.resdata != null ?
+                                            <NumberFormat value={value.price} displayType={'text'}
+                                                          thousandSeparator={true}/>
+                                            : null}
+                                        {this.state.resdata != null ? "원" : null}
+                                      </small>
+                                    </Col>
+                                  </Row>
+                                  <Row>
+                                    <Col xs={{span: 24}}>
+                                      <small style={{color: "#656565", fontSize: "15px", fontWeight: "500"}}>
+                                        {this.state.resdata != null && value.regiPrice !== "" ? "북을 판매가  : " : null}
+                                        {this.state.resdata != null ?
+                                            <small style={{color: "rgba(51, 158, 172, 0.9)", fontSize: "15px"}}>
+                                              <NumberFormat value={value.regiPrice} displayType={'text'}
+                                                            thousandSeparator={true}/>
+                                            </small>
+                                            : null}
+                                        {this.state.resdata != null && value.regiPrice !== "" ?
+                                            <small
+                                                style={{color: "rgba(51, 158, 172, 0.9)", fontSize: "2.3vh"}}>원~</small> :
+                                            null}
+                                      </small>
+                                    </Col>
+                                  </Row>
 
-                    </Col>
-                  </Row>
-                </div>
-              );
-              } 
-            )
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col offset={1} span={22}><Divider/></Col>
+                              </Row>
+                            </div>
+                        );
+                      }
+                  )
+                }
+              </div>
 
             :
             this.state.isFocused && this.state.resdata == null ?

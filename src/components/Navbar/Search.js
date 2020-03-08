@@ -13,17 +13,19 @@ export default function Search(props,{ location, match, history }) {
   const [inputValue, setInputValue] = useState();
   const [resdata, setResdata] = useState();
   const [searchType, setSearchType] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [onFocus, setOnFocus] = useState("");
   const [onBlur, setOnBlur] = useState("");
 
   const updateInputValue = (e) => {
 
-    if(searchType == "/sell"){
-      getAllSearchedSellItems(e.target.value);
-    }
-    else{
-      getAllSearchedBuyItems(e.target.value);
-    }
+      setKeyword(e.target.value);
+
+      if (searchType == "/sell") {
+          getAllSearchedSellItems(e.target.value);
+      } else {
+          getAllSearchedBuyItems(e.target.value);
+      }
   }
 
     const updateInputValueByKeyword = (keyword) => {
@@ -38,7 +40,7 @@ export default function Search(props,{ location, match, history }) {
 
   const getAllSearchedBuyItems = async (keyword) => {
     if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
-      axios.get(host + '/naver/bookApi/buy/title?keyword=' + keyword)
+      axios.get(host + '/naver/bookApi/buy/title?keyword=' + keyword + "&sortType=" + props.sortType)
           .then((response) => {
 
                 console.log(response);
@@ -161,6 +163,13 @@ export default function Search(props,{ location, match, history }) {
             updateInputValueByKeyword(props.passedKeyword)
         }
     }, [props.passedKeyword])
+
+    React.useEffect(() => {
+        if(props.sortType != null){
+            console.log(props.sortType);
+            getAllSearchedBuyItems(keyword);
+        }
+    }, [props.sortType])
 
   return (
       <form className="search-form">
