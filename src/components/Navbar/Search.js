@@ -87,7 +87,7 @@ export default function Search(props,{ location, match, history }) {
 
         if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
 
-            axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword)
+            axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword + "&sortType=" + props.sellSortType)
                 .then((response) => {
                         console.log(response);
                         if(response.data != null){
@@ -171,11 +171,16 @@ export default function Search(props,{ location, match, history }) {
         }
     }, [props.sortType2])
 
+    React.useEffect(() => {
+        if(props.sellSortType != null){
+            getAllSearchedSellItems(keyword);
+        }
+    }, [props.sellSortType])
+
     return (
         <form className="search-form">
             <input onFocus={onFocusHandler} onBlur={onBlurHandler}
                    className="search-input" type="text" name="name"
-                   value={props.passedKeyword? props.passedKeyword : null}
                    onChange={evt => updateInputValue(evt)}
                    onKeyPress = {(e) => {
                        if(e.key == 'Enter'){

@@ -23,7 +23,7 @@ class Banner extends Component {
     passedKeyword : "",
     renderFocus : false,
     sortType1 : "accuracy",
-    sortType2 : "accuracy"
+    sortType2 : "accuracy",
   }
 
   getHomeData = async () => {
@@ -576,7 +576,7 @@ class Banner extends Component {
           {
             this.state.mode === "buy" && this.state.isFocused === false?
                 <div id="banner-list">
-                  <Row clasnsName="banner-list-title" style={{ marginBottom: "3vh" }}>
+                  <Row className="banner-list-title" style={{ marginBottom: "3vh" }}>
                     <Col xs={{ span: 18, offset: 1 }}><h5 style={{ fontSize: "2.8vh", color: "#707070", fontWeight: 500 }}>방금 올라온 책</h5></Col>
                   </Row>
                   <Row>
@@ -610,7 +610,7 @@ class Banner extends Component {
                                 </Row>
                                 <Row>
                                   <Col span={24}>
-                                    <small class="banner-list-item-title">{item.title}</small>
+                                    <small className="banner-list-item-title">{item.title}</small>
                                   </Col>
                                 </Row>
                               </List.Item>
@@ -652,7 +652,7 @@ class Banner extends Component {
                                 </Row>
                                 <Row>
                                   <Col span={24}>
-                                    <small class="banner-list-item-title">{item.title}</small>
+                                    <small className="banner-list-item-title">{item.title}</small>
                                   </Col>
                                 </Row>
                               </List.Item>
@@ -693,7 +693,7 @@ class Banner extends Component {
                                 </Row>
                                 <Row>
                                   <Col span={24}>
-                                    <small class="banner-list-item-title">{item.title}</small>
+                                    <small className="banner-list-item-title">{item.title}</small>
                                   </Col>
                                 </Row>
                               </List.Item>
