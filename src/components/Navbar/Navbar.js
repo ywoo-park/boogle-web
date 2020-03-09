@@ -77,7 +77,8 @@ class Navbar extends Component {
                   focusOnSearch={this.focusOnSearch}
                   updateInputValue={this.updateInputValue}
                   mode={this.state.mode}
-                  sortType = {this.props.sortType}
+                  sortType1 = {this.props.sortType1}
+                  sortType2 = {this.props.sortType2}
                   placeHolder={this.state.mode === "buy" ?
                     "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
                     : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
