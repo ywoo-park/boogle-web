@@ -10,23 +10,23 @@ import host from '../../server-settings/ServerApiHost';
 
 export default function Search(props,{ location, match, history }) {
 
-  const [inputValue, setInputValue] = useState();
-  const [resdata, setResdata] = useState();
-  const [searchType, setSearchType] = useState("");
-  const [keyword, setKeyword] = useState("");
-  const [onFocus, setOnFocus] = useState("");
-  const [onBlur, setOnBlur] = useState("");
+    const [inputValue, setInputValue] = useState();
+    const [resdata, setResdata] = useState();
+    const [searchType, setSearchType] = useState("");
+    const [keyword, setKeyword] = useState("");
+    const [onFocus, setOnFocus] = useState("");
+    const [onBlur, setOnBlur] = useState("");
 
-  const updateInputValue = (e) => {
+    const updateInputValue = (e) => {
 
-      setKeyword(e.target.value);
+        setKeyword(e.target.value);
 
-      if (searchType == "/sell") {
-          getAllSearchedSellItems(e.target.value);
-      } else {
-          getAllSearchedBuyItems(e.target.value);
-      }
-  }
+        if (searchType == "/sell") {
+            getAllSearchedSellItems(e.target.value);
+        } else {
+            getAllSearchedBuyItems(e.target.value);
+        }
+    }
 
     const updateInputValueByKeyword = (keyword) => {
 
@@ -38,125 +38,120 @@ export default function Search(props,{ location, match, history }) {
         }
     }
 
-  const getAllSearchedBuyItems = async (keyword) => {
-    if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
-      axios.get(host + '/naver/bookApi/buy/title?keyword=' + keyword + "&sortType=" + props.sortType)
-          .then((response) => {
+    const getAllSearchedBuyItems = async (keyword) => {
+        if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
+            axios.get(host + '/naver/bookApi/buy/title?keyword=' + keyword + "&itemResListSortType=" + props.sortType1 +
+                "&itemNotRegisteredResListSortType=" + props.sortType2)
+                .then((response) => {
 
-                console.log(response);
-                console.log(keyword);
+                        if(response.data != null){
 
-                if(response.data != null){
+                            const items = response.data;
 
-                  const items = response.data;
+                            if(items.itemResList!= undefined && items.itemResList.length > 0 && keyword !=''){
+                                setResdata(items);
+                            }
 
-                  if(items!= undefined && items.length > 0 && keyword !=''){
-                    setResdata(items);
-                  }
+                            if(keyword == ''){
+                                setResdata(null);
+                            }
 
-                  if(keyword == ''){
-                    setResdata(null);
-                  }
+                        }
+                    }
+                );
+        }
+        else{
+            axios.get(host + '/naver/bookApi/buy/isbn?keyword=' + keyword)
+                .then((response) => {
 
-                }
-              }
-          );
-    }
-    else{
-      axios.get(host + '/naver/bookApi/buy/isbn?keyword=' + keyword)
-          .then((response) => {
+                        if(response.data != null){
 
-                console.log(response);
-                console.log(keyword);
+                            const items = response.data;
 
-                if(response.data != null){
+                            if(items!= undefined && items.length > 0 && keyword !=''){
+                                setResdata(items);
+                            }
 
-                  const items = response.data;
+                            if(keyword == ''){
+                                setResdata(null);
+                            }
 
-                  if(items!= undefined && items.length > 0 && keyword !=''){
-                    setResdata(items);
-                  }
+                        }
+                    }
+                );
+        }
 
-                  if(keyword == ''){
-                    setResdata(null);
-                  }
-
-                }
-              }
-          );
     }
 
-  }
+    const getAllSearchedSellItems = async (keyword) => {
 
-  const getAllSearchedSellItems = async (keyword) => {
+        if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
 
-    if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
+            axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword)
+                .then((response) => {
+                        console.log(response);
+                        if(response.data != null){
 
-      axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword)
-          .then((response) => {
-                console.log(response);
-                if(response.data != null){
+                            const items = response.data;
 
-                  const items = response.data;
+                            if(items!= undefined && items.length > 0 && keyword !=''){
+                                setResdata(items);
+                            }
 
-                  if(items!= undefined && items.length > 0 && keyword !=''){
-                    setResdata(items);
-                  }
+                            if(keyword == ''){
+                                setResdata(null);
+                            }
 
-                  if(keyword == ''){
-                    setResdata(null);
-                  }
+                            props.updateInputValue(resdata);
 
-                  props.updateInputValue(resdata);
+                        }
+                    }
+                );
+        }
+        else{
+            axios.get(host + '/naver/bookApi/sell/isbn?keyword=' + keyword)
+                .then((response) => {
+                        console.log(response);
+                        if(response.data != null){
 
-                }
-              }
-          );
+                            const items = response.data;
+
+                            if(items!= undefined && items.length > 0 && keyword !=''){
+                                setResdata(items);
+                            }
+
+                            if(keyword == ''){
+                                setResdata(null);
+                            }
+
+                            props.updateInputValue(resdata);
+
+                        }
+                    }
+                );
+        }
+
     }
-    else{
-      axios.get(host + '/naver/bookApi/sell/isbn?keyword=' + keyword)
-          .then((response) => {
-                console.log(response);
-                if(response.data != null){
 
-                  const items = response.data;
-
-                  if(items!= undefined && items.length > 0 && keyword !=''){
-                    setResdata(items);
-                  }
-
-                  if(keyword == ''){
-                    setResdata(null);
-                  }
-
-                  props.updateInputValue(resdata);
-
-                }
-              }
-          );
+    const onFocusHandler = () =>{
+        setOnFocus("search-result-col");
+        props.focusOnSearch(true);
     }
 
-  }
-
-  const onFocusHandler = () =>{
-    setOnFocus("search-result-col");
-    props.focusOnSearch(true);
-  }
-
-  const onBlurHandler = () => {
-    setOnBlur("search-result-col-before-focus");
-  }
-
-  React.useEffect(() => {
-    setSearchType(window.location.pathname);
-  }, [])
-
-  React.useEffect(() => {
-    if(resdata != null){
-      console.log(resdata);
-      props.updateInputValue(resdata);
+    const onBlurHandler = () => {
+        setOnBlur("search-result-col-before-focus");
     }
-  }, [resdata])
+
+    React.useEffect(() => {
+        setSearchType(window.location.pathname);
+    }, [])
+
+    React.useEffect(() => {
+        if(resdata != null){
+            console.log(resdata);
+            props.updateInputValue(resdata);
+        }
+    }, [resdata])
 
     React.useEffect(() => {
         if(props.passedKeyword){
@@ -165,25 +160,30 @@ export default function Search(props,{ location, match, history }) {
     }, [props.passedKeyword])
 
     React.useEffect(() => {
-        if(props.sortType != null){
-            console.log(props.sortType);
+        if(props.sortType1 != null){
             getAllSearchedBuyItems(keyword);
         }
-    }, [props.sortType])
+    }, [props.sortType1])
 
-  return (
-      <form className="search-form">
-        <input onFocus={onFocusHandler} onBlur={onBlurHandler}
-               className="search-input" type="text" name="name"
-               value={props.passedKeyword? props.passedKeyword : null}
-               onChange={evt => updateInputValue(evt)}
-               onKeyPress = {(e) => {
-                 if(e.key == 'Enter'){
-                   e.preventDefault();
-                   e.target.blur();
-                 }}}
-               placeholder={props.placeHolder} />
-        <Icon className="search-input-button" type="search" theme="outlined" style={{ color: "white", margin: "auto" }}></Icon>
-      </form>
-  );
+    React.useEffect(() => {
+        if(props.sortType2 != null){
+            getAllSearchedBuyItems(keyword);
+        }
+    }, [props.sortType2])
+
+    return (
+        <form className="search-form">
+            <input onFocus={onFocusHandler} onBlur={onBlurHandler}
+                   className="search-input" type="text" name="name"
+                   value={props.passedKeyword? props.passedKeyword : null}
+                   onChange={evt => updateInputValue(evt)}
+                   onKeyPress = {(e) => {
+                       if(e.key == 'Enter'){
+                           e.preventDefault();
+                           e.target.blur();
+                       }}}
+                   placeholder={props.placeHolder} />
+            <Icon className="search-input-button" type="search" theme="outlined" style={{ color: "white", margin: "auto" }}></Icon>
+        </form>
+    );
 }
