@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
-import { Col, Row, Icon, Divider, Popconfirm, message, Tag } from "antd";
-import { Link, RouteComponentProps, Redirect } from "react-router-dom";
+import { Col, Row, Icon, Divider, Popconfirm, message, Tag, Modal } from "antd";
+import { Link, RouteComponentProps, Redirect, useHistory } from "react-router-dom";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import { Carousel } from "react-responsive-carousel";
@@ -16,6 +16,7 @@ function Subject({ match }) {
   const [seller, setSeller] = useState({});
   const [isBookmarked, setIsBookmarked] = useState(0);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [confirmModalOpened, setConfirmModalOpened] = useState(false);
 
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
@@ -119,11 +120,11 @@ function Subject({ match }) {
       .then(res => console.log(res));
   };
 
+  const history = useHistory();
   const goToSignIn = () => {
-    // if (authToken != "" && authToken != null) {
-    if (!isSignedIn) {
-      return <Redirect to="/signin" />;
-    }
+      if (authToken != "" && authToken != null) {
+          history.push('/signin')
+      }
   };
 
   return (
@@ -330,29 +331,69 @@ function Subject({ match }) {
       <Row style={{ marginBottom: "15vh" }}>
         <Col xs={{ offset: 1, span: 22 }}>
           {localStorage.getItem('token') != null ?
-            <Popconfirm
-              placement="bottom"
-              title="판매자에게 구매 신청을 보내겠습니까?"
-              onConfirm={confirm}
-              okText="네"
-              cancelText="아니오"
-            >
-              <button
-                style={{
-                  padding: "0",
-                  width: "100%",
-                  background: "rgba(51, 158, 172, 0.9)",
-                  color: "#ffffff",
-                  border: "none",
-                  borderRadius: "2.25vh",
-                  fontSize: "2.5vh",
-                  height: "5vh"
-                }}
-                onClick={goToSignIn()}
-              >
-                구매하기
-              </button>
-            </Popconfirm>
+              <div>
+                  <button
+                      style={{
+                          padding: "0",
+                          width: "100%",
+                          background: "rgba(51, 158, 172, 0.9)",
+                          color: "#ffffff",
+                          border: "none",
+                          borderRadius: "2.25vh",
+                          fontSize: "2.5vh",
+                          height: "5vh"
+                      }}
+                      onClick={()=>{setConfirmModalOpened(true)}}
+                  >
+                      구매하기
+                  </button>
+                  <Modal
+                      title = {null}
+                      footer={null}
+                      visible={confirmModalOpened}
+                      closable={false}>
+                      <div>
+                          <Row>
+                              <Col span={24}><h5 style={{textAlign : "center", padding : "auto", fontSize : "17px", color : "#666666"}}>판매자에게 구매 신청을 보내겠습니까?</h5></Col>
+                          </Row>
+                          <Row style={{marginTop : "10px"}}>
+                              <Col offset={2} span={8}><button
+                                  style={{
+                                      padding: "0",
+                                      width: "100%",
+                                      background: "rgba(51, 158, 172, 0.9)",
+                                      color: "#ffffff",
+                                      border: "none",
+                                      borderRadius: "15px",
+                                      fontSize: "16px",
+                                      height: "30px"
+                                  }}
+                                  onClick={()=>{
+                                      setConfirmModalOpened(false);
+                                      confirm();
+                                      setTimeout(() => {
+                                          goToSignIn();
+                                      }, 2000);
+                                     }}
+                              >예</button></Col>
+                              <Col offset={4} span={8}><button
+                                  style={{
+                                      padding: "0",
+                                      width: "100%",
+                                      background: "#fafafa",
+                                      color: "#666666",
+                                      border: "#666666 0.3px solid",
+                                      borderRadius: "15px",
+                                      fontSize: "16px",
+                                      height: "30px"
+                                  }}
+                                  onClick={()=>{setConfirmModalOpened(false)}}
+                              >아니요</button></Col>
+                          </Row>
+                      </div>
+                  </Modal>
+              </div>
+
             :
             <Link to="/signin">
               <button

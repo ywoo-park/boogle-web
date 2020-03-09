@@ -79,6 +79,7 @@ class Navbar extends Component {
                   mode={this.state.mode}
                   sortType1 = {this.props.sortType1}
                   sortType2 = {this.props.sortType2}
+                  sellSortType = {this.props.sellSortType}
                   placeHolder={this.state.mode === "buy" ?
                     "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
                     : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
@@ -109,7 +110,7 @@ class Navbar extends Component {
                   </Col>
                   <Col xs={{ span: 4, offset: 0 }}>
                     <button
-                      class={this.state.mode === "sell" ? "mode-button-active" : "mode-button"}
+                      className={this.state.mode === "sell" ? "mode-button-active" : "mode-button"}
                       style={{
                         width: "100%",
                         border: "#ffffff 1px solid",
@@ -132,7 +133,7 @@ class Navbar extends Component {
                   </Col>
                   <Col xs={{ span: 4, offset: 0 }}>
                     <button
-                      class={this.state.mode === "buy" ? "mode-button-active" : "mode-button"}
+                      className={this.state.mode === "buy" ? "mode-button-active" : "mode-button"}
                       style={{
                         width: "100%",
                         border: "#ffffff 1px solid",
@@ -175,6 +176,7 @@ class Navbar extends Component {
                           "구매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."
                           : "판매할 도서의 제목, 저자 또는 ISBN을 입력해주세요."}
                         mode={this.state.mode}
+                        sellSortType = {this.props.sellSortType}
                       ></Search>
                     </Col>
                   </Row>

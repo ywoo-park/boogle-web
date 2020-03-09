@@ -52,6 +52,8 @@ export default function Register() {
 
     const [modalVisible, setModalVisible] = useState(false);
 
+    const [sellSortType, setSellSortType] = useState("accuracy");
+
     const { register, handleSubmit } = useForm();
 
     const focusOnSearch = (isFocused) => {
@@ -254,101 +256,123 @@ export default function Register() {
                                             <Search focusOnSearch={focusOnSearch}
                                                 updateInputValue={updateInputValue}
                                                 placeHolder={""}
-                                                seachType="sell"></Search>
+                                                seachType="sell" sellSortType = {sellSortType}></Search>
                                         </Col>
                                     </Row>
                                 </header>
                             </div>
                             {resdata != null && resdata.length != 0 ?
-                                resdata.map((value, index) => {
-                                    return (
-                                        <div>
-                                            <Row>
-                                                <Col offset={1} span={22}><Divider /></Col>
-                                            </Row>
-                                            <Row key={index} className="search-result-row" style={{ paddingTop: "1vh" }}>
-                                                <Col xs={{ span: 5, offset: 1 }}>
-                                                    <img style={{
-                                                        width: "100px", height: "150px", backgroundSize: "contain",
-                                                        borderRadius: "7px"
-                                                    }}
-                                                        src={resdata != null && value.imageUrl != null ? value.imageUrl.replace("type=m1", "") : ""}></img>
+                                <div>
+                                    <Row style={{marginTop : "15px", marginBottom : "25px"}}>
+                                        <Col offset={1} span={22} style={{height : "40px", borderTop : "1px solid #8d8d8d", borderBottom : "1px solid #8d8d8d"}}>
+                                            <Row style={{fontSize : "14px", textAlign : "center", padding : "10px 0 10px 0", color : "#707070"}}>
+                                                <Col onClick={()=>{setSellSortType("accuracy")}} offset={1} span={4}>
+                                                    <span style={sellSortType === "accuracy" ? {color : "black"} : null}>정확도순</span>
                                                 </Col>
-                                                <Col xs={{ span: 14, offset: 3 }}>
-                                                    <Row>
-                                                        <Col xs={{ span: 24 }}>
-                                                            <span style={{ color: "#656565", fontSize: "17px" }}>{resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col style={{ marginTop: "10px", marginBottom: "-9px" }} xs={{ span: 24 }}>
-                                                            <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
-                                                                저자 : {resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
-                                                            </small>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row>
-                                                        <Col style={{}} xs={{ span: 24 }}>
-                                                            <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
-                                                                출판사 : {resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
-                                                            </small>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row style={{ marginTop: "-10px" }}>
-                                                        <Col xs={{ span: 24 }}>
-                                                            <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
-                                                                {resdata != null ? value.pubdate.toString().substring(0, 4) + "년 " +
-                                                                    value.pubdate.toString().substring(4, 6) + "월" : null}
-                                                            </small>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row style={{ marginTop: "-10px" }}>
-                                                        <Col xs={{ span: 24 }}>
-                                                            <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
-                                                                {resdata != null ? "ISBN : " + value.itemId : null}
-                                                            </small>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row style={{ marginTop: "10px" }}>
-                                                        <Col xs={{ span: 12 }}>
-                                                            <small style={{ color: "#656565", fontSize: "12px"}}>
-                                                                {resdata != null ? "정가 : " : null}
-                                                                {resdata != null ?
-                                                                    <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
-                                                                    : null}
-                                                                {resdata != null ? "원" : null}
-                                                            </small>
-                                                        </Col>
-                                                        <Col xs={{ span: 12 }}>
-                                                            {
-                                                                localStorage.getItem('token') != null ? 
-                                                                <button style={{
-                                                                    borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                                                                    color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
-                                                                    padding: "auto"
-                                                                }}
-                                                                    onClick={() => {
-                                                                        setSelectedItem(value);
-                                                                        setStep(2);
-                                                                    }}
-                                                                ><span>판매 등록하기</span></button>
-                                                                :
-                                                                <Link to="/signin">
-                                                                    <button style={{
-                                                                        borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
-                                                                        color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
-                                                                        padding: "auto"
-                                                                    }}
-                                                                    ><span>판매 등록하기</span></button>
-                                                                </Link>
-                                                            }
-                                                        </Col>
-                                                    </Row>
+                                                <Col onClick={()=>{setSellSortType("regiCount")}} offset={2} span={4}>
+                                                    <span style={sellSortType === "regiCount" ? {color : "black"} : null}>판매량순</span>
+                                                </Col>
+                                                <Col onClick={()=>{setSellSortType("pubdate")}} offset={2} span={4}>
+                                                    <span style={sellSortType === "pubdate" ? {color : "black"} : null}>출시일순</span>
+                                                </Col>
+                                                <Col onClick={()=>{setSellSortType("regiPrice")}} offset={2} span={4}>
+                                                    <span style={sellSortType === "regiPrice" ? {color : "black"} : null}>저가격순</span>
                                                 </Col>
                                             </Row>
-                                        </div>
-                                    );
-                                })
+                                        </Col>
+                                    </Row>
+                                    {resdata.map((value, index) => {
+                                        return (
+                                            <div>
+                                                <Row key={index} className="search-result-row" style={{ paddingTop: "1vh" }}>
+                                                    <Col xs={{ span: 5, offset: 1 }}>
+                                                        <img style={{
+                                                            width: "100px", height: "150px", backgroundSize: "contain",
+                                                            borderRadius: "7px"
+                                                        }}
+                                                             src={resdata != null && value.imageUrl != null ? value.imageUrl.replace("type=m1", "") : ""}></img>
+                                                    </Col>
+                                                    <Col xs={{ span: 14, offset: 3 }}>
+                                                        <Row>
+                                                            <Col xs={{ span: 24 }}>
+                                                                <span style={{ color: "#656565", fontSize: "17px" }}>{resdata != null ? value.title.replace(/(<([^>]+)>)/ig, "") : null}</span>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col style={{ marginTop: "10px", marginBottom: "-9px" }} xs={{ span: 24 }}>
+                                                                <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
+                                                                    저자 : {resdata != null ? value.author.replace(/(<([^>]+)>)/ig, "") : null}
+                                                                </small>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col style={{}} xs={{ span: 24 }}>
+                                                                <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
+                                                                    출판사 : {resdata != null ? value.publisher.replace(/(<([^>]+)>)/ig, "") : null}
+                                                                </small>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row style={{ marginTop: "-10px" }}>
+                                                            <Col xs={{ span: 24 }}>
+                                                                <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
+                                                                    {resdata != null ? value.pubdate.toString().substring(0, 4) + "년 " +
+                                                                        value.pubdate.toString().substring(4, 6) + "월" : null}
+                                                                </small>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row style={{ marginTop: "-10px" }}>
+                                                            <Col xs={{ span: 24 }}>
+                                                                <small style={{ color: "#656565", fontSize: "12px", fontWeight : "400" }}>
+                                                                    {resdata != null ? "ISBN : " + value.itemId : null}
+                                                                </small>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row style={{ marginTop: "10px" }}>
+                                                            <Col xs={{ span: 12 }}>
+                                                                <small style={{ color: "#656565", fontSize: "12px"}}>
+                                                                    {resdata != null ? "정가 : " : null}
+                                                                    {resdata != null ?
+                                                                        <NumberFormat value={value.price} displayType={'text'} thousandSeparator={true} />
+                                                                        : null}
+                                                                    {resdata != null ? "원" : null}
+                                                                </small>
+                                                            </Col>
+                                                            <Col xs={{ span: 12 }}>
+                                                                {
+                                                                    localStorage.getItem('token') != null ?
+                                                                        <button style={{
+                                                                            borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                                            color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                                            padding: "auto"
+                                                                        }}
+                                                                                onClick={() => {
+                                                                                    setSelectedItem(value);
+                                                                                    setStep(2);
+                                                                                }}
+                                                                        ><span>판매 등록하기</span></button>
+                                                                        :
+                                                                        <Link to="/signin">
+                                                                            <button style={{
+                                                                                borderRadius: "14px", background: "rgba(51, 158, 172, 0.9)",
+                                                                                color: "white", border: "none", fontSize: "12px", height: "25px", width: "100%",
+                                                                                padding: "auto"
+                                                                            }}
+                                                                            ><span>판매 등록하기</span></button>
+                                                                        </Link>
+                                                                }
+                                                            </Col>
+                                                        </Row>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col offset={1} span={22}><Divider /></Col>
+                                                </Row>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+
                                 :
                                 <div style={{ height: "100%" }}>
                                     <div style={{ marginTop: "25%" }}>
@@ -877,8 +901,8 @@ export default function Register() {
                                     </Row>
                                 </form>
                             </div>
-                            : step === 3 ? 
-                                <Row style={{ marginTop: "50%" }}>
+                            : step === 3 ?
+                                <Row style={{padding : "320px 0 320px 0"}}>
                                     <Col xs={{ span: 4, offset: 10 }} style={{ padding: "auto" }}>
                                         <BeatLoader
                                             size={"15px"}
