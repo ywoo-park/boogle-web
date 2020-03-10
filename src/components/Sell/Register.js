@@ -70,7 +70,8 @@ export default function Register() {
     const showModal = e => {
         setModal(true);
       }
-    
+
+
       const closeModal = e => {
         setModal(false);
       }
