@@ -55,6 +55,12 @@ export default function Register() {
 
     const [sellSortType, setSellSortType] = useState("accuracy");
 
+    const [subject, setSubject] = useState("");
+    const [professor, setProfessor] = useState("");
+    const [subjectList, setSubjectList] = useState([]);
+    const [subjectKeyword, setSubjectKeyword] = useState("");
+    const [isSearchSubjectModalOpened, setIsSearchSubjectModalOpened] = useState(false);
+
     const { register, handleSubmit } = useForm();
 
     const focusOnSearch = (isFocused) => {
@@ -74,6 +80,61 @@ export default function Register() {
     const closeModal = e => {
         setModal(false);
     }
+
+    const subjectAddModal =
+        <Modal
+            className="search-form"
+            title="과목 검색"
+            visible={isSearchSubjectModalOpened}
+            onCancel={() => { setIsSearchSubjectModalOpened(false) }}
+            footer={null}
+            destroyOnClose={true}>
+
+            <Row>
+                <Col xs={{ span: 24, offset: 0 }}>
+                    <input
+                        className="subject-search-input" type="text"
+                        onChange={(e) => { setSubjectKeyword(e.target.value) }}
+                        placeholder="과목명 또는 교수명을 입력해주세요."
+                        onKeyPress={(e) => {
+                            if (e.key == 'Enter') {
+                                e.preventDefault();
+                                e.target.blur();
+                            }
+                        }}
+                    />
+                    <Icon className="major-search-input-button" type="search" theme="outlined"
+                          style={{ color: "#707070", margin: "auto" }}
+                          onClick={() => {searchSubject(subjectKeyword)}}></Icon>
+                </Col>
+            </Row>
+            {
+                subjectList.length != 0 ?
+                    subjectList.map((subject) => {
+                        return (
+                            <Row style={{ marginTop: "20px" }}>
+                                <Col xs={{ span: 24, offset: 0 }}>
+                                    <div className="subject-search-result">
+                                      <span
+                                          style={{fontSize : "12px"}}
+                                          onClick={() => {
+                                              subject = subject.replace(" / ", "/");
+                                              setSubject(subject.split("/")[0])
+                                              setProfessor(subject.split("/")[1]);
+                                              setSubjectKeyword("");
+                                              setSubjectList([]);
+                                              setIsSearchSubjectModalOpened(false);
+                                          }} >{subject}</span>
+                                    </div>
+
+                                </Col>
+                            </Row>
+                        );
+                    })
+                    : null
+            }
+
+        </Modal>
 
     React.useEffect(() => {
         getUserBankAccount();
@@ -155,7 +216,9 @@ export default function Register() {
                 comment: data.comment,
                 imageUrl: selectedItem.imageUrl,
                 regiTime : new Date(),
-                sellerBankAccountId : selectedUserBankAccount._id
+                sellerBankAccountId : selectedUserBankAccount._id,
+                subject : subject,
+                professor : professor
             })
 
             setImageFileList(data.regiImages);
@@ -231,6 +294,18 @@ export default function Register() {
                 closeModal();
             });
     };
+
+    const searchSubject = (keyword) => {
+        axios.get(host + '/subject?campus=서강대학교&keyword=' + keyword +'&year=2020&semester=1', {
+        })
+            .then((response) => {
+                console.log(response.data.data);
+                setSubjectList(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
 
     return (
@@ -659,7 +734,6 @@ export default function Register() {
                                                                                         }}
                                                                                         type="submit"
                                                                                         onClick={() => {
-                                                                                            // window.location.reload();
                                                                                         }}
                                                                                         value="계좌 등록하기"
                                                                                     />
@@ -753,6 +827,30 @@ export default function Register() {
                                     </Col>
                                     {imageDiv !== undefined ? imageDiv : null}
                                 </Row>
+                                <Row style={{ marginBottom: "10px" }}>
+                                    <Col xs={{ span: 20, offset: 2 }}>
+                                        <Row>
+                                            <Col xs={{ span: 24 }}>
+                                                <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>과목/교수</span>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={{ span: 24 }} >
+                                                <input
+                                                    readOnly
+                                                    style={{ width: "100%", height : "40px", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }}
+                                                    name="pubdate" ref={register}
+                                                    value={subject === ""? "" : subject + " / " + professor} />
+                                                <Icon className="major-search-button" type="search" theme="outlined"
+
+                                                      style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
+
+                                                      onClick={() => {setIsSearchSubjectModalOpened(true)}}></Icon>
+                                            </Col>
+                                            {subjectAddModal}
+                                        </Row>
+                                    </Col>
+                                </Row>
                                 <Row style={{marginBottom: "10px" }}>
                                     <Col xs={{ span: 20, offset: 2 }}>
                                         <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>책상태(택 1)<span style={{color : "#e95513"}}>*</span></span>
@@ -774,7 +872,7 @@ export default function Register() {
                                             onClick={() => {
                                                 setQualityGeneral("ALMOST_CLEAN");
                                             }}
-                                            style={{fontSize : "12px"}}
+                                            style={{fontSize : "10px"}}
                                         >대체로 깨끗</button>
                                     </Col>
                                     <Col xs={{ span: 5, offset: 1 }}>
@@ -783,7 +881,7 @@ export default function Register() {
                                             onClick={() => {
                                                 setQualityGeneral("USED");
                                             }}
-                                            style={{fontSize : "12px"}}
+                                            style={{fontSize : "10px"}}
                                         >사용감 많음</button>
                                     </Col>
                                 </Row>
