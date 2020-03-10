@@ -11,6 +11,7 @@ import host from '../../server-settings/ServerApiHost';
 
 import axios from 'axios';
 import './Register.css';
+import '../SignUp/SignUpForm.css';
 import Footer from "../Footer/Footer";
 
 export default function Register() {
@@ -846,8 +847,8 @@ export default function Register() {
                                                       style={{ color: "rgba(51, 158, 172, 0.9)", margin: "auto" }}
 
                                                       onClick={() => {setIsSearchSubjectModalOpened(true)}}></Icon>
+                                                {subjectAddModal}
                                             </Col>
-                                            {subjectAddModal}
                                         </Row>
                                     </Col>
                                 </Row>
@@ -945,22 +946,26 @@ export default function Register() {
                                         <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>판매 희망가격<span style={{color : "#e95513"}}>*</span></span>
                                     </Col>
                                 </Row>
-                                <Row style={{ marginBottom: "10px" }}>
-                                    <Col xs={{ span: 10, offset: 2 }} >
-                                        <CurrencyInput
-                                            precision="0"
-                                            suffix=" 원"
-                                            value={regiPrice}
-                                            onChangeEvent={(e) => {
-                                                let value = e.target.value;
-                                                value = value.replace(/,/g, "")
-                                                value = value.replace(" 원", "");
-                                                setRegiPrice(value)
-                                            }
-                                            }
-                                            style={{ width: "100%", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }} />
-                                    </Col>
-                                </Row>
+                                {
+                                    !isSearchSubjectModalOpened ?
+                                        <Row style={{ marginBottom: "10px" }}>
+                                            <Col xs={{ span: 10, offset: 2 }} >
+                                                <CurrencyInput
+                                                    precision="0"
+                                                    suffix=" 원"
+                                                    value={regiPrice}
+                                                    onChangeEvent={(e) => {
+                                                        let value = e.target.value;
+                                                        value = value.replace(/,/g, "")
+                                                        value = value.replace(" 원", "");
+                                                        setRegiPrice(value)
+                                                    }
+                                                    }
+                                                    style={{ width: "100%", height : "6vh", padding : "1.5vh", border: "none", borderBottom: "rgba(51, 158, 172, 0.9) solid 2px" }} />
+                                            </Col>
+                                        </Row> : null
+                                }
+
                                 <Row>
                                     <Col xs={{ span: 5, offset: 2 }}>
                                         <span style={{ color: "rgba(51, 158, 172, 0.9)", fontWeight: "800" }}>코멘트</span>
