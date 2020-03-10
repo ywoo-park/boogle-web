@@ -18,7 +18,7 @@ export default function Search(props,{ location, match, history }) {
     const [onBlur, setOnBlur] = useState("");
 
     const updateInputValue = (e) => {
-
+        setKeyword(e.target.value)
         if (searchType === "sell") {
             getAllSearchedSellItems(e.target.value);
         } else {
@@ -87,7 +87,6 @@ export default function Search(props,{ location, match, history }) {
 
             axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword + "&sortType=" + props.sellSortType)
                 .then((response) => {
-                        console.log(response);
                         if(response.data != null){
 
                             const items = response.data;
@@ -103,7 +102,6 @@ export default function Search(props,{ location, match, history }) {
         else{
             axios.get(host + '/naver/bookApi/sell/isbn?keyword=' + keyword)
                 .then((response) => {
-                        console.log(response);
                         if(response.data != null){
 
                             const items = response.data;
@@ -134,7 +132,7 @@ export default function Search(props,{ location, match, history }) {
     }
 
     React.useEffect(() => {
-        if(searchType == "" || searchType == props.searchType)
+       //if(searchType == "" || searchType == props.searchType)
         setSearchType(props.searchType);
     }, [])
 
