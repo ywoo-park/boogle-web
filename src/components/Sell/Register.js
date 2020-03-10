@@ -164,6 +164,7 @@ export default function Register() {
         }
     };
 
+
     const saveSellItem = (sellItem, imageFileList) => {
 
         setStep(3);
