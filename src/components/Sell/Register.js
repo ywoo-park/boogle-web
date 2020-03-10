@@ -11,6 +11,7 @@ import host from '../../server-settings/ServerApiHost';
 
 import axios from 'axios';
 import './Register.css';
+import Footer from "../Footer/Footer";
 
 export default function Register() {
     const [step, setStep] = useState(1);
@@ -331,12 +332,12 @@ export default function Register() {
                                             <Search focusOnSearch={focusOnSearch}
                                                 updateInputValue={updateInputValue}
                                                 placeHolder={""}
-                                                seachType="sell" sellSortType = {sellSortType}></Search>
+                                                searchType="sell" sellSortType = {sellSortType}></Search>
                                         </Col>
                                     </Row>
                                 </header>
                             </div>
-                            {resdata != null && resdata.length != 0 ?
+                            {resdata != undefined && resdata.length > 0 ?
                                 <div>
                                     <Row style={{marginTop : "15px", marginBottom : "25px"}}>
                                         <Col offset={1} span={22} style={{height : "40px", borderTop : "1px solid #8d8d8d", borderBottom : "1px solid #8d8d8d"}}>
@@ -449,16 +450,29 @@ export default function Register() {
 
 
                                 :
-                                <div style={{ height: "100%" }}>
-                                    <div style={{ marginTop: "25%" }}>
-                                        <h5 style={{
-                                            textAlign: "center",
-                                            color: "gray", fontWeight: "600"
-                                        }}>판매 등록할 도서를<br /> 검색해주세요!</h5>
-                                    </div>
+                                <div>
+                                    <Row>
+                                        <Col offset={1} span={22}><Divider /></Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{offset : 2, span : 20}}>
+                                            <h5 style={{color : "#707070"}}>찾으시는 서적이 없나요?</h5>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={{offset : 1, span : 22}}>
+                                            <ul style={{color : "#707070"}}>
+                                                <li>핵심 단어를 띄어쓰기 하여 입력해주세요. 예시) 맨큐의 경제학 → 맨큐 경제</li>
+                                                <li>오타가 있는지 다시 확인해보세요.</li>
+                                            </ul>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col offset={1} span={22}><Divider /></Col>
+                                    </Row>
                                 </div>
                             }
-
+                            <Footer></Footer>
                         </div>
 
                         :
