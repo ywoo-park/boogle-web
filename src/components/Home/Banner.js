@@ -113,7 +113,8 @@ class Banner extends Component {
                   reRenderFocus = {this.reRenderFocus}
                   sortType1={this.state.sortType1}
                   sortType2={this.state.sortType2}
-                  search={<Search searchType="buy"
+                  searchType="buy"
+                  search={<Search
                   />}
                   id="navbar"></Navbar>
 
@@ -145,7 +146,7 @@ class Banner extends Component {
                 </Row> : null
           }
           {
-            this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null &&  this.state.resdata.itemResList!= undefined
+            this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null &&  this.state.resdata.itemResList!= undefined && this.state.resdata.itemResList.length > 0
             && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === false ?
                 <div>
                   <Row style={{marginTop : "15px", marginBottom : "25px"}}>
@@ -260,18 +261,6 @@ class Banner extends Component {
                     )
                   }
                 </div>
-
-                :
-                this.state.isFocused && this.state.resdata == null ?
-                    <div style={{ height: "100%" }}>
-                      <div style={{ marginTop: "25%" }}>
-                        <h5 style={{
-                          textAlign: "center",
-                          color: "gray", fontWeight: "500"
-                        }}>구매할 도서를<br /> 검색해주세요!</h5>
-                      </div>
-                    </div>
-
                     : this.state.isFocused && this.state.resdata != null && this.state.inDetail &&
                     !this.state.inSubDetail ?
                     <div>
@@ -406,8 +395,9 @@ class Banner extends Component {
                     </div>
                     : null}
 
-          {this.state.mode === "buy" && this.state.isFocused && this.state.resdata !== null
-          && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === false ?
+
+          {this.state.mode === "buy" && this.state.isFocused && !this.state.isAlarmNeedSectionAppened
+          && this.state.inDetail === false?
               <div>
                 <Row>
                   <Col offset={1} span={22}><Divider /></Col>
@@ -449,6 +439,7 @@ class Banner extends Component {
 
               : null}
           {(this.state.mode === "buy" && this.state.isFocused && this.state.resdata != null && this.state.resdata.itemNotRegisteredResList != undefined
+              && this.state.resdata.itemNotRegisteredResList.length > 0
               && this.state.inDetail === false && this.state.isAlarmNeedSectionAppened === true) ?
               <div>
               <Row style={{marginTop : "15px", marginBottom : "25px"}}>
