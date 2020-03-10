@@ -19,9 +19,7 @@ export default function Search(props,{ location, match, history }) {
 
     const updateInputValue = (e) => {
 
-        setKeyword(e.target.value);
-
-        if (searchType == "/sell") {
+        if (searchType === "sell") {
             getAllSearchedSellItems(e.target.value);
         } else {
             getAllSearchedBuyItems(e.target.value);
@@ -30,10 +28,10 @@ export default function Search(props,{ location, match, history }) {
 
     const updateInputValueByKeyword = (keyword) => {
 
-        if(searchType == "/sell"){
+        if(searchType === "sell"){
             getAllSearchedSellItems(keyword);
         }
-        else{
+        else {
             getAllSearchedBuyItems(keyword);
         }
     }
@@ -48,14 +46,13 @@ export default function Search(props,{ location, match, history }) {
 
                             const items = response.data;
 
-                            if(items.itemResList!= undefined && items.itemResList.length > 0 && keyword !=''){
+                            if(items!= undefined){
                                 setResdata(items);
                             }
+                        }
 
-                            if(keyword == ''){
-                                setResdata(null);
-                            }
-
+                        if(response.data.itemResList.length == 0 && response.data.itemNotRegisteredResList.length == 0){
+                            getAllSearchedSellItems("");
                         }
                     }
                 );
@@ -64,19 +61,19 @@ export default function Search(props,{ location, match, history }) {
             axios.get(host + '/naver/bookApi/buy/isbn?keyword=' + keyword)
                 .then((response) => {
 
-                        if(response.data != null){
+                    if(response.data != null){
 
-                            const items = response.data;
+                        const items = response.data;
 
-                            if(items!= undefined && items.length > 0 && keyword !=''){
-                                setResdata(items);
-                            }
-
-                            if(keyword == ''){
-                                setResdata(null);
-                            }
-
+                        if(items.itemResList!= undefined && items.itemResList.length > 0 && keyword !=''){
+                            setResdata(items);
                         }
+
+                        if(keyword == ''){
+                            setResdata(null);
+                        }
+
+                    }
                     }
                 );
         }
@@ -85,7 +82,8 @@ export default function Search(props,{ location, match, history }) {
 
     const getAllSearchedSellItems = async (keyword) => {
 
-        if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
+        if(props.sellSortType != undefined){
+            if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
 
             axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword + "&sortType=" + props.sellSortType)
                 .then((response) => {
@@ -94,15 +92,9 @@ export default function Search(props,{ location, match, history }) {
 
                             const items = response.data;
 
-                            if(items!= undefined && items.length > 0 && keyword !=''){
+                            if(items!= undefined){
                                 setResdata(items);
                             }
-
-                            if(keyword == ''){
-                                setResdata(null);
-                            }
-
-                            props.updateInputValue(resdata);
 
                         }
                     }
@@ -124,12 +116,11 @@ export default function Search(props,{ location, match, history }) {
                                 setResdata(null);
                             }
 
-                            props.updateInputValue(resdata);
-
                         }
                     }
                 );
-        }
+        }}
+
 
     }
 
@@ -143,12 +134,12 @@ export default function Search(props,{ location, match, history }) {
     }
 
     React.useEffect(() => {
-        setSearchType(window.location.pathname);
+        if(searchType == "" || searchType == props.searchType)
+        setSearchType(props.searchType);
     }, [])
 
     React.useEffect(() => {
         if(resdata != null){
-            console.log(resdata);
             props.updateInputValue(resdata);
         }
     }, [resdata])

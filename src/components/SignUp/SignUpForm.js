@@ -155,6 +155,8 @@ export default function SignUpForm() {
 
     const saveUser = () => {
 
+        setStep(2);
+
         axios.post(host + '/users/signup', signUpReq, {
         })
             .then((response) => {
@@ -173,20 +175,21 @@ export default function SignUpForm() {
                         headers: { Authorization: response.data.data }
                     })
                         .then((response) => {
-                            setStep(2);
+
                             setTimeout(() => {
                                 setStep(3);
                             }, 3000);
+
                         })
                         .catch((error) => {
-                            console.log(error);
                         })
                 }
                 else {
-                    setStep(2);
+
                     setTimeout(() => {
                         setStep(3);
                     }, 3000);
+
                 }
             })
             .catch((error) => {
