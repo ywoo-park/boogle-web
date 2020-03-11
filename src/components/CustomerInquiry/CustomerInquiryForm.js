@@ -3,6 +3,7 @@ import { useForm, ErrorMessage } from "react-hook-form";
 import { Row, Col, Menu, Dropdown, Button, Icon, Input } from "antd";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import host from '../../server-settings/ServerApiHost';
 
 export default function CustomerInquiryForm() {
   const { register, handleSubmit, errors, getValues, setValue } = useForm();
@@ -98,7 +99,7 @@ export default function CustomerInquiryForm() {
 
   const saveCustomerInquiry = customerInquiry => {
     axios
-      .post("http://13.124.113.72:8080/customerInquiry", customerInquiry)
+      .post(host + "/customerInquiry", customerInquiry)
       .then(response => {
         console.log(response);
       })
@@ -110,7 +111,7 @@ export default function CustomerInquiryForm() {
 
   const getUserData = authToken => {
     const result = axios
-      .get("http://13.124.113.72:8080/users/modification", {
+      .get(host + "/users/modification", {
         headers: { Authorization: authToken }
       })
       .then(res => {

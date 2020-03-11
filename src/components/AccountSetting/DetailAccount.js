@@ -4,12 +4,13 @@ import { useForm, ErrorMessage } from "react-hook-form";
 
 import { ManageContext } from "./ManageAccount";
 import axios from "axios";
+import host from '../../server-settings/ServerApiHost';
 
 export default function DetailAccount() {
   const { manageSet, dispatch } = useContext(ManageContext);
   const authToken =
     localStorage.getItem("token") == null ? "" : localStorage.getItem("token");
-  const regNewAcc_url = "http://13.124.113.72:8080/userBankAccount";
+  const regNewAcc_url = host + "/userBankAccount";
   const { register, handleSubmit, errors } = useForm();
   const [accNum, setAccNum] = useState("");
   const [depName, setDepName] = useState("");
@@ -136,8 +137,7 @@ export default function DetailAccount() {
                 background: "rgba(51, 158, 172, 0.9)",
                 color: "#ffffff",
                 border: "none",
-                fontSize: "15px", height: "35px", width: "100%",
-                padding: "0", borderRadius : "16px"
+                fontSize: "15px", height: "35px", borderRadius : "16px"
               }}
               type="submit"
               onClick={() => {

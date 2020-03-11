@@ -1,11 +1,12 @@
 import React, { useState, useEffect, createContext, useReducer } from "react";
-import { Row, Col, Card } from "antd";
-import { Link, Redirect } from "react-router-dom";
+import { Row, Col } from "antd";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import AddAccount from "./AddAccount";
 import CurrentAccount from "./CurrentAccount";
 import DetailAccount from "./DetailAccount";
 import './ManageAccount.css';
+import host from '../../server-settings/ServerApiHost';
 
 export const ManageContext = createContext(null);
 
@@ -56,7 +57,7 @@ function reducer(state, action) {
 
 export default function ManageAccount() {
   const [manageSet, dispatch] = useReducer(reducer, initialState);
-  const server_url = `http://13.124.113.72:8080`;
+  const server_url = host;
   const getAcc_url = `${server_url}/userBankAccount`;
   const bankData_url = `${server_url}/bank`;
   const authToken =
