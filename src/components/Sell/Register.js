@@ -893,7 +893,7 @@ export default function Register() {
                                 </Row>
                                 <Row style={{ marginBottom: "10px" }}>
                                     {
-                                        [["SCRATCHED_AND_FOLDED", "긁힘"], ["UNDERLINED", "밑줄"], ["SOLVED", "푼제 풂"], ["NAME_WRITTEN", "이름 기입"],
+                                        [["SCRATCHED_AND_FOLDED", "긁힘"], ["UNDERLINED", "밑줄"], ["SOLVED", "문제 풂"], ["NAME_WRITTEN", "이름 기입"],
                                             ["WET", "젖음"], ["RIPPED", "찢어짐"], ["WRITTEN", "필기"], ["EXTRA", "기타 오염"]]
                                             .map((qualityArr, index) => {
                                                 if(index === 0 || index % 3 === 0){
