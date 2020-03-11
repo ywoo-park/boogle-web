@@ -1,9 +1,9 @@
 
-    textarea::-webkit-input-placeholder { font-size: 70%; }
-    textarea::-moz-placeholder { font-size: 70%; }
-    textarea:-ms-input-placeholder { font-size: 70%; }
-    textarea:-moz-placeholder { font-size: 70%; }
-    textarea::placeholder { font-size: 70%; }
+textarea::-webkit-input-placeholder { font-size: 70%; }
+textarea::-moz-placeholder { font-size: 70%; }
+textarea:-ms-input-placeholder { font-size: 70%; }
+textarea:-moz-placeholder { font-size: 70%; }
+textarea::placeholder { font-size: 70%; }
 
 @media (min-width: 320px) and (max-width : 374px){
     #register-container{
@@ -21,6 +21,10 @@
     }
     .isFocused{
         height : 12%;
+    }
+    input, select{
+        height : 6vh;
+        padding : 1.5vh;
     }
     input:focus { outline: none; }
     textarea:focus { outline: none; }
@@ -89,6 +93,10 @@
     }
     .isFocused{
         height : 12%;
+    }
+    input, select{
+        height : 6vh;
+        padding : 1.5vh;
     }
     input:focus { outline: none; }
     textarea:focus { outline: none; }

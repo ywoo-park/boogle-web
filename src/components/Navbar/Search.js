@@ -19,6 +19,8 @@ export default function Search(props,{ location, match, history }) {
 
     const updateInputValue = (e) => {
 
+        setKeyword(e.target.value)
+
         if (searchType === "sell") {
             getAllSearchedSellItems(e.target.value);
         } else {
@@ -61,19 +63,19 @@ export default function Search(props,{ location, match, history }) {
             axios.get(host + '/naver/bookApi/buy/isbn?keyword=' + keyword)
                 .then((response) => {
 
-                    if(response.data != null){
+                        if(response.data != null){
 
-                        const items = response.data;
+                            const items = response.data;
 
-                        if(items.itemResList!= undefined && items.itemResList.length > 0 && keyword !=''){
-                            setResdata(items);
+                            if(items.itemResList!= undefined && items.itemResList.length > 0 && keyword !=''){
+                                setResdata(items);
+                            }
+
+                            if(keyword == ''){
+                                setResdata(null);
+                            }
+
                         }
-
-                        if(keyword == ''){
-                            setResdata(null);
-                        }
-
-                    }
                     }
                 );
         }
@@ -85,41 +87,39 @@ export default function Search(props,{ location, match, history }) {
         if(props.sellSortType != undefined){
             if(isNaN(keyword) || (!isNaN(keyword) && keyword.length < 4)){
 
-            axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword + "&sortType=" + props.sellSortType)
-                .then((response) => {
-                        console.log(response);
-                        if(response.data != null){
+                axios.get(host  + '/naver/bookApi/sell/title?keyword=' + keyword + "&sortType=" + props.sellSortType)
+                    .then((response) => {
+                            if(response.data != null){
 
-                            const items = response.data;
+                                const items = response.data;
 
-                            if(items!= undefined){
-                                setResdata(items);
+                                if(items!= undefined){
+                                    setResdata(items);
+                                }
+
                             }
-
                         }
-                    }
-                );
-        }
-        else{
-            axios.get(host + '/naver/bookApi/sell/isbn?keyword=' + keyword)
-                .then((response) => {
-                        console.log(response);
-                        if(response.data != null){
+                    );
+            }
+            else{
+                axios.get(host + '/naver/bookApi/sell/isbn?keyword=' + keyword)
+                    .then((response) => {
+                            if(response.data != null){
 
-                            const items = response.data;
+                                const items = response.data;
 
-                            if(items!= undefined && items.length > 0 && keyword !=''){
-                                setResdata(items);
+                                if(items!= undefined && items.length > 0 && keyword !=''){
+                                    setResdata(items);
+                                }
+
+                                if(keyword == ''){
+                                    setResdata(null);
+                                }
+
                             }
-
-                            if(keyword == ''){
-                                setResdata(null);
-                            }
-
                         }
-                    }
-                );
-        }}
+                    );
+            }}
 
 
     }
@@ -135,7 +135,7 @@ export default function Search(props,{ location, match, history }) {
 
     React.useEffect(() => {
         if(searchType == "" || searchType == props.searchType)
-        setSearchType(props.searchType);
+            setSearchType(props.searchType);
     }, [])
 
     React.useEffect(() => {

@@ -648,7 +648,7 @@ export default function SignUpForm() {
                                 <Col style={{ marginTop: "0px", marginBottom: "20px" }} xs={{ span: 24, offset: 0 }}>
                                     <input
                                         readOnly
-                                        className="major-input"
+
                                         style={{
                                             width: "100%", height: "40px", border: "none",
                                             borderBottom: "rgba(51, 158, 172, 0.9) solid 2px",
